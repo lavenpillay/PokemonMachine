@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.example.pokemonmachine;
+package com.darkdesign.pokemonmachine;
 
 public final class R {
     public static final class array {
@@ -36,21 +36,52 @@ public final class R {
         public static final int venus=0x7f020009;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000e;
-        public static final int btnSearch=0x7f090005;
+        public static final int action_settings=0x7f09002d;
+        public static final int btnSearch=0x7f090004;
         public static final int content_frame=0x7f090001;
-        public static final int displayPokemon=0x7f090003;
+        public static final int displayPokemon=0x7f090002;
         public static final int drawer_layout=0x7f090000;
-        public static final int icon=0x7f09000c;
-        public static final int image=0x7f09000a;
-        public static final int imageView1=0x7f090007;
-        public static final int lblName=0x7f090008;
-        public static final int left_drawer=0x7f090004;
-        public static final int listPokemon=0x7f090002;
-        public static final int listview=0x7f09000b;
-        public static final int secondLine=0x7f09000d;
-        public static final int txtName=0x7f090009;
-        public static final int txtSearch=0x7f090006;
+        public static final int icon=0x7f09002b;
+        public static final int image=0x7f090029;
+        public static final int imageView1=0x7f090006;
+        public static final int lblATK=0x7f09000d;
+        public static final int lblCatch=0x7f090021;
+        public static final int lblDEF=0x7f09000f;
+        public static final int lblEVYield=0x7f090017;
+        public static final int lblEggCycles=0x7f090023;
+        public static final int lblEggGroups=0x7f090025;
+        public static final int lblGrowthRate=0x7f090027;
+        public static final int lblHP=0x7f09000b;
+        public static final int lblHappiness=0x7f090019;
+        public static final int lblHeight=0x7f09001b;
+        public static final int lblMaleFemaleRatio=0x7f09001f;
+        public static final int lblName=0x7f090007;
+        public static final int lblSPATK=0x7f090011;
+        public static final int lblSPD=0x7f090015;
+        public static final int lblSPDEF=0x7f090013;
+        public static final int lblSpecies=0x7f090009;
+        public static final int lblWeight=0x7f09001d;
+        public static final int left_drawer=0x7f090003;
+        public static final int listview=0x7f09002a;
+        public static final int secondLine=0x7f09002c;
+        public static final int txtATK=0x7f09000e;
+        public static final int txtCatchRate=0x7f090022;
+        public static final int txtDEF=0x7f090010;
+        public static final int txtEVYield=0x7f090018;
+        public static final int txtEggCycles=0x7f090024;
+        public static final int txtEggGroups=0x7f090026;
+        public static final int txtGrowthRate=0x7f090028;
+        public static final int txtHP=0x7f09000c;
+        public static final int txtHappiness=0x7f09001a;
+        public static final int txtHeight=0x7f09001c;
+        public static final int txtMaleFemaleRatio=0x7f090020;
+        public static final int txtName=0x7f090008;
+        public static final int txtSPATK=0x7f090012;
+        public static final int txtSPD=0x7f090016;
+        public static final int txtSPDEF=0x7f090014;
+        public static final int txtSearch=0x7f090005;
+        public static final int txtSpecies=0x7f09000a;
+        public static final int txtWeight=0x7f09001e;
     }
     public static final class layout {
         public static final int activity_pokemonmachine=0x7f030000;

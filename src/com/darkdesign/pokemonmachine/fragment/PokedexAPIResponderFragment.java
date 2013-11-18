@@ -16,12 +16,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
+import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
-import com.example.pokemonmachine.R;
+
 
 public class PokedexAPIResponderFragment extends RESTResponderFragment {
-    private static String TAG = PokedexAPIResponderFragment.class.getName();
+    private static final String JSON_FIELD_ATTACK = "attack";
+
+	private static final String JSON_FIELD_SPECIES = "species";
+
+	private static final String JSON_FIELD_NAME = "name";
+
+	private static String TAG = PokedexAPIResponderFragment.class.getName();
     
     private PokemonMachineActivity activity;
     
@@ -154,9 +161,21 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
         			
             Log.i(TAG, "Checking Abilities...");
             JSONArray jArray = pokemonWrapper.getJSONArray("abilities");
-            String  pokemonName = pokemonWrapper.getString("name");
+            String pName = pokemonWrapper.getString(JSON_FIELD_NAME);
+            String pSpecies = pokemonWrapper.getString(JSON_FIELD_SPECIES);
+            String pAttack = pokemonWrapper.getString(JSON_FIELD_ATTACK);
+            String pDefense = pokemonWrapper.getString("defense");
+            String pSpAtk = pokemonWrapper.getString("sp_atk");
+            String pSpDef = pokemonWrapper.getString("sp_def");
+            String pSpeed = pokemonWrapper.getString("speed");
             
-            pokemon.setName(pokemonName);
+            pokemon.setName(pName);
+            pokemon.setSpecies(pSpecies);
+            pokemon.setAttack(Integer.parseInt(pAttack));
+            pokemon.setDefense(Integer.parseInt(pDefense));
+            pokemon.setSpAtk(Integer.parseInt(pSpAtk));
+            pokemon.setSpDef(Integer.parseInt(pSpDef));
+            pokemon.setSpeed(Integer.parseInt(pSpeed));
         }
         catch (JSONException e) {
             Log.e(TAG, "Failed to parse JSON.", e);

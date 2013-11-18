@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     
+    
+    <!--  START : Search Area -->
 	<Button
         android:id="@+id/btnSearch"
         android:layout_width="wrap_content"
@@ -16,29 +18,329 @@
 	    android:id="@+id/txtSearch"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    android:ems="10" >
+	    android:ems="10"
+	    android:text="1" >
 
 	    <requestFocus />
 	</EditText>
+	<!-- END : Search Area -->
+	
+	<!-- START : Display Area -->
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+	    
+	    <ImageView
+	        android:id="@+id/imageView1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@drawable/no_image" />
+
+	    <LinearLayout 
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical">
+		    
+	        <!-- Name -->	
+		    <LinearLayout 
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="horizontal">
+		        <TextView
+			        android:id="@+id/lblName"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Name: "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtName"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="xyz "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </LinearLayout>
+
+	        <!-- Species -->	
+		    <LinearLayout 
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="horizontal">
+		        <TextView
+			        android:id="@+id/lblSpecies"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Species : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtSpecies"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </LinearLayout>
+		 </LinearLayout>
+		
+	    <!-- START : Stats Area -->
+	    <TableLayout 
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical">
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblHP"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="HP : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtHP"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblATK"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Attack : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtATK"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		    
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblDEF"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Defense : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtDEF"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>		    	        
+
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblSPATK"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Sp Atk : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtSPATK"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		    
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblSPDEF"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Sp Def : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtSPDEF"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>				    	
+		    
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblSPD"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Speed : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtSPD"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		    
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblEVYield"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="EV Yield : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtEVYield"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>				    		    		    		    	        
+
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblHappiness"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Happiness : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtHappiness"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblHeight"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Height : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtHeight"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		    
+		    <TableRow >
+		        <TextView
+			        android:id="@+id/lblWeight"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Weight : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtWeight"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>	
+
+		</TableLayout>
+		<!-- END : Stats Area -->
+	    
+	    <!--  START : Capture and Breeding -->
+	    <TableLayout 
+		        android:layout_width="wrap_content"
+		    	android:layout_height="wrap_content"
+		    	android:orientation="vertical">
+
+	        
+			<TableRow >
+		        <TextView
+			        android:id="@+id/lblMaleFemaleRatio"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Male/Female Ratio : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtMaleFemaleRatio"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		    
+			<TableRow >
+		        <TextView
+			        android:id="@+id/lblCatch"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Catch Rate : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtCatchRate"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+
+			<TableRow >
+		        <TextView
+			        android:id="@+id/lblEggCycles"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Egg Cycles : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtEggCycles"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+			
+			<TableRow >
+		        <TextView
+			        android:id="@+id/lblEggGroups"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Catch Rate : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtEggGroups"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="-- Replace with List --"
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+
+			<TableRow >
+		        <TextView
+			        android:id="@+id/lblGrowthRate"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="Growth Rate : "
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+			    <TextView
+			        android:id="@+id/txtGrowthRate"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        android:textAppearance="?android:attr/textAppearanceMedium" />
+		    </TableRow>
+		</TableLayout>
+	</LinearLayout>
+	<!-- END : Display Area -->	
 
 	
-	<ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/no_image" />
-	
-    <TextView
-        android:id="@+id/lblName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name: "
-        android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <TextView
-        android:id="@+id/txtName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="xyz "
-        android:textAppearance="?android:attr/textAppearanceMedium" />	
 </LinearLayout>

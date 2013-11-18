@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.fragment.PlanetFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
@@ -22,7 +21,7 @@ import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
-import com.example.pokemonmachine.R;
+
 
 public class PokemonMachineActivity extends FragmentActivity implements OnPokemonUpdatedListener 
 {

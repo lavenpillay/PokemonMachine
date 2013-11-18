@@ -14,7 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
-import com.example.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.R;
 
 public class PokemonListFragment extends Fragment {
 	

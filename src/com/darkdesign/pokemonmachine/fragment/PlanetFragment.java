@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.R;
 
 /**
  * Fragment that appears in the "content_frame", shows a planet

@@ -1,5 +1,5 @@
 /** Automatically generated file. DO NOT MODIFY */
-package com.example.pokemonmachine;
+package com.darkdesign.pokemonmachine;
 
 public final class BuildConfig {
     public final static boolean DEBUG = true;
