@@ -5,38 +5,42 @@
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:padding="6dip" >
 
-    <ImageView
-        android:id="@+id/icon"
+    <LinearLayout 
+        android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="6dip"
-        android:contentDescription="TODO"
-        android:src="@drawable/ic_launcher" />
+        android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true">
+
+	    <ImageView
+	        android:id="@+id/list_item_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginRight="6dip"
+	        android:contentDescription="TODO"
+	        
+	        android:src="@drawable/ic_launcher" />
+        
+    </LinearLayout>
+    
 
     <TextView
-        android:id="@+id/secondLine"
-        android:layout_width="fill_parent"
-        android:layout_height="26dip"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/icon"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:text="Description"
-        android:textSize="12sp" />
-
-    <TextView
+        android:id="@+id/list_item_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/secondLine"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_toRightOf="@id/icon"
-        android:gravity="center_vertical"
-        android:text="Example application"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Pokemon Name"
         android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/list_item_description"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list_item_name"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:text="Description"
+        android:textSize="12sp" />
 
 </RelativeLayout>

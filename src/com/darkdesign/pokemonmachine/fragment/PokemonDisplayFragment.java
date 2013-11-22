@@ -1,13 +1,22 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import java.io.IOException;
+
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.helper.AssetHelper;
+import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 
 public class PokemonDisplayFragment extends Fragment {
@@ -36,8 +45,24 @@ public class PokemonDisplayFragment extends Fragment {
 	 }
 	 
 	 public void update(Pokemon pokemon) {
-		 TextView messageTextView = (TextView)v.findViewById(R.id.txtName);
-	     messageTextView.setText(pokemon.getName());
+		 // Set Image
+		 AssetHelper assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
+		 
+		 ImageView i;
+		 try {
+			 String id = Util.padLeft(String.valueOf(pokemon.getId()), GlobalConstants.POKEMON_ID_LENGTH);
+			 Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_images/" + id + ".png");
+			 i = (ImageView)v.findViewById(R.id.imageView1);
+			 i.setImageBitmap(bm);			 
+		 } catch (IOException ioe) {
+			 Log.e(getTag(), ioe.toString());
+		 }
+
+		 TextView idTextView = (TextView)v.findViewById(R.id.txtID);
+	     idTextView.setText("#" + String.valueOf(pokemon.getId()));
+		 
+		 TextView nameTextView = (TextView)v.findViewById(R.id.txtName);
+	     nameTextView.setText(pokemon.getName());
 	     
 	     TextView speciesTextView = (TextView)v.findViewById(R.id.txtSpecies);
 	     speciesTextView.setText(pokemon.getSpecies());
@@ -56,5 +81,14 @@ public class PokemonDisplayFragment extends Fragment {
 	     
 	     TextView speedTextView = (TextView)v.findViewById(R.id.txtSPD);
 	     speedTextView.setText(String.valueOf(pokemon.getSpeed()));
+	     
+	     TextView evTextView = (TextView)v.findViewById(R.id.txtEVYield);
+	     evTextView.setText(String.valueOf(pokemon.getEvYield()));
+	     
+	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
+	     heightTextView.setText(String.valueOf(pokemon.getHeight()));
+	     
+	     TextView weightTextView = (TextView)v.findViewById(R.id.txtWeight);
+	     weightTextView.setText(String.valueOf(pokemon.getWeight()));
 	 }
 }

@@ -22,7 +22,9 @@ import com.darkdesign.pokemonmachine.service.RESTService;
 
 
 public class PokedexAPIResponderFragment extends RESTResponderFragment {
-    private static final String JSON_FIELD_ATTACK = "attack";
+    private static final String JSON_FIELD_DEFENSE = "defense";
+
+	private static final String JSON_FIELD_ATTACK = "attack";
 
 	private static final String JSON_FIELD_SPECIES = "species";
 
@@ -161,21 +163,35 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
         			
             Log.i(TAG, "Checking Abilities...");
             JSONArray jArray = pokemonWrapper.getJSONArray("abilities");
+            String pId = pokemonWrapper.getString("national_id");
             String pName = pokemonWrapper.getString(JSON_FIELD_NAME);
             String pSpecies = pokemonWrapper.getString(JSON_FIELD_SPECIES);
+            
+            String pHP = pokemonWrapper.getString("hp");
             String pAttack = pokemonWrapper.getString(JSON_FIELD_ATTACK);
-            String pDefense = pokemonWrapper.getString("defense");
+            String pDefense = pokemonWrapper.getString(JSON_FIELD_DEFENSE);
             String pSpAtk = pokemonWrapper.getString("sp_atk");
             String pSpDef = pokemonWrapper.getString("sp_def");
             String pSpeed = pokemonWrapper.getString("speed");
             
+            String pEV = pokemonWrapper.getString("ev_yield");
+            String pHappiness = pokemonWrapper.getString("happiness");
+            String pHeight = pokemonWrapper.getString("height");
+            String pWeight = pokemonWrapper.getString("weight");
+            
+            pokemon.setId(Integer.parseInt(pId));
             pokemon.setName(pName);
             pokemon.setSpecies(pSpecies);
+            pokemon.setHp(Integer.parseInt(pHP));
             pokemon.setAttack(Integer.parseInt(pAttack));
             pokemon.setDefense(Integer.parseInt(pDefense));
             pokemon.setSpAtk(Integer.parseInt(pSpAtk));
             pokemon.setSpDef(Integer.parseInt(pSpDef));
             pokemon.setSpeed(Integer.parseInt(pSpeed));
+            pokemon.setEvYield(pEV);
+            pokemon.setHappiness(pHappiness);
+            pokemon.setHeight(pHeight);
+            pokemon.setWeight(pWeight);
         }
         catch (JSONException e) {
             Log.e(TAG, "Failed to parse JSON.", e);

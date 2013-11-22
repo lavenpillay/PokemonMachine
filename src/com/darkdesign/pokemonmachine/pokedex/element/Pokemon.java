@@ -12,7 +12,7 @@ public class Pokemon {
 	private String name;
 	private String species;
 	
-	private String hp;
+	private int hp;
 	private int attack;
 	private int defense;
 	private int spAtk;
@@ -33,7 +33,7 @@ public class Pokemon {
 	private String evYield; // In the format "1 Sp Atk"
 	private int exp;
 	private String growthRate;
-	private int happiness;
+	private String happiness;
 	private String genderRatio; // Maps to "male_female_ratio" from json
 	private String resourceURI; // What is this for ?
 	
@@ -98,11 +98,11 @@ public class Pokemon {
 		this.species = species;
 	}
 
-	public String getHp() {
+	public int getHp() {
 		return hp;
 	}
 
-	public void setHp(String hp) {
+	public void setHp(int hp) {
 		this.hp = hp;
 	}
 
@@ -242,11 +242,11 @@ public class Pokemon {
 		this.growthRate = growthRate;
 	}
 
-	public int getHappiness() {
+	public String getHappiness() {
 		return happiness;
 	}
 
-	public void setHappiness(int happiness) {
+	public void setHappiness(String happiness) {
 		this.happiness = happiness;
 	}
 
