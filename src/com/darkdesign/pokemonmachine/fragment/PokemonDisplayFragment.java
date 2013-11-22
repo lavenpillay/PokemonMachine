@@ -33,7 +33,6 @@ public class PokemonDisplayFragment extends Fragment {
 		
 	 	return f;
 	}
-
 	 
 
 	 @Override
@@ -59,7 +58,7 @@ public class PokemonDisplayFragment extends Fragment {
 		 }
 
 		 TextView idTextView = (TextView)v.findViewById(R.id.txtID);
-	     idTextView.setText("#" + String.valueOf(pokemon.getId()));
+	     idTextView.setText("#" + String.valueOf(pokemon.getId()) + " ");
 		 
 		 TextView nameTextView = (TextView)v.findViewById(R.id.txtName);
 	     nameTextView.setText(pokemon.getName());

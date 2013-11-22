@@ -22,5 +22,6 @@ public class AssetHelper {
 	    Bitmap bitmap = BitmapFactory.decodeStream(istr);
 	    return bitmap;
 	 }
+	
 
 }

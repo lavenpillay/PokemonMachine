@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
+import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimplePokemonListAdapter extends ArrayAdapter<String> {
@@ -39,13 +40,13 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 		// TODO Remove Hardcoded array positions
 		nameTextView.setText(values[position]);
 		// TODO Remove HArdcoded values below
-		String id = values[position];
+		String id = Util.padLeft((position+1), GlobalConstants.POKEMON_ID_LENGTH);
 		
 		// Set icon
 		try {
 			AssetHelper assetHelper = new AssetHelper(context);
 			//Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_sprites/00" + id + ".png");
-			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_sprites/" + id + ".png");
+			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
 			imageView.setImageBitmap(bm);
 		} catch (IOException ioe) {
 			 Log.e(TAG, ioe.toString());

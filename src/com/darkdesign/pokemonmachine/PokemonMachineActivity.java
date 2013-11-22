@@ -18,17 +18,18 @@ import com.darkdesign.pokemonmachine.fragment.PlanetFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
+import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
 
 
-public class PokemonMachineActivity extends FragmentActivity implements OnPokemonUpdatedListener 
+public class PokemonMachineActivity extends FragmentActivity implements OnPokemonUpdatedListener, OnPokemonListItemSelectedListener 
 {
 	private static String TAG = PokemonMachineActivity.class.getName();
 	private static String TAG_FRAGMENT_POKEMON_DISPLAY = "PokemonDisplayFragment";
 	
-	private String[] mPlanetTitles;
+	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     
@@ -37,6 +38,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 
 	public PokemonMachineActivity() {
 		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@Override
@@ -44,16 +46,13 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemonmachine);
 
-        mPlanetTitles = getResources().getStringArray(R.array.top_menu_item_name_array);
+        mMainMenuItems = getResources().getStringArray(R.array.top_menu_item_name_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, mPlanetTitles));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+                R.layout.drawer_list_item, mMainMenuItems));
     }
 
 	
@@ -81,12 +80,15 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mPlanetTitles[position]);
+        setTitle(mMainMenuItems[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
     
 	public void onSearchClick(View view) {
-		
+		executeSearch();
+	}
+	
+	public void executeSearch() {
 		PokedexAPIResponderFragment responder = new PokedexAPIResponderFragment();
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -116,11 +118,12 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		pDisplay.update(pokemon);
 	}	
 
-    /* The click listener for ListView in the navigation drawer */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
-        }
-    }    
+	public void onPokemonListItemSelected(String id) {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		
+		// Update View		
+		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY);
+		EditText searchValue = (EditText)findViewById(R.id.txtSearch);
+		searchValue.setText(id);
+	}
 }
