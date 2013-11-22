@@ -37,15 +37,12 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 		
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
-		// TODO Remove Hardcoded array positions
 		nameTextView.setText(values[position]);
-		// TODO Remove HArdcoded values below
 		String id = Util.padLeft((position+1), GlobalConstants.POKEMON_ID_LENGTH);
 		
 		// Set icon
 		try {
 			AssetHelper assetHelper = new AssetHelper(context);
-			//Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_sprites/00" + id + ".png");
 			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
 			imageView.setImageBitmap(bm);
 		} catch (IOException ioe) {
