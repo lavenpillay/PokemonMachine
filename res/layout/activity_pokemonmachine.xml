@@ -14,7 +14,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
-	        android:id="@+id/content_frame"
+	        android:id="@+id/pokemon_list"
 	        android:layout_width="wrap_content"
 	        android:layout_height="match_parent"
 	        android:orientation="vertical">
@@ -24,7 +24,9 @@
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:ems="10"
-			    android:text="" >
+			    android:text="" 
+			    android:inputType=""
+			    android:hint="pokemon name">
 		
 			</EditText>
 	        
@@ -37,6 +39,7 @@
 	            tools:layout="@layout/fragment_pokemon_list" />
 	    </LinearLayout>
 
+        
         <fragment
             android:id="@+id/displayPokemon"
             android:name="com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment"
