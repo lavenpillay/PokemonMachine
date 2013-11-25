@@ -39,7 +39,7 @@
 	            tools:layout="@layout/fragment_pokemon_list" />
 	    </LinearLayout>
 
-        
+        <!-- 
         <fragment
             android:id="@+id/displayPokemon"
             android:name="com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment"
@@ -47,6 +47,7 @@
             android:layout_height="match_parent"
             android:tag="PokemonDisplayFragment"
             tools:layout="@layout/fragment_display_pokemon" />
+         -->
     </LinearLayout>
 
     <!-- The navigation drawer -->

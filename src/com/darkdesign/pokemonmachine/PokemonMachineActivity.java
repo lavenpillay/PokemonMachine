@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +41,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     private final static int TOP_MENU_ITEM_MOVES = 1;
     private final static int TOP_MENU_ITEM_BERRIES = 2;
     
+    private PokemonDisplayFragment pokemonDisplayFragment = null;
+    private BerryDisplayFragment berryDisplayFragment = null;
     private Fragment currentMainFragment;
 
 	public PokemonMachineActivity() {
@@ -79,9 +82,18 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         
         // Set Display Pokemon as default Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
-        // TODO Extract String fragment name
-        currentMainFragment = fragmentManager.findFragmentByTag("PokemonDisplayFragment");  
+
+        FragmentTransaction fTransaction = fragmentManager.beginTransaction();
+        if (pokemonDisplayFragment == null) {
+        	pokemonDisplayFragment = new PokemonDisplayFragment();
+        }
+        fTransaction.add(R.id.content_frame, pokemonDisplayFragment);
+        fTransaction.commit();
+
+        currentMainFragment = pokemonDisplayFragment;
     }
+	
+
 
 	
 	public void onSearchClick(View view) {
@@ -141,11 +153,16 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	    	// Check position
 	    	if (position == TOP_MENU_ITEM_POKEMON) {
 	    		// TODO Replace with Cached Instances
-	    		Fragment fragment = new PokemonDisplayFragment();
+	    		//Fragment fragment = new PokemonDisplayFragment();
+	    		if (pokemonDisplayFragment == null) {
+	            	pokemonDisplayFragment = new PokemonDisplayFragment();
+	            }
 		
 		        FragmentManager fragmentManager = getSupportFragmentManager();
-		        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+		        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
 	    		
+		        currentMainFragment = pokemonDisplayFragment;
+		        
 	    	} else if (position == TOP_MENU_ITEM_MOVES) {
 		        // update the main content by replacing fragments
 	    		/*
@@ -158,12 +175,14 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, TAG_FRAGMENT_POKEMON_DISPLAY).commit();
 		        */
 	    	} else if (position == TOP_MENU_ITEM_BERRIES) {
-	    		// TODO Replace with Cached Instances
-	    		Fragment fragment = new BerryDisplayFragment();
+	    		if (berryDisplayFragment == null) {
+	    			berryDisplayFragment = new BerryDisplayFragment();
+	            }
 		
 		        FragmentManager fragmentManager = getSupportFragmentManager();
-		        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-		        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+		        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
+	    		
+		        currentMainFragment = berryDisplayFragment;
 	    	}
 
 	        // update selected item and title, then close the drawer
