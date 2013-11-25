@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -19,6 +21,7 @@ import android.widget.ListView;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MainMenuFragment;
+import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
@@ -43,6 +46,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
+    private MoveListFragment movesListFragment = null;
     private Fragment currentMainFragment;
 
 	public PokemonMachineActivity() {
@@ -77,10 +81,17 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         // Set the adapter for the list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mMainMenuItems));
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_drawer, mMainMenuItems));
         mDrawerList.setOnItemClickListener(new MainMenuItemClickListener());
         
-        // Set Display Pokemon as default Fragment
+        // Add First Divider
+        LayoutParams layout = new ViewGroup.LayoutParams(1, ViewGroup.LayoutParams.FILL_PARENT);
+        View verticalDivider = new View(this);
+        verticalDivider.setBackgroundColor(0);
+        verticalDivider.setLayoutParams(layout);
+        
+        
+        // Set Display Pokemon as Primary Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fTransaction = fragmentManager.beginTransaction();
@@ -91,6 +102,14 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.commit();
 
         currentMainFragment = pokemonDisplayFragment;
+        
+        // Set Moves List Secondary Fragment
+        fTransaction = fragmentManager.beginTransaction();
+        if (movesListFragment == null) {
+        	movesListFragment = new MoveListFragment();
+        }
+        fTransaction.add(R.id.content_frame, movesListFragment);
+        fTransaction.commit();
     }
 	
 
