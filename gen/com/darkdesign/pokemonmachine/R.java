@@ -30,12 +30,11 @@ public final class R {
         public static final int pokeball=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f090031;
+        public static final int action_settings=0x7f090030;
         public static final int btnSearch=0x7f090006;
         public static final int content_frame=0x7f090001;
         public static final int displayPokemon=0x7f090004;
         public static final int drawer_layout=0x7f090000;
-        public static final int image=0x7f09002c;
         public static final int imageView1=0x7f09000a;
         public static final int imageView2=0x7f09002b;
         public static final int lblATK=0x7f09000d;
@@ -56,10 +55,10 @@ public final class R {
         public static final int lblWeight=0x7f09001f;
         public static final int left_drawer=0x7f090005;
         public static final int listPokemon=0x7f090003;
-        public static final int list_item_description=0x7f090030;
-        public static final int list_item_image=0x7f09002e;
-        public static final int list_item_name=0x7f09002f;
-        public static final int thumbnail=0x7f09002d;
+        public static final int list_item_description=0x7f09002f;
+        public static final int list_item_image=0x7f09002d;
+        public static final int list_item_name=0x7f09002e;
+        public static final int thumbnail=0x7f09002c;
         public static final int txtATK=0x7f09000e;
         public static final int txtCatchRate=0x7f090024;
         public static final int txtDEF=0x7f090010;
@@ -84,10 +83,11 @@ public final class R {
     public static final class layout {
         public static final int activity_pokemonmachine=0x7f030000;
         public static final int drawer_list_item=0x7f030001;
-        public static final int fragment_display_pokemon=0x7f030002;
-        public static final int fragment_planet=0x7f030003;
-        public static final int fragment_pokemon_list=0x7f030004;
-        public static final int list_item_pokemon=0x7f030005;
+        public static final int fragment_berry_list=0x7f030002;
+        public static final int fragment_berry_main=0x7f030003;
+        public static final int fragment_display_pokemon=0x7f030004;
+        public static final int fragment_pokemon_list=0x7f030005;
+        public static final int list_item_pokemon=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f080000;

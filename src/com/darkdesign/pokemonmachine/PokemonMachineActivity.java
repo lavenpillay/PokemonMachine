@@ -1,6 +1,7 @@
 package com.darkdesign.pokemonmachine;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,11 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.fragment.PlanetFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
@@ -39,6 +40,23 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	public PokemonMachineActivity() {
 		// TODO Auto-generated constructor stub
 		
+		//Testing Database
+		/*
+		Cursor pokemonCursor;
+        DatabaseHelper db;
+        
+        db = new DatabaseHelper(this);
+        pokemonCursor = db.getPokemon();
+        
+        if (pokemonCursor.moveToFirst()) {
+    	   do {
+    	      String data = pokemonCursor.getString(pokemonCursor.getColumnIndex("name"));
+    	      // do what ever you want here
+    	      Log.i(TAG, "Read from database : " + data);
+    	   } while(pokemonCursor.moveToNext());
+    	}
+        pokemonCursor.close();
+        */
 	}
 	
 	@Override
