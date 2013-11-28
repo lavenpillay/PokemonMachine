@@ -52,30 +52,22 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	public PokemonMachineActivity() {
 		// TODO Auto-generated constructor stub
 		
-		//Testing Database
-		/*
-		Cursor pokemonCursor;
-        DatabaseHelper db;
-        
-        db = new DatabaseHelper(this);
-        pokemonCursor = db.getPokemon();
-        
-        if (pokemonCursor.moveToFirst()) {
-    	   do {
-    	      String data = pokemonCursor.getString(pokemonCursor.getColumnIndex("name"));
-    	      // do what ever you want here
-    	      Log.i(TAG, "Read from database : " + data);
-    	   } while(pokemonCursor.moveToNext());
-    	}
-        pokemonCursor.close();
-        */
 	}
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemonmachine);
-
+        
+		//Testing Database
+		/*
+		Cursor pokemonCursor;
+        DatabaseHelper db;
+        
+        db = new DatabaseHelper(this);
+        Pokemon test = db.getPokemon("001");
+        */
+        
         mMainMenuItems = getResources().getStringArray(R.array.top_menu_item_name_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -89,7 +81,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         View verticalDivider = new View(this);
         verticalDivider.setBackgroundColor(0);
         verticalDivider.setLayoutParams(layout);
-        
         
         // Set Display Pokemon as Primary Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
