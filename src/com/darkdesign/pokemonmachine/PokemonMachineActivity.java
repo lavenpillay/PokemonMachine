@@ -35,6 +35,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 {
 	private static String TAG = PokemonMachineActivity.class.getName();
 	private static String TAG_FRAGMENT_POKEMON_DISPLAY = "PokemonDisplayFragment";
+	private static String TAG_FRAGMENT_MOVES_DISPLAY = "MovesDisplayFragment";
 	
 	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
@@ -76,12 +77,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_drawer, mMainMenuItems));
         mDrawerList.setOnItemClickListener(new MainMenuItemClickListener());
         
-        // Add First Divider
-        LayoutParams layout = new ViewGroup.LayoutParams(1, ViewGroup.LayoutParams.FILL_PARENT);
-        View verticalDivider = new View(this);
-        verticalDivider.setBackgroundColor(0);
-        verticalDivider.setLayoutParams(layout);
-        
         // Set Display Pokemon as Primary Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -89,18 +84,20 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         if (pokemonDisplayFragment == null) {
         	pokemonDisplayFragment = new PokemonDisplayFragment();
         }
-        fTransaction.add(R.id.content_frame, pokemonDisplayFragment);
+        fTransaction.add(R.id.content_frame, pokemonDisplayFragment, TAG_FRAGMENT_POKEMON_DISPLAY);
         fTransaction.commit();
 
         currentMainFragment = pokemonDisplayFragment;
         
         // Set Moves List Secondary Fragment
+        
         fTransaction = fragmentManager.beginTransaction();
         if (movesListFragment == null) {
         	movesListFragment = new MoveListFragment();
         }
-        fTransaction.add(R.id.content_frame, movesListFragment);
+        fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
+        
     }
 	
 

@@ -1,399 +1,421 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    
-    <!--  START : Search Area -->
-	<Button
-        android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"	
-        android:onClick="onSearchClick"
-        android:text="Press to Search"
-         />
-
-	<EditText
-	    android:id="@+id/txtSearch"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:ems="10"
-	    android:text="1" >
-
-	    <requestFocus android:layout_width="wrap_content" />
-
-	</EditText>
-	<!-- END : Search Area -->
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal" >
+	    
+	<LinearLayout 
+	    android:layout_width="0dip"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" 
+	    android:layout_weight="1">
+	    
+	    <!--  START : Search Area -->
+		<Button
+	        android:id="@+id/btnSearch"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"	
+	        android:onClick="onSearchClick"
+	        android:text="Press to Search"
+	         />
 	
-	<!-- START : Display Area -->
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
-	    
-		        <TextView
-			        android:id="@+id/txtID"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=" "
-			        android:textAppearance="?android:attr/textAppearanceSmall" 
-			        android:textSize="15pt"/>
-	    
-			    <TextView
-			        android:id="@+id/txtName"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Pokemon Name "
-			        android:textAppearance="?android:attr/textAppearanceSmall" 
-			        android:textSize="15pt"/>
-
-	</LinearLayout>
+		<EditText
+		    android:id="@+id/txtSearch"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:ems="10"
+		    android:text="1" >
 	
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal">
-	    
-	    <ImageView
-	        android:id="@+id/imageView1"
-	        android:layout_width="200dip"
-	        android:layout_height="200dip"
-	        android:src="@drawable/pokeball"
-	        android:padding="10dip" />
-	    
-
+		    <requestFocus android:layout_width="wrap_content" />
+	
+		</EditText>
+		<!-- END : Search Area -->
 		
-	    <!-- START : Stats Area -->
-	    <TableLayout 
-		        android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:orientation="vertical"
-		    	android:paddingLeft="10dip"
-		    	android:paddingTop="10dip"
-		    	android:paddingRight="50dip"
-		    	android:paddingBottom="10dip">
-
-		    <TableRow android:layout_width="wrap_content" >
-
-		        <TextView
-			        android:id="@+id/lblHP"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="HP : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtHP"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblATK"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Attack : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtATK"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
+		<!-- START : Display Area -->
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal">
 		    
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblDEF"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Defense : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtDEF"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>		    	        
-
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblSPATK"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Sp Atk : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtSPATK"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
+			        <TextView
+				        android:id="@+id/txtID"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=" "
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="15pt"/>
 		    
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblSPDEF"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Sp Def : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtSPDEF"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>				    	
-		    
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblSPD"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Speed : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtSPD"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-		    
-
-
-		</TableLayout>
-		<!-- END : Stats Area -->
+				    <TextView
+				        android:id="@+id/txtName"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Pokemon Name "
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="15pt"/>
+	
+		</LinearLayout>
 		
-	    
-		<!-- START : Basic Information -->
-	    <TableLayout 
-		        android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:orientation="vertical"
-		    	android:paddingLeft="30dip"
-		    	android:paddingTop="10dip"
-		    	android:paddingRight="50dip"
-		    	android:paddingBottom="10dip">
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal">
 		    
-		    <TableRow 
-		        android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:orientation="horizontal">
-		        <TextView
-			        android:id="@+id/lblSpecies"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Species : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtSpecies"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>		    
+		    <ImageView
+		        android:id="@+id/imageView1"
+		        android:layout_width="200dip"
+		        android:layout_height="200dip"
+		        android:src="@drawable/pokeball"
+		        android:padding="10dip" />
 		    
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblEVYield"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="EV Yield : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtEVYield"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>				    		    		    		    	        
-
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblHappiness"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Happiness : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtHappiness"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblHeight"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Height : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtHeight"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-		    
-		    <TableRow >
-		        <TextView
-			        android:id="@+id/lblWeight"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Weight : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtWeight"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>			    
-		 </TableLayout>	    
-
-	</LinearLayout>
-	<!-- END : Display Area -->	
-
-	<LinearLayout 
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal"
-	    android:paddingLeft="100dip">
-	    		
-	    
-	    <!--  START : Capture and Breeding -->
-	    <TableLayout 
-		        android:layout_width="wrap_content"
-		    	android:layout_height="wrap_content"
-		    	android:orientation="vertical"
-		    	android:padding="10dip">
-	        
-			<TableRow >
-		        <TextView
-			        android:id="@+id/lblMaleFemaleRatio"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Male/Female Ratio : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtMaleFemaleRatio"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-		    
-			<TableRow >
-		        <TextView
-			        android:id="@+id/lblCatch"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Catch Rate : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtCatchRate"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-
-			<TableRow >
-		        <TextView
-			        android:id="@+id/lblEggCycles"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Egg Cycles : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtEggCycles"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
+	
 			
-			<TableRow >
-		        <TextView
-			        android:id="@+id/lblEggGroups"
+		    <!-- START : Stats Area -->
+		    <TableLayout 
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Egg groups : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-	    
-			    <TextView
-			        android:id="@+id/txtEggGroups"
+			    	android:layout_height="wrap_content"
+			    	android:orientation="vertical"
+			    	android:paddingLeft="10dip"
+			    	android:paddingTop="10dip"
+			    	android:paddingRight="50dip"
+			    	android:paddingBottom="10dip">
+	
+			    <TableRow android:layout_width="wrap_content" >
+	
+			        <TextView
+				        android:id="@+id/lblHP"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="HP : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtHP"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+	
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblATK"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Attack : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtATK"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			    
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblDEF"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Defense : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtDEF"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>		    	        
+	
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblSPATK"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Sp Atk : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtSPATK"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			    
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblSPDEF"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Sp Def : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtSPDEF"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>				    	
+			    
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblSPD"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Speed : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtSPD"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			    
+	
+	
+			</TableLayout>
+			<!-- END : Stats Area -->
+			
+		    
+			<!-- START : Basic Information -->
+		    <TableLayout 
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="-- Replace with List --"
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-
-			<TableRow >
-		        <TextView
-			        android:id="@+id/lblGrowthRate"
+			    	android:layout_height="wrap_content"
+			    	android:orientation="vertical"
+			    	android:paddingLeft="30dip"
+			    	android:paddingTop="10dip"
+			    	android:paddingRight="50dip"
+			    	android:paddingBottom="10dip">
+			    
+			    <TableRow 
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="Growth Rate : "
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-	    
-			    <TextView
-			        android:id="@+id/txtGrowthRate"
+			    	android:layout_height="wrap_content"
+			    	android:orientation="horizontal">
+			        <TextView
+				        android:id="@+id/lblSpecies"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Species : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtSpecies"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>		    
+			    
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblEVYield"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="EV Yield : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtEVYield"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>				    		    		    		    	        
+	
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblHappiness"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Happiness : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtHappiness"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+	
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblHeight"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Height : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtHeight"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			    
+			    <TableRow >
+			        <TextView
+				        android:id="@+id/lblWeight"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Weight : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtWeight"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>			    
+			 </TableLayout>	    
+	
+		</LinearLayout>
+		<!-- END : Display Area -->	
+	
+		<LinearLayout 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal"
+		    android:paddingLeft="100dip">
+		    		
+		    
+		    <!--  START : Capture and Breeding -->
+		    <TableLayout 
 			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text=""
-			        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    </TableRow>
-		</TableLayout>
+			    	android:layout_height="wrap_content"
+			    	android:orientation="vertical"
+			    	android:padding="10dip">
+		        
+				<TableRow >
+			        <TextView
+				        android:id="@+id/lblMaleFemaleRatio"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Male/Female Ratio : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtMaleFemaleRatio"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			    
+				<TableRow >
+			        <TextView
+				        android:id="@+id/lblCatch"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Catch Rate : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtCatchRate"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+	
+				<TableRow >
+			        <TextView
+				        android:id="@+id/lblEggCycles"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Egg Cycles : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtEggCycles"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+				
+				<TableRow >
+			        <TextView
+				        android:id="@+id/lblEggGroups"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Egg groups : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+		    
+				    <TextView
+				        android:id="@+id/txtEggGroups"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="-- Replace with List --"
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+	
+				<TableRow >
+			        <TextView
+				        android:id="@+id/lblGrowthRate"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="Growth Rate : "
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+		    
+				    <TextView
+				        android:id="@+id/txtGrowthRate"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=""
+				        android:textAppearance="?android:attr/textAppearanceSmall" />
+			    </TableRow>
+			</TableLayout>
+		</LinearLayout>
+	
+		<!-- 
+		<View 
+		    android:layout_width="fill_parent"
+		    android:layout_height="2dip"
+		    android:background="#FFFF0000"/>
+		 -->
+		 
+		<!-- START : Evolutions -->
+	    <TableLayout 
+	        android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+		    
+	        <TableRow 
+	            android:gravity="center">
+	
+	            <ImageView
+	                android:id="@+id/imageView2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ic_launcher" />
+	            
+	        </TableRow>
+	        
+	    </TableLayout>
 	</LinearLayout>
-
-	<!-- 
-	<View 
-	    android:layout_width="fill_parent"
-	    android:layout_height="2dip"
-	    android:background="#FFFF0000"/>
-	 -->
-	 
-	<!-- START : Evolutions -->
-    <TableLayout 
-        android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:orientation="horizontal">
+	
+	
+	
+	<!-- MOVES -->
+	<LinearLayout 
+	    android:id="@+id/moves_holder"
+	    android:layout_width="0dip"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" 
+	    android:layout_weight="1">
 	    
-        <TableRow 
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_launcher" />
-            
-        </TableRow>
-        
-    </TableLayout>
+	    <include android:id="@+id/movesArea" layout="@layout/fragment_move_list" />
+	    
+	</LinearLayout>
+	
 </LinearLayout>
