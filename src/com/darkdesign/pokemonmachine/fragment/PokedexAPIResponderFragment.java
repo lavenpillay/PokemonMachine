@@ -179,7 +179,7 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
             String pHeight = pokemonWrapper.getString("height");
             String pWeight = pokemonWrapper.getString("weight");
             
-            pokemon.setId(Integer.parseInt(pId));
+            pokemon.setId(pId);
             pokemon.setName(pName);
             pokemon.setSpecies(pSpecies);
             pokemon.setHp(Integer.parseInt(pHP));

@@ -8,7 +8,7 @@ public class Pokemon {
 	private String modifiedTimestamp; // masp to "modified" in json
 	
 	// Pokemon Values
-	private int nationalId;
+	private String nationalId;
 	private String name;
 	private String species;
 	
@@ -40,21 +40,21 @@ public class Pokemon {
 	
 	public Pokemon() {
 		super();
-		this.nationalId = -1;
+		this.nationalId = "";
 		this.name = "";
 	}
 	
-	public Pokemon(int id, String name) {
+	public Pokemon(String id, String name) {
 		super();
 		this.nationalId = id;
 		this.name = name;
 	}
 
-	public int getId() {
+	public String getId() {
 		return nationalId;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.nationalId = id;
 	}
 
@@ -82,11 +82,11 @@ public class Pokemon {
 		this.modifiedTimestamp = modifiedTimestamp;
 	}
 
-	public int getNationalId() {
+	public String getNationalId() {
 		return nationalId;
 	}
 
-	public void setNationalId(int nationalId) {
+	public void setNationalId(String nationalId) {
 		this.nationalId = nationalId;
 	}
 
