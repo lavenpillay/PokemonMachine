@@ -24,7 +24,4 @@ public class Ability {
 	public void setResourceURI(String resourceURI) {
 		this.resourceURI = resourceURI;
 	}
-	
-	
-
 }

@@ -1,7 +1,8 @@
 package com.darkdesign.pokemonmachine;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,22 +12,19 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
-import com.darkdesign.pokemonmachine.fragment.MainMenuFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
+import com.darkdesign.pokemonmachine.pokedex.element.Move;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
 
@@ -69,15 +67,16 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         Pokemon test = db.getPokemon("001");
         */
         
+        // Setup Main Slide Navigation Menu
         mMainMenuItems = getResources().getStringArray(R.array.top_menu_item_name_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        // Set the adapter for the list view
+        // Set the adapter for the main menu list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_drawer, mMainMenuItems));
         mDrawerList.setOnItemClickListener(new MainMenuItemClickListener());
         
-        // Set Display Pokemon as Primary Fragment
+        // Create and add "Display Pokemon" as Primary Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fTransaction = fragmentManager.beginTransaction();
@@ -89,7 +88,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 
         currentMainFragment = pokemonDisplayFragment;
         
-        // Set Moves List Secondary Fragment
+        // Create and add "Moves List" as Secondary Fragment
         
         fTransaction = fragmentManager.beginTransaction();
         if (movesListFragment == null) {
@@ -98,24 +97,27 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
         
+        executeSearch("001");
     }
 	
-
-
 	
 	public void onSearchClick(View view) {
 		executeSearch();
 	}
 	
 	public void executeSearch() {
+		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
+		executeSearch(searchValueTextbox.getText().toString());
+	}
+	
+	public void executeSearch(String nationalId) {
 		PokedexAPIResponderFragment responder = new PokedexAPIResponderFragment();
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		fragmentManager.beginTransaction().add(responder, "Responder").commit();
 		
 	    // Build URI
-		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
-	    int id = Integer.parseInt(searchValueTextbox.getText().toString());
+	    int id = Integer.parseInt(nationalId);
 		String searchURI = URIConstructor.nationalID(id);	
 		
 		// Set URI and call service
@@ -135,6 +137,12 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Update View		
 		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY); 
 		pDisplay.update(pokemon);
+
+		// Update Moves list
+		movesListFragment.testData.clear();
+		movesListFragment.testData.addAll(pokemon.getMoves());
+		
+		movesListFragment.adapter.notifyDataSetChanged();
 	}	
 
 	public void onPokemonListItemSelected(String id) {

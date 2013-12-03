@@ -27,8 +27,8 @@ public class Pokemon {
 	private ArrayList<Ability> abilities;
 	private ArrayList<Move> moves;
 	
-	private int catchRate;
-	private int eggCycles;
+	private String catchRate;
+	private String eggCycles;
 	private ArrayList<EggGroup> eggGroups;
 	private String evYield; // In the format "1 Sp Atk"
 	private int exp;
@@ -194,19 +194,19 @@ public class Pokemon {
 		this.moves = moves;
 	}
 
-	public int getCatchRate() {
+	public String getCatchRate() {
 		return catchRate;
 	}
 
-	public void setCatchRate(int catchRate) {
+	public void setCatchRate(String catchRate) {
 		this.catchRate = catchRate;
 	}
 
-	public int getEggCycles() {
+	public String getEggCycles() {
 		return eggCycles;
 	}
 
-	public void setEggCycles(int eggCycles) {
+	public void setEggCycles(String eggCycles) {
 		this.eggCycles = eggCycles;
 	}
 
@@ -265,7 +265,5 @@ public class Pokemon {
 	public void setResourceURI(String resourceURI) {
 		this.resourceURI = resourceURI;
 	}
-
-	
 	
 }

@@ -1,5 +1,7 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,8 +19,10 @@ import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.helper.JSONHelper;
 import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
+import com.darkdesign.pokemonmachine.pokedex.element.Move;
 
 
 public class PokedexAPIResponderFragment extends RESTResponderFragment {
@@ -179,6 +183,17 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
             String pHeight = pokemonWrapper.getString("height");
             String pWeight = pokemonWrapper.getString("weight");
             
+            // Breeding
+            String pGenderRatio = pokemonWrapper.getString("male_female_ratio");
+            String pCatchRate = pokemonWrapper.getString("catch_rate");
+            String pEggCycles = pokemonWrapper.getString("egg_cycles");
+            String pEVYield = pokemonWrapper.getString("ev_yield");
+            String pGrowthRate = pokemonWrapper.getString("growth_rate");
+            
+            // Moves
+            JSONArray movesArray = pokemonWrapper.getJSONArray("moves");
+            ArrayList<Move> movesList = JSONHelper.getMovesListFromJSON(movesArray);
+            
             pokemon.setId(pId);
             pokemon.setName(pName);
             pokemon.setSpecies(pSpecies);
@@ -192,6 +207,12 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
             pokemon.setHappiness(pHappiness);
             pokemon.setHeight(pHeight);
             pokemon.setWeight(pWeight);
+            pokemon.setGenderRatio(pGenderRatio);
+            pokemon.setCatchRate(pCatchRate);
+            pokemon.setEggCycles(pEggCycles);
+            pokemon.setGrowthRate(pGrowthRate);
+            
+            pokemon.setMoves(movesList);
         }
         catch (JSONException e) {
             Log.e(TAG, "Failed to parse JSON.", e);

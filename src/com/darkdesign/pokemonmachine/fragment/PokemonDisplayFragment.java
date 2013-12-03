@@ -64,7 +64,16 @@ public class PokemonDisplayFragment extends Fragment {
 	     nameTextView.setText(pokemon.getName());
 	     
 	     TextView speciesTextView = (TextView)v.findViewById(R.id.txtSpecies);
-	     speciesTextView.setText(pokemon.getSpecies());
+	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()));
+
+	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
+	     heightTextView.setText(String.valueOf(pokemon.getHeight()));
+	     
+	     TextView weightTextView = (TextView)v.findViewById(R.id.txtWeight);
+	     weightTextView.setText(String.valueOf(pokemon.getWeight()));
+	     
+	     TextView hpTextView = (TextView)v.findViewById(R.id.txtHP);
+	     hpTextView.setText(String.valueOf(pokemon.getHp()));
 	     
 	     TextView attackTextView = (TextView)v.findViewById(R.id.txtATK);
 	     attackTextView.setText(String.valueOf(pokemon.getAttack()));
@@ -84,10 +93,25 @@ public class PokemonDisplayFragment extends Fragment {
 	     TextView evTextView = (TextView)v.findViewById(R.id.txtEVYield);
 	     evTextView.setText(String.valueOf(pokemon.getEvYield()));
 	     
-	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
-	     heightTextView.setText(String.valueOf(pokemon.getHeight()));
+	     // Breeding Info
+	     TextView genderTextView = (TextView)v.findViewById(R.id.txtMaleFemaleRatio);
+	     genderTextView.setText(pokemon.getGenderRatio());
 	     
-	     TextView weightTextView = (TextView)v.findViewById(R.id.txtWeight);
-	     weightTextView.setText(String.valueOf(pokemon.getWeight()));
+	     TextView catchRateTextView = (TextView)v.findViewById(R.id.txtCatchRate);
+	     catchRateTextView.setText(String.valueOf(pokemon.getCatchRate()));
+	     
+	     TextView eggCyclesTextView = (TextView)v.findViewById(R.id.txtEggCycles);
+	     eggCyclesTextView.setText(String.valueOf(pokemon.getEggCycles()));
+	     
+	     TextView evYieldTextView = (TextView)v.findViewById(R.id.txtEVYield);
+	     evYieldTextView.setText(String.valueOf(pokemon.getEvYield()));
+	     
+	     TextView happinessTextView = (TextView)v.findViewById(R.id.txtHappiness);
+	     happinessTextView.setText(String.valueOf(pokemon.getHappiness()));
+	     
+	     TextView growthRateTextView = (TextView)v.findViewById(R.id.txtGrowthRate);
+	     growthRateTextView.setText(String.valueOf(pokemon.getGrowthRate()));
+	     
+
 	 }
 }
