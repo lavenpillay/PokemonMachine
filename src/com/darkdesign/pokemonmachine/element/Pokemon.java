@@ -1,4 +1,4 @@
-package com.darkdesign.pokemonmachine.pokedex.element;
+package com.darkdesign.pokemonmachine.element;
 
 import java.util.ArrayList;
 
@@ -49,7 +49,30 @@ public class Pokemon {
 		this.nationalId = id;
 		this.name = name;
 	}
+	
+	/**
+	 *  Returns all the Moves which match a specific type.
+	 *  Types include : "level up", "trade", etc.
+	 *  
+	 * @param type
+	 * @return
+	 */
+	public ArrayList<Move> getMovesByType(String type) {
+		ArrayList<Move> moveSubset = new ArrayList<Move>();
+		
+		for (int i=0; i < moves.size(); i++) {
+			Move move = moves.get(i);
+			if (move.getLearnType().equals(type)) {
+				moveSubset.add(move);
+			}
+		}
+		
+		return moveSubset;
+	}
+	
 
+	/* ----------------------------- GETTERS and SETTERS ------------------------ */
+	
 	public String getId() {
 		return nationalId;
 	}

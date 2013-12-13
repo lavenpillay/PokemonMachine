@@ -2,7 +2,10 @@ package com.darkdesign.pokemonmachine;
 
 import java.util.ArrayList;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
@@ -24,8 +30,7 @@ import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPoke
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
-import com.darkdesign.pokemonmachine.pokedex.element.Move;
-import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
+import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.service.RESTService;
 
 
@@ -34,6 +39,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private static String TAG = PokemonMachineActivity.class.getName();
 	private static String TAG_FRAGMENT_POKEMON_DISPLAY = "PokemonDisplayFragment";
 	private static String TAG_FRAGMENT_MOVES_DISPLAY = "MovesDisplayFragment";
+	
+	public static final String LEARN_TYPE_LEVEL_UP = "level up";
 	
 	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
@@ -50,22 +57,12 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 
 	public PokemonMachineActivity() {
 		// TODO Auto-generated constructor stub
-		
 	}
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemonmachine);
-        
-		//Testing Database
-		/*
-		Cursor pokemonCursor;
-        DatabaseHelper db;
-        
-        db = new DatabaseHelper(this);
-        Pokemon test = db.getPokemon("001");
-        */
         
         // Setup Main Slide Navigation Menu
         mMainMenuItems = getResources().getStringArray(R.array.top_menu_item_name_array);
@@ -75,6 +72,9 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         // Set the adapter for the main menu list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_drawer, mMainMenuItems));
         mDrawerList.setOnItemClickListener(new MainMenuItemClickListener());
+        
+        // TODO Remove this after DEBUG/TESTING
+        //forceDatabaseReload(this);
         
         // Create and add "Display Pokemon" as Primary Fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -89,7 +89,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         currentMainFragment = pokemonDisplayFragment;
         
         // Create and add "Moves List" as Secondary Fragment
-        
         fTransaction = fragmentManager.beginTransaction();
         if (movesListFragment == null) {
         	movesListFragment = new MoveListFragment();
@@ -97,6 +96,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
         
+        // Execute Default Search
         executeSearch("001");
     }
 	
@@ -129,19 +129,28 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	    startService(intent);
 	}
 	
+	// TODO Replace with database call 
+	public ArrayList<Move> retrieveMoveData(Pokemon pokemon) {
+        DatabaseHelper db = new DatabaseHelper(this);
+        ArrayList<Move> moves = db.getMovesForPokemon(pokemon);
+        
+        return moves;
+	}
+	
 	public void onPokemonUpdated(Pokemon pokemon) {
 		Log.i(TAG, "PokemonUpdated Received by MainActivity");
 		
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		
-		// Update View		
+		// Update Pokemon Display		
 		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY); 
 		pDisplay.update(pokemon);
-
-		// Update Moves list
-		movesListFragment.testData.clear();
-		movesListFragment.testData.addAll(pokemon.getMoves());
 		
+		// Update Moves list and Notify Adapter
+		pokemon.setMoves(retrieveMoveData(pokemon));
+		
+		movesListFragment.testData.clear();
+		movesListFragment.testData.addAll(Util.sortMovesByLevel(pokemon.getMovesByType(LEARN_TYPE_LEVEL_UP)));
 		movesListFragment.adapter.notifyDataSetChanged();
 	}	
 
@@ -152,6 +161,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY);
 		EditText searchValue = (EditText)findViewById(R.id.txtSearch);
 		searchValue.setText(id);
+		
+		executeSearch(id);
 	}
 	
 	private class MainMenuItemClickListener implements ListView.OnItemClickListener {
@@ -162,48 +173,63 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}
 	
 
-	    private void selectItem(int position) {
-	    	Log.i(TAG, "MainMenu Item Selected : " + String.valueOf(position));
-	    	
-	    	// Check position
-	    	if (position == TOP_MENU_ITEM_POKEMON) {
-	    		// TODO Replace with Cached Instances
-	    		//Fragment fragment = new PokemonDisplayFragment();
-	    		if (pokemonDisplayFragment == null) {
-	            	pokemonDisplayFragment = new PokemonDisplayFragment();
-	            }
-		
-		        FragmentManager fragmentManager = getSupportFragmentManager();
-		        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
-	    		
-		        currentMainFragment = pokemonDisplayFragment;
-		        
-	    	} else if (position == TOP_MENU_ITEM_MOVES) {
-		        // update the main content by replacing fragments
-	    		/*
-		        Fragment fragment = new MainMenuFragment();
-		        Bundle args = new Bundle();
-		        args.putInt(MainMenuFragment.ARG_PLANET_NUMBER, position);
-		        fragment.setArguments(args);
-		
-		        FragmentManager fragmentManager = getSupportFragmentManager();
-		        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, TAG_FRAGMENT_POKEMON_DISPLAY).commit();
-		        */
-	    	} else if (position == TOP_MENU_ITEM_BERRIES) {
-	    		if (berryDisplayFragment == null) {
-	    			berryDisplayFragment = new BerryDisplayFragment();
-	            }
-		
-		        FragmentManager fragmentManager = getSupportFragmentManager();
-		        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
-	    		
-		        currentMainFragment = berryDisplayFragment;
-	    	}
+	/**
+	 * Method to handle selections from the Main Nav Drawer
+	 * @param position
+	 */
+    private void selectItem(int position) {
+    	Log.i(TAG, "MainMenu Item Selected : " + String.valueOf(position));
+    	
+    	// Check position
+    	if (position == TOP_MENU_ITEM_POKEMON) {
+    		// TODO Replace with Cached Instances
+    		//Fragment fragment = new PokemonDisplayFragment();
+    		if (pokemonDisplayFragment == null) {
+            	pokemonDisplayFragment = new PokemonDisplayFragment();
+            }
+	
+	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
+    		
+	        currentMainFragment = pokemonDisplayFragment;
+	        
+    	} else if (position == TOP_MENU_ITEM_MOVES) {
+	        // update the main content by replacing fragments
+    		/*
+	        Fragment fragment = new MainMenuFragment();
+	        Bundle args = new Bundle();
+	        args.putInt(MainMenuFragment.ARG_PLANET_NUMBER, position);
+	        fragment.setArguments(args);
+	
+	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, TAG_FRAGMENT_POKEMON_DISPLAY).commit();
+	        */
+    	} else if (position == TOP_MENU_ITEM_BERRIES) {
+    		if (berryDisplayFragment == null) {
+    			berryDisplayFragment = new BerryDisplayFragment();
+            }
+	
+	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
+    		
+	        currentMainFragment = berryDisplayFragment;
+    	}
 
-	        // update selected item and title, then close the drawer
-	        mDrawerList.setItemChecked(position, true);
-	        setTitle(mMainMenuItems[position]);
-	        mDrawerLayout.closeDrawer(mDrawerList);
-	    }
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        setTitle(mMainMenuItems[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+    }
 
+	    /**
+	     * Forces the database to reload from the default asset file.
+	     */
+	    public static void forceDatabaseReload(Context context){
+	        DatabaseHelper dbHelper = new DatabaseHelper(context);
+	        dbHelper.setForcedUpgradeVersion(DatabaseHelper.DATABASE_VERSION);
+	        SQLiteDatabase db = dbHelper.getWritableDatabase();
+	        db.setVersion(-1);
+	        db.close();
+	        db = dbHelper.getWritableDatabase();
+	    }	    
 }

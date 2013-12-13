@@ -3,13 +3,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:orientation="horizontal" >
+	    android:orientation="horizontal" 
+	    android:background="@drawable/container_dropshadow">
 	    
 	<LinearLayout 
 	    android:layout_width="0dip"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical" 
-	    android:layout_weight="1">
+	    android:layout_weight="1.25">
 	    
 	    <!--  START : Search Area -->
 		<Button
@@ -527,7 +528,7 @@
 	    android:layout_width="0dip"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical" 
-	    android:layout_weight="1">
+	    android:layout_weight="0.75">
 	    
 	    <include android:id="@+id/movesArea" layout="@layout/fragment_move_list" />
 	    

@@ -1,10 +1,11 @@
-package com.darkdesign.pokemonmachine.pokedex.element;
+package com.darkdesign.pokemonmachine.element;
 
-public class Type {
+public class Ability {
+	
 	private String name;
 	private String resourceURI;
 
-	public Type() {
+	public Ability() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,6 +24,4 @@ public class Type {
 	public void setResourceURI(String resourceURI) {
 		this.resourceURI = resourceURI;
 	}
-
-	
 }

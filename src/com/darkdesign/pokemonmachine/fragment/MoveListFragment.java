@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
-import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
-import com.darkdesign.pokemonmachine.pokedex.element.Move;
+import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.helper.Util;
 
 public class MoveListFragment extends ListFragment {
 	private final String TAG = MoveListFragment.class.getName();
@@ -44,7 +44,6 @@ public class MoveListFragment extends ListFragment {
 	
 	public void updateMoveList(ArrayList<Move> moves) {
 		testData = moves;
-		//listAdapter.setMoveList(moves);
 		adapter.notifyDataSetChanged();
 	}
 

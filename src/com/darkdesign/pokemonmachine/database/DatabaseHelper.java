@@ -1,22 +1,28 @@
 package com.darkdesign.pokemonmachine.database;
 
+import java.util.ArrayList;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
+import com.darkdesign.pokemonmachine.element.*;
 import com.darkdesign.pokemonmachine.helper.Util;
-import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
+	
+	private static final String TAG = DatabaseHelper.class.getName();
 
-    private static final String DATABASE_NAME = "pokemon_machine_db";
-    private static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "pokemon_machine_db";
+    public static final int DATABASE_VERSION = 1;
     
     // Table Names
     private static final String TABLE_POKEMON = "pokemon";
+    private static final String TABLE_MOVES = "moves";
     
     // Field names for Pokemon table
     private static final String P_DEXNO = "dex_no";
@@ -48,13 +54,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
 
-    public Cursor getPokemon() {
+    public Cursor getAllPokemon() {
 
         SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"0 _id", "name"}; 
-        String sqlTables = "pokemon";
+        String sqlTables = TABLE_POKEMON;
 
         qb.setTables(sqlTables);
         Cursor c = qb.query(db, sqlSelect, null, null,
@@ -62,6 +68,37 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
         c.moveToFirst();
         return c;
+    }
+    
+    public ArrayList<Move> getMovesForPokemon(Pokemon pokemon) {
+    	
+    	ArrayList<Move> updatedMoveList = pokemon.getMoves();
+    	
+    	// Get Move IDs as array
+		String[] moveIDs = Util.getMoveListIDsAsArray(pokemon.getMoves());
+
+        SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String query = "SELECT id, identifier, power, pp, accuracy FROM " + TABLE_MOVES + " "
+                + " WHERE id IN (" + makePlaceholders(moveIDs.length) + ")";
+
+        Cursor cursor = db.rawQuery(query, moveIDs);
+        /*
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        */
+        
+        int i = 0;
+        while (cursor.moveToNext()) {
+        	updatedMoveList.get(i).setPower(cursor.getString(2));
+        	updatedMoveList.get(i).setPP(cursor.getString(3));
+        	updatedMoveList.get(i).setAccuracy(cursor.getString(4));
+        	i++;
+        }
+        
+        return updatedMoveList;
     }
     
     
@@ -136,4 +173,20 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public void deleteContact(Pokemon pokemon) {
     	
     }
+    
+    public String makePlaceholders(int len) {
+        if (len < 1) {
+            // It will lead to an invalid query anyway ..
+            throw new RuntimeException("No placeholders");
+        } else {
+            StringBuilder sb = new StringBuilder(len * 2 - 1);
+            sb.append("?");
+            for (int i = 1; i < len; i++) {
+                sb.append(",?");
+            }
+            return sb.toString();
+        }
+    }
+    
+    
 }

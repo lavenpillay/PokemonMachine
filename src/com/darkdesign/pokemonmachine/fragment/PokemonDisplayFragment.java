@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.Util;
-import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 
 public class PokemonDisplayFragment extends Fragment {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";

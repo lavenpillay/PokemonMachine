@@ -1,20 +1,11 @@
-package com.darkdesign.pokemonmachine.pokedex.element;
+package com.darkdesign.pokemonmachine.element;
 
-public class Move {
-	private String learnType;
+public class Type {
 	private String name;
 	private String resourceURI;
-	
-	public Move() {
+
+	public Type() {
 		// TODO Auto-generated constructor stub
-	}
-
-	public String getLearnType() {
-		return learnType;
-	}
-
-	public void setLearnType(String learnType) {
-		this.learnType = learnType;
 	}
 
 	public String getName() {
@@ -33,6 +24,5 @@ public class Move {
 		this.resourceURI = resourceURI;
 	}
 
-
-
+	
 }

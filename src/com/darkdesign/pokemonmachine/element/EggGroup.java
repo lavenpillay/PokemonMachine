@@ -1,4 +1,4 @@
-package com.darkdesign.pokemonmachine.pokedex.element;
+package com.darkdesign.pokemonmachine.element;
 
 public class EggGroup {
 

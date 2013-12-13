@@ -14,35 +14,26 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.Util;
-import com.darkdesign.pokemonmachine.pokedex.element.Move;
 
 public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 	private final String TAG = SimpleMoveListAdapter.class.getName();
 
 	private Context context;
 	private ArrayList<Move> moveList;
+	private AssetHelper assetHelper;
 	
 	public SimpleMoveListAdapter(Context context, ArrayList<Move> moves) {
 	    super(context, R.layout.list_item_move, moves);
 	    this.context = context;
 	    this.moveList = moves;
+	    assetHelper = new AssetHelper(context);
 	}
-
-	/*
-	@Override
-    public int getCount() {
-        return moveList.size();
-    }
-	
-	@Override
-    public Move getItem(int position) {
-        return moveList.get(position);
-    }
-    */
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -52,9 +43,29 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		Move move = moveList.get(position);
 		
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
-		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
+		TextView powerTextView = (TextView) rowView.findViewById(R.id.list_item_power);
+		TextView ppTextView = (TextView) rowView.findViewById(R.id.list_item_pp);
+		TextView accuracyTextView = (TextView) rowView.findViewById(R.id.list_item_accuracy);
+		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		
+		if (move.getLearnType().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+			TextView levelTextView = (TextView) rowView.findViewById(R.id.list_item_level);
+			levelTextView.setText(move.getLevel());
+		}
+		
+		// Set TextViews
 		nameTextView.setText(move.getName());
+		powerTextView.setText(move.getPower());
+		ppTextView.setText(move.getPP());
+		accuracyTextView.setText(move.getAccuracy());
+		
+		// Set Class Image
+		try {
+			 Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/physical.png");
+			 imageView.setImageBitmap(bm);			 
+		} catch (IOException ioe) {
+			 Log.e(TAG, ioe.toString());
+		}
 		
     return rowView;
   }

@@ -19,10 +19,10 @@ import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.JSONHelper;
-import com.darkdesign.pokemonmachine.pokedex.element.Pokemon;
 import com.darkdesign.pokemonmachine.service.RESTService;
-import com.darkdesign.pokemonmachine.pokedex.element.Move;
 
 
 public class PokedexAPIResponderFragment extends RESTResponderFragment {

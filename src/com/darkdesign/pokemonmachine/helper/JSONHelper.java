@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-import com.darkdesign.pokemonmachine.pokedex.element.Move;
+import com.darkdesign.pokemonmachine.element.Move;
 
 public class JSONHelper {
 	private static final String TAG = JSONHelper.class.getName();
@@ -23,6 +23,11 @@ public class JSONHelper {
 			 Move move = new Move();
 			 move.setName(jsonMoveData.getString("name"));
 			 move.setLearnType(jsonMoveData.getString("learn_type"));
+			 
+			 if (move.getLearnType().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+				 move.setLevel(jsonMoveData.getString("level"));
+			 }
+			 
 			 move.setResourceURI(jsonMoveData.getString("resource_uri"));
 			 
 			 movesList.add(move);
