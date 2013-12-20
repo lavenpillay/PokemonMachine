@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
@@ -47,6 +48,9 @@ public class PokemonDisplayFragment extends Fragment {
 		 // Set Image
 		 AssetHelper assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
 		 
+		 // Perform required checks and calculations
+		 
+		 
 		 ImageView i;
 		 try {
 			 String id = Util.padLeft(String.valueOf(pokemon.getId()), GlobalConstants.POKEMON_ID_LENGTH);
@@ -75,21 +79,40 @@ public class PokemonDisplayFragment extends Fragment {
 	     TextView hpTextView = (TextView)v.findViewById(R.id.txtHP);
 	     hpTextView.setText(String.valueOf(pokemon.getHp()));
 	     
+	     View hpBarView = (View)v.findViewById(R.id.barHP);
+	     hpBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getHp()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     
 	     TextView attackTextView = (TextView)v.findViewById(R.id.txtATK);
 	     attackTextView.setText(String.valueOf(pokemon.getAttack()));
+	     
+	     View attackBarView = (View)v.findViewById(R.id.barATK);
+	     attackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getAttack()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
 	     
 	     TextView defenseTextView = (TextView)v.findViewById(R.id.txtDEF);
 	     defenseTextView.setText(String.valueOf(pokemon.getDefense()));
 	     
+	     View defenseBarView = (View)v.findViewById(R.id.barDEF);
+	     defenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getDefense()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));	     
+	     
 	     TextView spAttackTextView = (TextView)v.findViewById(R.id.txtSPATK);
 	     spAttackTextView.setText(String.valueOf(pokemon.getSpAtk()));
+	     
+	     View spAttackBarView = (View)v.findViewById(R.id.barSPATK);
+	     spAttackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpAtk()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
 	     
 	     TextView spDefenseTextView = (TextView)v.findViewById(R.id.txtSPDEF);
 	     spDefenseTextView.setText(String.valueOf(pokemon.getSpDef()));
 	     
+	     View spDefenseBarView = (View)v.findViewById(R.id.barSPDEF);
+	     spDefenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpDef()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     
 	     TextView speedTextView = (TextView)v.findViewById(R.id.txtSPD);
 	     speedTextView.setText(String.valueOf(pokemon.getSpeed()));
 	     
+	     View speedBarView = (View)v.findViewById(R.id.barSPD);
+	     speedBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpeed()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+
+	     // EV Yield 
 	     TextView evTextView = (TextView)v.findViewById(R.id.txtEVYield);
 	     evTextView.setText(String.valueOf(pokemon.getEvYield()));
 	     

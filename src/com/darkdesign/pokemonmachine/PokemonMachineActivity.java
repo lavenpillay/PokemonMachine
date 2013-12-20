@@ -1,11 +1,12 @@
 package com.darkdesign.pokemonmachine;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,21 +15,29 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
+import com.darkdesign.pokemonmachine.exception.DoesNotEvolveException;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
+import com.darkdesign.pokemonmachine.helper.AssetHelper;
+import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.service.RESTService;
@@ -140,18 +149,108 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	public void onPokemonUpdated(Pokemon pokemon) {
 		Log.i(TAG, "PokemonUpdated Received by MainActivity");
 		
+		// Get Managers and Helpers
 		FragmentManager fragmentManager = getSupportFragmentManager();
+		AssetHelper assetHelper = new AssetHelper(this);
+		DatabaseHelper db = new DatabaseHelper(this);
 		
-		// Update Pokemon Display		
+		// Update Pokemon Display -----------------------------		
 		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY); 
 		pDisplay.update(pokemon);
 		
-		// Update Moves list and Notify Adapter
+		// Update Moves list and Notify Adapter -----------------------------
 		pokemon.setMoves(retrieveMoveData(pokemon));
 		
 		movesListFragment.testData.clear();
 		movesListFragment.testData.addAll(Util.sortMovesByLevel(pokemon.getMovesByType(LEARN_TYPE_LEVEL_UP)));
 		movesListFragment.adapter.notifyDataSetChanged();
+		
+		// Update Evolutions -----------------------------
+		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
+		
+		try {
+			evolutions = db.getEvolutions(pokemon.getId());
+		} catch (DoesNotEvolveException e) {
+			Log.i(TAG, "Pokemon with ID = " + pokemon.getId() + " does not Evolve");
+		}
+		
+		LayoutInflater inflater = (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LinearLayout holder = (LinearLayout) findViewById(R.id.evolutionsHolder);
+		// Remove current displays
+		holder.removeAllViews();
+		
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(5, 5, 5, 5);		
+		
+		try {
+			// State 1
+			String id = Util.padLeft(String.valueOf(pokemon.getId()), GlobalConstants.POKEMON_ID_LENGTH);
+			Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
+			LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+			ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
+			evolutionImage.setImageBitmap(bm);
+			
+			holder.addView(evolutionStateView);
+			
+			if (evolutions.size() > 0) {
+				
+				Evolution evolution = evolutions.get(0);
+				
+				// Add Method
+				// TODO Handle more Methods
+				LinearLayout evolutionMethodView = null;
+				if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
+					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
+				} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
+					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+				}
+				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
+				levelView.setText(evolution.getLevel());
+				
+				holder.addView(evolutionMethodView, layoutParams);
+				
+				// State 2
+				id = Util.padLeft(String.valueOf(evolution.getPokemonId()), GlobalConstants.POKEMON_ID_LENGTH);
+				bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
+				evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+				evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
+				evolutionImage.setImageBitmap(bm);
+				
+				holder.addView(evolutionStateView);
+			}
+			
+			if (evolutions.size() > 1) {
+				
+				Evolution evolution = evolutions.get(1);
+				
+				// Add Method
+				// TODO Handle more Methods
+				LinearLayout evolutionMethodView = null;
+				if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
+					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
+				} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
+					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+				}
+				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
+				levelView.setText(evolution.getLevel());
+				
+				holder.addView(evolutionMethodView, layoutParams);
+				
+				// State 3
+				id = Util.padLeft(String.valueOf(evolution.getPokemonId()), GlobalConstants.POKEMON_ID_LENGTH);
+				bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
+				evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+				evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
+				evolutionImage.setImageBitmap(bm);
+				
+				holder.addView(evolutionStateView);
+			}			
+		} catch (IOException ioe) {
+			 Log.e(TAG, ioe.toString());
+		}			
+		
 	}	
 
 	public void onPokemonListItemSelected(String id) {

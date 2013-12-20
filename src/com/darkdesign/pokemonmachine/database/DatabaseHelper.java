@@ -2,14 +2,17 @@ package com.darkdesign.pokemonmachine.database;
 
 import java.util.ArrayList;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
-import com.darkdesign.pokemonmachine.element.*;
+import com.darkdesign.pokemonmachine.element.Evolution;
+import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Pokemon;
+import com.darkdesign.pokemonmachine.exception.DoesNotEvolveException;
+import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -23,6 +26,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     // Table Names
     private static final String TABLE_POKEMON = "pokemon";
     private static final String TABLE_MOVES = "moves";
+    private static final String TABLE_EVOLUTION = "pokemon_evolution";
+    private static final String TABLE_SPECIES = "pokemon_species";
+    
     
     // Field names for Pokemon table
     private static final String P_DEXNO = "dex_no";
@@ -84,11 +90,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
                 + " WHERE id IN (" + makePlaceholders(moveIDs.length) + ")";
 
         Cursor cursor = db.rawQuery(query, moveIDs);
-        /*
-        if (cursor != null) {
-            cursor.moveToFirst();
-        }
-        */
         
         int i = 0;
         while (cursor.moveToNext()) {
@@ -101,9 +102,63 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return updatedMoveList;
     }
     
+    /**
+     * Returns an ArrayList of Evolution objects containing all evolutions
+     * 
+     * @param id
+     * @return
+     */
+	public ArrayList<Evolution> getEvolutions(String id) throws DoesNotEvolveException 
+	{
+		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
+		
+		Evolution evolution = null;
+		
+		SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String querySpecies = "SELECT id, evolves_from_species_id FROM " + TABLE_SPECIES + " WHERE evolution_chain_id IN (SELECT evolution_chain_id FROM " + TABLE_SPECIES + " WHERE id = " + id + ")";
+        Log.d(TAG, querySpecies);
+        
+        Cursor cursor = db.rawQuery(querySpecies, null);
+        
+        if (cursor.getCount() == 0) {
+        	throw new DoesNotEvolveException();
+        } else {
+        	cursor.moveToFirst();
+        }
+        
+        while (cursor.moveToNext()) {
+	        Log.d(TAG, "CHAIN : " + cursor.getString(0));
+	        
+	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + cursor.getString(0);
+	        Log.d(TAG, queryEvolutions);
+	        Cursor cursorEvolutions = db.rawQuery(queryEvolutions, null);
+	        cursorEvolutions.moveToFirst();
+	        
+	        String pokemonId = cursor.getString(0);
+	        String prevEvolutionId = cursor.getString(1);
+	        String method = cursorEvolutions.getString(1);
+	        String level = cursorEvolutions.getString(2);
+	        String triggerItemId = cursorEvolutions.getString(2);
+	        
+	        evolution = new Evolution();
+	        evolution.setPokemonId(pokemonId);
+	        evolution.setPreviousEvolutionId(prevEvolutionId);
+	        evolution.setMethod(method);
+	        evolution.setLevel(level);
+	        evolution.setTriggerItemId(triggerItemId);
+	        
+	        evolutions.add(evolution);
+        }
+		
+		return evolutions;
+	}
+    
     
     // Adding new Pokemon
-    public void addContact(Pokemon pokemon) {
+    /*
+    public void addPokemon(Pokemon pokemon) {
     	SQLiteDatabase db = this.getWritableDatabase();
     	 
         ContentValues values = new ContentValues();
@@ -136,6 +191,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db.insert(TABLE_POKEMON, null, values);
         db.close(); // Closing database connection
     }
+    */
     
     // Getting single pokemon
     public Pokemon getPokemon(String id) {
@@ -165,15 +221,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     }
     
     // Updating single Pokemon
-    public int updateContact(Pokemon pokemon) {
+    public int updatePokemon(Pokemon pokemon) {
     	return -1;
     }
      
     // Deleting single Pokemon
-    public void deleteContact(Pokemon pokemon) {
+    public void deletePokemon(Pokemon pokemon) {
     	
     }
     
+    /**
+     * Helper method to create the correct number of comma-delimited 
+     * question marks for SQL Query building
+     * 
+     * @param len
+     * @return
+     */
     public String makePlaceholders(int len) {
         if (len < 1) {
             // It will lead to an invalid query anyway ..
