@@ -9,7 +9,20 @@
         android:id="@+id/thumbnail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-		android:layout_alignParentLeft="true">
+		android:layout_alignParentLeft="true"
+		android:orientation="horizontal"
+		android:gravity="center">
+		
+        <TextView
+            android:id="@+id/list_item_id"
+	        android:layout_width="40dip"
+	        android:layout_height="wrap_content"
+	        android:layout_toLeftOf="@+id/thumbnail"
+	        android:singleLine="true"
+	        android:text=""
+	        android:textSize="19sp"
+	        android:textStyle="bold"
+	        android:gravity="center"/>
 
 	    <ImageView
 	        android:id="@+id/list_item_image"

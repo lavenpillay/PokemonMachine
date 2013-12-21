@@ -47,8 +47,8 @@
 		    
 		    <ImageView
 		        android:id="@+id/list_item_move_type_image"
-		        android:layout_width="0dip"
-		        android:layout_height="fill_parent"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
 		        android:layout_marginRight="6dip"
 		        android:src="@drawable/bug" 
 		        android:layout_gravity="center"

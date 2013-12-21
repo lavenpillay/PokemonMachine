@@ -6,6 +6,7 @@ public class GlobalConstants {
 	
 	public static final String PATH_TO_POKEMON_SPRITES = "pokemon_sprites/";
 	public static final String PATH_TO_POKEMON_IMAGES = "pokemon_images/";
+	public static final String PATH_TO_ITEM_SPRITES = "items/";
 
 	public static final String LEARN_TYPE_LEVEL_UP = "level up";
 	public static final String LEARN_TYPE_TUTOR = "tutor";

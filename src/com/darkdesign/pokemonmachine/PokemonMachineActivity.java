@@ -62,7 +62,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
     private MoveListFragment movesListFragment = null;
-    private Fragment currentMainFragment;
+    
+    private EditText filterText = null;
 
 	public PokemonMachineActivity() {
 		// TODO Auto-generated constructor stub
@@ -94,8 +95,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         }
         fTransaction.add(R.id.content_frame, pokemonDisplayFragment, TAG_FRAGMENT_POKEMON_DISPLAY);
         fTransaction.commit();
-
-        currentMainFragment = pokemonDisplayFragment;
         
         // Create and add "Moves List" as Secondary Fragment
         fTransaction = fragmentManager.beginTransaction();
@@ -106,7 +105,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.commit();
         
         // Execute Default Search
-        executeSearch("001");
+        executeSearch("043");
     }
 	
 	
@@ -179,78 +178,110 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Remove current displays
 		holder.removeAllViews();
 		
+		buildEvolutionChain(pokemon, assetHelper, evolutions, inflater, holder);			
+		
+	}
+
+	/**
+	 * 
+	 * @param pokemon
+	 * @param assetHelper
+	 * @param evolutions
+	 * @param inflater
+	 * @param holder
+	 */
+	private void buildEvolutionChain(Pokemon pokemon, AssetHelper assetHelper, 
+			ArrayList<Evolution> evolutions, LayoutInflater inflater, LinearLayout holder) {
+		
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 		layoutParams.setMargins(5, 5, 5, 5);		
 		
 		try {
-			// State 1
-			String id = Util.padLeft(String.valueOf(pokemon.getId()), GlobalConstants.POKEMON_ID_LENGTH);
-			Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
-			LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
-			ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
-			evolutionImage.setImageBitmap(bm);
+			Evolution evolution = evolutions.get(0);
 			
+			// State 1
+			LinearLayout evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
 			holder.addView(evolutionStateView);
 			
 			if (evolutions.size() > 0) {
-				
-				Evolution evolution = evolutions.get(0);
+				evolution = evolutions.get(1);
 				
 				// Add Method
-				// TODO Handle more Methods
-				LinearLayout evolutionMethodView = null;
-				if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
-					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
-				} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
-					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
-				}
-				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
-				levelView.setText(evolution.getLevel());
-				
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
 				holder.addView(evolutionMethodView, layoutParams);
 				
 				// State 2
-				id = Util.padLeft(String.valueOf(evolution.getPokemonId()), GlobalConstants.POKEMON_ID_LENGTH);
-				bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
-				evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
-				evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
-				evolutionImage.setImageBitmap(bm);
-				
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
 				holder.addView(evolutionStateView);
 			}
 			
-			if (evolutions.size() > 1) {
-				
-				Evolution evolution = evolutions.get(1);
+			if (evolutions.size() > 2) {
+				evolution = evolutions.get(2);
 				
 				// Add Method
-				// TODO Handle more Methods
-				LinearLayout evolutionMethodView = null;
-				if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
-					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
-				} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
-					evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
-				}
-				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
-				levelView.setText(evolution.getLevel());
-				
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
 				holder.addView(evolutionMethodView, layoutParams);
 				
 				// State 3
-				id = Util.padLeft(String.valueOf(evolution.getPokemonId()), GlobalConstants.POKEMON_ID_LENGTH);
-				bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
-				evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
-				evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
-				evolutionImage.setImageBitmap(bm);
-				
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
 				holder.addView(evolutionStateView);
 			}			
 		} catch (IOException ioe) {
-			 Log.e(TAG, ioe.toString());
-		}			
+			Log.e(TAG, ioe.toString());
+		}
+	}
+
+	/**
+	 * 
+	 * 
+	 * TODO Handle more Methods
+	 * 
+	 * @param inflater
+	 * @param evolution
+	 * @return
+	 */
+	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, Evolution evolution) 
+			throws IOException	{
 		
+		LinearLayout evolutionMethodView = null;
+		DatabaseHelper dbHelper = new DatabaseHelper(this);
+		
+		if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
+			if (evolution.getMinimumHappiness() != null) {
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup_happiness, null );
+			} else {
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
+			}
+			
+			if (evolution.getLevel() != null) {
+				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
+				levelView.setText(evolution.getLevel());
+			}
+		} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
+			evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+		} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_USE_ITEM)) {
+			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
+			
+			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
+			String itemName = dbHelper.getItemById(evolution.getTriggerItemId()).getName();
+			Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
+			useItemView.setImageBitmap(bm);
+		}
+		
+		return evolutionMethodView;
+	}
+
+	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
+			throws IOException 
+	{
+		String id = Util.padLeft(pokemonId, GlobalConstants.POKEMON_ID_LENGTH);
+		Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
+		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
+		evolutionImage.setImageBitmap(bm);
+		return evolutionStateView;
 	}	
 
 	public void onPokemonListItemSelected(String id) {
@@ -290,7 +321,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	        FragmentManager fragmentManager = getSupportFragmentManager();
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
     		
-	        currentMainFragment = pokemonDisplayFragment;
+	        //currentMainFragment = pokemonDisplayFragment;
 	        
     	} else if (position == TOP_MENU_ITEM_MOVES) {
 	        // update the main content by replacing fragments
@@ -311,7 +342,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	        FragmentManager fragmentManager = getSupportFragmentManager();
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
     		
-	        currentMainFragment = berryDisplayFragment;
+	        //currentMainFragment = berryDisplayFragment;
     	}
 
         // update selected item and title, then close the drawer

@@ -1,6 +1,7 @@
 package com.darkdesign.pokemonmachine.database;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -9,10 +10,10 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import com.darkdesign.pokemonmachine.element.Evolution;
+import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.exception.DoesNotEvolveException;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -28,6 +29,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_MOVES = "moves";
     private static final String TABLE_EVOLUTION = "pokemon_evolution";
     private static final String TABLE_SPECIES = "pokemon_species";
+    private static final String TABLE_ITEMS = "items";
     
     
     // Field names for Pokemon table
@@ -113,11 +115,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
 		Evolution evolution = null;
+		String evolvedSpeciesId;
 		
 		SQLiteDatabase db = getReadableDatabase();
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String querySpecies = "SELECT id, evolves_from_species_id FROM " + TABLE_SPECIES + " WHERE evolution_chain_id IN (SELECT evolution_chain_id FROM " + TABLE_SPECIES + " WHERE id = " + id + ")";
+        String querySpecies = "SELECT id, evolves_from_species_id FROM " + TABLE_SPECIES + " WHERE evolution_chain_id = (SELECT evolution_chain_id FROM " + TABLE_SPECIES + " WHERE id = " + id + ")";
         Log.d(TAG, querySpecies);
         
         Cursor cursor = db.rawQuery(querySpecies, null);
@@ -125,31 +128,57 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (cursor.getCount() == 0) {
         	throw new DoesNotEvolveException();
         } else {
-        	cursor.moveToFirst();
+        	//cursor.moveToFirst();
         }
         
         while (cursor.moveToNext()) {
 	        Log.d(TAG, "CHAIN : " + cursor.getString(0));
 	        
-	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + cursor.getString(0);
+        	evolvedSpeciesId =  cursor.getString(0);
+	        
+	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness " +
+	        		"FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + evolvedSpeciesId;
 	        Log.d(TAG, queryEvolutions);
 	        Cursor cursorEvolutions = db.rawQuery(queryEvolutions, null);
 	        cursorEvolutions.moveToFirst();
 	        
 	        String pokemonId = cursor.getString(0);
 	        String prevEvolutionId = cursor.getString(1);
-	        String method = cursorEvolutions.getString(1);
-	        String level = cursorEvolutions.getString(2);
-	        String triggerItemId = cursorEvolutions.getString(2);
 	        
 	        evolution = new Evolution();
 	        evolution.setPokemonId(pokemonId);
 	        evolution.setPreviousEvolutionId(prevEvolutionId);
-	        evolution.setMethod(method);
-	        evolution.setLevel(level);
-	        evolution.setTriggerItemId(triggerItemId);
+
+	        if (cursorEvolutions.getCount() > 0) {
+		        String method = cursorEvolutions.getString(1);
+		        String level = cursorEvolutions.getString(2);
+		        String triggerItemId = cursorEvolutions.getString(3);
+		        String minimumHappiness = cursorEvolutions.getString(4);
+		        
+		        evolution.setMethod(method);
+		        evolution.setLevel(level);
+		        evolution.setTriggerItemId(triggerItemId);
+		        evolution.setMinimumHappiness(minimumHappiness);
+	        }
 	        
 	        evolutions.add(evolution);
+        }
+        
+        if (evolutions.size() > 1) {
+	        // Sort evolutions - get pre-evolutions first
+	        for (int i=0; i < evolutions.size(); i++) {
+	        	if (evolutions.get(i).getPreviousEvolutionId() == null) {
+	        		Collections.swap(evolutions, 0, i);
+	        	}
+	        }
+
+	        // If theres 3 evolutions check and swap
+	        if (evolutions.size() > 2) {
+	        	if (evolutions.get(1).getPreviousEvolutionId().equals(evolutions.get(2).getPokemonId())) {
+	        		Collections.swap(evolutions, 1, 2);
+	        	}
+	        }
+
         }
 		
 		return evolutions;
@@ -213,6 +242,29 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         pokemon.setName(cursor.getString(1));
         
     	return pokemon;
+    }
+    
+    /**
+     * Return an item from the database
+     * 
+     * @param itemId
+     * @return
+     */
+    public Item getItemById(String itemId) {
+    	Item item;
+    	
+    	SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String queryItem = "SELECT id, identifier FROM " + TABLE_ITEMS + " WHERE id = " + itemId;
+        Log.d(TAG, queryItem);
+        
+        Cursor cursor = db.rawQuery(queryItem, null);
+        cursor.moveToFirst();
+        
+        item = new Item(cursor.getString(0), cursor.getString(1));
+        
+        return item;
     }
     
     // Getting Pokemon Count

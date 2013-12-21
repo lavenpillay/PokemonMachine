@@ -22,6 +22,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="35"
+        android:text=""
         android:textSize="8pt" />    
 </LinearLayout>

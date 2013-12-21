@@ -21,6 +21,11 @@ public class Util {
 		return list.toString().replaceAll("[\\s\\[\\]]", "");
 	}
 	
+	/**
+	 * 
+	 * @param stringToConvert
+	 * @return
+	 */
 	public static String toTitleCase(String stringToConvert) {
 		
 		String returnStr = "";
@@ -43,6 +48,21 @@ public class Util {
     }
 	
 	/**
+	 * 
+	 * @param text
+	 * @return
+	 */
+	public static String toAllLowerCase(String text) {
+		String newText;
+		newText = text.toLowerCase();
+		newText = newText.replace(" ", "");
+		newText = newText.replace("_", "");
+		newText = newText.replace("-", "");
+		
+		return newText;
+	}
+	
+	/**
 	 * Returns the IDs of a list of Moves, as a CSV string
 	 */
 	public static String getMoveListIDsAsCSV(ArrayList<Move> moveList) {
@@ -57,6 +77,20 @@ public class Util {
 		
 		// Trim final comma and return
 		return returnStr.substring(0, returnStr.length() -1);
+	}
+	
+	public static int arrayIndexOf(String[] array, String value) {
+		int index = 0;
+		boolean valueFound = false;
+		
+		while (!valueFound) {
+			if (array[index].equalsIgnoreCase(value)) {
+				break;
+			}
+			index++;
+		}
+		
+		return index;
 	}
 	
 	public static String[] getMoveListIDsAsArray(ArrayList<Move> moveList) {

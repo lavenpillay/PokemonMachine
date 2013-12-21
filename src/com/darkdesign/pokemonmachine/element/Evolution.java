@@ -7,6 +7,7 @@ public class Evolution {
 	private String pokemonId;
 	private String previousEvolutionId;
 	private String triggerItemId;
+	private String minimumHappiness;
 
 	public Evolution() {
 		// TODO Auto-generated constructor stub
@@ -64,5 +65,13 @@ public class Evolution {
 
 	public void setTriggerItemId(String triggerItemId) {
 		this.triggerItemId = triggerItemId;
+	}	
+
+	public String getMinimumHappiness() {
+		return minimumHappiness;
+	}
+
+	public void setMinimumHappiness(String minimumHapiness) {
+		this.minimumHappiness = minimumHapiness;
 	}	
 }

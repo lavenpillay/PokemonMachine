@@ -21,29 +21,40 @@ import com.darkdesign.pokemonmachine.helper.Util;
 public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 	private final String TAG = SimplePokemonListAdapter.class.getName();
 
-	private final Context context;
-	private final String[] values;
+	private Context context;
+	private String[] values;
+	
+	private AssetHelper assetHelper;
 	
 	public SimplePokemonListAdapter(Context context, String[] values) {
 	    super(context, R.layout.list_item_pokemon, values);
 	    this.context = context;
 	    this.values = values;
+	    
+	    assetHelper = new AssetHelper(context);
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.list_item_pokemon, parent, false);
+
+		String name = this.getItem(position);
+		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
+
+		// Set ID 
+		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
+		idTextView.setText(String.valueOf(pokemonId));
 		
+		// Set Name
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
-		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
-		nameTextView.setText(values[position]);
-		String id = Util.padLeft((position+1), GlobalConstants.POKEMON_ID_LENGTH);
+		nameTextView.setText(name);
 		
 		// Set icon
 		try {
-			AssetHelper assetHelper = new AssetHelper(context);
+			String id = Util.padLeft(pokemonId, GlobalConstants.POKEMON_ID_LENGTH);
 			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
+			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 			imageView.setImageBitmap(bm);
 		} catch (IOException ioe) {
 			 Log.e(TAG, ioe.toString());
@@ -51,5 +62,9 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 
     return rowView;
   }
+	
+	public String[] getAllData() {
+		return values;
+	}
 
 }

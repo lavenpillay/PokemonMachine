@@ -32,7 +32,7 @@ public class JSONHelper {
 			 
 			 movesList.add(move);
 			 
-			 Log.d(TAG,"Read Move : " + move.getName() + "[" + move.getLearnType() + "]");
+			 //Log.v(TAG,"Read Move : " + move.getName() + "[" + move.getLearnType() + "]");
 		}
 		
 		return movesList;
