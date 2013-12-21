@@ -1,9 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
- 
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
-  	android:id="@android:id/list"
-  	android:layout_width="match_parent"
-  	android:layout_height="wrap_content">
-</ListView>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+
+		<Button
+		    android:id="@+id/btnMovesByLevel"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByLevelClick"
+		    android:text="Level" />
+
+		<Button
+		    android:id="@+id/btnMovesByMachine"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByMachineClick"
+		    android:text="TM" />
+
+		<Button
+		    android:id="@+id/btnMovesByEgg"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByEggClick"
+		    android:text="Egg Moves" />
+		
+		<Button
+		    android:id="@+id/btnMovesByTutor"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByTutorClick"
+		    android:text="Tutor" />		
+	    
+	</LinearLayout>
+	    
+	<ListView 
+	  	android:id="@android:id/list"
+	  	android:layout_width="match_parent"
+	  	android:layout_height="wrap_content">
+	</ListView>
+</LinearLayout>
 
 

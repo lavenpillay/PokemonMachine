@@ -62,6 +62,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
 
+    /**
+     * 
+     * @return
+     */
     public Cursor getAllPokemon() {
 
         SQLiteDatabase db = getReadableDatabase();
@@ -78,6 +82,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         return c;
     }
     
+    /**
+     * 
+     * @param pokemon
+     * @return
+     */
     public ArrayList<Move> getMovesForPokemon(Pokemon pokemon) {
     	
     	ArrayList<Move> updatedMoveList = pokemon.getMoves();

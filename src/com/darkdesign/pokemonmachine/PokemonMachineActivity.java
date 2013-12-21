@@ -50,6 +50,9 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private static String TAG_FRAGMENT_MOVES_DISPLAY = "MovesDisplayFragment";
 	
 	public static final String LEARN_TYPE_LEVEL_UP = "level up";
+	public static final String LEARN_TYPE_MACHINE = "machine";
+	public static final String LEARN_TYPE_TUTOR = "tutor";
+	public static final String LEARN_TYPE_EGG_MOVE = "egg move";
 	
 	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
@@ -62,6 +65,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
     private MoveListFragment movesListFragment = null;
+    
+    private Pokemon currentSelectedPokemon;
     
     private EditText filterText = null;
 
@@ -113,6 +118,36 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		executeSearch();
 	}
 	
+	public void onMoveByLevelClick(View view) {
+		updateMoveList(LEARN_TYPE_LEVEL_UP);
+	}
+	
+	public void onMoveByMachineClick(View view) {
+		updateMoveList(LEARN_TYPE_MACHINE);
+	}
+
+	public void onMoveByEggClick(View view) {
+		updateMoveList(LEARN_TYPE_EGG_MOVE);
+	}
+	
+	public void onMoveByTutorClick(View view) {
+		updateMoveList(LEARN_TYPE_TUTOR);
+	}
+	
+
+
+	private void updateMoveList(String moveLearnType) {
+		ArrayList<Move> moveSubset = currentSelectedPokemon.getMovesByType(moveLearnType);
+		
+		if (moveLearnType.equalsIgnoreCase(LEARN_TYPE_LEVEL_UP)) {
+			moveSubset = Util.sortMovesByLevel(moveSubset);
+		}
+		
+		movesListFragment.testData.clear();
+		movesListFragment.testData.addAll(moveSubset);
+		movesListFragment.adapter.notifyDataSetChanged();
+	}
+	
 	public void executeSearch() {
 		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
 		executeSearch(searchValueTextbox.getText().toString());
@@ -148,6 +183,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	public void onPokemonUpdated(Pokemon pokemon) {
 		Log.i(TAG, "PokemonUpdated Received by MainActivity");
 		
+		currentSelectedPokemon = pokemon;
+		
 		// Get Managers and Helpers
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		AssetHelper assetHelper = new AssetHelper(this);
@@ -160,9 +197,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Update Moves list and Notify Adapter -----------------------------
 		pokemon.setMoves(retrieveMoveData(pokemon));
 		
-		movesListFragment.testData.clear();
-		movesListFragment.testData.addAll(Util.sortMovesByLevel(pokemon.getMovesByType(LEARN_TYPE_LEVEL_UP)));
-		movesListFragment.adapter.notifyDataSetChanged();
+		updateMoveList(LEARN_TYPE_LEVEL_UP);
 		
 		// Update Evolutions -----------------------------
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
