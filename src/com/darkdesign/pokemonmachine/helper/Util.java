@@ -30,7 +30,7 @@ public class Util {
 		
 		String returnStr = "";
 		
-		if (stringToConvert.equals("")) {
+		if (stringToConvert == null || stringToConvert.equals("")) {
 			return "";
 		}
 		

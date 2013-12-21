@@ -207,7 +207,7 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
             pokemon.setHappiness(pHappiness);
             pokemon.setHeight(pHeight);
             pokemon.setWeight(pWeight);
-            pokemon.setGenderRatio(pGenderRatio);
+            pokemon.setGenderRate(pGenderRatio);
             pokemon.setCatchRate(pCatchRate);
             pokemon.setEggCycles(pEggCycles);
             pokemon.setGrowthRate(pGrowthRate);

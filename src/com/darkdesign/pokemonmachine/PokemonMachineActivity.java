@@ -49,11 +49,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private static String TAG_FRAGMENT_POKEMON_DISPLAY = "PokemonDisplayFragment";
 	private static String TAG_FRAGMENT_MOVES_DISPLAY = "MovesDisplayFragment";
 	
-	public static final String LEARN_TYPE_LEVEL_UP = "level up";
-	public static final String LEARN_TYPE_MACHINE = "machine";
-	public static final String LEARN_TYPE_TUTOR = "tutor";
-	public static final String LEARN_TYPE_EGG_MOVE = "egg move";
-	
 	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -68,10 +63,10 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     
     private Pokemon currentSelectedPokemon;
     
-    private EditText filterText = null;
+    private DatabaseHelper db;
 
 	public PokemonMachineActivity() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@Override
@@ -109,8 +104,10 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
         
+        db = new DatabaseHelper(this);
+        
         // Execute Default Search
-        executeSearch("043");
+        //executeSearch("034");
     }
 	
 	
@@ -119,19 +116,19 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}
 	
 	public void onMoveByLevelClick(View view) {
-		updateMoveList(LEARN_TYPE_LEVEL_UP);
+		updateMoveList(GlobalConstants.LEARN_TYPE_LEVEL_UP);
 	}
 	
 	public void onMoveByMachineClick(View view) {
-		updateMoveList(LEARN_TYPE_MACHINE);
+		updateMoveList(GlobalConstants.LEARN_TYPE_MACHINE);
 	}
 
 	public void onMoveByEggClick(View view) {
-		updateMoveList(LEARN_TYPE_EGG_MOVE);
+		updateMoveList(GlobalConstants.LEARN_TYPE_EGG_MOVE);
 	}
 	
 	public void onMoveByTutorClick(View view) {
-		updateMoveList(LEARN_TYPE_TUTOR);
+		updateMoveList(GlobalConstants.LEARN_TYPE_TUTOR);
 	}
 	
 
@@ -139,7 +136,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private void updateMoveList(String moveLearnType) {
 		ArrayList<Move> moveSubset = currentSelectedPokemon.getMovesByType(moveLearnType);
 		
-		if (moveLearnType.equalsIgnoreCase(LEARN_TYPE_LEVEL_UP)) {
+		if (moveLearnType.equalsIgnoreCase(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		
@@ -154,6 +151,11 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}
 	
 	public void executeSearch(String nationalId) {
+		//executeSearchByREST(nationalId);
+		executeSearchByDatabase(nationalId);
+	}
+	
+	public void executeSearchByREST(String nationalId) {
 		PokedexAPIResponderFragment responder = new PokedexAPIResponderFragment();
 
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -172,12 +174,10 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	    startService(intent);
 	}
 	
-	// TODO Replace with database call 
-	public ArrayList<Move> retrieveMoveData(Pokemon pokemon) {
-        DatabaseHelper db = new DatabaseHelper(this);
-        ArrayList<Move> moves = db.getMovesForPokemon(pokemon);
-        
-        return moves;
+	public void executeSearchByDatabase(String nationalId) {
+		Pokemon pokemon = db.getPokemon(nationalId);
+		
+		onPokemonUpdated(pokemon);
 	}
 	
 	public void onPokemonUpdated(Pokemon pokemon) {
@@ -186,18 +186,15 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		currentSelectedPokemon = pokemon;
 		
 		// Get Managers and Helpers
-		FragmentManager fragmentManager = getSupportFragmentManager();
 		AssetHelper assetHelper = new AssetHelper(this);
-		DatabaseHelper db = new DatabaseHelper(this);
 		
 		// Update Pokemon Display -----------------------------		
-		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY); 
-		pDisplay.update(pokemon);
+		pokemonDisplayFragment.update(pokemon);
 		
 		// Update Moves list and Notify Adapter -----------------------------
-		pokemon.setMoves(retrieveMoveData(pokemon));
-		
-		updateMoveList(LEARN_TYPE_LEVEL_UP);
+		pokemon.setMoves(db.getMovesForPokemon(pokemon));
+
+		updateMoveList(GlobalConstants.LEARN_TYPE_LEVEL_UP);
 		
 		// Update Evolutions -----------------------------
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
@@ -281,7 +278,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 			throws IOException	{
 		
 		LinearLayout evolutionMethodView = null;
-		DatabaseHelper dbHelper = new DatabaseHelper(this);
 		
 		if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
 			if (evolution.getMinimumHappiness() != null) {
@@ -300,7 +296,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
 			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
-			String itemName = dbHelper.getItemById(evolution.getTriggerItemId()).getName();
+			String itemName = db.getItemById(evolution.getTriggerItemId()).getName();
 			Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
 			useItemView.setImageBitmap(bm);
 		}
@@ -320,10 +316,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}	
 
 	public void onPokemonListItemSelected(String id) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		
 		// Update View		
-		PokemonDisplayFragment pDisplay = (PokemonDisplayFragment) fragmentManager.findFragmentByTag(TAG_FRAGMENT_POKEMON_DISPLAY);
 		EditText searchValue = (EditText)findViewById(R.id.txtSearch);
 		searchValue.setText(id);
 		

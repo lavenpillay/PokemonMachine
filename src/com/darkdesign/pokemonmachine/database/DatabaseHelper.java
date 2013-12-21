@@ -30,34 +30,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_EVOLUTION = "pokemon_evolution";
     private static final String TABLE_SPECIES = "pokemon_species";
     private static final String TABLE_ITEMS = "items";
-    
-    
-    // Field names for Pokemon table
-    private static final String P_DEXNO = "dex_no";
-    private static final String P_NAME = "name";
-    private static final String P_SPECIES = "species";
-    private static final String P_HP = "hp";
-    private static final String P_ATTACK = "atk";
-    private static final String P_DEFENSE = "def";
-    private static final String P_SPECIAL_ATTACK = "sp_atk";
-    private static final String P_SPECIAL_DEFENSE = "sp_def";
-    private static final String P_SPEED = "speed";
-    private static final String P_TOTAL = "total";
-    private static final String P_HEIGHT = "height";
-    private static final String P_WEIGHT = "weight";
-    private static final String P_TYPES = "types"; // Comma delimited list of IDs
-    private static final String P_ABILITIES = "abilities"; // Comma delimited list of IDs
-    private static final String P_MOVES = "moves"; // Comma delimited list of IDs
-    private static final String P_CATCH_RATE = "catch_rate";
-    private static final String P_EGG_CYCLES = "egg_cycles";
-    private static final String P_EGG_GROUPS = "egg_groups";
-    private static final String P_EV_YIELD = "ev_yield";
-    private static final String P_EXP = "exp";
-    private static final String P_GROWTH_RATE = "growth_rate";
-    private static final String P_HAPPINESS = "happiness";
-    private static final String P_GENDER_RATIO = "gender_ratio";
-    private static final String P_RESOURCE_URI = "resource_uri";
 
+    private static final String VERSION_GROUP_XY = "15";
+    
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);  
     }
@@ -89,28 +64,85 @@ public class DatabaseHelper extends SQLiteAssetHelper {
      */
     public ArrayList<Move> getMovesForPokemon(Pokemon pokemon) {
     	
-    	ArrayList<Move> updatedMoveList = pokemon.getMoves();
+    	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	
-    	// Get Move IDs as array
-		String[] moveIDs = Util.getMoveListIDsAsArray(pokemon.getMoves());
-
         SQLiteDatabase db = getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
-
-        String query = "SELECT id, identifier, power, pp, accuracy FROM " + TABLE_MOVES + " "
-                + " WHERE id IN (" + makePlaceholders(moveIDs.length) + ")";
-
-        Cursor cursor = db.rawQuery(query, moveIDs);
         
-        int i = 0;
-        while (cursor.moveToNext()) {
-        	updatedMoveList.get(i).setPower(cursor.getString(2));
-        	updatedMoveList.get(i).setPP(cursor.getString(3));
-        	updatedMoveList.get(i).setAccuracy(cursor.getString(4));
-        	i++;
+        String query = "SELECT move_id, pokemon_move_method_id, level FROM pokemon_moves WHERE pokemon_id = " + pokemon.getId() + " AND version_group_id = " + VERSION_GROUP_XY;
+        Cursor c = db.rawQuery(query, null);
+        
+        int totalMoves = c.getCount();
+        
+        while(c.moveToNext()) {
+        	Move move = new Move();
+        	
+        	String moveId = c.getString(0);
+        	String methodId = c.getString(1);
+        	
+        	Log.v(TAG, "Getting info for Move with ID = " + moveId);
+        	
+        	move.setId(moveId);
+        	move.setLevel(c.getString(2));
+        	
+        	// Get Move Main Info
+        	String queryMove = "SELECT identifier, type_id, power, pp, accuracy, priority," 
+        			+ " target_id, damage_class_id, effect_id, effect_chance from moves where id = " + moveId;
+            Cursor cursorMove = db.rawQuery(queryMove, null);
+            cursorMove.moveToFirst();
+            
+            String typeId = cursorMove.getString(1);
+            String targetId = cursorMove.getString(6);
+            String damageClassId = cursorMove.getString(7);
+            String effectId = cursorMove.getString(8);
+            move.setEffectChance(cursorMove.getString(9));
+            
+            move.setName(cursorMove.getString(0));
+            move.setPower(cursorMove.getString(2));
+            move.setPP(cursorMove.getString(3));
+            move.setAccuracy(cursorMove.getString(4));
+            move.setPriority(cursorMove.getString(5));
+            cursorMove.close();
+            
+            // Get move Type
+        	String queryType = "SELECT identifier FROM types WHERE id = " + typeId;
+            Cursor cursorType = db.rawQuery(queryType, null);
+            cursorType.moveToFirst();
+            move.setType(cursorType.getString(0));
+            cursorType.close();
+            
+            // Get Targets
+            String queryTarget = "SELECT identifier FROM move_targets WHERE id = " + targetId;
+            Cursor cursorTarget = db.rawQuery(queryTarget, null);
+            cursorTarget.moveToFirst();
+            move.setTargets(cursorTarget.getString(0));
+            cursorTarget.close();
+            
+            // Get Damage Class
+            String queryDamageClass = "SELECT identifier FROM move_damage_classes WHERE id = " + damageClassId;
+            Cursor cursorDamageClass = db.rawQuery(queryDamageClass, null);
+            cursorDamageClass.moveToFirst();
+            move.setDamageClass(cursorDamageClass.getString(0));
+            cursorDamageClass.close();
+            
+            // Get Effects
+            String queryEffect = "SELECT effect, short_effect FROM move_effect_prose WHERE move_effect_id = " + effectId;
+            Cursor cursorEffect = db.rawQuery(queryEffect, null);
+            cursorEffect.moveToFirst();
+            move.setEffectLong(cursorEffect.getString(0));
+            move.setEffectShort(cursorEffect.getString(1));
+            cursorEffect.close();
+        	
+        	// Get Method Name
+        	String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
+            Cursor cursorMethod = db.rawQuery(queryMethod, null);
+            cursorMethod.moveToFirst();
+            move.setMethod(cursorMethod.getString(0));
+            cursorMethod.close();
+        	
+        	moveList.add(move);
         }
-        
-        return updatedMoveList;
+
+        return moveList;
     }
     
     /**
@@ -194,61 +226,58 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	}
     
     
-    // Adding new Pokemon
-    /*
-    public void addPokemon(Pokemon pokemon) {
-    	SQLiteDatabase db = this.getWritableDatabase();
-    	 
-        ContentValues values = new ContentValues();
-        values.put(P_DEXNO, pokemon.getNationalId());
-        values.put(P_NAME, pokemon.getName());
-		values.put(P_SPECIES, pokemon.getSpecies());
-		values.put(P_HP, pokemon.getHp());
-		values.put(P_ATTACK, pokemon.getAttack());
-		values.put(P_DEFENSE, pokemon.getDefense());
-		values.put(P_SPECIAL_ATTACK, pokemon.getSpAtk());
-		values.put(P_SPECIAL_DEFENSE, pokemon.getSpDef());
-		values.put(P_SPEED, pokemon.getSpeed());
-		values.put(P_TOTAL, pokemon.getTotal());
-		values.put(P_HEIGHT, pokemon.getHeight());
-		values.put(P_WEIGHT, pokemon.getWeight());
-		values.put(P_TYPES, Util.arrayListToCSV(pokemon.getTypes()));
-		values.put(P_ABILITIES, Util.arrayListToCSV(pokemon.getAbilities()));
-		values.put(P_MOVES, Util.arrayListToCSV(pokemon.getMoves()));
-		values.put(P_CATCH_RATE, pokemon.getCatchRate());
-		values.put(P_EGG_CYCLES, pokemon.getEggCycles());
-		values.put(P_EGG_GROUPS, Util.arrayListToCSV(pokemon.getEggGroups()));
-		values.put(P_EV_YIELD, pokemon.getEvYield());
-		values.put(P_EXP, pokemon.getExp());
-		values.put(P_GROWTH_RATE, pokemon.getGrowthRate());
-		values.put(P_HAPPINESS, pokemon.getHappiness());
-		values.put(P_GENDER_RATIO, pokemon.getGenderRatio());
-		values.put(P_RESOURCE_URI, pokemon.getResourceURI());
-     
-        // Inserting Row
-        db.insert(TABLE_POKEMON, null, values);
-        db.close(); // Closing database connection
-    }
-    */
-    
     // Getting single pokemon
     public Pokemon getPokemon(String id) {
+    	Pokemon pokemon = new Pokemon();
     	
-    	SQLiteDatabase db = this.getReadableDatabase();
-    	 
-        Cursor cursor = db.query(TABLE_POKEMON, 
-        		new String[] { P_DEXNO, P_NAME },    // fields to SELECT 
-        		P_DEXNO + "=?", 				     // WHERE clause
-                new String[] { id }, // WHERE clause VALUES 
-                null, null, null, null);
+    	SQLiteDatabase db = getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String queryPokemon = "SELECT p.id, psn.name, ps.generation_id, ps.evolves_from_species_id, ps.evolution_chain_id,"
+        		+ "	ps.gender_rate, ps.capture_rate, ps.base_happiness, ps.is_baby,	ps.hatch_counter, gr.identifier,"
+        		+ " ps.forms_switchable, height, weight"
+        		+ " FROM pokemon p, pokemon_species ps, pokemon_species_names psn, growth_rates gr "
+        		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id";
         
-        if (cursor != null)
-            cursor.moveToFirst();
-     
-        Pokemon pokemon = new Pokemon();
+        Log.v(TAG, queryPokemon);
         
-        pokemon.setNationalId(cursor.getString(0));
-        pokemon.setName(cursor.getString(1));
+        Cursor c = db.rawQuery(queryPokemon, null);
+        c.moveToFirst();
+        
+        pokemon.setId(c.getString(0));
+        pokemon.setName(c.getString(1));
+        pokemon.setGenerationId(c.getString(2));
+        pokemon.setEvolvesFromId(c.getString(3));
+        pokemon.setEvolutionChainId(c.getString(4));
+        pokemon.setGenderRate(c.getString(5));
+        pokemon.setCatchRate(c.getString(6));
+        pokemon.setHappiness(c.getString(7));
+        pokemon.setBaby(c.getInt(8) == 1 ? true : false);
+        pokemon.setHatchCounter(c.getString(9));
+        pokemon.setGrowthRate(c.getString(10));
+        pokemon.setFormSwitchable(c.getInt(11) == 1 ? true : false);
+        pokemon.setHeight(c.getString(12));
+        pokemon.setWeight(c.getString(13));
+        
+        // Get Base Stats
+        String queryBaseStats = 
+        		"SELECT base_stat FROM pokemon_stats WHERE pokemon_id = " + id + " ORDER BY stat_id ASC";
+        
+        Log.v(TAG, queryBaseStats);
+        
+        Cursor cursorStats = db.rawQuery(queryBaseStats, null);
+        cursorStats.moveToFirst();
+        pokemon.setHp(cursorStats.getInt(0));
+        cursorStats.moveToNext();
+        pokemon.setAttack(cursorStats.getInt(0));
+        cursorStats.moveToNext();
+        pokemon.setDefense(cursorStats.getInt(0));
+        cursorStats.moveToNext();
+        pokemon.setSpAtk(cursorStats.getInt(0));
+        cursorStats.moveToNext();
+        pokemon.setSpDef(cursorStats.getInt(0));
+        cursorStats.moveToNext();
+        pokemon.setSpeed(cursorStats.getInt(0));
         
     	return pokemon;
     }

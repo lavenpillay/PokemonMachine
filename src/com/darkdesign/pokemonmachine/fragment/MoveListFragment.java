@@ -32,7 +32,7 @@ public class MoveListFragment extends ListFragment {
 		// Create Test Data
 		Move testMove1 = new Move();
 		testMove1.setName("Test Name 1");
-		testMove1.setLearnType("Test Learn Type 1");
+		testMove1.setMethod("Test Learn Type 1");
 		testMove1.setResourceURI("/etc");
 		
 		testData.add(testMove1);

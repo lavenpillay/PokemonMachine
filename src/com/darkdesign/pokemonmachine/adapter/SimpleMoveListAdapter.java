@@ -49,7 +49,7 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
-		if (move.getLearnType().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+		if (move.getMethod().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
 			TextView levelTextView = (TextView) rowView.findViewById(R.id.list_item_level);
 			levelTextView.setText(move.getLevel());
 		}
@@ -62,9 +62,11 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		
 		// Set Images
 		try {
-			 Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/physical.png");
+			 Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
 			 categoryImageView.setImageBitmap(bm);
 			 
+			 Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images/" + move.getType() + ".png");
+			 typeImageView.setImageBitmap(typeBitmap);
 			 
 		} catch (IOException ioe) {
 			 Log.e(TAG, ioe.toString());

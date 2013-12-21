@@ -22,9 +22,9 @@ public class JSONHelper {
 			 
 			 Move move = new Move();
 			 move.setName(jsonMoveData.getString("name"));
-			 move.setLearnType(jsonMoveData.getString("learn_type"));
+			 move.setMethod(jsonMoveData.getString("learn_type"));
 			 
-			 if (move.getLearnType().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+			 if (move.getMethod().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
 				 move.setLevel(jsonMoveData.getString("level"));
 			 }
 			 

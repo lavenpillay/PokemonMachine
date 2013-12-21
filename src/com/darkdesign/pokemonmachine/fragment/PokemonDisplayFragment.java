@@ -118,16 +118,13 @@ public class PokemonDisplayFragment extends Fragment {
 	     
 	     // Breeding Info
 	     TextView genderTextView = (TextView)v.findViewById(R.id.txtMaleFemaleRatio);
-	     genderTextView.setText(pokemon.getGenderRatio());
+	     genderTextView.setText(pokemon.getGenderRate());
 	     
 	     TextView catchRateTextView = (TextView)v.findViewById(R.id.txtCatchRate);
 	     catchRateTextView.setText(String.valueOf(pokemon.getCatchRate()));
 	     
 	     TextView eggCyclesTextView = (TextView)v.findViewById(R.id.txtEggCycles);
 	     eggCyclesTextView.setText(String.valueOf(pokemon.getEggCycles()));
-	     
-	     TextView evYieldTextView = (TextView)v.findViewById(R.id.txtEVYield);
-	     evYieldTextView.setText(String.valueOf(pokemon.getEvYield()));
 	     
 	     TextView happinessTextView = (TextView)v.findViewById(R.id.txtHappiness);
 	     happinessTextView.setText(String.valueOf(pokemon.getHappiness()));

@@ -8,10 +8,10 @@ public class GlobalConstants {
 	public static final String PATH_TO_POKEMON_IMAGES = "pokemon_images/";
 	public static final String PATH_TO_ITEM_SPRITES = "items/";
 
-	public static final String LEARN_TYPE_LEVEL_UP = "level up";
-	public static final String LEARN_TYPE_TUTOR = "tutor";
-	public static final String LEARN_TYPE_MACHINE = "machine";
-	public static final String LEARN_TYPE_EGG_MOVE = "egg move";
+	public static final String LEARN_TYPE_LEVEL_UP = "Level up";
+	public static final String LEARN_TYPE_TUTOR = "Tutor";
+	public static final String LEARN_TYPE_MACHINE = "Machine";
+	public static final String LEARN_TYPE_EGG_MOVE = "Egg";
 
 	public static final String EVOLUTION_METHOD_LEVEL_UP = "1";
 	public static final String EVOLUTION_METHOD_TRADE = "2";

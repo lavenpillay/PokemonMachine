@@ -8,7 +8,11 @@ public class Pokemon {
 	private String modifiedTimestamp; // masp to "modified" in json
 	
 	// Pokemon Values
-	private String nationalId;
+	private String id;
+	private String generationId;
+	private String evolvesFromId;
+	private String evolutionChainId;
+
 	private String name;
 	private String species;
 	
@@ -18,7 +22,7 @@ public class Pokemon {
 	private int spAtk;
 	private int spDef;
 	private int speed;
-	private int total; // Total what ?
+	private int total; // Total base stat values
 
 	private String height;
 	private String weight;
@@ -29,24 +33,57 @@ public class Pokemon {
 	
 	private String catchRate;
 	private String eggCycles;
+	private String hatchCounter;
 	private ArrayList<EggGroup> eggGroups;
 	private String evYield; // In the format "1 Sp Atk"
 	private int exp;
 	private String growthRate;
 	private String happiness;
-	private String genderRatio; // Maps to "male_female_ratio" from json
-	private String resourceURI; // What is this for ?
-	
-	
+	private String genderRate;
+	private String resourceURI;
+
+	private boolean isBaby;
+	private boolean isFormSwitchable;
+
 	public Pokemon() {
-		super();
-		this.nationalId = "";
+		
+		this.createdTimestamp = "";
+		this.modifiedTimestamp = "";
+		this.id = "";
+		this.generationId = "";
+		this.evolvesFromId = "";
+		this.evolutionChainId = "";
 		this.name = "";
+		this.species = "";
+		this.hp = 0;
+		this.attack = 0;
+		this.defense = 0;
+		this.spAtk = 0;
+		this.spDef = 0;
+		this.speed = 0;
+		this.total = 0;
+		this.height = "";
+		this.weight = "";
+		this.types = new ArrayList<Type>(); // TODO Implement getting Pokemon Type(s) 
+		this.abilities = new ArrayList<Ability>();
+		this.moves = new ArrayList<Move>();
+		this.catchRate = "";
+		this.eggCycles = "";
+		this.hatchCounter = "";
+		this.eggGroups = new ArrayList<EggGroup>();
+		this.evYield = "";
+		this.exp = 0;
+		this.growthRate = "";
+		this.happiness = "";
+		this.genderRate = "";
+		this.resourceURI = "";
+		this.isBaby = false;
+		this.isFormSwitchable = false;
 	}
-	
+
 	public Pokemon(String id, String name) {
 		super();
-		this.nationalId = id;
+		this.id = id;
 		this.name = name;
 	}
 	
@@ -62,7 +99,7 @@ public class Pokemon {
 		
 		for (int i=0; i < moves.size(); i++) {
 			Move move = moves.get(i);
-			if (move.getLearnType().equals(type)) {
+			if (move.getMethod().equals(type)) {
 				moveSubset.add(move);
 			}
 		}
@@ -74,11 +111,11 @@ public class Pokemon {
 	/* ----------------------------- GETTERS and SETTERS ------------------------ */
 	
 	public String getId() {
-		return nationalId;
+		return id;
 	}
 
 	public void setId(String id) {
-		this.nationalId = id;
+		this.id = id;
 	}
 
 	public String getName() {
@@ -106,11 +143,11 @@ public class Pokemon {
 	}
 
 	public String getNationalId() {
-		return nationalId;
+		return id;
 	}
 
 	public void setNationalId(String nationalId) {
-		this.nationalId = nationalId;
+		this.id = nationalId;
 	}
 
 	public String getSpecies() {
@@ -273,12 +310,12 @@ public class Pokemon {
 		this.happiness = happiness;
 	}
 
-	public String getGenderRatio() {
-		return genderRatio;
+	public String getGenderRate() {
+		return genderRate;
 	}
 
-	public void setGenderRatio(String genderRatio) {
-		this.genderRatio = genderRatio;
+	public void setGenderRate(String genderRate) {
+		this.genderRate = genderRate;
 	}
 
 	public String getResourceURI() {
@@ -288,5 +325,52 @@ public class Pokemon {
 	public void setResourceURI(String resourceURI) {
 		this.resourceURI = resourceURI;
 	}
-	
+
+	public String getGenerationId() {
+		return generationId;
+	}
+
+	public void setGenerationId(String generationId) {
+		this.generationId = generationId;
+	}	
+
+	public String getEvolvesFromId() {
+		return evolvesFromId;
+	}
+
+	public void setEvolvesFromId(String evolvesFromId) {
+		this.evolvesFromId = evolvesFromId;
+	}
+
+	public String getEvolutionChainId() {
+		return evolutionChainId;
+	}
+
+	public void setEvolutionChainId(String evolutionChainId) {
+		this.evolutionChainId = evolutionChainId;
+	}
+
+	public boolean isBaby() {
+		return isBaby;
+	}
+
+	public void setBaby(boolean isBaby) {
+		this.isBaby = isBaby;
+	}
+
+	public String getHatchCounter() {
+		return hatchCounter;
+	}
+
+	public void setHatchCounter(String hatchCounter) {
+		this.hatchCounter = hatchCounter;
+	}	
+
+	public boolean isFormSwitchable() {
+		return isFormSwitchable;
+	}
+
+	public void setFormSwitchable(boolean isFormSwitchable) {
+		this.isFormSwitchable = isFormSwitchable;
+	}
 }
