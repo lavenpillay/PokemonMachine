@@ -19,6 +19,7 @@ import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
+import com.darkdesign.pokemonmachine.helper.Parser;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
@@ -46,12 +47,16 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		TextView powerTextView = (TextView) rowView.findViewById(R.id.list_item_power);
 		TextView ppTextView = (TextView) rowView.findViewById(R.id.list_item_pp);
 		TextView accuracyTextView = (TextView) rowView.findViewById(R.id.list_item_accuracy);
+		TextView levelTextView = (TextView) rowView.findViewById(R.id.list_item_level);
+		TextView description = (TextView) rowView.findViewById(R.id.txt_move_description);
+		
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
 		if (move.getMethod().equals(Constants.LEARN_TYPE_LEVEL_UP)) {
-			TextView levelTextView = (TextView) rowView.findViewById(R.id.list_item_level);
 			levelTextView.setText(move.getLevel());
+		} else {
+			levelTextView.setText("");
 		}
 		
 		// Set TextViews
@@ -59,6 +64,7 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		powerTextView.setText(move.getPower());
 		ppTextView.setText(move.getPP());
 		accuracyTextView.setText(move.getAccuracy());
+		description.setText(Parser.parseMoveDescription(move.getEffectLong()));
 		
 		// Set Images
 		try {

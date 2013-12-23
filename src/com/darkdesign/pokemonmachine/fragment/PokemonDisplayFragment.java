@@ -87,7 +87,7 @@ public class PokemonDisplayFragment extends Fragment {
 	     nameTextView.setText(pokemon.getName());
 	     
 	     TextView speciesTextView = (TextView)v.findViewById(R.id.txtSpecies);
-	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()));
+	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");
 
 	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
 	     heightTextView.setText(String.valueOf(pokemon.getHeight()));

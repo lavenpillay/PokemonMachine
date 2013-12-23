@@ -28,24 +28,27 @@ public final class R {
     public static final class drawable {
         public static final int background_image=0x7f020000;
         public static final int bug=0x7f020001;
-        public static final int container_dropshadow=0x7f020002;
-        public static final int container_lightgray_round=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-        public static final int icon_level_up=0x7f020005;
-        public static final int icon_level_up_happiness=0x7f020006;
-        public static final int icon_trade=0x7f020007;
-        public static final int main_background=0x7f020008;
-        public static final int no_image=0x7f020009;
-        public static final int physical=0x7f02000a;
-        public static final int pokeball=0x7f02000b;
-        public static final int selector_gray_gradient=0x7f02000c;
-        public static final int shadow_l=0x7f02000d;
-        public static final int shadow_left=0x7f02000e;
-        public static final int shadow_r=0x7f02000f;
-        public static final int shadow_right=0x7f020010;
+        public static final int button_expand_move=0x7f020002;
+        public static final int button_expand_move_arrow=0x7f020003;
+        public static final int button_expand_move_more=0x7f020004;
+        public static final int container_dropshadow=0x7f020005;
+        public static final int container_lightgray_round=0x7f020006;
+        public static final int ic_launcher=0x7f020007;
+        public static final int icon_level_up=0x7f020008;
+        public static final int icon_level_up_happiness=0x7f020009;
+        public static final int icon_trade=0x7f02000a;
+        public static final int main_background=0x7f02000b;
+        public static final int no_image=0x7f02000c;
+        public static final int physical=0x7f02000d;
+        public static final int pokeball=0x7f02000e;
+        public static final int selector_gray_gradient=0x7f02000f;
+        public static final int shadow_l=0x7f020010;
+        public static final int shadow_left=0x7f020011;
+        public static final int shadow_r=0x7f020012;
+        public static final int shadow_right=0x7f020013;
     }
     public static final class id {
-        public static final int action_settings=0x7f09004a;
+        public static final int action_settings=0x7f09004d;
         public static final int barATK=0x7f09001c;
         public static final int barDEF=0x7f09001f;
         public static final int barHP=0x7f090019;
@@ -61,6 +64,8 @@ public final class R {
         public static final int drawer_layout=0x7f090000;
         public static final int emptyItem=0x7f090006;
         public static final int evolutionsHolder=0x7f090037;
+        public static final int expandable=0x7f090047;
+        public static final int expandable_toggle_button=0x7f09003f;
         public static final int image=0x7f09003e;
         public static final int imageView1=0x7f09000a;
         public static final int imgPokemonEvolution=0x7f090007;
@@ -85,20 +90,20 @@ public final class R {
         public static final int lblWeight=0x7f090015;
         public static final int left_drawer=0x7f090005;
         public static final int listPokemon=0x7f090004;
-        public static final int list_item_accuracy=0x7f090044;
-        public static final int list_item_category=0x7f090041;
-        public static final int list_item_description=0x7f090049;
-        public static final int list_item_id=0x7f090047;
-        public static final int list_item_image=0x7f090048;
-        public static final int list_item_level=0x7f09003f;
-        public static final int list_item_move_type_image=0x7f090042;
-        public static final int list_item_name=0x7f090040;
-        public static final int list_item_power=0x7f090043;
-        public static final int list_item_pp=0x7f090045;
+        public static final int list_item_accuracy=0x7f090045;
+        public static final int list_item_category=0x7f090042;
+        public static final int list_item_description=0x7f09004c;
+        public static final int list_item_id=0x7f09004a;
+        public static final int list_item_image=0x7f09004b;
+        public static final int list_item_level=0x7f090040;
+        public static final int list_item_move_type_image=0x7f090043;
+        public static final int list_item_name=0x7f090041;
+        public static final int list_item_power=0x7f090044;
+        public static final int list_item_pp=0x7f090046;
         public static final int movesArea=0x7f090039;
         public static final int moves_holder=0x7f090038;
         public static final int pokemon_list=0x7f090002;
-        public static final int thumbnail=0x7f090046;
+        public static final int thumbnail=0x7f090049;
         public static final int txtATK=0x7f09001b;
         public static final int txtCatchRate=0x7f09002c;
         public static final int txtDEF=0x7f09001e;
@@ -120,6 +125,7 @@ public final class R {
         public static final int txtSearch=0x7f09000c;
         public static final int txtSpecies=0x7f090012;
         public static final int txtWeight=0x7f090016;
+        public static final int txt_move_description=0x7f090048;
     }
     public static final class layout {
         public static final int activity_pokemonmachine=0x7f030000;

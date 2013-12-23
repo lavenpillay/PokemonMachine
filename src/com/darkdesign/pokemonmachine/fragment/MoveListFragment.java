@@ -8,9 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
+import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.element.Move;
-import com.darkdesign.pokemonmachine.helper.Util;
+import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 public class MoveListFragment extends ListFragment {
 	private final String TAG = MoveListFragment.class.getName();
@@ -39,7 +40,15 @@ public class MoveListFragment extends ListFragment {
 		
 		adapter = new SimpleMoveListAdapter(getActivity(), testData);
 		
-		setListAdapter(adapter);
+		//setListAdapter(adapter);
+		
+		
+		setListAdapter(new SlideExpandableListAdapter(
+                adapter,
+                R.id.expandable_toggle_button,
+                R.id.expandable
+        ));
+        
 	}
 	
 	public void updateMoveList(ArrayList<Move> moves) {

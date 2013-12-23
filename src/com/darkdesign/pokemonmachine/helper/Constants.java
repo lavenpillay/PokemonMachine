@@ -1,5 +1,9 @@
 package com.darkdesign.pokemonmachine.helper;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 public class Constants {
 	public static final int TOTAL_POKEMON_COUNT = 718;
 	public static final int POKEMON_ID_LENGTH = 3;
@@ -35,4 +39,28 @@ public class Constants {
 	public static final int STAT_BAR_HEIGHT = 3;
 	public static final double STAT_BAR_LENGTH_MULTIPLIER = 1; // change to 0.5 [128 length for a 255 value]
 	
+	private static final Map<String, Integer> TYPE_COLORS_PASTEL;
+    static {
+    	Map<String, Integer> cMap = new HashMap<String, Integer>();
+        cMap.put("bug", 0xffeafbe1);
+        cMap.put("dark", 0xffeafbe1);
+        cMap.put("dragon", 0xffeafbe1);
+        cMap.put("electric", 0xffeafbe1);
+        cMap.put("fairy", 0xffeafbe1);
+        cMap.put("fighting", 0xffeafbe1);
+        cMap.put("fire", 0xffeafbe1);
+        cMap.put("flying", 0xffeafbe1);
+        cMap.put("ghost", 0xffeafbe1);
+        cMap.put("grass", 0xffeafbe1);
+        cMap.put("ground", 0xffeafbe1);
+        cMap.put("ice", 0xffeafbe1);
+        cMap.put("normal", 0xffeafbe1);
+        cMap.put("poison", 0xffeafbe1);
+        cMap.put("psychic", 0xffeafbe1);
+        cMap.put("rock", 0xffeafbe1);
+        cMap.put("steel", 0xffeafbe1);
+        cMap.put("water", 0xffeafbe1);
+        
+        TYPE_COLORS_PASTEL = Collections.unmodifiableMap(cMap);
+    }
 }
