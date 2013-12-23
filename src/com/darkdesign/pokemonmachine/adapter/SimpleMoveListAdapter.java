@@ -18,7 +18,7 @@ import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
@@ -49,7 +49,7 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
-		if (move.getMethod().equals(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+		if (move.getMethod().equals(Constants.LEARN_TYPE_LEVEL_UP)) {
 			TextView levelTextView = (TextView) rowView.findViewById(R.id.list_item_level);
 			levelTextView.setText(move.getLevel());
 		}

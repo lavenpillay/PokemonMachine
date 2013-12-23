@@ -14,9 +14,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -37,7 +39,7 @@ import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPoke
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.service.RESTService;
@@ -106,29 +108,38 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         
         db = new DatabaseHelper(this);
         
-        // Execute Default Search
-        //executeSearch("034");
     }
 	
-	
+
+
+
+	@Override
+	public void onAttachedToWindow() {
+		// TODO Auto-generated method stub
+		super.onAttachedToWindow();
+		
+		executeSearch("001");
+	}
+
+
 	public void onSearchClick(View view) {
 		executeSearch();
 	}
 	
 	public void onMoveByLevelClick(View view) {
-		updateMoveList(GlobalConstants.LEARN_TYPE_LEVEL_UP);
+		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 	}
 	
 	public void onMoveByMachineClick(View view) {
-		updateMoveList(GlobalConstants.LEARN_TYPE_MACHINE);
+		updateMoveList(Constants.LEARN_TYPE_MACHINE);
 	}
 
 	public void onMoveByEggClick(View view) {
-		updateMoveList(GlobalConstants.LEARN_TYPE_EGG_MOVE);
+		updateMoveList(Constants.LEARN_TYPE_EGG_MOVE);
 	}
 	
 	public void onMoveByTutorClick(View view) {
-		updateMoveList(GlobalConstants.LEARN_TYPE_TUTOR);
+		updateMoveList(Constants.LEARN_TYPE_TUTOR);
 	}
 	
 
@@ -136,7 +147,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private void updateMoveList(String moveLearnType) {
 		ArrayList<Move> moveSubset = currentSelectedPokemon.getMovesByType(moveLearnType);
 		
-		if (moveLearnType.equalsIgnoreCase(GlobalConstants.LEARN_TYPE_LEVEL_UP)) {
+		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		
@@ -194,7 +205,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Update Moves list and Notify Adapter -----------------------------
 		pokemon.setMoves(db.getMovesForPokemon(pokemon));
 
-		updateMoveList(GlobalConstants.LEARN_TYPE_LEVEL_UP);
+		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 		
 		// Update Evolutions -----------------------------
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
@@ -237,7 +248,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 			LinearLayout evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
 			holder.addView(evolutionStateView);
 			
-			if (evolutions.size() > 0) {
+			if (evolutions.size() > 1) {
 				evolution = evolutions.get(1);
 				
 				// Add Method
@@ -279,7 +290,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		
 		LinearLayout evolutionMethodView = null;
 		
-		if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_LEVEL_UP)) {
+		if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_LEVEL_UP)) {
 			if (evolution.getMinimumHappiness() != null) {
 				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup_happiness, null );
 			} else {
@@ -290,14 +301,14 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
 				levelView.setText(evolution.getLevel());
 			}
-		} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_TRADE)) {
+		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_TRADE)) {
 			evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
-		} else if (evolution.getMethod().equalsIgnoreCase(GlobalConstants.EVOLUTION_METHOD_USE_ITEM)) {
+		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_USE_ITEM)) {
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
 			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
 			String itemName = db.getItemById(evolution.getTriggerItemId()).getName();
-			Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
+			Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
 			useItemView.setImageBitmap(bm);
 		}
 		
@@ -307,8 +318,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
 			throws IOException 
 	{
-		String id = Util.padLeft(pokemonId, GlobalConstants.POKEMON_ID_LENGTH);
-		Bitmap bm = assetHelper.getBitmapFromAsset(GlobalConstants.PATH_TO_POKEMON_SPRITES + id + ".png");
+		String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
+		Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
 		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
 		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
 		evolutionImage.setImageBitmap(bm);

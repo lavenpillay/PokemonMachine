@@ -1,6 +1,7 @@
 package com.darkdesign.pokemonmachine.fragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -16,12 +17,15 @@ import android.widget.TextView;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Pokemon;
+import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class PokemonDisplayFragment extends Fragment {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+	
+	private AssetHelper assetHelper;
 	
 	private View v; 
 
@@ -41,22 +45,37 @@ public class PokemonDisplayFragment extends Fragment {
 
 	   v = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
+	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
+	   
 	   return v;
 	 }
 	 
 	 public void update(Pokemon pokemon) {
-		 // Set Image
-		 AssetHelper assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
-		 
+	 
 		 // Perform required checks and calculations
 		 
+		 // Handle Images
+		 ImageView i = (ImageView)v.findViewById(R.id.imageView1);
+		 ImageView pokemonType1 = (ImageView)v.findViewById(R.id.imgType1);
+		 ImageView pokemonType2 = (ImageView)v.findViewById(R.id.imgType2);;
 		 
-		 ImageView i;
 		 try {
-			 String id = Util.padLeft(String.valueOf(pokemon.getId()), GlobalConstants.POKEMON_ID_LENGTH);
+			 String id = Util.padLeft(String.valueOf(pokemon.getId()), Constants.POKEMON_ID_LENGTH);
 			 Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_images/" + id + ".png");
-			 i = (ImageView)v.findViewById(R.id.imageView1);
-			 i.setImageBitmap(bm);			 
+			 
+			 i.setImageBitmap(bm);
+			 
+			 ArrayList<Type> pokemonTypes = pokemon.getTypes();
+			 
+			 Bitmap type1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(0).getName() + ".png");
+			 pokemonType1.setImageBitmap(type1);
+			 
+			 if (pokemonTypes.size() > 1) {
+				 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
+				 pokemonType2.setImageBitmap(type2);
+			 }
+			 
+			 
 		 } catch (IOException ioe) {
 			 Log.e(getTag(), ioe.toString());
 		 }
@@ -80,37 +99,37 @@ public class PokemonDisplayFragment extends Fragment {
 	     hpTextView.setText(String.valueOf(pokemon.getHp()));
 	     
 	     View hpBarView = (View)v.findViewById(R.id.barHP);
-	     hpBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getHp()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     hpBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getHp()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
 	     
 	     TextView attackTextView = (TextView)v.findViewById(R.id.txtATK);
 	     attackTextView.setText(String.valueOf(pokemon.getAttack()));
 	     
 	     View attackBarView = (View)v.findViewById(R.id.barATK);
-	     attackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getAttack()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     attackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getAttack()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
 	     
 	     TextView defenseTextView = (TextView)v.findViewById(R.id.txtDEF);
 	     defenseTextView.setText(String.valueOf(pokemon.getDefense()));
 	     
 	     View defenseBarView = (View)v.findViewById(R.id.barDEF);
-	     defenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getDefense()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));	     
+	     defenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getDefense()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));	     
 	     
 	     TextView spAttackTextView = (TextView)v.findViewById(R.id.txtSPATK);
 	     spAttackTextView.setText(String.valueOf(pokemon.getSpAtk()));
 	     
 	     View spAttackBarView = (View)v.findViewById(R.id.barSPATK);
-	     spAttackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpAtk()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     spAttackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpAtk()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
 	     
 	     TextView spDefenseTextView = (TextView)v.findViewById(R.id.txtSPDEF);
 	     spDefenseTextView.setText(String.valueOf(pokemon.getSpDef()));
 	     
 	     View spDefenseBarView = (View)v.findViewById(R.id.barSPDEF);
-	     spDefenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpDef()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     spDefenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpDef()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
 	     
 	     TextView speedTextView = (TextView)v.findViewById(R.id.txtSPD);
 	     speedTextView.setText(String.valueOf(pokemon.getSpeed()));
 	     
 	     View speedBarView = (View)v.findViewById(R.id.barSPD);
-	     speedBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpeed()) * GlobalConstants.STAT_BAR_LENGTH_MULTIPLIER), GlobalConstants.STAT_BAR_HEIGHT));
+	     speedBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpeed()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
 
 	     // EV Yield 
 	     TextView evTextView = (TextView)v.findViewById(R.id.txtEVYield);

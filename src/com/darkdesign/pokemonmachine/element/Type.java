@@ -8,6 +8,11 @@ public class Type {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Type(String name) {
+		super();
+		this.name = name;
+	}
+
 	public String getName() {
 		return name;
 	}

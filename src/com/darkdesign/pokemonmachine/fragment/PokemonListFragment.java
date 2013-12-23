@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class PokemonListFragment extends ListFragment {
@@ -64,7 +64,7 @@ public class PokemonListFragment extends ListFragment {
 		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
 		  String name = adapter.getItem(position);
 		  int pokemonId = Util.arrayIndexOf(adapter.getAllData(), name) + 1;
-		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, GlobalConstants.POKEMON_ID_LENGTH));
+		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
 		  //listener.onPokemonListItemSelected(Util.padLeft(position+1, GlobalConstants.POKEMON_ID_LENGTH));
 	  }
 	  

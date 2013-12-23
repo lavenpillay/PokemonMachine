@@ -62,6 +62,18 @@
 				        android:text="Pokemon Name "
 				        android:textAppearance="?android:attr/textAppearanceSmall" 
 				        android:textSize="15pt"/>
+				    
+					<ImageView
+				        android:id="@+id/imgType1"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_margin="5dip" />
+					
+					<ImageView
+				        android:id="@+id/imgType2"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_margin="5dip" />
 	
 		</LinearLayout>
 		

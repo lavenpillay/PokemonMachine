@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.GlobalConstants;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimplePokemonListAdapter extends ArrayAdapter<String> {
@@ -52,7 +52,7 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 		
 		// Set icon
 		try {
-			String id = Util.padLeft(pokemonId, GlobalConstants.POKEMON_ID_LENGTH);
+			String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
 			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 			imageView.setImageBitmap(bm);
