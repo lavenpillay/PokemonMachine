@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -66,6 +67,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     private Pokemon currentSelectedPokemon;
     
     private DatabaseHelper db;
+    
+    public static Cache cache;
 
 	public PokemonMachineActivity() {
 		
@@ -108,6 +111,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         
         db = new DatabaseHelper(this);
         
+        cache = new Cache(this);
     }
 	
 
@@ -118,7 +122,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// TODO Auto-generated method stub
 		super.onAttachedToWindow();
 		
-		executeSearch("001");
+		executeSearch("711");
 	}
 
 
@@ -186,7 +190,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}
 	
 	public void executeSearchByDatabase(String nationalId) {
-		Pokemon pokemon = db.getPokemon(nationalId);
+		//Pokemon pokemon = db.getPokemon(nationalId);
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Util.stripZeros(nationalId));
 		
 		onPokemonUpdated(pokemon);
 	}
@@ -203,7 +208,11 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		pokemonDisplayFragment.update(pokemon);
 		
 		// Update Moves list and Notify Adapter -----------------------------
-		pokemon.setMoves(db.getMovesForPokemon(pokemon));
+		if (pokemon.getMoves().size() == 0) {
+			pokemon.setMoves(db.getMovesForPokemon(pokemon));
+			// Update Cache
+			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
+		}
 
 		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 		

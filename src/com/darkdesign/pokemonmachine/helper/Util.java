@@ -21,6 +21,10 @@ public class Util {
 		return list.toString().replaceAll("[\\s\\[\\]]", "");
 	}
 	
+	public static String stripZeros(String stringToModify) {
+		return stringToModify.replaceAll("0", "");
+	}
+	
 	/**
 	 * 
 	 * @param stringToConvert

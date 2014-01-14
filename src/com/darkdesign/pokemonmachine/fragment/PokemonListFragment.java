@@ -25,7 +25,6 @@ public class PokemonListFragment extends ListFragment {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-
 	}
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
@@ -54,6 +53,9 @@ public class PokemonListFragment extends ListFragment {
 	    
 	    setListAdapter(adapter);
 	    
+	    getListView().setFastScrollEnabled(true);
+	    getListView().setFastScrollAlwaysVisible(true);
+	    getListView().setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	    //adapter.getFilter().filter("Sand");
 	  }
 

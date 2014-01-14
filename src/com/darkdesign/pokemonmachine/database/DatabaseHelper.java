@@ -83,8 +83,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             String targetId = cursorMove.getString(6);
             String damageClassId = cursorMove.getString(7);
             String effectId = cursorMove.getString(8);
-            move.setEffectChance(cursorMove.getString(9));
+            String effectChance = cursorMove.getString(9) == null ? "" : cursorMove.getString(9);
             
+            move.setEffectChance(effectChance);
             move.setName(cursorMove.getString(0));
             move.setPower(cursorMove.getString(2));
             move.setPP(cursorMove.getString(3));

@@ -11,20 +11,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
-public class SimplePokemonListAdapter extends ArrayAdapter<String> {
+public class SimplePokemonListAdapter extends ArrayAdapter<String> implements SectionIndexer {
 	private final String TAG = SimplePokemonListAdapter.class.getName();
 
 	private Context context;
 	private String[] values;
 	
 	private AssetHelper assetHelper;
+	private DatabaseHelper db;
 	
 	public SimplePokemonListAdapter(Context context, String[] values) {
 	    super(context, R.layout.list_item_pokemon, values);
@@ -32,6 +37,7 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 	    this.values = values;
 	    
 	    assetHelper = new AssetHelper(context);
+	    db = new DatabaseHelper(context);
 	}
 	
 	@Override
@@ -41,6 +47,9 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 
 		String name = this.getItem(position);
 		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
+		
+		//Pokemon pokemon = db.getPokemon(String.valueOf(pokemonId));
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(String.valueOf(pokemonId));
 
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
@@ -50,12 +59,25 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
 		nameTextView.setText(name);
 		
-		// Set icon
+		// Set Type(s)
+		ImageView imageType1 = (ImageView) rowView.findViewById(R.id.list_item_type1);
+		ImageView imageType2 = (ImageView) rowView.findViewById(R.id.list_item_type2);
+		
+		
+		// Set icon and types
 		try {
 			String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
 			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 			imageView.setImageBitmap(bm);
+			
+			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
+			imageType1.setImageBitmap(bmType1);
+			
+			if (pokemon.getTypes().size() > 1) {
+				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
+				imageType2.setImageBitmap(bmType2);
+			}
 		} catch (IOException ioe) {
 			 Log.e(TAG, ioe.toString());
 		}
@@ -65,6 +87,24 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> {
 	
 	public String[] getAllData() {
 		return values;
+	}
+
+	@Override
+	public int getPositionForSection(int arg0) {
+		
+		return (arg0 + 1) * 100;
+	}
+
+	@Override
+	public int getSectionForPosition(int arg0) {
+		
+		return (arg0 + 1) / 100;
+	}
+
+	@Override
+	public Object[] getSections() {
+		Integer[] sections = {1,2,3,4,5,6};
+		return sections;
 	}
 
 }

@@ -64,7 +64,7 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		powerTextView.setText(move.getPower());
 		ppTextView.setText(move.getPP());
 		accuracyTextView.setText(move.getAccuracy());
-		description.setText(Parser.parseMoveDescription(move.getEffectLong()));
+		description.setText(Parser.parseMoveDescription(move));
 		
 		// Set Images
 		try {

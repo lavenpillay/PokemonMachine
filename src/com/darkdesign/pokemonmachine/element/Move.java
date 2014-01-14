@@ -3,34 +3,56 @@ package com.darkdesign.pokemonmachine.element;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 
+/**
+ * @author Laven2
+ *
+ */
 public class Move {
 	
-	private String id;
-	private String name;
-	private String type;
+	private String id = "";
+	private String name = "";
+	private String type = "";
 
-	private String resourceURI;
+	private String resourceURI = "";
 	
-	private String power;
-	private String pp;
-	private String accuracy;
-	private String priority;
+	private String power = "";
+	private String pp = "";
+	private String accuracy = "";
+	private String priority = "";
 
-	private String level;
+	private String level = "";
 	
-	private String effectShort;
-	private String effectLong;
-	private String effectChance;
+	private String effectShort = "";
+	private String effectLong = "";
+	private String effectChance = "";
 	
-	private String targets;
-	private String damageClass;
+	private String targets = "";
+	private String damageClass = "";
 
-	private String method; // learn method
+	private String method = ""; // learn method
 
+	
 	public Move() {
-		// TODO Auto-generated constructor stub
+		super();
+		this.id = "";
+		this.name = "";
+		this.type = "";
+		this.resourceURI = "";
+		this.power = "";
+		this.pp = "";
+		this.accuracy = "";
+		this.priority = "";
+		this.level = "";
+		this.effectShort = "";
+		this.effectLong = "";
+		this.effectChance = "";
+		this.targets = "";
+		this.damageClass = "";
+		this.method = "";
 	}
-	
+
+
+
 	public String getName() {
 		return name;
 	}
