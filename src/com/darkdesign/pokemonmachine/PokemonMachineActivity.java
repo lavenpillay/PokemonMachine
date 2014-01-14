@@ -9,16 +9,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
-import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -26,13 +27,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
-import com.darkdesign.pokemonmachine.exception.DoesNotEvolveException;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
@@ -48,6 +49,7 @@ import com.darkdesign.pokemonmachine.service.RESTService;
 
 public class PokemonMachineActivity extends FragmentActivity implements OnPokemonUpdatedListener, OnPokemonListItemSelectedListener 
 {
+	private static final int ENTER_KEY_PRESSED = 66;
 	private static String TAG = PokemonMachineActivity.class.getName();
 	private static String TAG_FRAGMENT_POKEMON_DISPLAY = "PokemonDisplayFragment";
 	private static String TAG_FRAGMENT_MOVES_DISPLAY = "MovesDisplayFragment";
@@ -113,21 +115,63 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         
         cache = new Cache(this);
     }
-	
-
-
 
 	@Override
 	public void onAttachedToWindow() {
 		// TODO Auto-generated method stub
 		super.onAttachedToWindow();
 		
-		executeSearch("711");
+        // Other Listeners
+        EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
+        searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
+        
+        searchValueTextbox.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == ENTER_KEY_PRESSED) {
+                	
+                	// hide virtual keyboard - could also use InputMethodManager.HIDE_NOT_ALWAYS
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                	
+                	// Execute Search
+                	searchFromSearchBox();
+                	
+                    return true;
+                }
+                return false;
+            }
+        });
+		
+        // Perform Initial Search
+		executeSearch("001");
 	}
 
+	/**
+	 * 
+	 */
+	public void searchFromSearchBox() {
+		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
+		
+		String searchValue = searchValueTextbox.getText().toString();
+		
+		if (searchValue != null && !searchValue.equals("") && Util.stringIsInteger(searchValue)) {
+			executeSearch(searchValue);
+		}
+	}
 
 	public void onSearchClick(View view) {
-		executeSearch();
+		searchFromSearchBox();
+	}
+	
+	public void onClearNameFilterClick(View view) {
+		EditText filterText = (EditText) findViewById(R.id.txtFilter);
+		filterText.setText("");
+	}
+	
+	public void onClearIDClick(View view) {
+		EditText idText = (EditText) findViewById(R.id.txtSearch);
+		idText.setText("");
 	}
 	
 	public void onMoveByLevelClick(View view) {
@@ -160,11 +204,6 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		movesListFragment.adapter.notifyDataSetChanged();
 	}
 	
-	public void executeSearch() {
-		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
-		executeSearch(searchValueTextbox.getText().toString());
-	}
-	
 	public void executeSearch(String nationalId) {
 		//executeSearchByREST(nationalId);
 		executeSearchByDatabase(nationalId);
@@ -191,7 +230,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	
 	public void executeSearchByDatabase(String nationalId) {
 		//Pokemon pokemon = db.getPokemon(nationalId);
-		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Util.stripZeros(nationalId));
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.parseInt(nationalId));
 		
 		onPokemonUpdated(pokemon);
 	}
@@ -211,6 +250,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		if (pokemon.getMoves().size() == 0) {
 			pokemon.setMoves(db.getMovesForPokemon(pokemon));
 			// Update Cache
+			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
 
@@ -219,19 +259,20 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Update Evolutions -----------------------------
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
-		try {
+		if (pokemon.getEvolutions().size() == 0) {
 			evolutions = db.getEvolutions(pokemon.getId());
-		} catch (DoesNotEvolveException e) {
-			Log.i(TAG, "Pokemon with ID = " + pokemon.getId() + " does not Evolve");
+			pokemon.setEvolutions(evolutions);
+			// Update Cache
+			Log.d(TAG, "[EVOLUTIONS_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
+			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
-		
+
 		LayoutInflater inflater = (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		LinearLayout holder = (LinearLayout) findViewById(R.id.evolutionsHolder);
 		// Remove current displays
 		holder.removeAllViews();
 		
-		buildEvolutionChain(pokemon, assetHelper, evolutions, inflater, holder);			
-		
+		buildEvolutionChain(pokemon, assetHelper, inflater, holder);			
 	}
 
 	/**
@@ -243,12 +284,14 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	 * @param holder
 	 */
 	private void buildEvolutionChain(Pokemon pokemon, AssetHelper assetHelper, 
-			ArrayList<Evolution> evolutions, LayoutInflater inflater, LinearLayout holder) {
+			LayoutInflater inflater, LinearLayout holder) {
 		
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
 		layoutParams.setMargins(5, 5, 5, 5);		
+		
+		ArrayList<Evolution> evolutions = pokemon.getEvolutions();
 		
 		try {
 			Evolution evolution = evolutions.get(0);
@@ -327,19 +370,23 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
 			throws IOException 
 	{
-		String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
+		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
 		Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
 		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
 		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
 		evolutionImage.setImageBitmap(bm);
+		
+		evolutionImage.setOnClickListener(new OnClickListener() {
+		    public void onClick(View v) {
+		    	Log.v(TAG, "Evolution Image Clicked - Switching to ID = " + id);
+		    	executeSearch(id);
+		    }
+		});
+		
 		return evolutionStateView;
 	}	
 
 	public void onPokemonListItemSelected(String id) {
-		// Update View		
-		EditText searchValue = (EditText)findViewById(R.id.txtSearch);
-		searchValue.setText(id);
-		
 		executeSearch(id);
 	}
 	

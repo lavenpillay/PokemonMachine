@@ -49,7 +49,7 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
 		
 		//Pokemon pokemon = db.getPokemon(String.valueOf(pokemonId));
-		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(String.valueOf(pokemonId));
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(pokemonId);
 
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);

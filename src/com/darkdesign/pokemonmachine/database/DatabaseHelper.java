@@ -143,7 +143,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
      * @param id
      * @return
      */
-	public ArrayList<Evolution> getEvolutions(String id) throws DoesNotEvolveException 
+	public ArrayList<Evolution> getEvolutions(String id) /* throws DoesNotEvolveException */ 
 	{
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
@@ -160,11 +160,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         cursorSpecies = db.rawQuery(querySpecies, null);
         
+        /*
         if (cursorSpecies.getCount() == 0) {
         	throw new DoesNotEvolveException();
         } else {
         	//cursor.moveToFirst();
         }
+        */
         
         while (cursorSpecies.moveToNext()) {
 	        Log.d(TAG, "CHAIN : " + cursorSpecies.getString(0));

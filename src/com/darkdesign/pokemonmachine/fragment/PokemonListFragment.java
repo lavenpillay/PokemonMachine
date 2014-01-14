@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
+import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
@@ -53,9 +54,10 @@ public class PokemonListFragment extends ListFragment {
 	    
 	    setListAdapter(adapter);
 	    
-	    getListView().setFastScrollEnabled(true);
-	    getListView().setFastScrollAlwaysVisible(true);
+	    getListView().setFastScrollEnabled(Config.FAST_SCROLL);
+	    getListView().setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	    getListView().setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+	    
 	    //adapter.getFilter().filter("Sand");
 	  }
 

@@ -26,31 +26,14 @@ public class Cache {
 		POKEMON_CACHE.put(pokemon.getId(), pokemon);
 	}
 	
-	public Pokemon getPokemon(String id) {
-		Pokemon pokemon = POKEMON_CACHE.get(id);
+	public Pokemon getPokemon(int id) {
+		Pokemon pokemon = POKEMON_CACHE.get(String.valueOf(id));
 		
 		if (pokemon == null) {
-			pokemon = db.getPokemon(id);
+			pokemon = db.getPokemon(String.valueOf(id));
 			addPokemonToCache(pokemon);
 		}
 		
 		return pokemon;
 	}
-	
-	public boolean addMoveToCache(Pokemon pokemon, Move move) {
-		return (MOVE_CACHE.put(pokemon, move) != null);
-	}
-	
-	/*
-	public Move getMove(String id) {
-		Move move = POKEMON_CACHE.get(id);
-		
-		if (move == null) {
-			move = db.getPokemon(id);
-			addPokemonToCache(pokemon);
-		}
-		
-		return pokemon;
-	}
-	*/
 }
