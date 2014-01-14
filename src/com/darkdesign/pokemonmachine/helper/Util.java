@@ -124,5 +124,18 @@ public class Util {
 		
 		return list;
 	}
+	
+	public static boolean stringIsInteger(String str) {
+		try  
+		  {  
+		    int i = Integer.parseInt(str);  
+		  }  
+		  catch(NumberFormatException nfe)  
+		  {  
+		    return false;  
+		  }  
+		
+		  return true;
+	}
 
 }
