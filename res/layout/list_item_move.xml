@@ -135,7 +135,8 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical"
 	    android:id="@+id/expandable"
-	    android:paddingLeft="20dip">
+	    android:paddingLeft="20dip"
+	    android:paddingBottom="3dip">
 	
 		<TextView
 		    android:layout_width="wrap_content"

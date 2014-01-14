@@ -2,8 +2,7 @@
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" >
+    android:layout_height="wrap_content">
 
     <LinearLayout 
         android:id="@+id/thumbnail"
@@ -47,13 +46,19 @@
         android:text="Pokemon Name"
         android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/list_item_description"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/list_item_name"
+    <ImageView
+        android:id="@+id/list_item_type1"
+        android:layout_width="50dip"
+        android:layout_height="20dip"
+        android:layout_below="@+id/list_item_name"
         android:layout_toRightOf="@+id/thumbnail"
-        android:text="Description"
-        android:textSize="12sp" />
+        android:src="@drawable/bug" />
+    
+    <ImageView
+        android:id="@+id/list_item_type2"
+        android:layout_width="50dip"
+        android:layout_height="20dip"
+        android:layout_below="@+id/list_item_name"
+        android:layout_toRightOf="@+id/list_item_type1"/>
 
 </RelativeLayout>
