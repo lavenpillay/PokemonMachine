@@ -11,15 +11,15 @@ import com.darkdesign.pokemonmachine.element.Pokemon;
 public class Cache {
 
 	private static HashMap<String, Pokemon> POKEMON_CACHE;
-	private static HashMap<Pokemon, Move> MOVE_CACHE;
+	private static int[][] TYPE_EFFICACY_MATRIX;
 	
 	private DatabaseHelper db;
 	
 	public Cache(FragmentActivity mainActivity) {
-		POKEMON_CACHE = new HashMap<String, Pokemon>();
-		MOVE_CACHE = new HashMap<Pokemon, Move>();
-		
 		db = new DatabaseHelper(mainActivity);
+		
+		POKEMON_CACHE = new HashMap<String, Pokemon>();
+		TYPE_EFFICACY_MATRIX = db.getTypeEfficacyMatrix();
 	}
 	
 	public void addPokemonToCache(Pokemon pokemon) {
@@ -35,5 +35,9 @@ public class Cache {
 		}
 		
 		return pokemon;
+	}
+	
+	public int[][] getTypeEfficacyMatrix() {
+		return TYPE_EFFICACY_MATRIX;
 	}
 }

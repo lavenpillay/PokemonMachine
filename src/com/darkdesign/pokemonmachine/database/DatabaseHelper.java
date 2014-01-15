@@ -32,9 +32,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_EVOLUTION = "pokemon_evolution";
     private static final String TABLE_SPECIES = "pokemon_species";
     private static final String TABLE_ITEMS = "items";
+    private static final String TABLE_TYPE_EFFICACY = "type_efficacy";
+    
+    
+    private static SQLiteDatabase db = null;
     
     public DatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);  
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        
+        db = getReadableDatabase();
     }
 
     /**
@@ -46,7 +52,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	
-        SQLiteDatabase db = getReadableDatabase();
+        //SQLiteDatabase db = getReadableDatabase();
         
         String versionGroupToQuery = "";
         
@@ -153,20 +159,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		Cursor cursorSpecies;
 		Cursor cursorEvolutions;
 		
-		SQLiteDatabase db = getReadableDatabase();
+		//SQLiteDatabase db = getReadableDatabase();
 
         String querySpecies = "SELECT id, evolves_from_species_id FROM " + TABLE_SPECIES + " WHERE evolution_chain_id = (SELECT evolution_chain_id FROM " + TABLE_SPECIES + " WHERE id = " + id + ")";
         Log.d(TAG, querySpecies);
         
         cursorSpecies = db.rawQuery(querySpecies, null);
-        
-        /*
-        if (cursorSpecies.getCount() == 0) {
-        	throw new DoesNotEvolveException();
-        } else {
-        	//cursor.moveToFirst();
-        }
-        */
         
         while (cursorSpecies.moveToNext()) {
 	        Log.d(TAG, "CHAIN : " + cursorSpecies.getString(0));
@@ -230,7 +228,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	Pokemon pokemon = new Pokemon();
     	ArrayList<Type> pokemonTypes = new ArrayList<Type>();
     	
-    	SQLiteDatabase db = getReadableDatabase();
+    	//SQLiteDatabase db = getReadableDatabase();
 
         String queryPokemon = "SELECT p.id, psn.name, ps.generation_id, ps.evolves_from_species_id, ps.evolution_chain_id,"
         		+ "	ps.gender_rate, ps.capture_rate, ps.base_happiness, ps.is_baby,	ps.hatch_counter, gr.identifier,"
@@ -282,12 +280,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         // Get Pokemon Types
         String queryPokemonTypes = 
-        		"SELECT identifier FROM pokemon_types INNER JOIN types ON id = type_id WHERE pokemon_id = " + pokemon.getId();
+        		"SELECT identifier, type_id FROM pokemon_types INNER JOIN types ON id = type_id WHERE pokemon_id = " + pokemon.getId();
         Log.v(TAG, queryPokemonTypes);
         
         Cursor cursorTypes = db.rawQuery(queryPokemonTypes, null);
         while(cursorTypes.moveToNext()) {
-        	pokemonTypes.add(new Type(cursorTypes.getString(0)));
+        	pokemonTypes.add(new Type(cursorTypes.getString(0), cursorTypes.getString(1)));
         }
         
         pokemon.setTypes(pokemonTypes);
@@ -308,7 +306,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public Item getItemById(String itemId) {
     	Item item;
     	
-    	SQLiteDatabase db = getReadableDatabase();
+    	//SQLiteDatabase db = getReadableDatabase();
 
         String queryItem = "SELECT id, identifier FROM " + TABLE_ITEMS + " WHERE id = " + itemId;
         Log.v(TAG, queryItem);
@@ -321,6 +319,31 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursor.close();
         
         return item;
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public int[][] getTypeEfficacyMatrix() {
+    	int[][] typeEfficacyMatrix = new int[Constants.NUMBER_OF_TYPES+1][Constants.NUMBER_OF_TYPES+1];
+    	
+    	String queryTypeEfficacy = "SELECT damage_type_id, target_type_id, damage_factor FROM " + TABLE_TYPE_EFFICACY;
+        Log.v(TAG, queryTypeEfficacy);
+        
+        Cursor cursorTypeEfficacy = db.rawQuery(queryTypeEfficacy, null);
+        
+        while (cursorTypeEfficacy.moveToNext()) {
+           	int damageTypeId = cursorTypeEfficacy.getInt(0);
+           	int targetTypeId = cursorTypeEfficacy.getInt(1);
+           	int damageFactor = cursorTypeEfficacy.getInt(2);
+           	
+           	typeEfficacyMatrix[damageTypeId][targetTypeId] = damageFactor;
+        }
+        
+        cursorTypeEfficacy.close();
+    	
+    	return typeEfficacyMatrix;
     }
     
     // Getting Pokemon Count
