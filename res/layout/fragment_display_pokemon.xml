@@ -7,7 +7,7 @@
 	    android:paddingLeft="10dip" 
 	    android:background="@drawable/container_dropshadow">
 	    
-	<LinearLayout 
+<LinearLayout 
 	    android:layout_width="0dip"
 	    android:layout_height="match_parent"
 	    android:orientation="vertical" 
@@ -120,14 +120,14 @@
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text="Species : "
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall"/>
 		    
 				    <TextView
 				        android:id="@+id/txtSpecies"
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall"/>
 			    </LinearLayout> 
 			    
 			    <LinearLayout 
@@ -141,14 +141,16 @@
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text="Height : "
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="10sp"/>
 		    
 				    <TextView
 				        android:id="@+id/txtHeight"
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall"
+				        android:textSize="10sp" />
 			    </LinearLayout>
 			    
 			    <LinearLayout 
@@ -162,20 +164,23 @@
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text="Weight : "
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall"
+				        android:textSize="10sp" />
 		    
 				    <TextView
 				        android:id="@+id/txtWeight"
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="10sp"/>
 				    
 				    <TextView
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
 				        android:text=" lbs"
-				        android:textAppearance="?android:attr/textAppearanceSmall" />
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="10sp"/>
 			    </LinearLayout>		
 		    
 			</LinearLayout> 
@@ -187,7 +192,7 @@
 			    android:layout_width="140dip"
 			    android:layout_height="wrap_content"
 
-			    android:paddingTop="20dip"
+			    android:paddingTop="10dip"
 			    android:orientation="vertical">
 	
 			    <LinearLayout 
@@ -550,38 +555,23 @@
 				</TableLayout>
 			    <!-- </LinearLayout> -->
 			    
-
-			     
-		    		    		    		    	        
-	
-
-	
-		
-			    
 			 </LinearLayout>   
 	
 		</LinearLayout>
 		<!-- END : Display Area -->	
 	
-		<LinearLayout 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal"
-		    android:paddingLeft="100dip">
-		    		
-		    
-		    
 
-		</LinearLayout>
 	
-		<!-- 
-		<View 
-		    android:layout_width="fill_parent"
-		    android:layout_height="2dip"
-		    android:background="#FFFF0000"/>
-		 -->
+
 		 
 		<!-- START : Evolutions -->
+		<TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Evolution Chain"
+	        android:textSize="16sp"
+	        android:layout_gravity="center_horizontal" />
+			        
 	    <LinearLayout 
 	        android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
@@ -596,20 +586,24 @@
 				android:orientation="horizontal"
 				android:gravity="center_vertical">
 				
-	            <!-- 
-				<include android:id="@+id/evolution1" layout="@layout/evolution_state_image"/>
-				
-				<include android:id="@+id/method1" layout="@layout/evolution_method_levelup"/>
-				
-				<include android:id="@+id/evolution2" layout="@layout/evolution_state_image"/>
-				
-				<include android:id="@+id/method2" layout="@layout/evolution_method_levelup"/>
-				
-				<include android:id="@+id/evolution3" layout="@layout/evolution_state_image"/>
-				 -->
 			</LinearLayout>
-	        
+        
+		</LinearLayout>
+		<!-- END : Evolutions -->	    
+
+		<!-- START : Weaknesses -->
+		<LinearLayout 
+	        android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:padding="5dip"
+			android:gravity="center">	
+			    
+	    	<include android:id="@+id/type_efficacy" layout="@layout/type_weakness"/>
+	    	
 	    </LinearLayout>
+	    <!-- END : Weaknesses -->
+	    
 	</LinearLayout>
 	
 	
