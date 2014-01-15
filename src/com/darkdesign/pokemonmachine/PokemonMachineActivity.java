@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -272,7 +274,43 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Remove current displays
 		holder.removeAllViews();
 		
-		buildEvolutionChain(pokemon, assetHelper, inflater, holder);			
+		buildEvolutionChain(pokemon, assetHelper, inflater, holder);
+		
+		// Update Type Weaknesses
+		int[][] matrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
+		
+		int[] textViewIds = {R.id.txtDamageBug, R.id.txtDamageDark, R.id.txtDamageDragon, R.id.txtDamageElectric,
+				R.id.txtDamageFairy, R.id.txtDamageFighting, R.id.txtDamageFire, R.id.txtDamageFlying,
+				R.id.txtDamageGhost, R.id.txtDamageGrass, R.id.txtDamageGround, R.id.txtDamageIce,
+				R.id.txtDamageNormal, R.id.txtDamagePoison, R.id.txtDamagePsychic, R.id.txtDamageRock, 
+				R.id.txtDamageSteel, R.id.txtDamageWater};
+		
+		for (int i=0; i < Constants.NUMBER_OF_TYPES; i++) {
+			TextView textView = (TextView) findViewById(textViewIds[i]);
+			int type1Id = Integer.parseInt(pokemon.getTypes().get(0).getId());
+			int damagePercentage = matrix[i+1][type1Id];
+			String damageText = "";
+			
+			if (damagePercentage == 100) {
+				textView.setTypeface(null, Typeface.NORMAL);
+				textView.setTextColor(Color.parseColor("#000000"));
+				damageText = "Regular";
+			} else if (damagePercentage == 50) {
+				textView.setTypeface(null, Typeface.ITALIC);
+				textView.setTextColor(Color.parseColor("#7bce52"));
+				damageText = "Half";
+			} else if (damagePercentage == 200) {
+				textView.setTypeface(null, Typeface.BOLD);
+				textView.setTextColor(Color.parseColor("#ee0000"));
+				damageText = "x2";
+			} else {
+				textView.setTypeface(null, Typeface.NORMAL);
+				textView.setTextColor(Color.BLUE);
+				damageText = String.valueOf(damagePercentage);
+			}
+			
+			textView.setText(damageText);
+		}
 	}
 
 	/**
@@ -373,6 +411,10 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
 		Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
 		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+		
+		TextView txtName = (TextView) evolutionStateView.findViewById(R.id.txtPokemonEvolutionName);
+		txtName.setText(PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id)).getName());
+		
 		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
 		evolutionImage.setImageBitmap(bm);
 		
