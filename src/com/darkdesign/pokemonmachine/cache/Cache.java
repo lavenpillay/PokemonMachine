@@ -13,6 +13,9 @@ public class Cache {
 	private static HashMap<String, Pokemon> POKEMON_CACHE;
 	private static int[][] TYPE_EFFICACY_MATRIX;
 	
+	private static HashMap<String,Integer> TYPE_ID_BY_NAME;
+	private static HashMap<Integer,String> TYPE_NAME_BY_ID;
+	
 	private DatabaseHelper db;
 	
 	public Cache(FragmentActivity mainActivity) {
@@ -20,6 +23,9 @@ public class Cache {
 		
 		POKEMON_CACHE = new HashMap<String, Pokemon>();
 		TYPE_EFFICACY_MATRIX = db.getTypeEfficacyMatrix();
+		
+		TYPE_ID_BY_NAME = db.getTypeIdsByNamesMap();
+		TYPE_NAME_BY_ID = db.getTypeNamesByIdsMap();
 	}
 	
 	public void addPokemonToCache(Pokemon pokemon) {
@@ -35,6 +41,14 @@ public class Cache {
 		}
 		
 		return pokemon;
+	}
+	
+	public int getTypeIdByName(String typeName) {
+		return TYPE_ID_BY_NAME.get(typeName);
+	}
+	
+	public String getTypeNameById(int typeId) {
+		return TYPE_NAME_BY_ID.get(typeId);
 	}
 	
 	public int[][] getTypeEfficacyMatrix() {

@@ -3,6 +3,7 @@ package com.darkdesign.pokemonmachine.database;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,7 +15,6 @@ import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
-import com.darkdesign.pokemonmachine.exception.DoesNotEvolveException;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_EVOLUTION = "pokemon_evolution";
     private static final String TABLE_SPECIES = "pokemon_species";
     private static final String TABLE_ITEMS = "items";
+    private static final String TABLE_TYPES = "types";
     private static final String TABLE_TYPE_EFFICACY = "type_efficacy";
     
     
@@ -344,6 +345,36 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursorTypeEfficacy.close();
     	
     	return typeEfficacyMatrix;
+    }
+    
+    public HashMap<String,Integer> getTypeIdsByNamesMap() {
+    	HashMap<String,Integer> typeIdByName = new HashMap<String,Integer>();
+    	
+    	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES;
+        Log.v(TAG, queryTypes);
+        
+        Cursor cursorTypes = db.rawQuery(queryTypes, null);
+        
+        while (cursorTypes.moveToNext()) {
+        	typeIdByName.put(cursorTypes.getString(1), cursorTypes.getInt(0));
+        }
+    	
+    	return typeIdByName;
+    }
+    
+    public HashMap<Integer,String> getTypeNamesByIdsMap() {
+    	HashMap<Integer,String> typeNameById = new HashMap<Integer,String>();
+    	
+    	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES;
+        Log.v(TAG, queryTypes);
+        
+        Cursor cursorTypes = db.rawQuery(queryTypes, null);
+        
+        while (cursorTypes.moveToNext()) {
+        	typeNameById.put(cursorTypes.getInt(0), cursorTypes.getString(1));
+        }
+    	
+    	return typeNameById;
     }
     
     // Getting Pokemon Count

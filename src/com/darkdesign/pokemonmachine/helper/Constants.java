@@ -27,6 +27,34 @@ public class Constants {
 	
 	public static final int NUMBER_OF_TYPES = 18;
 	
+	public static final int TYPE_NORMAL = 1;
+	public static final int TYPE_FIGHTING = 2;
+	public static final int TYPE_FLYING = 3;
+	public static final int TYPE_POISON = 4;
+	public static final int TYPE_GROUND = 5;
+	public static final int TYPE_ROCK = 6;
+	public static final int TYPE_BUG = 7;
+	public static final int TYPE_GHOST = 8;
+	public static final int TYPE_STEEL = 9;
+	public static final int TYPE_FIRE = 10;
+	public static final int TYPE_WATER = 11;
+	public static final int TYPE_GRASS = 12;
+	public static final int TYPE_ELECTRIC = 13;
+	public static final int TYPE_PSYCHIC = 14;
+	public static final int TYPE_ICE = 15;
+	public static final int TYPE_DRAGON = 16;
+	public static final int TYPE_DARK = 17;
+	public static final int TYPE_FAIRY = 18;
+	
+	public static final int TYPE_NULL = -1;
+	
+	public static final String DAMAGE_IMMUNE = "Immune";
+	public static final String DAMAGE_HALF = "Half";
+	public static final String DAMAGE_QUARTER = "Quarter";
+	public static final String DAMAGE_REGULAR = "Regular";
+	public static final String DAMAGE_DOUBLE = "x2";
+	public static final String DAMAGE_QUADRUPLE = "x4";
+	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 
 		"160", "200", "201", "233", "234", "243", "244", "245", "249", "250", "251", "252", "253", "254", "258", 

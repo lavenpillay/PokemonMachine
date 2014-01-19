@@ -136,7 +136,8 @@
 	    android:orientation="vertical"
 	    android:id="@+id/expandable"
 	    android:paddingLeft="20dip"
-	    android:paddingBottom="3dip">
+	    android:paddingBottom="3dip"
+	    android:background="#AAEFEFEF">
 	
 		<TextView
 		    android:layout_width="wrap_content"

@@ -141,17 +141,12 @@
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_below="@+id/imageView5"
-	                android:layout_marginBottom="5dip"
 	                android:src="@drawable/fighting" />
 	            
 	            <TextView
 	                android:id="@+id/txtDamageFighting"
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
-			        android:layout_toRightOf="@+id/imageView6"
-			        android:layout_below="@+id/txtDamageFairy"
-			        android:layout_marginBottom="5dip"
-			        android:layout_marginTop="2dip"
 			        android:paddingLeft="5dip"
 			        android:textSize="12sp"
 			        android:text="Damage"/>

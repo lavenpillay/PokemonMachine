@@ -2,6 +2,7 @@ package com.darkdesign.pokemonmachine;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
@@ -279,39 +280,116 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 		// Update Type Weaknesses
 		int[][] matrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
 		
-		int[] textViewIds = {R.id.txtDamageBug, R.id.txtDamageDark, R.id.txtDamageDragon, R.id.txtDamageElectric,
-				R.id.txtDamageFairy, R.id.txtDamageFighting, R.id.txtDamageFire, R.id.txtDamageFlying,
-				R.id.txtDamageGhost, R.id.txtDamageGrass, R.id.txtDamageGround, R.id.txtDamageIce,
-				R.id.txtDamageNormal, R.id.txtDamagePoison, R.id.txtDamagePsychic, R.id.txtDamageRock, 
-				R.id.txtDamageSteel, R.id.txtDamageWater};
+		HashMap<Integer, Integer> textFieldIdByTypeId = new HashMap<Integer, Integer>();
+		textFieldIdByTypeId.put(Constants.TYPE_BUG, R.id.txtDamageBug);
+		textFieldIdByTypeId.put(Constants.TYPE_DARK, R.id.txtDamageDark);
+		textFieldIdByTypeId.put(Constants.TYPE_DRAGON, R.id.txtDamageDragon);
+		textFieldIdByTypeId.put(Constants.TYPE_ELECTRIC, R.id.txtDamageElectric);
+		textFieldIdByTypeId.put(Constants.TYPE_FAIRY, R.id.txtDamageFairy);
+		textFieldIdByTypeId.put(Constants.TYPE_FIGHTING, R.id.txtDamageFighting);
+		textFieldIdByTypeId.put(Constants.TYPE_FIRE, R.id.txtDamageFire);
+		textFieldIdByTypeId.put(Constants.TYPE_FLYING, R.id.txtDamageFlying);
+		textFieldIdByTypeId.put(Constants.TYPE_GHOST, R.id.txtDamageGhost);
+		textFieldIdByTypeId.put(Constants.TYPE_GRASS, R.id.txtDamageGrass);
+		textFieldIdByTypeId.put(Constants.TYPE_GROUND, R.id.txtDamageGround);
+		textFieldIdByTypeId.put(Constants.TYPE_ICE, R.id.txtDamageIce);
+		textFieldIdByTypeId.put(Constants.TYPE_NORMAL, R.id.txtDamageNormal);
+		textFieldIdByTypeId.put(Constants.TYPE_POISON, R.id.txtDamagePoison);
+		textFieldIdByTypeId.put(Constants.TYPE_PSYCHIC, R.id.txtDamagePsychic);
+		textFieldIdByTypeId.put(Constants.TYPE_ROCK, R.id.txtDamageRock);
+		textFieldIdByTypeId.put(Constants.TYPE_STEEL, R.id.txtDamageSteel);
+		textFieldIdByTypeId.put(Constants.TYPE_WATER, R.id.txtDamageWater);
 		
-		for (int i=0; i < Constants.NUMBER_OF_TYPES; i++) {
-			TextView textView = (TextView) findViewById(textViewIds[i]);
+		for (int i=1; i <= Constants.NUMBER_OF_TYPES; i++) {
+			TextView textView = (TextView) findViewById(textFieldIdByTypeId.get(i));
 			int type1Id = Integer.parseInt(pokemon.getTypes().get(0).getId());
-			int damagePercentage = matrix[i+1][type1Id];
-			String damageText = "";
+			int damagePercentageForType1 = matrix[i][type1Id];
 			
-			if (damagePercentage == 100) {
+			int type2Id;
+			int damagePercentageForType2 = Constants.TYPE_NULL;
+			
+			if (pokemon.getTypes().size() == 2) {
+				type2Id = Integer.parseInt(pokemon.getTypes().get(1).getId());
+				damagePercentageForType2 = matrix[i][type2Id];
+			}
+			
+			// Resolve Efficacy
+			String damageText = getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
+			
+			// Set text styles for type weaknesses
+			if (damageText.equalsIgnoreCase(Constants.DAMAGE_REGULAR)) {
 				textView.setTypeface(null, Typeface.NORMAL);
-				textView.setTextColor(Color.parseColor("#000000"));
-				damageText = "Regular";
-			} else if (damagePercentage == 50) {
+				textView.setTextColor(Color.GRAY);
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_HALF)) {
 				textView.setTypeface(null, Typeface.ITALIC);
 				textView.setTextColor(Color.parseColor("#7bce52"));
-				damageText = "Half";
-			} else if (damagePercentage == 200) {
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_DOUBLE)) {
 				textView.setTypeface(null, Typeface.BOLD);
-				textView.setTextColor(Color.parseColor("#ee0000"));
-				damageText = "x2";
-			} else {
+				textView.setTextColor(Color.parseColor("#f08030"));
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_QUARTER)) {
 				textView.setTypeface(null, Typeface.NORMAL);
 				textView.setTextColor(Color.BLUE);
-				damageText = String.valueOf(damagePercentage);
-			}
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_QUADRUPLE)) {
+				textView.setTypeface(null, Typeface.BOLD);
+				textView.setTextColor(Color.parseColor("#ee0000"));
+			} if (damageText.equalsIgnoreCase(Constants.DAMAGE_IMMUNE)) {
+				textView.setTypeface(null, Typeface.ITALIC);
+				textView.setTextColor(Color.BLACK);
+			} 
+			
+			
+			
+			Log.v(TAG, "AttackType=" + cache.getTypeNameById(i) + 
+					   " VS DefendingType=" + cache.getTypeNameById(type1Id) + 
+					   " = " + damagePercentageForType1 + " AND " + damagePercentageForType2);
+			
 			
 			textView.setText(damageText);
 		}
 	}
+	
+	public String getAttackEfficacy(int damagePercentageType1, int damagePercentageType2) {
+		String damage = "";
+
+		if (damagePercentageType2 == Constants.TYPE_NULL) {
+			if (damagePercentageType1 == 0) {
+				damage = Constants.DAMAGE_IMMUNE;
+			} else if (damagePercentageType1 == 50) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 200) {
+				damage = Constants.DAMAGE_DOUBLE;
+			}
+		} else {
+			if (damagePercentageType1 == 100 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_DOUBLE;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_DOUBLE;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_QUARTER;
+			} else if (damagePercentageType1 == 0 || damagePercentageType2 == 0) {
+				damage = Constants.DAMAGE_IMMUNE;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_QUADRUPLE;
+			}
+		}
+		
+		return damage;
+	}
+	
 
 	/**
 	 * 
