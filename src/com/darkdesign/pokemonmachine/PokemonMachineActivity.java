@@ -115,12 +115,14 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         fTransaction.commit();
         
         // Create and add "Moves List" as Secondary Fragment
+        /*
         fTransaction = fragmentManager.beginTransaction();
         if (movesListFragment == null) {
         	movesListFragment = new MoveListFragment();
         }
         fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
+        */
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -212,8 +214,6 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	public void onMoveByTutorClick(View view) {
 		updateMoveList(Constants.LEARN_TYPE_TUTOR);
 	}
-	
-
 
 	private void updateMoveList(String moveLearnType) {
 		ArrayList<Move> moveSubset = currentSelectedPokemon.getMovesByType(moveLearnType);
@@ -222,9 +222,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		
-		movesListFragment.movesData.clear();
-		movesListFragment.movesData.addAll(moveSubset);
-		movesListFragment.adapter.notifyDataSetChanged();
+		pokemonDisplayFragment.movesData.clear();
+		pokemonDisplayFragment.movesData.addAll(moveSubset);
+		pokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
 	}
 	
 	public void executeSearch(String nationalId) {

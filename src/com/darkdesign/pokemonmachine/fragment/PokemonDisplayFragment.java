@@ -27,12 +27,14 @@ import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
+import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 public class PokemonDisplayFragment extends Fragment {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
@@ -43,8 +45,10 @@ public class PokemonDisplayFragment extends Fragment {
 	private View v; 
 	private EditText filterText = null;
 	
-	private static SimplePokemonListAdapter pokemonListAdapter;
-	private static SimpleMoveListAdapter movesListAdapter;
+	public static ArrayList<Move> movesData = new ArrayList<Move>();	
+	
+	public static SimplePokemonListAdapter pokemonListAdapter;
+	public static SimpleMoveListAdapter movesListAdapter;
 	
 	private String lastViewedPokemonId;
 
@@ -122,8 +126,24 @@ public class PokemonDisplayFragment extends Fragment {
 	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	   
-	   // Handle Moves List
-	   
+	   	// Handle Moves List
+	   		// Create Test Data
+		Move testMove1 = new Move();
+		testMove1.setName("Test Name 1");
+		testMove1.setMethod("Test Learn Type 1");
+		testMove1.setResourceURI("/etc");
+		
+		PokemonDisplayFragment.movesData.add(testMove1);
+		
+		movesListAdapter = new SimpleMoveListAdapter(getActivity(), movesData);
+		
+		ListView movesListView = (ListView) v.findViewById(R.id.mlist);
+		
+		movesListView.setAdapter(new SlideExpandableListAdapter(
+				movesListAdapter,
+                R.id.expandable_toggle_button,
+                R.id.expandable
+        ));
 	   
 	   return v;
 	 }

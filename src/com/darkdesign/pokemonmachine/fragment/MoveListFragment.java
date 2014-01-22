@@ -16,9 +16,6 @@ import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 public class MoveListFragment extends ListFragment {
 	private final String TAG = MoveListFragment.class.getName();
 
-	public ArrayList<Move> movesData = new ArrayList<Move>();	
-	public SimpleMoveListAdapter adapter;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, "onCreate()");
@@ -30,30 +27,13 @@ public class MoveListFragment extends ListFragment {
 		Log.i(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 
-		// Create Test Data
-		Move testMove1 = new Move();
-		testMove1.setName("Test Name 1");
-		testMove1.setMethod("Test Learn Type 1");
-		testMove1.setResourceURI("/etc");
 		
-		movesData.add(testMove1);
-		
-		adapter = new SimpleMoveListAdapter(getActivity(), movesData);
-		
-		//setListAdapter(adapter);
-		
-		
-		setListAdapter(new SlideExpandableListAdapter(
-                adapter,
-                R.id.expandable_toggle_button,
-                R.id.expandable
-        ));
         
 	}
 	
 	public void updateMoveList(ArrayList<Move> moves) {
-		movesData = moves;
-		adapter.notifyDataSetChanged();
+		//movesData = moves;
+		//adapter.notifyDataSetChanged();
 	}
 
 	  @Override

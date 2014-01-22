@@ -8,7 +8,6 @@
     android:paddingLeft="10dip" >
 
     <!-- List of Pokemon to choose from -->
-
     <LinearLayout
         android:id="@+id/pokemon_list"
         android:layout_width="wrap_content"
@@ -70,10 +69,11 @@
 
     <!-- END - List of Pokemon -->
 
+
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="match_parent"
-        android:layout_weight="1.25"
+        android:layout_weight="2"
         android:background="@drawable/shadow_left"
         android:orientation="vertical" >
 
@@ -669,16 +669,52 @@
 
     <!-- MOVES -->
 
-    <LinearLayout
-        android:id="@+id/moves_holder"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="0.75"
-        android:orientation="vertical" >
+<LinearLayout 
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1.5">
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
 
-        <include
-            android:id="@+id/movesArea"
-            layout="@layout/fragment_move_list" />
-    </LinearLayout>
+		<Button
+		    android:id="@+id/btnMovesByLevel"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByLevelClick"
+		    android:text="Level" />
+
+		<Button
+		    android:id="@+id/btnMovesByMachine"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByMachineClick"
+		    android:text="TM" />
+
+		<Button
+		    android:id="@+id/btnMovesByEgg"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByEggClick"
+		    android:text="Egg Moves" />
+		
+		<Button
+		    android:id="@+id/btnMovesByTutor"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByTutorClick"
+		    android:text="Tutor" />		
+	    
+	</LinearLayout>
+	    
+	<ListView 
+	  	android:id="@+id/mlist"
+	  	android:layout_width="match_parent"
+	  	android:layout_height="wrap_content">
+	</ListView>
+</LinearLayout>
 
 </LinearLayout>
