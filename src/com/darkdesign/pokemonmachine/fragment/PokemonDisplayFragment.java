@@ -25,11 +25,12 @@ import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
-import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
+import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
@@ -43,6 +44,9 @@ public class PokemonDisplayFragment extends Fragment {
 	private EditText filterText = null;
 	
 	private static SimplePokemonListAdapter pokemonListAdapter;
+	private static SimpleMoveListAdapter movesListAdapter;
+	
+	private String lastViewedPokemonId;
 
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 
@@ -54,7 +58,7 @@ public class PokemonDisplayFragment extends Fragment {
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
 	    	if (s.length() > 0) {
-	    		PokemonListFragment.pokemonListAdapter.getFilter().filter(s);
+	    		pokemonListAdapter.getFilter().filter(s);
 	    	}
 	    }
 
@@ -66,8 +70,6 @@ public class PokemonDisplayFragment extends Fragment {
 		Bundle bdl = new Bundle(1);
 		bdl.putString(EXTRA_MESSAGE, message);
 		f.setArguments(bdl);
-		
-		pokemonListAdapter = PokemonListFragment.pokemonListAdapter;
 		
 	 	return f;
 	}
@@ -95,6 +97,7 @@ public class PokemonDisplayFragment extends Fragment {
 	   filterText = (EditText) v.findViewById(R.id.txtFilter);
 	   filterText.addTextChangedListener(filterTextWatcher);
 	   
+	   // Handle Pokemon List
 	   String[] names = getResources().getStringArray(R.array.pokemon_names);
 	   pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
 		
@@ -115,8 +118,30 @@ public class PokemonDisplayFragment extends Fragment {
 	       }
 	    });
 	   
+	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
+	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
+	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+	   
+	   // Handle Moves List
+	   
+	   
 	   return v;
 	 }
+	 
+	 @Override
+	 public void onPause() {
+		 super.onPause();
+		 lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
+	 }
+	 
+	 @Override
+	 public void onResume() {
+		 super.onResume();
+		 if (lastViewedPokemonId != null) {
+			 ((PokemonMachineActivity) getActivity()).executeSearch(lastViewedPokemonId);
+		 }
+	 }
+	 
 	 
 	 public void update(Pokemon pokemon) {
 	 
@@ -234,5 +259,10 @@ public class PokemonDisplayFragment extends Fragment {
 	    super.onDestroy();
 	    filterText.removeTextChangedListener(filterTextWatcher);
 	}	 
-}
 
+
+	//Container Activity must implement this interface
+	public interface OnPokemonListItemSelectedListener {
+	    public void onPokemonListItemSelected(String id);
+	}	
+}

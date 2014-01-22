@@ -201,11 +201,10 @@ public final class R {
         public static final int fragment_display_pokemon=0x7f03000a;
         public static final int fragment_move_list=0x7f03000b;
         public static final int fragment_planet=0x7f03000c;
-        public static final int fragment_pokemon_list=0x7f03000d;
-        public static final int list_item_drawer=0x7f03000e;
-        public static final int list_item_move=0x7f03000f;
-        public static final int list_item_pokemon=0x7f030010;
-        public static final int type_weakness=0x7f030011;
+        public static final int list_item_drawer=0x7f03000d;
+        public static final int list_item_move=0x7f03000e;
+        public static final int list_item_pokemon=0x7f03000f;
+        public static final int type_weakness=0x7f030010;
     }
     public static final class menu {
         public static final int main=0x7f090000;

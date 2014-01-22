@@ -47,7 +47,7 @@ import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
-import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
+import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
@@ -75,7 +75,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     private BerryDisplayFragment berryDisplayFragment = null;
     private MoveListFragment movesListFragment = null;
     
-    private Pokemon currentSelectedPokemon;
+    public Pokemon currentSelectedPokemon;
     
     private DatabaseHelper db;
     
@@ -169,7 +169,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	    inflater.inflate(R.menu.main_activity_actions, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
-
+	
 	/**
 	 * 
 	 */
