@@ -1,12 +1,15 @@
 package com.darkdesign.pokemonmachine.fragment;
 
 import android.app.ListFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.darkdesign.pokemonmachine.R;
@@ -18,47 +21,39 @@ import com.darkdesign.pokemonmachine.helper.Util;
 public class PokemonListFragment extends ListFragment {
 	private final String TAG = PokemonListFragment.class.getName();
 	
-	private EditText filterText = null;
-	SimplePokemonListAdapter adapter = null;
+	
+	public static SimplePokemonListAdapter pokemonListAdapter = null;
+	private LayoutInflater inflater;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
 	}
 	
-	private TextWatcher filterTextWatcher = new TextWatcher() {
-
-	    public void afterTextChanged(Editable s) {
-	    }
-
-	    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-	    }
-
-	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-	        adapter.getFilter().filter(s);
-	    }
-
-	};
+	@Override
+	public void onAttach(android.app.Activity activity) {
+		super.onAttach(activity);
+		Log.d(TAG, "PokemonListFragment.onAttach() - Called");
+	} 
 	
 	@Override
 	  public void onActivityCreated(Bundle savedInstanceState) {
 	    super.onActivityCreated(savedInstanceState);
 	    
-		String[] names = getResources().getStringArray(R.array.pokemon_names);
-		adapter = new SimplePokemonListAdapter(getActivity(), names);
-		
-		filterText = (EditText) getActivity().findViewById(R.id.txtFilter);
-	    filterText.addTextChangedListener(filterTextWatcher);
+	    Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
 	    
-	    setListAdapter(adapter);
+		String[] names = getResources().getStringArray(R.array.pokemon_names);
+		pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+		
+	    setListAdapter(pokemonListAdapter);
 	    
 	    getListView().setFastScrollEnabled(Config.FAST_SCROLL);
 	    getListView().setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	    getListView().setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	    
 	    //adapter.getFilter().filter("Sand");
+	    
 	  }
 
 	  @Override
@@ -66,10 +61,9 @@ public class PokemonListFragment extends ListFragment {
 		  Log.i("PokemonListFragment", "Item Clicked");
 		  
 		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
-		  String name = adapter.getItem(position);
-		  int pokemonId = Util.arrayIndexOf(adapter.getAllData(), name) + 1;
+		  String name = pokemonListAdapter.getItem(position);
+		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
 		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
-		  //listener.onPokemonListItemSelected(Util.padLeft(position+1, GlobalConstants.POKEMON_ID_LENGTH));
 	  }
 	  
 	// Container Activity must implement this interface
@@ -77,9 +71,4 @@ public class PokemonListFragment extends ListFragment {
 	    public void onPokemonListItemSelected(String id);
 	}
 
-	@Override
-	public void onDestroy() {
-	    super.onDestroy();
-	    filterText.removeTextChangedListener(filterTextWatcher);
-	}	
 }

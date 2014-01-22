@@ -8,29 +8,58 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
+import com.darkdesign.pokemonmachine.fragment.PokemonListFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class PokemonDisplayFragment extends Fragment {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
+	private String TAG = PokemonDisplayFragment.class.getName();
 	
 	private AssetHelper assetHelper;
 	private SharedPreferences applicationSettings;
 	private View v; 
+	private EditText filterText = null;
+	
+	private static SimplePokemonListAdapter pokemonListAdapter;
 
+	private TextWatcher filterTextWatcher = new TextWatcher() {
+
+	    public void afterTextChanged(Editable s) {
+	    }
+
+	    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	    }
+
+	    public void onTextChanged(CharSequence s, int start, int before, int count) {
+	    	if (s.length() > 0) {
+	    		PokemonListFragment.pokemonListAdapter.getFilter().filter(s);
+	    	}
+	    }
+
+	};
+	
 	public static final PokemonDisplayFragment newInstance(String message)
 	{
 		PokemonDisplayFragment f = new PokemonDisplayFragment();
@@ -38,18 +67,53 @@ public class PokemonDisplayFragment extends Fragment {
 		bdl.putString(EXTRA_MESSAGE, message);
 		f.setArguments(bdl);
 		
+		pokemonListAdapter = PokemonListFragment.pokemonListAdapter;
+		
 	 	return f;
 	}
+
 	 
 
+	@Override
+	  public void onActivityCreated(Bundle savedInstanceState) {
+	    super.onActivityCreated(savedInstanceState);
+	    
+	    Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
+	    
+	    //adapter.getFilter().filter("Sand");
+
+	  }	
+	
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
 	   v = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
 	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
 	   
 	   applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+	   
+	   filterText = (EditText) v.findViewById(R.id.txtFilter);
+	   filterText.addTextChangedListener(filterTextWatcher);
+	   
+	   String[] names = getResources().getStringArray(R.array.pokemon_names);
+	   pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+		
+	   ListView listView = (ListView) v.findViewById(R.id.plist);
+	   listView.setAdapter(pokemonListAdapter);
+	   listView.invalidate();
+	   
+	   listView.setOnItemClickListener(new OnItemClickListener() {
+	        public void onItemClick(AdapterView<?> parent, View view,
+	                int position, long id) {
+
+	          Log.i("PokemonListFragment", "Item Clicked");
+	  		  
+	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
+	  		  String name = pokemonListAdapter.getItem(position);
+	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));	        	
+	       }
+	    });
 	   
 	   return v;
 	 }
@@ -163,7 +227,12 @@ public class PokemonDisplayFragment extends Fragment {
 	     
 	     TextView growthRateTextView = (TextView)v.findViewById(R.id.txtGrowthRate);
 	     growthRateTextView.setText(String.valueOf(pokemon.getGrowthRate()));
-	     
-
 	 }
+	 
+	@Override
+	public void onDestroy() {
+	    super.onDestroy();
+	    filterText.removeTextChangedListener(filterTextWatcher);
+	}	 
 }
+

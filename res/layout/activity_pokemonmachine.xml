@@ -14,52 +14,6 @@
         android:orientation="horizontal"
         android:weightSum="5" >
 
-        <!-- List of Pokemon to choose from  -->
-        <LinearLayout
-	        android:id="@+id/pokemon_list"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
-	        
-            <LinearLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:layout_gravity="center">
-	        
-            <EditText
-			    android:id="@+id/txtFilter"
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:ems="10"
-			    android:text="" 
-			    android:inputType=""
-			    android:hint="pokemon name"
-			    android:textColorHint="#AAAAAA">
-		
-			</EditText>
-			
-            <ImageButton
-		        android:id="@+id/btnClearNameFilter"
-		        android:layout_width="30dip"
-		        android:layout_height="30dip"	
-		        android:onClick="onClearNameFilterClick"
-		        android:src="@drawable/clear_cross_01" 
-		        android:layout_gravity="center"
-		        android:background="@null"/>
-			
-            </LinearLayout>
-			
-	        <fragment
-	            android:id="@+id/listPokemon"
-	            android:name="com.darkdesign.pokemonmachine.fragment.PokemonListFragment"
-	            android:layout_width="250dip"
-	            android:layout_height="match_parent"
-	            android:tag="PokemonListFragment"
-	            android:layout_weight="3"
-	            tools:layout="@layout/fragment_pokemon_list" />
-	    </LinearLayout>
-
 
     </LinearLayout>
 

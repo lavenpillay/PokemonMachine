@@ -542,6 +542,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
 	    PrefFragment mPrefsFragment = new PrefFragment();
 	    mFragmentTransaction.replace(R.id.content_frame, mPrefsFragment);
+	    mFragmentTransaction.addToBackStack(null);
 	    mFragmentTransaction.commit();
 	    
 	    /*

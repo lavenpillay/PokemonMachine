@@ -1,630 +1,684 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:orientation="horizontal"
-	    android:paddingLeft="10dip" 
-	    android:background="@drawable/container_dropshadow">
-	    
-<LinearLayout 
-	    android:layout_width="0dip"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" 
-	    android:layout_weight="1.25"
-	    android:background="@drawable/shadow_left">
-	    
-		<!--  START : Search Area -->
-	    <LinearLayout 
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container_dropshadow"
+    android:orientation="horizontal"
+    android:paddingLeft="10dip" >
 
-			<Button
-		        android:id="@+id/btnSearch"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"	
-		        android:onClick="onSearchClick"
-		        android:text="Search" />
-				        
-			<EditText
-			    android:id="@+id/txtSearch"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:ems="10"
-			    android:text="" 
-			    android:singleLine="true"
-			    android:numeric="integer"
-			    android:hint="national id"
-			    android:textColorHint="#AAAAAA"
-			    android:imeOptions="actionDone">
-		
-			    <!-- <requestFocus android:layout_width="wrap_content" />  -->
-			</EditText>			    
+    <!-- List of Pokemon to choose from -->
 
-			<ImageButton
-		        android:id="@+id/btnClearID"
-		        android:layout_width="30dip"
-		        android:layout_height="30dip"	
-		        android:onClick="onClearIDClick"
-		        android:src="@drawable/clear_cross_01" 
-		        android:layout_gravity="center"
-		        android:background="@null"/>
-			
-			
-		</LinearLayout>
-		<!-- END : Search Area -->
-		
-		<!-- START : Display Area -->
-		<LinearLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal">
-		    
-			        <TextView
-				        android:id="@+id/txtID"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=" "
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="15pt"/>
-		    
-				    <TextView
-				        android:id="@+id/txtName"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Pokemon Name "
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="15pt"/>
-				    
-					<ImageView
-				        android:id="@+id/imgType1"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_margin="5dip" />
-					
-					<ImageView
-				        android:id="@+id/imgType2"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:layout_margin="5dip" />
-	
-		</LinearLayout>
-		
-		<LinearLayout 
-		    android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    android:orientation="horizontal">
-		    
-		    
-		    <LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="vertical">
-				    
-			    <ImageView
-			        android:id="@+id/imageView1"
-			        android:layout_width="200dip"
-			        android:layout_height="200dip"
-			        android:src="@drawable/pokeball"
-			        android:padding="10dip" />
-			    
-			    <LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal"
-				    android:layout_gravity="center">
-				    
-			        <TextView
-				        android:id="@+id/lblSpecies"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Species : "
-				        android:textAppearance="?android:attr/textAppearanceSmall"/>
-		    
-				    <TextView
-				        android:id="@+id/txtSpecies"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall"/>
-			    </LinearLayout> 
-			    
-			    <LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal"
-				    android:layout_gravity="center" >
-				    
-			        <TextView
-				        android:id="@+id/lblHeight"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Height : "
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="10sp"/>
-		    
-				    <TextView
-				        android:id="@+id/txtHeight"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="10sp" />
-				    
-			        <TextView
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=" m"
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="10sp"/>				    
-			    </LinearLayout>
-			    
-			    <LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal"
-				    android:layout_gravity="center" >
-				    
-			        <TextView
-				        android:id="@+id/lblWeight"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text="Weight : "
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="10sp" />
-			        
-				    <TextView
-				        android:id="@+id/txtWeight"
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=""
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="10sp"/>
-				    
-				    <TextView
-				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content"
-				        android:text=" kg"
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="10sp"/>
-			    </LinearLayout>		
-		    
-			</LinearLayout> 
-		    
-	
-			
-		    <!-- START : Stats Area -->
-		    <LinearLayout 
-			    android:layout_width="140dip"
-			    android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/pokemon_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-			    android:paddingTop="10dip"
-			    android:orientation="vertical">
-	
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-	
-			        <TextView
-				        android:id="@+id/lblHP"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#AAFF7F"
-				        android:gravity="center"
-				        android:text="HP"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtHP"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="100"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-			    <View
-			        android:id="@+id/barHP"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
 
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				    
-			        <TextView
-				        android:id="@+id/lblATK"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#FFFF7F"
-				        android:gravity="center"
-				        android:layout_marginTop="3dip"
-				        android:text="ATK"
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="6pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtATK"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="200"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-				<View
-			        android:id="@+id/barATK"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>			    
-			    
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				    
-			        <TextView
-				        android:id="@+id/lblDEF"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#FFD455"
-				        android:gravity="center"
-				        android:layout_marginTop="3dip"
-				        android:text="DEF"
-				        android:textAppearance="?android:attr/textAppearanceSmall" 
-				        android:textSize="6pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtDEF"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="300"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-			    <View
-			        android:id="@+id/barDEF"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>		    	        
-	
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				    
-			        <TextView
-				        android:id="@+id/lblSPATK"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#2AD4FF"
-				        android:gravity="center"
-				        android:layout_marginTop="3dip"
-				        android:text="SP\nATK"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="5pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtSPATK"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="400"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-			    <View
-			        android:id="@+id/barSPATK"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>
-			     
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				    
-			        <TextView
-				        android:id="@+id/lblSPDEF"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#7F7FFF"
-				        android:gravity="center"
-				        android:layout_marginTop="3dip"
-				        android:text="SP\nDEF"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="5pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtSPDEF"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="500"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-			    <View
-			        android:id="@+id/barSPDEF"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>				    	
-			    
-			    <LinearLayout 
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				    
-			        <TextView
-				        android:id="@+id/lblSPD"
-				        android:layout_width="30dip"
-				        android:layout_height="30dip"
-				        android:background="#FF55D4"
-				        android:gravity="center"
-				        android:layout_marginTop="3dip"
-				        android:text="SPD"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt" />
-		    
-				    <TextView
-				        android:id="@+id/txtSPD"
-				        android:layout_width="wrap_content"
-				        android:layout_height="match_parent"
-				        android:layout_marginTop="3dip"
-				        android:layout_marginLeft="5dip"
-				        android:gravity="center"
-				        android:text="600"
-				        android:textAppearance="?android:attr/textAppearanceSmall"
-				        android:textSize="6pt"  />
-			    </LinearLayout>
-			    
-			    <View
-			        android:id="@+id/barSPD"
-				    android:layout_width="128dip"
-				    android:layout_height="3dp"
-				    android:background="@android:color/darker_gray"/>
-			</LinearLayout>
-			<!-- END : Stats Area -->
-			
-		    
-			<!--  START : Capture and Breeding -->
-		    <LinearLayout 
-			    android:layout_width="0dip"
-			    android:layout_height="wrap_content"
-			    android:layout_weight="2"
-			    android:paddingTop="20dip"
-			    android:orientation="vertical">
-			    
-		        <!-- 
-  		        <LinearLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content"
-				    android:orientation="horizontal">
-				 -->
-				 <TableLayout 
-				    android:layout_width="wrap_content"
-				    android:layout_height="wrap_content">
-				    
-				    <TableRow >
-				        <TextView
-					        android:id="@+id/lblMaleFemaleRatio"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text="Male/Female Ratio : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtMaleFemaleRatio"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text="0.56"
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
-				    
-				    <TableRow >
-					    <TextView
-					        android:id="@+id/lblCatch"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="Catch Rate : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtCatchRate"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
-				    
-					<TableRow 
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content">
-					    
-				        <TextView
-					        android:id="@+id/lblEggCycles"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="Egg Cycles : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtEggCycles"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
-				    
-					<TableRow
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content">
-					    
-				        <TextView
-					        android:id="@+id/lblEggGroups"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="Egg Group : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-		
-			    
-					    <TextView
-					        android:id="@+id/txtEggGroups"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
-				    
-					<TableRow 
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content">
-					    
-				        <TextView
-					        android:id="@+id/lblGrowthRate"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="Growth Rate : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtGrowthRate"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
+            <EditText
+                android:id="@+id/txtFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="pokemon name"
+                android:inputType=""
+                android:text=""
+                android:textColorHint="#AAAAAA" >
+            </EditText>
 
-				    <TableRow 
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content">
-					    
-				        <TextView
-					        android:id="@+id/lblEVYield"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="EV Yield : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtEVYield"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>
-				    
-				    <TableRow 
-					    android:layout_width="wrap_content"
-					    android:layout_height="wrap_content">
-					    
-				        <TextView
-					        android:id="@+id/lblHappiness"
-					        android:gravity="right"
-					        android:layout_width="fill_parent"
-					        android:layout_height="wrap_content"
-					        android:text="Happiness : "
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-			    
-					    <TextView
-					        android:id="@+id/txtHappiness"
-					        android:layout_width="wrap_content"
-					        android:layout_height="wrap_content"
-					        android:text=""
-					        android:textAppearance="?android:attr/textAppearanceSmall" />
-				    </TableRow>				    
-				</TableLayout>
-			    <!-- </LinearLayout> -->
-			    
-			 </LinearLayout>   
-	
-		</LinearLayout>
-		<!-- END : Display Area -->	
-	
-
-	
-
-		 
-		<!-- START : Evolutions -->
-		<TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Evolution Chain"
-	        android:textSize="16sp"
-	        android:layout_gravity="center_horizontal" />
-			        
-	    <LinearLayout 
-	        android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:padding="5dip"
-			android:gravity="center">
-		    
-	        <LinearLayout 
-	            android:id="@+id/evolutionsHolder"
-		        android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="horizontal"
-				android:gravity="center_vertical">
-				
-			</LinearLayout>
+            <ImageButton
+                android:id="@+id/btnClearNameFilter"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:onClick="onClearNameFilterClick"
+                android:src="@drawable/clear_cross_01" />
+        </LinearLayout>
         
-		</LinearLayout>
-		<!-- END : Evolutions -->	    
+        <ListView
+            android:id="@+id/plist"
+            android:layout_width="250dip"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="vertical"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/list_item_pokemon" >
 
-		<!-- START : Weaknesses -->
-		<LinearLayout 
-	        android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal"
-			android:padding="5dip"
-			android:gravity="center">	
-			    
-	    	<include android:id="@+id/type_efficacy" layout="@layout/type_weakness"/>
-	    	
-	    </LinearLayout>
-	    <!-- END : Weaknesses -->
-	    
-	</LinearLayout>
-	
-	
-	
-	<!-- MOVES -->
-	<LinearLayout 
-	    android:id="@+id/moves_holder"
-	    android:layout_width="0dip"
-	    android:layout_height="match_parent"
-	    android:orientation="vertical" 
-	    android:layout_weight="0.75">
-	    
-	    <include android:id="@+id/movesArea" layout="@layout/fragment_move_list" />
-	    
-	</LinearLayout>
-	
+		</ListView>
+
+        <!-- 
+        <fragment
+            android:id="@+id/listPokemon"
+            android:name="com.darkdesign.pokemonmachine.fragment.PokemonListFragment"
+            android:layout_width="250dip"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:layout="@layout/fragment_pokemon_list"
+            android:tag="PokemonListFragment" />
+          -->
+    </LinearLayout>
+
+    <!-- END - List of Pokemon -->
+
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="1.25"
+        android:background="@drawable/shadow_left"
+        android:orientation="vertical" >
+
+        <!-- START : Search Area -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onSearchClick"
+                android:text="Search" />
+
+            <EditText
+                android:id="@+id/txtSearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="national id"
+                android:imeOptions="actionDone"
+                android:numeric="integer"
+                android:singleLine="true"
+                android:text=""
+                android:textColorHint="#AAAAAA" >
+
+                <!-- <requestFocus android:layout_width="wrap_content" /> -->
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/btnClearID"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:onClick="onClearIDClick"
+                android:src="@drawable/clear_cross_01" />
+        </LinearLayout>
+        <!-- END : Search Area -->
+
+
+        <!-- START : Display Area -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/txtID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="15pt" />
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pokemon Name "
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textSize="15pt" />
+
+            <ImageView
+                android:id="@+id/imgType1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" />
+
+            <ImageView
+                android:id="@+id/imgType2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dip" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="200dip"
+                    android:layout_height="200dip"
+                    android:padding="10dip"
+                    android:src="@drawable/pokeball" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Species : "
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/txtSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height : "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/txtHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" m"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weight : "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/txtWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" kg"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- START : Stats Area -->
+
+            <LinearLayout
+                android:layout_width="140dip"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="10dip" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblHP"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:background="#AAFF7F"
+                        android:gravity="center"
+                        android:text="HP"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/txtHP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="100"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barHP"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblATK"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginTop="3dip"
+                        android:background="#FFFF7F"
+                        android:gravity="center"
+                        android:text="ATK"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/txtATK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="200"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barATK"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblDEF"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginTop="3dip"
+                        android:background="#FFD455"
+                        android:gravity="center"
+                        android:text="DEF"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/txtDEF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="300"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barDEF"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblSPATK"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginTop="3dip"
+                        android:background="#2AD4FF"
+                        android:gravity="center"
+                        android:text="SP\nATK"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="5pt" />
+
+                    <TextView
+                        android:id="@+id/txtSPATK"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="400"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barSPATK"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblSPDEF"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginTop="3dip"
+                        android:background="#7F7FFF"
+                        android:gravity="center"
+                        android:text="SP\nDEF"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="5pt" />
+
+                    <TextView
+                        android:id="@+id/txtSPDEF"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="500"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barSPDEF"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblSPD"
+                        android:layout_width="30dip"
+                        android:layout_height="30dip"
+                        android:layout_marginTop="3dip"
+                        android:background="#FF55D4"
+                        android:gravity="center"
+                        android:text="SPD"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+
+                    <TextView
+                        android:id="@+id/txtSPD"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dip"
+                        android:layout_marginTop="3dip"
+                        android:gravity="center"
+                        android:text="600"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="6pt" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/barSPD"
+                    android:layout_width="128dip"
+                    android:layout_height="3dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+            <!-- END : Stats Area -->
+
+
+            <!-- START : Capture and Breeding -->
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:paddingTop="20dip" >
+
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/lblMaleFemaleRatio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Male/Female Ratio : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtMaleFemaleRatio"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0.56"
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/lblCatch"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Catch Rate : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtCatchRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/lblEggCycles"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Egg Cycles : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtEggCycles"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/lblEggGroups"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Egg Group : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtEggGroups"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/lblGrowthRate"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Growth Rate : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtGrowthRate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/lblEVYield"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="EV Yield : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtEVYield"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/lblHappiness"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:text="Happiness : "
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                        <TextView
+                            android:id="@+id/txtHappiness"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                    </TableRow>
+                </TableLayout>
+                <!-- </LinearLayout> -->
+
+            </LinearLayout>
+        </LinearLayout>
+        <!-- END : Display Area -->
+
+
+        <!-- START : Evolutions -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Evolution Chain"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <LinearLayout
+                android:id="@+id/evolutionsHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </LinearLayout>
+        <!-- END : Evolutions -->
+
+
+        <!-- START : Weaknesses -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <include
+                android:id="@+id/type_efficacy"
+                layout="@layout/type_weakness" />
+        </LinearLayout>
+        <!-- END : Weaknesses -->
+
+    </LinearLayout>
+
+    <!-- MOVES -->
+
+    <LinearLayout
+        android:id="@+id/moves_holder"
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="0.75"
+        android:orientation="vertical" >
+
+        <include
+            android:id="@+id/movesArea"
+            layout="@layout/fragment_move_list" />
+    </LinearLayout>
+
 </LinearLayout>
