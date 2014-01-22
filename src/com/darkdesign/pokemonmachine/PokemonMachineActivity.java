@@ -43,7 +43,6 @@ import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
-import com.darkdesign.pokemonmachine.fragment.MoveListFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
@@ -73,7 +72,6 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
-    private MoveListFragment movesListFragment = null;
     
     public Pokemon currentSelectedPokemon;
     

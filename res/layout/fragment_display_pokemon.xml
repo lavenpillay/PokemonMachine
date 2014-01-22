@@ -12,7 +12,8 @@
         android:id="@+id/pokemon_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:background="@drawable/shadow_left">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,7 +52,7 @@
             android:fastScrollEnabled="true"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
-            tools:listitem="@layout/list_item_pokemon" >
+            tools:listitem="@layout/list_item_pokemon">
 
 		</ListView>
 
@@ -70,12 +71,14 @@
     <!-- END - List of Pokemon -->
 
 
+	<!-- START - Main Display Area -->
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="match_parent"
         android:layout_weight="2"
         android:background="@drawable/shadow_left"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:paddingLeft="10dip">
 
         <!-- START : Search Area -->
 
@@ -673,7 +676,7 @@
     android:layout_width="0dip"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_weight="1.5">
+    android:layout_weight="1.25">
     
 	<LinearLayout 
 	    android:layout_width="fill_parent"
