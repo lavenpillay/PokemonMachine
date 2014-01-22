@@ -2,8 +2,8 @@ package com.darkdesign.pokemonmachine.fragment;
 
 import java.util.ArrayList;
 
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
@@ -16,7 +16,7 @@ import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 public class MoveListFragment extends ListFragment {
 	private final String TAG = MoveListFragment.class.getName();
 
-	public ArrayList<Move> testData = new ArrayList<Move>();	
+	public ArrayList<Move> movesData = new ArrayList<Move>();	
 	public SimpleMoveListAdapter adapter;
 	
 	@Override
@@ -36,9 +36,9 @@ public class MoveListFragment extends ListFragment {
 		testMove1.setMethod("Test Learn Type 1");
 		testMove1.setResourceURI("/etc");
 		
-		testData.add(testMove1);
+		movesData.add(testMove1);
 		
-		adapter = new SimpleMoveListAdapter(getActivity(), testData);
+		adapter = new SimpleMoveListAdapter(getActivity(), movesData);
 		
 		//setListAdapter(adapter);
 		
@@ -52,7 +52,7 @@ public class MoveListFragment extends ListFragment {
 	}
 	
 	public void updateMoveList(ArrayList<Move> moves) {
-		testData = moves;
+		movesData = moves;
 		adapter.notifyDataSetChanged();
 	}
 

@@ -1,9 +1,9 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.support.v4.app.Fragment;
 
 import com.darkdesign.pokemonmachine.service.RESTService;
 

@@ -2,10 +2,9 @@ package com.darkdesign.pokemonmachine.cache;
 
 import java.util.HashMap;
 
-import android.support.v4.app.FragmentActivity;
+import android.app.Activity;
 
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
-import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 
 public class Cache {
@@ -18,7 +17,7 @@ public class Cache {
 	
 	private DatabaseHelper db;
 	
-	public Cache(FragmentActivity mainActivity) {
+	public Cache(Activity mainActivity) {
 		db = new DatabaseHelper(mainActivity);
 		
 		POKEMON_CACHE = new HashMap<String, Pokemon>();

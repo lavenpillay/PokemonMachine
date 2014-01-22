@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory
+        android:title="Display Options">
+            
+		<CheckBoxPreference
+		    android:key="pref_use_imperial"
+		    android:title="Use Imperial Measurements"
+		    android:summary="Default/Unchecked value uses Metric measurements"
+		    android:defaultValue="false" />
+		
+		<CheckBoxPreference
+		    android:key="pref_types_in_list"
+		    android:title="Display Pokemon Types in Pokemon List"
+		    android:summary=""
+		    android:defaultValue="true" />
+    </PreferenceCategory>
+    
+</PreferenceScreen>

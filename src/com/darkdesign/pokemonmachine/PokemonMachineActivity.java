@@ -4,23 +4,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -49,10 +52,11 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.preferences.PrefFragment;
 import com.darkdesign.pokemonmachine.service.RESTService;
 
 
-public class PokemonMachineActivity extends FragmentActivity implements OnPokemonUpdatedListener, OnPokemonListItemSelectedListener 
+public class PokemonMachineActivity extends Activity implements OnPokemonUpdatedListener, OnPokemonListItemSelectedListener 
 {
 	private static final int ENTER_KEY_PRESSED = 66;
 	private static String TAG = PokemonMachineActivity.class.getName();
@@ -74,6 +78,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     private Pokemon currentSelectedPokemon;
     
     private DatabaseHelper db;
+    
+    private SharedPreferences applicationSettings;
     
     public static Cache cache;
 
@@ -99,7 +105,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         //forceDatabaseReload(this);
         
         // Create and add "Display Pokemon" as Primary Fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fTransaction = fragmentManager.beginTransaction();
         if (pokemonDisplayFragment == null) {
@@ -116,9 +122,13 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
         fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
         fTransaction.commit();
         
+        // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
         
+        // Create and Initialise Cache 
         cache = new Cache(this);
+        
+        applicationSettings = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
 	@Override
@@ -212,8 +222,8 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		
-		movesListFragment.testData.clear();
-		movesListFragment.testData.addAll(moveSubset);
+		movesListFragment.movesData.clear();
+		movesListFragment.movesData.addAll(moveSubset);
 		movesListFragment.adapter.notifyDataSetChanged();
 	}
 	
@@ -225,7 +235,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	public void executeSearchByREST(String nationalId) {
 		PokedexAPIResponderFragment responder = new PokedexAPIResponderFragment();
 
-		FragmentManager fragmentManager = getSupportFragmentManager();
+		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().add(responder, "Responder").commit();
 		
 	    // Build URI
@@ -242,14 +252,13 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	}
 	
 	public void executeSearchByDatabase(String nationalId) {
-		//Pokemon pokemon = db.getPokemon(nationalId);
 		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.parseInt(nationalId));
 		
 		onPokemonUpdated(pokemon);
 	}
 	
 	public void onPokemonUpdated(Pokemon pokemon) {
-		Log.i(TAG, "PokemonUpdated Received by MainActivity");
+		Log.i(TAG, "PokemonUpdated Received by MainActivity : ID = " + pokemon.getId());
 		
 		currentSelectedPokemon = pokemon;
 		
@@ -527,6 +536,35 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	    }
 	}
 	
+	public void showSettings() {
+	    // Display the fragment as the main content.
+	    FragmentManager mFragmentManager = getFragmentManager();
+	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+	    PrefFragment mPrefsFragment = new PrefFragment();
+	    mFragmentTransaction.replace(R.id.content_frame, mPrefsFragment);
+	    mFragmentTransaction.commit();
+	    
+	    /*
+	     getFragmentManager().beginTransaction().replace(android.R.id.content, new PrefsFragment()).commit();
+	     */
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.action_settings:
+	            showSettings();
+	            return true;
+	        /*    
+	        case R.id.action_settings:
+	            openSettings();
+	            return true;
+	        */    
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}	
 
 	/**
 	 * Method to handle selections from the Main Nav Drawer
@@ -543,7 +581,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
             	pokemonDisplayFragment = new PokemonDisplayFragment();
             }
 	
-	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        FragmentManager fragmentManager = getFragmentManager();
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
     		
 	        //currentMainFragment = pokemonDisplayFragment;
@@ -564,7 +602,7 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
     			berryDisplayFragment = new BerryDisplayFragment();
             }
 	
-	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        FragmentManager fragmentManager = getFragmentManager();
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
     		
 	        //currentMainFragment = berryDisplayFragment;
@@ -588,3 +626,4 @@ public class PokemonMachineActivity extends FragmentActivity implements OnPokemo
 	        db = dbHelper.getWritableDatabase();
 	    }	    
 }
+

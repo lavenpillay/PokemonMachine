@@ -151,6 +151,13 @@
 				        android:text=""
 				        android:textAppearance="?android:attr/textAppearanceSmall"
 				        android:textSize="10sp" />
+				    
+			        <TextView
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text=" m"
+				        android:textAppearance="?android:attr/textAppearanceSmall" 
+				        android:textSize="10sp"/>				    
 			    </LinearLayout>
 			    
 			    <LinearLayout 
@@ -166,7 +173,7 @@
 				        android:text="Weight : "
 				        android:textAppearance="?android:attr/textAppearanceSmall"
 				        android:textSize="10sp" />
-		    
+			        
 				    <TextView
 				        android:id="@+id/txtWeight"
 				        android:layout_width="wrap_content"
@@ -178,7 +185,7 @@
 				    <TextView
 				        android:layout_width="wrap_content"
 				        android:layout_height="wrap_content"
-				        android:text=" lbs"
+				        android:text=" kg"
 				        android:textAppearance="?android:attr/textAppearanceSmall" 
 				        android:textSize="10sp"/>
 			    </LinearLayout>		

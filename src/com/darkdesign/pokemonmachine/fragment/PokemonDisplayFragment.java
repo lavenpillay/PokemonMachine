@@ -3,9 +3,11 @@ package com.darkdesign.pokemonmachine.fragment;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.Fragment;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ public class PokemonDisplayFragment extends Fragment {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	
 	private AssetHelper assetHelper;
-	
+	private SharedPreferences applicationSettings;
 	private View v; 
 
 	public static final PokemonDisplayFragment newInstance(String message)
@@ -47,13 +49,13 @@ public class PokemonDisplayFragment extends Fragment {
 
 	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
 	   
+	   applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+	   
 	   return v;
 	 }
 	 
 	 public void update(Pokemon pokemon) {
 	 
-		 // Perform required checks and calculations
-		 
 		 // Handle Images
 		 ImageView i = (ImageView)v.findViewById(R.id.imageView1);
 		 ImageView pokemonType1 = (ImageView)v.findViewById(R.id.imgType1);
@@ -73,6 +75,9 @@ public class PokemonDisplayFragment extends Fragment {
 			 if (pokemonTypes.size() > 1) {
 				 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
 				 pokemonType2.setImageBitmap(type2);
+			 } else {
+				 // Remove 2nd Type icon
+				 pokemonType2.setImageResource(android.R.color.transparent);
 			 }
 			 
 			 
@@ -90,10 +95,18 @@ public class PokemonDisplayFragment extends Fragment {
 	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");
 
 	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
-	     heightTextView.setText(String.valueOf(pokemon.getHeight()));
+	     // Convert to meters
+	     String height = String.valueOf(Double.parseDouble(pokemon.getHeight()) / 10);
+	     heightTextView.setText(height);
 	     
 	     TextView weightTextView = (TextView)v.findViewById(R.id.txtWeight);
-	     weightTextView.setText(String.valueOf(pokemon.getWeight()));
+	     // Convert to kg
+	     String weight = String.valueOf(Double.parseDouble(pokemon.getWeight()) / 10);
+	     
+	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
+	    	 weight = "CONVERTED";
+	     }
+	     weightTextView.setText(weight);
 	     
 	     TextView hpTextView = (TextView)v.findViewById(R.id.txtHP);
 	     hpTextView.setText(String.valueOf(pokemon.getHp()));

@@ -137,5 +137,19 @@ public class Util {
 		
 		  return true;
 	}
+	
+	public String convertKilogramsToPounds(double valueInKilograms) {
+		return String.valueOf(valueInKilograms / 2.2);
+	}
+	
+	public String convertMetersToFeetAndInches(double valueInMeters) {
+		double valueInInches = valueInMeters * 39.37;
+		int feetPart = (int) (valueInInches / 12);
+		int inchesPart = (int) (valueInInches % 12);
+		
+		String finalValue = feetPart + "' " + inchesPart + "\"";
+				
+		return finalValue; 
+	}
 
 }
