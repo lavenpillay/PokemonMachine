@@ -37,6 +37,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Evolution;
@@ -112,16 +113,6 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         fTransaction.add(R.id.content_frame, pokemonDisplayFragment, TAG_FRAGMENT_POKEMON_DISPLAY);
         fTransaction.commit();
         
-        // Create and add "Moves List" as Secondary Fragment
-        /*
-        fTransaction = fragmentManager.beginTransaction();
-        if (movesListFragment == null) {
-        	movesListFragment = new MoveListFragment();
-        }
-        fTransaction.add(R.id.moves_holder, movesListFragment, TAG_FRAGMENT_MOVES_DISPLAY);
-        fTransaction.commit();
-        */
-        
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
         
@@ -133,10 +124,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 
 	@Override
 	public void onAttachedToWindow() {
-		// TODO Auto-generated method stub
 		super.onAttachedToWindow();
 		
-        // Other Listeners
+        // Search-By-ID Listener
         EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
         searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
         searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
@@ -183,32 +173,67 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		}
 	}
 
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onSearchClick(View view) {
 		searchFromSearchBox();
 	}
+
+	/**
+	 * 
+	 */
+	public void onPokemonListItemSelected(String id) {
+		executeSearch(id);
+	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onClearNameFilterClick(View view) {
 		EditText filterText = (EditText) findViewById(R.id.txtFilter);
 		filterText.setText("");
 	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onClearIDClick(View view) {
 		EditText idText = (EditText) findViewById(R.id.txtSearch);
 		idText.setText("");
 	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onMoveByLevelClick(View view) {
 		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onMoveByMachineClick(View view) {
 		updateMoveList(Constants.LEARN_TYPE_MACHINE);
 	}
 
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onMoveByEggClick(View view) {
 		updateMoveList(Constants.LEARN_TYPE_EGG_MOVE);
 	}
 	
+	/**
+	 * 
+	 * @param view
+	 */
 	public void onMoveByTutorClick(View view) {
 		updateMoveList(Constants.LEARN_TYPE_TUTOR);
 	}
@@ -220,9 +245,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		
-		pokemonDisplayFragment.movesData.clear();
-		pokemonDisplayFragment.movesData.addAll(moveSubset);
-		pokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
+		PokemonDisplayFragment.movesData.clear();
+		PokemonDisplayFragment.movesData.addAll(moveSubset);
+		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
 	}
 	
 	public void executeSearch(String nationalId) {
@@ -249,6 +274,10 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	    startService(intent);
 	}
 	
+	/**
+	 * 
+	 * @param nationalId
+	 */
 	public void executeSearchByDatabase(String nationalId) {
 		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.parseInt(nationalId));
 		
@@ -263,10 +292,10 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		// Get Managers and Helpers
 		AssetHelper assetHelper = new AssetHelper(this);
 		
-		// Update Pokemon Display -----------------------------		
+		// Update Pokemon Display		
 		pokemonDisplayFragment.update(pokemon);
 		
-		// Update Moves list and Notify Adapter -----------------------------
+		// Update Moves list and Notify Adapter
 		if (pokemon.getMoves().size() == 0) {
 			pokemon.setMoves(db.getMovesForPokemon(pokemon));
 			// Update Cache
@@ -276,7 +305,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 
 		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 		
-		// Update Evolutions -----------------------------
+		// Update Evolutions
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
 		if (pokemon.getEvolutions().size() == 0) {
@@ -331,7 +360,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 			}
 			
 			// Resolve Efficacy
-			String damageText = getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
+			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
 			
 			// Set text styles for type weaknesses
 			if (damageText.equalsIgnoreCase(Constants.DAMAGE_REGULAR)) {
@@ -354,60 +383,16 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				textView.setTextColor(Color.BLACK);
 			} 
 			
-			
-			
+			/*
 			Log.v(TAG, "AttackType=" + cache.getTypeNameById(i) + 
 					   " VS DefendingType=" + cache.getTypeNameById(type1Id) + 
 					   " = " + damagePercentageForType1 + " AND " + damagePercentageForType2);
-			
+			*/
 			
 			textView.setText(damageText);
 		}
 	}
 	
-	public String getAttackEfficacy(int damagePercentageType1, int damagePercentageType2) {
-		String damage = "";
-
-		if (damagePercentageType2 == Constants.TYPE_NULL) {
-			if (damagePercentageType1 == 0) {
-				damage = Constants.DAMAGE_IMMUNE;
-			} else if (damagePercentageType1 == 50) {
-				damage = Constants.DAMAGE_HALF;
-			} else if (damagePercentageType1 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
-			} else if (damagePercentageType1 == 200) {
-				damage = Constants.DAMAGE_DOUBLE;
-			}
-		} else {
-			if (damagePercentageType1 == 100 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
-			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_REGULAR;
-			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_REGULAR;
-			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
-			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_HALF;
-			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_HALF;
-			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_DOUBLE;
-			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_DOUBLE;
-			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_QUARTER;
-			} else if (damagePercentageType1 == 0 || damagePercentageType2 == 0) {
-				damage = Constants.DAMAGE_IMMUNE;
-			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_QUADRUPLE;
-			}
-		}
-		
-		return damage;
-	}
-	
-
 	/**
 	 * 
 	 * @param pokemon
@@ -500,6 +485,14 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		return evolutionMethodView;
 	}
 
+	/**
+	 * 
+	 * @param pokemonId
+	 * @param assetHelper
+	 * @param inflater
+	 * @return
+	 * @throws IOException
+	 */
 	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
 			throws IOException 
 	{
@@ -523,10 +516,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		return evolutionStateView;
 	}	
 
-	public void onPokemonListItemSelected(String id) {
-		executeSearch(id);
-	}
-	
+	/**
+	 * 
+	 */
 	private class MainMenuItemClickListener implements ListView.OnItemClickListener {
 	    @Override
 	    public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -538,8 +530,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	    // Display the fragment as the main content.
 	    FragmentManager mFragmentManager = getFragmentManager();
 	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-	    PrefFragment mPrefsFragment = new PrefFragment();
-	    mFragmentTransaction.replace(R.id.content_frame, mPrefsFragment);
+	    mFragmentTransaction.replace(R.id.content_frame, new PrefFragment());
 	    mFragmentTransaction.addToBackStack(null);
 	    mFragmentTransaction.commit();
 	    

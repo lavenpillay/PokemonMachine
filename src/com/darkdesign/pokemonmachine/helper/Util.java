@@ -152,4 +152,52 @@ public class Util {
 		return finalValue; 
 	}
 
+	/**
+	 * 
+	 * @param damagePercentageType1
+	 * @param damagePercentageType2
+	 * @return
+	 */
+	public static String getAttackEfficacy(int damagePercentageType1, int damagePercentageType2) {
+		String damage = "";
+
+		if (damagePercentageType2 == Constants.TYPE_NULL) {
+			if (damagePercentageType1 == 0) {
+				damage = Constants.DAMAGE_IMMUNE;
+			} else if (damagePercentageType1 == 50) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 200) {
+				damage = Constants.DAMAGE_DOUBLE;
+			}
+		} else {
+			if (damagePercentageType1 == 100 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_REGULAR;
+			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_HALF;
+			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_DOUBLE;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 100) {
+				damage = Constants.DAMAGE_DOUBLE;
+			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 50) {
+				damage = Constants.DAMAGE_QUARTER;
+			} else if (damagePercentageType1 == 0 || damagePercentageType2 == 0) {
+				damage = Constants.DAMAGE_IMMUNE;
+			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 200) {
+				damage = Constants.DAMAGE_QUADRUPLE;
+			}
+		}
+		
+		return damage;
+	}
+	
 }
