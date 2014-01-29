@@ -4,6 +4,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import android.app.Activity;
+import android.content.Context;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 
 public class Util {
@@ -199,5 +214,54 @@ public class Util {
 		
 		return damage;
 	}
-	
+
+	// The method that displays the popup.
+	public static void showPopup(final Activity context, Point p, String heading, String content) {
+	   int popupWidth = 200;
+	   int popupHeight = 250;
+	 
+	   // Inflate the popup_layout.xml
+	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+	   LayoutInflater layoutInflater = (LayoutInflater) context
+	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	   View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
+	 
+	   // Creating the PopupWindow
+	   final PopupWindow popup = new PopupWindow(context);
+	   popup.setContentView(layout);
+	   popup.setWidth(popupWidth);
+	   popup.setHeight(popupHeight);
+	   popup.setFocusable(true);
+	 
+	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+	   int OFFSET_X = 10;
+	   int OFFSET_Y = 30;
+	 
+	   // Clear the default translucent background
+	   popup.setBackgroundDrawable(new BitmapDrawable());
+	 
+		// Displaying the popup at the specified location, + offsets.
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+	   
+		// Update Heading and Content
+		TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
+		TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
+		txtHeading.setText(heading);
+		txtContent.setText(content);
+
+		// Setup Layout Params
+		popup.update(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+		// Getting a reference to Close button, and close the popup when clicked.
+		/*
+		Button close = (Button) layout.findViewById(R.id.close);
+		close.setOnClickListener(new OnClickListener() {
+	 
+	     @Override
+	     public void onClick(View v) {
+	       popup.dismiss();
+	     }
+	   });
+	   */
+	}	
 }

@@ -172,7 +172,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	        
         	evolvedSpeciesId =  cursorSpecies.getString(0);
 	        
-	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness " +
+	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness, held_item_id " +
 	        		"FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + evolvedSpeciesId;
 	        Log.d(TAG, queryEvolutions);
 	        cursorEvolutions = db.rawQuery(queryEvolutions, null);
@@ -190,11 +190,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		        String level = cursorEvolutions.getString(2);
 		        String triggerItemId = cursorEvolutions.getString(3);
 		        String minimumHappiness = cursorEvolutions.getString(4);
+		        String heldItemId = cursorEvolutions.getString(5);
 		        
 		        evolution.setMethod(method);
 		        evolution.setLevel(level);
 		        evolution.setTriggerItemId(triggerItemId);
 		        evolution.setMinimumHappiness(minimumHappiness);
+		        evolution.setHeldItemId(heldItemId);
 	        }
 	        
 	        evolutions.add(evolution);

@@ -5,7 +5,7 @@ import android.preference.PreferenceFragment;
 
 import com.darkdesign.pokemonmachine.R;
 
-public class PrefFragment extends PreferenceFragment {
+public class SettingsFragment extends PreferenceFragment {
 	 
     @Override
     public void onCreate(Bundle savedInstanceState) {

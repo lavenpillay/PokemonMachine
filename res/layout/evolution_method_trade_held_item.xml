@@ -4,24 +4,22 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="#EEEEEE"
-    android:layout_margin="3dip">
+    android:layout_margin="3dip"
+    android:gravity="center">
 
     <ImageView
         android:id="@+id/imgPokemonEvolution"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/icon_level_up_happiness" />
+        android:src="@drawable/icon_trade" />
 
     <View
 	    android:layout_width="fill_parent"
 	    android:layout_height="1dip"
 	    android:background="@android:color/darker_gray"/>
     
-    <TextView
-        android:id="@+id/txtHappinessLevel"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text=""
-        android:textSize="8pt" />    
+    <ImageView
+        android:id="@+id/imgHoldItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>    
 </LinearLayout>

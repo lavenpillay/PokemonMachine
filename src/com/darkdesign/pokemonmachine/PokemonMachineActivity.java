@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -34,10 +36,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Evolution;
@@ -52,7 +54,7 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.URIConstructor;
 import com.darkdesign.pokemonmachine.helper.Util;
-import com.darkdesign.pokemonmachine.preferences.PrefFragment;
+import com.darkdesign.pokemonmachine.preferences.SettingsFragment;
 import com.darkdesign.pokemonmachine.service.RESTService;
 
 
@@ -81,6 +83,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     private SharedPreferences applicationSettings;
     
     public static Cache cache;
+    
+    //The "x" and "y" position of the Popup Window
+    private Point p;
 
 	public PokemonMachineActivity() {
 		
@@ -187,6 +192,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	public void onPokemonListItemSelected(String id) {
 		executeSearch(id);
 	}
+
 	
 	/**
 	 * 
@@ -195,7 +201,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	public void onClearNameFilterClick(View view) {
 		EditText filterText = (EditText) findViewById(R.id.txtFilter);
 		filterText.setText("");
-	}
+	}	
 	
 	/**
 	 * 
@@ -461,10 +467,57 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		LinearLayout evolutionMethodView = null;
 		
 		if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_LEVEL_UP)) {
+			// LEVEL UP WITH MIN HAPPINESS
 			if (evolution.getMinimumHappiness() != null) {
 				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup_happiness, null );
+				
+				TextView happinessMinValue = (TextView) evolutionMethodView.findViewById(R.id.txtHappinessLevel);
+				final String happiness = evolution.getMinimumHappiness();
+				happinessMinValue.setText(happiness);
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];		
+							
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Level Up with Minimum Happiness";
+				    	   String content = "This Pokemon will evolve when it levels up with a minimum Happiness of " + happiness;
+				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				       }
+				     }
+				   });				
+				
 			} else {
+				// LEVEL UP NORMALLY
 				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
+				
+				final String level = evolution.getLevel();
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Level Up";
+				    	   String content = "This Pokemon will evolve when it reaches level " + level;
+				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				       }
+				     }
+				   });
 			}
 			
 			if (evolution.getLevel() != null) {
@@ -472,15 +525,86 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				levelView.setText(evolution.getLevel());
 			}
 		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_TRADE)) {
-			evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+			// EVOLVE WHEN TRADED - 01 - WITH HELD ITEM
+
+			// Check if there's a Held Item
+			if (evolution.getHeldItemId() != null && evolution.getHeldItemId().length() > 0) {
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade_held_item, null );
+				
+				ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgHoldItem);
+				final String itemName = db.getItemById(evolution.getHeldItemId()).getName();
+				Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
+				useItemView.setImageBitmap(bm);
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Trade with Held Item";
+				    	   String content = "This Pokemon will evolve when it is traded while holding " + itemName;
+				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				       }
+				     }
+				   });				
+			} else {
+				// EVOLVE WHEN TRADED - 01 - WITH HELD ITEM
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Trade with Held Item";
+				    	   String content = "This Pokemon will evolve when it is traded";
+				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				       }
+				     }
+				   });				
+			}
 		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_USE_ITEM)) {
+			// EVOLVE WHEN AN ITEM IS USED ON IT
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
 			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
-			String itemName = db.getItemById(evolution.getTriggerItemId()).getName();
+			final String itemName = db.getItemById(evolution.getTriggerItemId()).getName();
 			Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
 			useItemView.setImageBitmap(bm);
-		}
+			
+			evolutionMethodView.setOnClickListener(new OnClickListener() {
+			     @Override
+			     public void onClick(View evolutionMethodView) {
+					int[] location = new int[2];
+					evolutionMethodView.getLocationOnScreen(location);
+					 
+					p = new Point();
+					p.x = location[0];
+					p.y = location[1];				    	 
+			    	 
+			       //Open popup window
+			       if (p != null) {
+			    	   String heading = "Use Item";
+			    	   String content = "This Pokemon will evolve when a " + itemName + " is used on it.";
+			    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+			       }
+			     }
+			   });			
+		} 
 		
 		return evolutionMethodView;
 	}
@@ -530,7 +654,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	    // Display the fragment as the main content.
 	    FragmentManager mFragmentManager = getFragmentManager();
 	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-	    mFragmentTransaction.replace(R.id.content_frame, new PrefFragment());
+	    mFragmentTransaction.replace(R.id.content_frame, new SettingsFragment());
 	    mFragmentTransaction.addToBackStack(null);
 	    mFragmentTransaction.commit();
 	    

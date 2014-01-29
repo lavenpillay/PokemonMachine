@@ -7,6 +7,7 @@ public class Evolution {
 	private String pokemonId;
 	private String previousEvolutionId;
 	private String triggerItemId;
+	private String heldItemId;
 	private String minimumHappiness;
 
 	public Evolution() {
@@ -73,5 +74,13 @@ public class Evolution {
 
 	public void setMinimumHappiness(String minimumHapiness) {
 		this.minimumHappiness = minimumHapiness;
+	}
+
+	public String getHeldItemId() {
+		return heldItemId;
+	}
+
+	public void setHeldItemId(String heldItemId) {
+		this.heldItemId = heldItemId;
 	}	
 }

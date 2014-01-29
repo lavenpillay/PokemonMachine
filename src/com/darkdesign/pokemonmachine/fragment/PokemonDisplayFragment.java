@@ -63,6 +63,8 @@ public class PokemonDisplayFragment extends Fragment {
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
 	    	if (s.length() > 0) {
 	    		pokemonListAdapter.getFilter().filter(s);
+	    	} else if (s.length() == 0) {
+	    		pokemonListAdapter.getFilter().filter("");
 	    	}
 	    }
 
@@ -144,6 +146,8 @@ public class PokemonDisplayFragment extends Fragment {
                 R.id.expandable_toggle_button,
                 R.id.expandable
         ));
+        
+		//movesListView.setAdapter(movesListAdapter);
 	   
 	   return v;
 	 }
@@ -278,9 +282,9 @@ public class PokemonDisplayFragment extends Fragment {
 	public void onDestroy() {
 	    super.onDestroy();
 	    filterText.removeTextChangedListener(filterTextWatcher);
-	}	 
-
-
+	}
+	
+	
 	//Container Activity must implement this interface
 	public interface OnPokemonListItemSelectedListener {
 	    public void onPokemonListItemSelected(String id);
