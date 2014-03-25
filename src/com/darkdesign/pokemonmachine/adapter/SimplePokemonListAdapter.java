@@ -4,7 +4,9 @@ package com.darkdesign.pokemonmachine.adapter;
 import java.io.IOException;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +32,7 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 	
 	private AssetHelper assetHelper;
 	private DatabaseHelper db;
+	private SharedPreferences applicationSettings;
 	
 	public SimplePokemonListAdapter(Context context, String[] values) {
 	    super(context, R.layout.list_item_pokemon, values);
@@ -42,6 +45,9 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		
+		applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)context);
+		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.list_item_pokemon, parent, false);
 
@@ -68,15 +74,18 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		try {
 			String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
 			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
+			
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 			imageView.setImageBitmap(bm);
 			
-			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
-			imageType1.setImageBitmap(bmType1);
-			
-			if (pokemon.getTypes().size() > 1) {
-				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
-				imageType2.setImageBitmap(bmType2);
+			if (applicationSettings.getBoolean("pref_types_in_list", true)) {
+				Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
+				imageType1.setImageBitmap(bmType1);
+				
+				if (pokemon.getTypes().size() > 1) {
+					Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
+					imageType2.setImageBitmap(bmType2);
+				}
 			}
 		} catch (IOException ioe) {
 			 Log.e(TAG, ioe.toString());

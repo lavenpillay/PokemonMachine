@@ -140,9 +140,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == ENTER_KEY_PRESSED) {
                 	
-                	// hide virtual keyboard - could also use InputMethodManager.HIDE_NOT_ALWAYS
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+                	hideSoftKeyboard(v);
+                	clearFilterText();
                 	
                 	// Execute Search
                 	searchFromSearchBox();
@@ -156,6 +155,12 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         // Perform Initial Search
 		executeSearch("001");
 	}
+	
+	public void hideSoftKeyboard(TextView v) {
+		// hide virtual keyboard - could also use InputMethodManager.HIDE_NOT_ALWAYS
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+	}	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -190,6 +195,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	 * 
 	 */
 	public void onPokemonListItemSelected(String id) {
+		TextView pokemonNameFilterTextView = (TextView) findViewById(R.id.txtFilter);
+		hideSoftKeyboard(pokemonNameFilterTextView);
 		executeSearch(id);
 	}
 
@@ -199,6 +206,10 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	 * @param view
 	 */
 	public void onClearNameFilterClick(View view) {
+		clearFilterText();
+	}
+
+	public void clearFilterText() {
 		EditText filterText = (EditText) findViewById(R.id.txtFilter);
 		filterText.setText("");
 	}	
@@ -549,7 +560,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				       //Open popup window
 				       if (p != null) {
 				    	   String heading = "Trade with Held Item";
-				    	   String content = "This Pokemon will evolve when it is traded while holding " + itemName;
+				    	   String content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
 				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }
 				     }
@@ -570,7 +581,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				    	 
 				       //Open popup window
 				       if (p != null) {
-				    	   String heading = "Trade with Held Item";
+				    	   String heading = "Trade";
 				    	   String content = "This Pokemon will evolve when it is traded";
 				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }

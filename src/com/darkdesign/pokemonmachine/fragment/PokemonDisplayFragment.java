@@ -155,7 +155,9 @@ public class PokemonDisplayFragment extends Fragment {
 	 @Override
 	 public void onPause() {
 		 super.onPause();
-		 lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
+		 if (((PokemonMachineActivity) getActivity()) != null) {
+			 lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
+		 }
 	 }
 	 
 	 @Override
@@ -210,6 +212,12 @@ public class PokemonDisplayFragment extends Fragment {
 	     TextView heightTextView = (TextView)v.findViewById(R.id.txtHeight);
 	     // Convert to meters
 	     String height = String.valueOf(Double.parseDouble(pokemon.getHeight()) / 10);
+	     
+	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
+	    	 height = Util.convertMetersToFeetAndInches(Double.parseDouble(height));
+	    	 TextView heightUnitTextView = (TextView)v.findViewById(R.id.lblHeightUnit);
+	    	 heightUnitTextView.setText("");
+	     }
 	     heightTextView.setText(height);
 	     
 	     TextView weightTextView = (TextView)v.findViewById(R.id.txtWeight);
@@ -217,7 +225,9 @@ public class PokemonDisplayFragment extends Fragment {
 	     String weight = String.valueOf(Double.parseDouble(pokemon.getWeight()) / 10);
 	     
 	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
-	    	 weight = "CONVERTED";
+	    	 weight = Util.convertKilogramsToPounds(Double.parseDouble(pokemon.getWeight()));
+	    	 TextView weightUnitTextView = (TextView)v.findViewById(R.id.lblWeightUnit);
+	    	 weightUnitTextView.setText(" lb");
 	     }
 	     weightTextView.setText(weight);
 	     
