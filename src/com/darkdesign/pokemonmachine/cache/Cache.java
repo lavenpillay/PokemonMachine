@@ -1,21 +1,25 @@
 package com.darkdesign.pokemonmachine.cache;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
 
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 
 public class Cache {
 
 	private static HashMap<String, Pokemon> POKEMON_CACHE;
+	private static ArrayList<Berry> BERRY_CACHE;
 	private static int[][] TYPE_EFFICACY_MATRIX;
 	
 	private static HashMap<String,Integer> TYPE_ID_BY_NAME;
 	private static HashMap<Integer,String> TYPE_NAME_BY_ID;
+	private static HashMap<String,String> BERRY_NAME_BY_ID;
 	
-	private DatabaseHelper db;
+	private static DatabaseHelper db;
 	
 	public Cache(Activity mainActivity) {
 		db = new DatabaseHelper(mainActivity);
@@ -25,6 +29,18 @@ public class Cache {
 		
 		TYPE_ID_BY_NAME = db.getTypeIdsByNamesMap();
 		TYPE_NAME_BY_ID = db.getTypeNamesByIdsMap();
+		
+		BERRY_CACHE = db.getBerries();
+		setupBerryNameByIdMap();
+	}
+	
+	public void setupBerryNameByIdMap() {
+		BERRY_NAME_BY_ID = new HashMap<String,String>();
+		
+		for (int i=0; i < BERRY_CACHE.size(); i++) {
+			Berry berry = BERRY_CACHE.get(i);
+			BERRY_NAME_BY_ID.put(berry.getBerryId(), berry.getBerryName()); 
+		}
 	}
 	
 	public void addPokemonToCache(Pokemon pokemon) {
@@ -53,4 +69,10 @@ public class Cache {
 	public int[][] getTypeEfficacyMatrix() {
 		return TYPE_EFFICACY_MATRIX;
 	}
+	
+	public ArrayList<Berry> getBerryList() {
+		return BERRY_CACHE;
+	}
+	
+
 }

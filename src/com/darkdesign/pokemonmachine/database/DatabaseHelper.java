@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -43,6 +44,35 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         db = getReadableDatabase();
     }
+    
+    /**
+     * 
+     * @param 
+     * @return
+     */
+    public ArrayList<Berry> getBerries() {
+    	ArrayList<Berry> berryList = new ArrayList<Berry>();
+    	
+    	String query = "SELECT id, item_id FROM berries";
+        Cursor berryCursor = db.rawQuery(query, null);
+        
+        while(berryCursor.moveToNext()) {
+        	Berry berry = new Berry();
+        	
+        	String berryId = berryCursor.getString(0);
+        	String berryItemId = berryCursor.getString(1);
+        	
+        	berry.setBerryId(berryId);
+        	berry.setBerryItemId(berryItemId);
+        	berry.setBerryName(getItemById(berryItemId).getName());
+        	
+        	berryList.add(berry);
+        }
+        
+        berryCursor.close();
+    	
+    	return berryList;
+    }
 
     /**
      * 
@@ -57,7 +87,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         String versionGroupToQuery = "";
         
-        // TODO Update/Remove this check after data is update
+        // TODO Update/Remove this check after data is updated
         if (Arrays.asList(Constants.POKEMON_WITH_NO_GEN_6_MOVEDATA).contains(pokemon.getId())) {
         	versionGroupToQuery = Constants.VERSION_GROUP_BLACKWHITE_2;
         } else {
