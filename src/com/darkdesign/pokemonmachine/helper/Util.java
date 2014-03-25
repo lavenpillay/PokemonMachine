@@ -1,5 +1,6 @@
 package com.darkdesign.pokemonmachine.helper;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,9 +12,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -52,6 +51,8 @@ public class Util {
 		if (stringToConvert == null || stringToConvert.equals("")) {
 			return "";
 		}
+		
+		stringToConvert = stringToConvert.replace("-", " ");
 		
 		if (stringToConvert != null) {
 	        String[] arr = stringToConvert.split(" ");
@@ -153,11 +154,11 @@ public class Util {
 		  return true;
 	}
 	
-	public String convertKilogramsToPounds(double valueInKilograms) {
-		return String.valueOf(valueInKilograms / 2.2);
+	public static String convertKilogramsToPounds(double valueInKilograms) {
+		return String.valueOf(round(valueInKilograms * 2.2046, 2));
 	}
 	
-	public String convertMetersToFeetAndInches(double valueInMeters) {
+	public static String convertMetersToFeetAndInches(double valueInMeters) {
 		double valueInInches = valueInMeters * 39.37;
 		int feetPart = (int) (valueInInches / 12);
 		int inchesPart = (int) (valueInInches % 12);
@@ -215,6 +216,15 @@ public class Util {
 		return damage;
 	}
 
+	public static double round(double value, int places) {
+        if (places < 0)
+            throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
+        return bd.doubleValue();
+    }
+	
 	// The method that displays the popup.
 	public static void showPopup(final Activity context, Point p, String heading, String content) {
 	   int popupWidth = 200;
