@@ -27,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -35,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -44,7 +46,6 @@ import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
-import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment;
 import com.darkdesign.pokemonmachine.fragment.PokedexAPIResponderFragment.OnPokemonUpdatedListener;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
@@ -68,15 +69,12 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     
-    // Menu Item Names Defined in strings.xml 
     private final static int TOP_MENU_ITEM_POKEMON = 0;
     private final static int TOP_MENU_ITEM_MOVES = 1;
     private final static int TOP_MENU_ITEM_BERRIES = 2;
-    private final static int TOP_MENU_ITEM_COLLECTION = 3;
     
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
-    private CollectionDisplayFragment collectionDisplayFragment = null;
     
     public Pokemon currentSelectedPokemon;
     
@@ -715,6 +713,15 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	        
     	} else if (position == TOP_MENU_ITEM_MOVES) {
 	        // update the main content by replacing fragments
+    		/*
+	        Fragment fragment = new MainMenuFragment();
+	        Bundle args = new Bundle();
+	        args.putInt(MainMenuFragment.ARG_PLANET_NUMBER, position);
+	        fragment.setArguments(args);
+	
+	        FragmentManager fragmentManager = getSupportFragmentManager();
+	        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, TAG_FRAGMENT_POKEMON_DISPLAY).commit();
+	        */
     	} else if (position == TOP_MENU_ITEM_BERRIES) {
     		if (berryDisplayFragment == null) {
     			berryDisplayFragment = new BerryDisplayFragment();
@@ -724,13 +731,6 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	        fragmentManager.beginTransaction().replace(R.id.content_frame, berryDisplayFragment).commit();
     		
 	        //currentMainFragment = berryDisplayFragment;
-    	} else if (position == TOP_MENU_ITEM_COLLECTION) {
-    		if (collectionDisplayFragment == null) {
-    			collectionDisplayFragment = new CollectionDisplayFragment();
-            }
-	
-	        FragmentManager fragmentManager = getFragmentManager();
-	        fragmentManager.beginTransaction().replace(R.id.content_frame, collectionDisplayFragment).commit();
     	}
 
         // update selected item and title, then close the drawer
