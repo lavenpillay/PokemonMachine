@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+<LinearLayout
+    android:id="@+id/collectionHolder"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal">
+          
+	<TableLayout
+	    android:id="@+id/pokemonListTableLayout"
+	    android:layout_width="250dip"
+	    android:layout_height="match_parent"
+	    android:shrinkColumns="*"
+	    android:stretchColumns="*">
+	    
+	    <!--  ROW : Table Name -->
+	    <TableRow
+	        android:id="@+id/trTableName"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent"
+	        android:gravity="center_horizontal">
+	        
+	        <TextView
+	            android:id="@+id/lblTableName"
+	            android:layout_width="match_parent"
+	            android:layout_height="30dip"
+	            android:textStyle="bold"
+	            android:textSize="18dp"
+	            android:text=""
+	            android:gravity="center"
+	            android:layout_span="6">
+	        </TextView>
+	    </TableRow>
+	    
+	    <TableRow
+	        android:id="@+id/trPokemonList"
+	        android:layout_height="match_parent"
+	        android:layout_width="match_parent">
+	        
+			<ListView
+	            android:id="@+id/plistCollection"
+	            android:layout_width="250dip"
+	            android:layout_height="match_parent"
+	            android:cacheColorHint="#00000000"
+	            android:fadingEdge="vertical"
+	            android:fastScrollAlwaysVisible="true"
+	            android:fastScrollEnabled="true"
+	            android:scrollbarStyle="outsideInset"
+	            android:scrollbars="vertical"
+	            tools:listitem="@layout/list_item_pokemon">
+	
+			</ListView>	        
+	    </TableRow>
+	</TableLayout>
+	
+	<HorizontalScrollView 
+        android:layout_width="fill_parent" 
+        android:layout_height="wrap_content">
+	    
+	<TableLayout
+	    android:id="@+id/collectionGameNameTableLayout"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+	    
+	    <!-- 	    
+		<TableRow
+	        android:id="@+id/trGameNameHeaders"
+	        android:layout_height="wrap_content"
+	        android:layout_width="match_parent">
+		        
+	        <TextView
+	            android:id="@+id/colNationalId"
+	            android:text="ID"
+	            android:width="200dip"></TextView>
+	        <TextView
+	            android:id="@+id/colName"
+	            android:text="Pokemon"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colRed"
+	            android:text="Red"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colGreen"
+	            android:text="Green"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colBlue"
+	            android:text="Blue"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colYellow"
+	            android:text="Yellow"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colGold"
+	            android:text="Gold"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colSilver"
+	            android:text="Silver"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colCrystal"
+	            android:text="Crystal"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colRuby"
+	            android:text="Ruby"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colSapphire"
+	            android:text="Sapphire"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colFireRed"
+	            android:text="Fire Red"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colLeafGreen"
+	            android:text="Leaf Green"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colEmerald"
+	            android:text="Emerald"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colDiamond"
+	            android:text="Diamond"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colPearl"
+	            android:text="Pearl"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colPlatinum"
+	            android:text="Platinum"
+	            android:textStyle="bold"></TextView>
+			<TextView
+	            android:id="@+id/colHeartGold"
+	            android:text="Heart Gold"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colSoulSilver"
+	            android:text="Soul Silver"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colBlack"
+	            android:text="Black"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colWhite"
+	            android:text="White"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colBlack2"
+	            android:text="Black 2"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colWhite2"
+	            android:text="White 2"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colX"
+	            android:text="X"
+	            android:textStyle="bold"></TextView>
+	        <TextView
+	            android:id="@+id/colY"
+	            android:text="Y"
+	            android:textStyle="bold"></TextView>
+	    </TableRow>
+    	-->
+    	 
+	</TableLayout>    	
+	</HorizontalScrollView>     
+          
+</LinearLayout>
+
+
+</LinearLayout>
