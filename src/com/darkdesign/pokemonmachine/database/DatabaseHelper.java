@@ -16,6 +16,7 @@ import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
+import com.darkdesign.pokemonmachine.element.VideoGame;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -35,6 +36,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_ITEMS = "items";
     private static final String TABLE_TYPES = "types";
     private static final String TABLE_TYPE_EFFICACY = "type_efficacy";
+    private static final String TABLE_GAMES = "version_names";
     
     
     private static SQLiteDatabase db = null;
@@ -444,6 +446,20 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             return sb.toString();
         }
     }
-    
+ 
+    public ArrayList<VideoGame> getVideoGameList() {
+    	ArrayList<VideoGame> gameList = new ArrayList<VideoGame>();
+    	
+    	String queryGames = "SELECT version_id, name FROM " + TABLE_GAMES;
+        Log.v(TAG, queryGames);
+        
+        Cursor cursorGames = db.rawQuery(queryGames, null);
+        
+        while (cursorGames.moveToNext()) {
+        	gameList.add(new VideoGame(cursorGames.getInt(0), cursorGames.getString(1)));
+        }
+    	
+    	return gameList;
+    }
     
 }

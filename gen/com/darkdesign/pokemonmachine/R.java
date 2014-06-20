@@ -60,8 +60,9 @@ public final class R {
         public static final int shadow_left=0x7f02001f;
         public static final int shadow_r=0x7f020020;
         public static final int shadow_right=0x7f020021;
-        public static final int steel=0x7f020022;
-        public static final int water=0x7f020023;
+        public static final int simple_grey_border=0x7f020022;
+        public static final int steel=0x7f020023;
+        public static final int water=0x7f020024;
     }
     public static final class id {
         public static final int action_search=0x7f0a0088;

@@ -93,4 +93,5 @@ public class Constants {
         
         TYPE_COLORS_PASTEL = Collections.unmodifiableMap(cMap);
     }
+    
 }
