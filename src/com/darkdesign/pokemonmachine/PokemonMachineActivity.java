@@ -111,6 +111,13 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         //forceDatabaseReload(this);
         
         // Create and add "Display Pokemon" as Primary Fragment
+        
+        showDisplayPokemonFragment();
+        
+        //showCollectionFragment();
+        
+        
+        /*
         FragmentManager fragmentManager = getFragmentManager();
 
         FragmentTransaction fTransaction = fragmentManager.beginTransaction();
@@ -119,6 +126,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         }
         fTransaction.add(R.id.content_frame, pokemonDisplayFragment, TAG_FRAGMENT_POKEMON_DISPLAY);
         fTransaction.commit();
+        */
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -704,12 +712,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     	if (position == TOP_MENU_ITEM_POKEMON) {
     		// TODO Replace with Cached Instances
     		//Fragment fragment = new PokemonDisplayFragment();
-    		if (pokemonDisplayFragment == null) {
-            	pokemonDisplayFragment = new PokemonDisplayFragment();
-            }
-	
-	        FragmentManager fragmentManager = getFragmentManager();
-	        fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
+    		showDisplayPokemonFragment();
     		
 	        //currentMainFragment = pokemonDisplayFragment;
 	        
@@ -725,12 +728,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     		
 	        //currentMainFragment = berryDisplayFragment;
     	} else if (position == TOP_MENU_ITEM_COLLECTION) {
-    		if (collectionDisplayFragment == null) {
-    			collectionDisplayFragment = new CollectionDisplayFragment();
-            }
-	
-	        FragmentManager fragmentManager = getFragmentManager();
-	        fragmentManager.beginTransaction().replace(R.id.content_frame, collectionDisplayFragment).commit();
+    		showCollectionFragment();
     	}
 
         // update selected item and title, then close the drawer
@@ -738,6 +736,24 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         setTitle(mMainMenuItems[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
+
+	public void showDisplayPokemonFragment() {
+		if (pokemonDisplayFragment == null) {
+			pokemonDisplayFragment = new PokemonDisplayFragment();
+		}
+
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
+	}
+
+	public void showCollectionFragment() {
+		if (collectionDisplayFragment == null) {
+			collectionDisplayFragment = new CollectionDisplayFragment();
+		}
+
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.content_frame, collectionDisplayFragment).commit();
+	}
 
 	    /**
 	     * Forces the database to reload from the default asset file.

@@ -35,8 +35,9 @@ public class CollectionDisplayFragment extends Fragment {
 	private View v; 
 	
 	private Context activity;
+	LayoutInflater inflater;
 	
-	private final static int GAME_COLUMN_WIDTH = 100;
+	private final static int GAME_COLUMN_WIDTH = 130;
 	
 	public static SimplePokemonListAdapter pokemonListAdapter;
 	
@@ -49,6 +50,8 @@ public class CollectionDisplayFragment extends Fragment {
 		v = inflater.inflate(R.layout.fragment_collection_main, container, false);
 		activity = getActivity();
 		
+		this.inflater = inflater;  
+		
 		// Setup Pokemon List
 		setupPokemonList();
 		
@@ -56,21 +59,21 @@ public class CollectionDisplayFragment extends Fragment {
 		games = PokemonMachineActivity.cache.getGameList();
 	   
 		// Setup Headers
-		TableLayout gameHeadersTable = (TableLayout) v.findViewById(R.id.collectionGameNameTableLayout);
-		TableRow gameNameHeaders = new TableRow(activity);
+		TableLayout gameHeadersTable = (TableLayout) v.findViewById(R.id.collectionHeaderTableLayout);
+		TableRow gameNameHeaderRow = (TableRow) gameHeadersTable.findViewById(R.id.collectionGameNameHeaderRow);
 		
 		int headerFieldCount = games.size();
 		  
 		for (int i=0; i < headerFieldCount; i++) {
 			TextView t = headerTextView(games.get(i).getName());
-			 
-			gameNameHeaders.addView(t);
+			gameNameHeaderRow.addView(t);
 		}
-		   
-		gameHeadersTable.addView(gameNameHeaders);
 		
+		// Setup Data Table
+		TableLayout collectionDataTable = (TableLayout) v.findViewById(R.id.collectionTableLayout);
+		   
 		// Setup Rows
-		buildTable(gameHeadersTable, headerFieldCount);
+		buildTable(collectionDataTable, headerFieldCount);
 		
 		return v;
 	 }
@@ -94,7 +97,7 @@ public class CollectionDisplayFragment extends Fragment {
 		// TODO Get the User Collection data from DB
 		
 		
-		final int DUMMY_ROWS_TO_GEN = 20;
+		final int DUMMY_ROWS_TO_GEN = 30;
 		
 		for (int i=0; i < DUMMY_ROWS_TO_GEN; i++) {
 			TableRow dataRow = new TableRow(activity);
@@ -109,13 +112,14 @@ public class CollectionDisplayFragment extends Fragment {
 
 	// header standard TextView
     TextView headerTextView(String label){
-         
+    	
         TextView headerTextView = new TextView(getActivity());
         headerTextView.setBackgroundColor(Color.WHITE);
         headerTextView.setText(label);
         headerTextView.setGravity(Gravity.CENTER);
         headerTextView.setPadding(5, 5, 5, 5);
         headerTextView.setWidth(GAME_COLUMN_WIDTH);
+        headerTextView.setBackgroundResource(R.drawable.simple_grey_border);
          
         return headerTextView;
     }
@@ -126,28 +130,18 @@ public class CollectionDisplayFragment extends Fragment {
      */
     private LinearLayout buildTableCell() {
     	
-    	LinearLayout infoLayout = new LinearLayout(this.activity);
-    	//infoLayout.setBackgroundColor(Color.WHITE);
-    	infoLayout.setBackgroundResource(R.drawable.simple_grey_border);
-    	infoLayout.setGravity(Gravity.CENTER);
-    	infoLayout.setPadding(5, 5, 5, 5);
-    	
-    	LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(30, 30);
-    	
-    	ImageView pokeballIcon = new ImageView(this.activity);
-    	pokeballIcon.setImageResource(R.drawable.pokeball);
-    	pokeballIcon.setLayoutParams(layoutParams);
-    	pokeballIcon.setTag("caught_indicator");
+    	LinearLayout iconsLayout = (LinearLayout)inflater.inflate( R.layout.collection_pokemon_icon_display, null );
+    	iconsLayout.setBackgroundResource(R.drawable.simple_grey_border);
     	
     	// Add Listeners
-    	infoLayout.setOnClickListener(new CellClickListener(TAG));
+    	iconsLayout.setOnClickListener(new CellClickListener(TAG));
     	
-    	infoLayout.addView(pokeballIcon);
+    	updateHeaders();
     	
-    	// testing
-    	pokeballIcon.setVisibility(View.INVISIBLE);
-    	
-        return infoLayout;
+        return iconsLayout;
+    }
+    
+    private void updateHeaders() {
     	
     }
 	
@@ -193,11 +187,31 @@ class CellClickListener implements OnClickListener {
         // TODO Hook up to DB
         //row_id=contact_table.indexOfChild(row);
 		Log.d(parentTag, "Cell Click !");
-		ImageView caughtIndicator = (ImageView) v.findViewWithTag("caught_indicator");
 		
-		int toggledVisibility = (caughtIndicator.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
-		caughtIndicator.setVisibility(toggledVisibility);
+		
+		ImageView seenIndicator = (ImageView) v.findViewWithTag("seen_indicator");
+		ImageView caughtIndicator = (ImageView) v.findViewWithTag("caught_indicator");
+		ImageView shinyIndicator = (ImageView) v.findViewWithTag("shiny_indicator");
+		
+		boolean isSeen = (seenIndicator.getVisibility() == View.VISIBLE) ? true : false;
+		boolean isCaught = (caughtIndicator.getVisibility() == View.VISIBLE) ? true : false;
+		boolean isShiny = (shinyIndicator.getVisibility() == View.VISIBLE) ? true : false;
+		
+		if (!isSeen) {
+			seenIndicator.setVisibility(View.VISIBLE);
+		} else if (isSeen && !isCaught) {
+			caughtIndicator.setVisibility(View.VISIBLE);
+		} else if (isSeen && isCaught) {
+			toggleIndicator(seenIndicator);
+			toggleIndicator(caughtIndicator);
+		}
+		
     }
+
+	public void toggleIndicator(ImageView indicator) {
+		int toggledVisibility = (indicator.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
+		indicator.setVisibility(toggledVisibility);
+	}
 	
 }
 

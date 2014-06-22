@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="210dip"
+    android:layout_height="40dip"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:background="@drawable/simple_grey_border" >
+    
+	<ImageView 
+	    android:id="@+id/imgSeen"
+	    android:src="@drawable/icon_coll_seen"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"
+	    android:tag="seen_indicator"
+	    android:visibility="invisible"/>
+
+	<ImageView 
+	    android:id="@+id/imgCaught"
+	    android:src="@drawable/icon_coll_pokeball"
+	    android:layout_width="30dip"
+	    android:layout_height="30dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"
+	    android:tag="caught_indicator"
+	    android:visibility="invisible"/>
+		
+	<ImageView 
+	    android:id="@+id/imgShiny"
+	    android:src="@drawable/icon_coll_shiny"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"
+	    android:tag="shiny_indicator"
+	    android:visibility="invisible"/>
+	
+	<!-- 
+	<ImageView 
+	    android:src="@drawable/pokeball"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"/>
+	
+	<ImageView 
+	    android:src="@drawable/pokeball"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"/>
+	
+	<ImageView 
+	    android:src="@drawable/pokeball"
+	    android:layout_width="40dip"
+	    android:layout_height="40dip"
+	    android:paddingLeft="5dip"
+	    android:paddingRight="5dip"/>
+	 -->
+</LinearLayout>
