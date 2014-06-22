@@ -64,7 +64,8 @@
 	    android:orientation="vertical" >		
 	
  		<!-- HEADERS -->
-		<HorizontalScrollView 
+		<com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView 
+		    android:id="@+id/horizontalScrollviewHeader"
 	        android:layout_width="fill_parent" 
 	        android:layout_height="wrap_content">
 			
@@ -77,14 +78,15 @@
 		            android:id="@+id/collectionGameNameHeaderRow">
 		        </TableRow>
 			</TableLayout>
-		</HorizontalScrollView>
+		</com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView>
 		<!-- END - HEADERS -->
 		
 		<!-- DATA TABLE -->
 		<ScrollView 
 		    android:layout_width="fill_parent" 
 	        android:layout_height="fill_parent">
-		<HorizontalScrollView 
+		<com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView 
+		    android:id="@+id/horizontalScrollviewData"
 		    android:layout_width="fill_parent" 
 	        android:layout_height="fill_parent">
 		    
@@ -94,7 +96,7 @@
 			    android:layout_height="wrap_content" >
 			    
 			</TableLayout>
-		</HorizontalScrollView>
+		</com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView>
 		</ScrollView>	
 		<!-- END - DATA TABLE -->	
 		

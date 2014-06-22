@@ -2,21 +2,29 @@ package com.darkdesign.pokemonmachine.fragment;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -29,15 +37,19 @@ import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment.OnPokemonLi
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView;
 
 public class CollectionDisplayFragment extends Fragment {
 	private String TAG = CollectionDisplayFragment.class.toString();
 	private View v; 
 	
-	private Context activity;
+	private Activity activity;
 	LayoutInflater inflater;
 	
-	private final static int GAME_COLUMN_WIDTH = 130;
+	private final static int GAME_COLUMN_WIDTH = 150;
+	
+	private NoFlingHorizontalScrollView headerHorizontalScrollView;
+	private NoFlingHorizontalScrollView dataHorizontalScrollView;
 	
 	public static SimplePokemonListAdapter pokemonListAdapter;
 	
@@ -75,22 +87,27 @@ public class CollectionDisplayFragment extends Fragment {
 		// Setup Rows
 		buildTable(collectionDataTable, headerFieldCount);
 		
+		// Setup Scroll Listeners
+		
+		headerHorizontalScrollView = (NoFlingHorizontalScrollView) v.findViewById(R.id.horizontalScrollviewHeader);
+		dataHorizontalScrollView = (NoFlingHorizontalScrollView) v.findViewById(R.id.horizontalScrollviewData);
+
+		dataHorizontalScrollView.setOnTouchListener(new OnTouchListener(){
+
+		    @Override
+		    public boolean onTouch(View view, MotionEvent event) {
+		        // TODO Auto-generated method stub
+
+		        int scrollX = view.getScrollX();
+		        int scrollY = view.getScrollY();
+
+		        headerHorizontalScrollView.scrollTo(scrollX, scrollY);
+		                    return false;
+		        }
+		});
+		
 		return v;
 	 }
-
-	private void generateDummyData(TableLayout gameHeadersTable, int headerFieldCount) {
-		final int DUMMY_ROWS_TO_GEN = 20;
-		
-		for (int i=0; i < DUMMY_ROWS_TO_GEN; i++) {
-			TableRow dataRow = new TableRow(activity);
-			
-			for (int j=0; j < headerFieldCount; j++) {
-				dataRow.addView(buildTableCell());
-			}
-			
-			gameHeadersTable.addView(dataRow);
-		}
-	}
 	
 	private void buildTable(TableLayout gameHeadersTable, int headerFieldCount) {
 		
@@ -129,20 +146,14 @@ public class CollectionDisplayFragment extends Fragment {
      * @return
      */
     private LinearLayout buildTableCell() {
-    	
     	LinearLayout iconsLayout = (LinearLayout)inflater.inflate( R.layout.collection_pokemon_icon_display, null );
-    	iconsLayout.setBackgroundResource(R.drawable.simple_grey_border);
-    	
+        	
     	// Add Listeners
-    	iconsLayout.setOnClickListener(new CellClickListener(TAG));
-    	
-    	updateHeaders();
+    	CellClickListener cellClickListener = new CellClickListener(TAG, activity);
+    	iconsLayout.setOnClickListener(cellClickListener);
+    	iconsLayout.setOnLongClickListener(cellClickListener);
     	
         return iconsLayout;
-    }
-    
-    private void updateHeaders() {
-    	
     }
 	
 	private void setupPokemonList() {
@@ -171,15 +182,40 @@ public class CollectionDisplayFragment extends Fragment {
 	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	}
-
 	
+	public static void showPopup(final Activity context, Point p, String heading, String content) {
+	   // Inflate the popup_layout.xml
+	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+	   LayoutInflater layoutInflater = (LayoutInflater) context
+	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	   View layout = layoutInflater.inflate(R.layout.collection_indicator_popup_layout, viewGroup);
+	 
+	   // Creating the PopupWindow
+	   final PopupWindow popup = new PopupWindow(context);
+	   popup.setContentView(layout);
+	   popup.setFocusable(true);
+	 
+	   // Clear the default translucent background
+	   popup.setBackgroundDrawable(new BitmapDrawable());
+	 
+		// Displaying the popup at the specified location, + offsets.
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x, p.y);
+	   
+		// Update Heading and Content
+		TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
+		TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
+		txtHeading.setText(heading);
+		txtContent.setText(content);
+	}
 }
 
-class CellClickListener implements OnClickListener {
+class CellClickListener implements OnClickListener, OnLongClickListener {
 	private String parentTag = "";
+	private Activity context;
 	
-	CellClickListener(String parentTag) {
+	CellClickListener(String parentTag, Activity context) {
 		this.parentTag = parentTag;
+		this.context = context;
 	}
 	
 	@Override
@@ -187,7 +223,6 @@ class CellClickListener implements OnClickListener {
         // TODO Hook up to DB
         //row_id=contact_table.indexOfChild(row);
 		Log.d(parentTag, "Cell Click !");
-		
 		
 		ImageView seenIndicator = (ImageView) v.findViewWithTag("seen_indicator");
 		ImageView caughtIndicator = (ImageView) v.findViewWithTag("caught_indicator");
@@ -205,8 +240,27 @@ class CellClickListener implements OnClickListener {
 			toggleIndicator(seenIndicator);
 			toggleIndicator(caughtIndicator);
 		}
-		
     }
+	
+	@Override
+	public boolean onLongClick(View v) {
+		Log.d(parentTag, "LONG Click" );
+		int[] location = new int[2];
+		v.getLocationOnScreen(location);
+		 
+		Point p = new Point();
+		p.x = 400;
+		p.y = 200;
+			
+		//Open popup window
+		if (p != null) {
+			String heading = "Set Indicators";
+			String content = "TODO";
+			CollectionDisplayFragment.showPopup(context, p, heading, content);
+		}
+		
+       return true;
+	}
 
 	public void toggleIndicator(ImageView indicator) {
 		int toggledVisibility = (indicator.getVisibility() == View.VISIBLE) ? View.INVISIBLE : View.VISIBLE;
