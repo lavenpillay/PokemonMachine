@@ -13,12 +13,19 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.cache.Cache;
+import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
 import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.VideoGame;
+import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class Util {
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
@@ -274,4 +281,59 @@ public class Util {
 	   });
 	   */
 	}	
+	
+	// The method that displays the popup.
+		public static void showGameFilterDialog(final Activity context, Point p, String heading, String content) {
+		   int popupWidth = 500;
+		   int popupHeight = 350;
+		 
+		   // Inflate the popup_layout.xml
+		   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
+		   LayoutInflater layoutInflater = (LayoutInflater) context
+		     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		   View layout = layoutInflater.inflate(R.layout.collection_game_filter_popup_layout, viewGroup);
+		   
+		   // Creating the PopupWindow
+		   final GameFilterDialog popup = new GameFilterDialog(context);
+		   popup.setContentView(layout);
+		   popup.setWidth(popupWidth);
+		   popup.setHeight(popupHeight);
+		   popup.setFocusable(true);
+		 
+		   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+		   int OFFSET_X = 10;
+		   int OFFSET_Y = 30;
+		 
+		   // Clear the default translucent background
+		   popup.setBackgroundDrawable(new BitmapDrawable());
+		 
+			// Displaying the popup at the specified location, + offsets.
+			popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+		   
+			// Update Heading and Content
+			TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
+			TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
+			txtHeading.setText(heading);
+			txtContent.setText(content);
+
+			//LinearLayout gameFilterCheckboxHolder = (LinearLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
+			FlowLayout gameFilterCheckboxHolder = (FlowLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
+			
+		   generateGameFilterCheckboxes(context, gameFilterCheckboxHolder);
+		}
+
+		//public static void generateGameFilterCheckboxes(final Activity context, LinearLayout gameFilterCheckboxHolder) {
+		public static void generateGameFilterCheckboxes(final Activity context, FlowLayout gameFilterCheckboxHolder) {
+			
+			ArrayList<VideoGame> gameList = PokemonMachineActivity.cache.getGameList();
+			
+			for (int i=0; i < gameList.size(); i++) {
+				CheckBox checkBox = new CheckBox(context);
+				checkBox.setTextColor(0xFFBBBBBB);
+				checkBox.setWidth(120);
+				checkBox.setText(gameList.get(i).getName());
+				   
+				gameFilterCheckboxHolder.addView(checkBox);
+			}
+		}		
 }

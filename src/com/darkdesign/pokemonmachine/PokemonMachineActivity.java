@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -15,11 +16,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,11 +38,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
@@ -77,9 +82,10 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
+    private Fragment currentMainFragment;
     
     public Pokemon currentSelectedPokemon;
-    
+        
     private DatabaseHelper db;
     
     private SharedPreferences applicationSettings;
@@ -684,6 +690,35 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	     */
 	}
 	
+	public void showGameFilterDialog(final Activity context, Point p, String heading, String content) {
+		
+			Util.showGameFilterDialog(this, new Point(100, 100), "sfasdf", "asdfasdfasdf");
+		/*
+		   // Inflate the popup_layout.xml
+		   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+		   LayoutInflater layoutInflater = (LayoutInflater) context
+		     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		   View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
+		 
+		   // Creating the PopupWindow
+		   final PopupWindow popup = new PopupWindow(context);
+		   popup.setContentView(layout);
+		   popup.setFocusable(true);
+		 
+		   // Clear the default translucent background
+		   popup.setBackgroundDrawable(new BitmapDrawable());
+		 
+			// Displaying the popup at the specified location, + offsets.
+			popup.showAtLocation(layout, Gravity.NO_GRAVITY, 100, 100);
+		   
+			// Update Heading and Content
+			TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
+			TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
+			txtHeading.setText(heading);
+			txtContent.setText(content);
+			*/
+		}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
@@ -691,11 +726,14 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	        case R.id.action_settings:
 	            showSettings();
 	            return true;
-	        /*    
-	        case R.id.action_settings:
-	            openSettings();
+	            
+	        case R.id.action_filter_games:
+	            //openSettings();
+	        	Log.d(TAG, "Open Filters");
+	        	showGameFilterDialog(this, new Point(), "Heading", "Content");
+	        	
 	            return true;
-	        */    
+	            
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
@@ -711,11 +749,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
     	// Check position
     	if (position == TOP_MENU_ITEM_POKEMON) {
     		// TODO Replace with Cached Instances
-    		//Fragment fragment = new PokemonDisplayFragment();
     		showDisplayPokemonFragment();
     		
-	        //currentMainFragment = pokemonDisplayFragment;
-	        
     	} else if (position == TOP_MENU_ITEM_MOVES) {
 	        // update the main content by replacing fragments
     	} else if (position == TOP_MENU_ITEM_BERRIES) {
@@ -744,6 +779,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, pokemonDisplayFragment).commit();
+		
+		currentMainFragment = pokemonDisplayFragment;
 	}
 
 	public void showCollectionFragment() {
@@ -753,6 +790,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.beginTransaction().replace(R.id.content_frame, collectionDisplayFragment).commit();
+		
+		currentMainFragment = collectionDisplayFragment;
 	}
 
 	    /**
