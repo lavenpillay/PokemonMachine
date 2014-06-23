@@ -9,10 +9,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -20,8 +22,6 @@ import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
-import com.darkdesign.pokemonmachine.cache.Cache;
-import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.VideoGame;
@@ -29,7 +29,16 @@ import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class Util {
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
-
+	private static Point screenDimensions;
+		
+	
+	public static void measureScreenDimensions(Context context) {
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		screenDimensions = new Point();
+		display.getSize(screenDimensions);
+	}
+	
 	public static String padLeft(String stringToPad, int finalLength) {
 		return String.format("%03d", Integer.valueOf(stringToPad));
 	}
@@ -283,9 +292,12 @@ public class Util {
 	}	
 	
 	// The method that displays the popup.
-		public static void showGameFilterDialog(final Activity context, Point p, String heading, String content) {
+		public static void showGameFilterDialog(final Activity context) {
 		   int popupWidth = 500;
 		   int popupHeight = 350;
+		   
+		   String heading = "Select Games";
+		   String content = "";
 		 
 		   // Inflate the popup_layout.xml
 		   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
@@ -300,26 +312,32 @@ public class Util {
 		   popup.setHeight(popupHeight);
 		   popup.setFocusable(true);
 		 
-		   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
-		   int OFFSET_X = 10;
-		   int OFFSET_Y = 30;
-		 
 		   // Clear the default translucent background
 		   popup.setBackgroundDrawable(new BitmapDrawable());
 		 
-			// Displaying the popup at the specified location, + offsets.
-			popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
-		   
 			// Update Heading and Content
+		   /*
 			TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
 			TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
 			txtHeading.setText(heading);
 			txtContent.setText(content);
+			*/
 
 			//LinearLayout gameFilterCheckboxHolder = (LinearLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
 			FlowLayout gameFilterCheckboxHolder = (FlowLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
 			
-		   generateGameFilterCheckboxes(context, gameFilterCheckboxHolder);
+			// Generate Checkboxes
+			generateGameFilterCheckboxes(context, gameFilterCheckboxHolder);
+			
+			int width = getScreenWidth(context);
+			int height = getScreenHeight(context);
+			
+			int posX = (width / 2) - (popupWidth / 2);
+			int posY = (height / 2) - (popupHeight / 2);
+			
+			// Displaying the popup in the middle of the screen
+			popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
+
 		}
 
 		//public static void generateGameFilterCheckboxes(final Activity context, LinearLayout gameFilterCheckboxHolder) {
@@ -335,5 +353,27 @@ public class Util {
 				   
 				gameFilterCheckboxHolder.addView(checkBox);
 			}
-		}		
+		}	
+		
+		/**
+		 * 
+		 * @param context
+		 * @return
+		 */
+		public static int getScreenWidth(Context context) {
+			if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
+			
+			return Util.screenDimensions.x;
+		}
+		
+		/**
+		 * 
+		 * @param context
+		 * @return
+		 */
+		public static int getScreenHeight(Context context) {
+			if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
+			
+			return Util.screenDimensions.y;
+		}
 }

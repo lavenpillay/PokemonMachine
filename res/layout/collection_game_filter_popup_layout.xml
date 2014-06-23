@@ -11,7 +11,7 @@
 		   android:id="@+id/txtPopupHeading"
 		   android:layout_width="fill_parent"
 		   android:layout_height="wrap_content"
-		   android:text="Popup"
+		   android:text="Game Filter"
 		   android:textColor="#FFFFFF"
 		   android:gravity="center_horizontal"
 		   android:textAppearance="?android:attr/textAppearanceLarge" />

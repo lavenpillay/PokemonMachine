@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,18 +12,19 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,13 +40,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
-import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
@@ -72,6 +72,9 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	private String[] mMainMenuItems;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mTitle;
+    private CharSequence mDrawerTitle;
     
     // Menu Item Names Defined in strings.xml 
     private final static int TOP_MENU_ITEM_POKEMON = 0;
@@ -108,6 +111,34 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         mMainMenuItems = getResources().getStringArray(R.array.top_menu_item_name_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        
+        mTitle = mDrawerTitle = getTitle();
+        
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, R.string.app_name, R.string.app_name)
+        {
+            public void onDrawerClosed(View view)
+            {
+            	super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView)
+            {
+            	super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu();
+            }
+        };
+        
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //enableHomeButtonIfRequired();
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        
 
         // Set the adapter for the main menu list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_drawer, mMainMenuItems));
@@ -117,22 +148,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         //forceDatabaseReload(this);
         
         // Create and add "Display Pokemon" as Primary Fragment
-        
         showDisplayPokemonFragment();
-        
-        //showCollectionFragment();
-        
-        
-        /*
-        FragmentManager fragmentManager = getFragmentManager();
-
-        FragmentTransaction fTransaction = fragmentManager.beginTransaction();
-        if (pokemonDisplayFragment == null) {
-        	pokemonDisplayFragment = new PokemonDisplayFragment();
-        }
-        fTransaction.add(R.id.content_frame, pokemonDisplayFragment, TAG_FRAGMENT_POKEMON_DISPLAY);
-        fTransaction.commit();
-        */
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -142,6 +158,27 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
         
         applicationSettings = PreferenceManager.getDefaultSharedPreferences(this);
     }
+	
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void enableHomeButtonIfRequired()
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH){
+            getActionBar().setHomeButtonEnabled(true);
+        }
+    }
+	
+	@Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+	
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }	
 
 	@Override
 	public void onAttachedToWindow() {
@@ -690,37 +727,14 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	     */
 	}
 	
-	public void showGameFilterDialog(final Activity context, Point p, String heading, String content) {
-		
-			Util.showGameFilterDialog(this, new Point(100, 100), "sfasdf", "asdfasdfasdf");
-		/*
-		   // Inflate the popup_layout.xml
-		   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
-		   LayoutInflater layoutInflater = (LayoutInflater) context
-		     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		   View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
-		 
-		   // Creating the PopupWindow
-		   final PopupWindow popup = new PopupWindow(context);
-		   popup.setContentView(layout);
-		   popup.setFocusable(true);
-		 
-		   // Clear the default translucent background
-		   popup.setBackgroundDrawable(new BitmapDrawable());
-		 
-			// Displaying the popup at the specified location, + offsets.
-			popup.showAtLocation(layout, Gravity.NO_GRAVITY, 100, 100);
-		   
-			// Update Heading and Content
-			TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
-			TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
-			txtHeading.setText(heading);
-			txtContent.setText(content);
-			*/
-		}
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		// Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+          return true;
+        }		
+		
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.action_settings:
@@ -728,11 +742,19 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	            return true;
 	            
 	        case R.id.action_filter_games:
-	            //openSettings();
 	        	Log.d(TAG, "Open Filters");
-	        	showGameFilterDialog(this, new Point(), "Heading", "Content");
+	        	Util.showGameFilterDialog(this);
 	        	
 	            return true;
+	            
+	        case android.R.id.home:
+	            if(mDrawerLayout.isDrawerOpen(mDrawerList)) {
+	                mDrawerLayout.closeDrawer(mDrawerList);
+	            }
+	            else {
+	                mDrawerLayout.openDrawer(mDrawerList);
+	            }
+	            return true;	            
 	            
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -794,16 +816,16 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		currentMainFragment = collectionDisplayFragment;
 	}
 
-	    /**
-	     * Forces the database to reload from the default asset file.
-	     */
-	    public static void forceDatabaseReload(Context context){
-	        DatabaseHelper dbHelper = new DatabaseHelper(context);
-	        dbHelper.setForcedUpgradeVersion(DatabaseHelper.DATABASE_VERSION);
-	        SQLiteDatabase db = dbHelper.getWritableDatabase();
-	        db.setVersion(-1);
-	        db.close();
-	        db = dbHelper.getWritableDatabase();
-	    }	    
+    /**
+     * Forces the database to reload from the default asset file.
+     */
+    public static void forceDatabaseReload(Context context){
+        DatabaseHelper dbHelper = new DatabaseHelper(context);
+        dbHelper.setForcedUpgradeVersion(DatabaseHelper.DATABASE_VERSION);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.setVersion(-1);
+        db.close();
+        db = dbHelper.getWritableDatabase();
+    }
 }
 

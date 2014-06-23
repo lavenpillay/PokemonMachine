@@ -17,6 +17,7 @@ import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
+import com.darkdesign.pokemonmachine.element.VideoGameList;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
@@ -36,7 +37,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_ITEMS = "items";
     private static final String TABLE_TYPES = "types";
     private static final String TABLE_TYPE_EFFICACY = "type_efficacy";
-    private static final String TABLE_GAMES = "version_names";
+    private static final String TABLE_VERSION_NAMES = "version_names";
+    private static final String TABLE_VERSIONS = "versions";
+    private static final String TABLE_VERSION_GROUPS = "version_groups";
     
     
     private static SQLiteDatabase db = null;
@@ -447,16 +450,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
     }
  
-    public ArrayList<VideoGame> getVideoGameList() {
-    	ArrayList<VideoGame> gameList = new ArrayList<VideoGame>();
+    public VideoGameList getVideoGameList() {
+    	VideoGameList gameList = new VideoGameList();
     	
-    	String queryGames = "SELECT version_id, name FROM " + TABLE_GAMES;
+    	String queryGames = "";
+    	queryGames += "SELECT v.id, n.name, g.generation_id ";
+    	queryGames += "FROM " + TABLE_VERSIONS + " v, " + TABLE_VERSION_NAMES +" n, " + TABLE_VERSION_GROUPS + " g ";
+    	queryGames += "WHERE n.version_id = v.id AND v.version_group_id = g.id ";
+    	queryGames += "GROUP BY v.id";
+    	
         Log.v(TAG, queryGames);
         
         Cursor cursorGames = db.rawQuery(queryGames, null);
         
+        // Build Game List from results
         while (cursorGames.moveToNext()) {
-        	gameList.add(new VideoGame(cursorGames.getInt(0), cursorGames.getString(1)));
+        	gameList.add(new VideoGame(cursorGames.getInt(0), cursorGames.getString(1), cursorGames.getInt(2)));
         }
     	
     	return gameList;
