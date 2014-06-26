@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:id="@+id/typeWeaknessDialog"
+	   	android:layout_width="800dip"
+		android:layout_height="800dip"
+		android:background="@drawable/popup_bg"
+		android:orientation="vertical" >
+	 
+		<TextView
+		   android:id="@+id/txtPopupHeading"
+		   android:layout_width="fill_parent"
+		   android:layout_height="wrap_content"
+		   android:text="Type Weaknesses"
+		   android:textColor="#FFFFFF"
+		   android:gravity="center_horizontal"
+		   android:textAppearance="?android:attr/textAppearanceLarge" />
+		 
+		<TextView
+		   android:id="@+id/txtPopupContent"
+		   android:layout_marginTop="5dp"
+		   android:layout_width="fill_parent"
+		   android:layout_height="wrap_content"
+		   android:textColor="#DDDDDD"
+		   android:gravity="center_horizontal"
+		   android:text="" />
+		
+		<TableLayout
+		    android:id="@+id/typeWeaknessTable"
+		    android:layout_width="fill_parent"
+		    android:layout_height="fill_parent">
+		
+		</TableLayout>
+
+	
+	</LinearLayout>

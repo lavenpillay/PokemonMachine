@@ -7,6 +7,8 @@ import java.util.Comparator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.Display;
@@ -16,21 +18,24 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
 import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
 import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class Util {
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
 	private static Point screenDimensions;
-		
 	
 	public static void measureScreenDimensions(Context context) {
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -291,89 +296,188 @@ public class Util {
 	   */
 	}	
 	
-	// The method that displays the popup.
-		public static void showGameFilterDialog(final Activity context) {
-		   int popupWidth = 500;
-		   int popupHeight = 350;
+	/**
+	 * 
+	 * @param context
+	 */
+	public static void showGameFilterDialog(final Activity context) {
+	   int popupWidth = 500;
+	   int popupHeight = 350;
+	   
+	   String heading = "Select Games";
+	   String content = "";
+	 
+	   // Inflate the popup_layout.xml
+	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
+	   LayoutInflater layoutInflater = (LayoutInflater) context
+	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	   View layout = layoutInflater.inflate(R.layout.collection_game_filter_popup_layout, viewGroup);
+	   
+	   // Creating the PopupWindow
+	   final GameFilterDialog popup = new GameFilterDialog(context);
+	   popup.setContentView(layout);
+	   popup.setWidth(popupWidth);
+	   popup.setHeight(popupHeight);
+	   popup.setFocusable(true);
+	 
+	   // Clear the default translucent background
+	   popup.setBackgroundDrawable(new BitmapDrawable());
+	 
+		//LinearLayout gameFilterCheckboxHolder = (LinearLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
+		FlowLayout gameFilterCheckboxHolder = (FlowLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
+		
+		// Generate Checkboxes
+		generateGameFilterCheckboxes(context, gameFilterCheckboxHolder);
+		
+		int width = getScreenWidth(context);
+		int height = getScreenHeight(context);
+		
+		int posX = (width / 2) - (popupWidth / 2);
+		int posY = (height / 2) - (popupHeight / 2);
+		
+		// Displaying the popup in the middle of the screen
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
+	
+	}
+	
+	public static void showTypeWeaknessPopup(final Activity context) {
+		
+		AssetHelper assetHelper = new AssetHelper(context);
+		
+		int popupWidth = 800;
+		int popupHeight = 800;
+		 
+		// Inflate the popup_layout.xml
+		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessDialog);
+		LayoutInflater layoutInflater = (LayoutInflater) context
+		   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = layoutInflater.inflate(R.layout.type_weakness_table_popup_layout, viewGroup);
 		   
-		   String heading = "Select Games";
-		   String content = "";
+		// Creating the PopupWindow
+		final GameFilterDialog popup = new GameFilterDialog(context);
+		popup.setContentView(layout);
+		popup.setWidth(popupWidth);
+		popup.setHeight(popupHeight);
+		popup.setFocusable(true);
 		 
-		   // Inflate the popup_layout.xml
-		   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
-		   LayoutInflater layoutInflater = (LayoutInflater) context
-		     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		   View layout = layoutInflater.inflate(R.layout.collection_game_filter_popup_layout, viewGroup);
-		   
-		   // Creating the PopupWindow
-		   final GameFilterDialog popup = new GameFilterDialog(context);
-		   popup.setContentView(layout);
-		   popup.setWidth(popupWidth);
-		   popup.setHeight(popupHeight);
-		   popup.setFocusable(true);
-		 
-		   // Clear the default translucent background
-		   popup.setBackgroundDrawable(new BitmapDrawable());
-		 
-			// Update Heading and Content
-		   /*
-			TextView txtHeading = (TextView) layout.findViewById(R.id.txtPopupHeading);
-			TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
-			txtHeading.setText(heading);
-			txtContent.setText(content);
-			*/
-
-			//LinearLayout gameFilterCheckboxHolder = (LinearLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
-			FlowLayout gameFilterCheckboxHolder = (FlowLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
+		// Clear the default translucent background
+		popup.setBackgroundDrawable(new BitmapDrawable());
+		
+		// Positioning
+		int width = getScreenWidth(context);
+		int height = getScreenHeight(context);
+		
+		int posX = (width / 2) - (popupWidth / 2);
+		int posY = (height / 2) - (popupHeight / 2);
+		
+		// Get Data and populate table
+		ArrayList<Type> typeList = PokemonMachineActivity.cache.getTypeList();
+		
+		// Add Top Header Row
+		TableRow attackTypeHeaders = new TableRow(context);
+		
+		ImageView spacer = new ImageView(context);
+		spacer.setImageResource(R.drawable.spacer_50x50);
+		
+		attackTypeHeaders.addView(spacer);
+		
+		// Add Top Row Type Symbols
+		for (int i=0; i < typeList.size(); i++) {
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images/" + typeList.get(i).getName() + ".png");
+			ImageView rotatedImage = rotateImageView(typeImage, 90, context);
+			rotatedImage.setPadding(5, 5, 5, 5);
+			rotatedImage.setBackgroundResource(R.drawable.simple_grey_border);
 			
-			// Generate Checkboxes
-			generateGameFilterCheckboxes(context, gameFilterCheckboxHolder);
-			
-			int width = getScreenWidth(context);
-			int height = getScreenHeight(context);
-			
-			int posX = (width / 2) - (popupWidth / 2);
-			int posY = (height / 2) - (popupHeight / 2);
-			
-			// Displaying the popup in the middle of the screen
-			popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
-
+			attackTypeHeaders.addView(rotatedImage);
 		}
-
-		//public static void generateGameFilterCheckboxes(final Activity context, LinearLayout gameFilterCheckboxHolder) {
-		public static void generateGameFilterCheckboxes(final Activity context, FlowLayout gameFilterCheckboxHolder) {
+		
+		
+		TableLayout table = (TableLayout) layout.findViewById(R.id.typeWeaknessTable);
+		table.addView(attackTypeHeaders);
+		
+		// Other Rows
+		for (int i=0; i < typeList.size(); i++) {
+			TableRow newRow = new TableRow(context);
+			LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 30);
+			newRow.setGravity(Gravity.CENTER_VERTICAL);
+			newRow.setLayoutParams(layoutParams);
+			newRow.setBackgroundColor(0xFFFFFFFF);
 			
-			ArrayList<VideoGame> gameList = PokemonMachineActivity.cache.getGameList();
 			
-			for (int i=0; i < gameList.size(); i++) {
-				CheckBox checkBox = new CheckBox(context);
-				checkBox.setTextColor(0xFFBBBBBB);
-				checkBox.setWidth(120);
-				checkBox.setText(gameList.get(i).getName());
-				   
-				gameFilterCheckboxHolder.addView(checkBox);
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images/" + typeList.get(i).getName() + ".png");
+			typeImage.setPadding(5, 5, 5, 5);
+			typeImage.setBackgroundResource(R.drawable.simple_grey_border);
+			
+			newRow.addView(typeImage);
+			
+			for (int j=0; j < typeList.size(); j++) {
+				//ImageView damageImage = assetHelper.getImageViewFromAsset("berry_images/aguav-berry.png");
+				ImageView damageImage = new ImageView(context);
+				damageImage.setBackgroundResource(R.drawable.simple_grey_border);
+				damageImage.setImageResource(R.drawable.damage_double);
+				
+				newRow.addView(damageImage);
 			}
-		}	
-		
-		/**
-		 * 
-		 * @param context
-		 * @return
-		 */
-		public static int getScreenWidth(Context context) {
-			if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
 			
-			return Util.screenDimensions.x;
+			table.addView(newRow);
 		}
 		
-		/**
-		 * 
-		 * @param context
-		 * @return
-		 */
-		public static int getScreenHeight(Context context) {
-			if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
-			
-			return Util.screenDimensions.y;
+		
+		
+		// Displaying the popup in the middle of the screen
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
+	
+	}	
+	
+	public static ImageView rotateImageView(ImageView image, int rotation, Context context) {
+		Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
+		
+		Matrix mat = new Matrix();
+		mat.postRotate(rotation);
+		Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
+		BitmapDrawable bmd = new BitmapDrawable(bMapRotate);
+		
+		ImageView rotatedImageView = new ImageView(context);
+		rotatedImageView.setImageBitmap(bMapRotate);
+		rotatedImageView.setImageDrawable(bmd);
+		
+		return rotatedImageView;
+	}
+
+	//public static void generateGameFilterCheckboxes(final Activity context, LinearLayout gameFilterCheckboxHolder) {
+	public static void generateGameFilterCheckboxes(final Activity context, FlowLayout gameFilterCheckboxHolder) {
+		
+		ArrayList<VideoGame> gameList = PokemonMachineActivity.cache.getGameList();
+		
+		for (int i=0; i < gameList.size(); i++) {
+			CheckBox checkBox = new CheckBox(context);
+			checkBox.setTextColor(0xFFBBBBBB);
+			checkBox.setWidth(120);
+			checkBox.setText(gameList.get(i).getName());
+			   
+			gameFilterCheckboxHolder.addView(checkBox);
 		}
+	}	
+	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenWidth(Context context) {
+		if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
+		
+		return Util.screenDimensions.x;
+	}
+	
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static int getScreenHeight(Context context) {
+		if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
+		
+		return Util.screenDimensions.y;
+	}
 }

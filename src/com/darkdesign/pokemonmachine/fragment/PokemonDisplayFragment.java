@@ -175,29 +175,23 @@ public class PokemonDisplayFragment extends Fragment {
 		 ImageView i = (ImageView)v.findViewById(R.id.imageView1);
 		 ImageView pokemonType1 = (ImageView)v.findViewById(R.id.imgType1);
 		 ImageView pokemonType2 = (ImageView)v.findViewById(R.id.imgType2);;
+
+		 String id = Util.padLeft(String.valueOf(pokemon.getId()), Constants.POKEMON_ID_LENGTH);
+		 Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_images/" + id + ".png");
 		 
-		 try {
-			 String id = Util.padLeft(String.valueOf(pokemon.getId()), Constants.POKEMON_ID_LENGTH);
-			 Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_images/" + id + ".png");
-			 
-			 i.setImageBitmap(bm);
-			 
-			 ArrayList<Type> pokemonTypes = pokemon.getTypes();
-			 
-			 Bitmap type1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(0).getName() + ".png");
-			 pokemonType1.setImageBitmap(type1);
-			 
-			 if (pokemonTypes.size() > 1) {
-				 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
-				 pokemonType2.setImageBitmap(type2);
-			 } else {
-				 // Remove 2nd Type icon
-				 pokemonType2.setImageResource(android.R.color.transparent);
-			 }
-			 
-			 
-		 } catch (IOException ioe) {
-			 Log.e(getTag(), ioe.toString());
+		 i.setImageBitmap(bm);
+		 
+		 ArrayList<Type> pokemonTypes = pokemon.getTypes();
+		 
+		 Bitmap type1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(0).getName() + ".png");
+		 pokemonType1.setImageBitmap(type1);
+		 
+		 if (pokemonTypes.size() > 1) {
+			 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
+			 pokemonType2.setImageBitmap(type2);
+		 } else {
+			 // Remove 2nd Type icon
+			 pokemonType2.setImageResource(android.R.color.transparent);
 		 }
 
 		 TextView idTextView = (TextView)v.findViewById(R.id.txtID);

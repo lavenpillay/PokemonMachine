@@ -67,16 +67,11 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 		description.setText(Parser.parseMoveDescription(move));
 		
 		// Set Images
-		try {
-			 Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
-			 categoryImageView.setImageBitmap(bm);
-			 
-			 Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images/" + move.getType() + ".png");
-			 typeImageView.setImageBitmap(typeBitmap);
-			 
-		} catch (IOException ioe) {
-			 Log.e(TAG, ioe.toString());
-		}
+		Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
+		categoryImageView.setImageBitmap(bm);
+				 
+		Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images/" + move.getType() + ".png");
+		typeImageView.setImageBitmap(typeBitmap);
 		
     return rowView;
   }

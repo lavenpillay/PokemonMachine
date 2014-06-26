@@ -40,13 +40,10 @@ public class BerryDisplayFragment extends Fragment {
 	        ImageView imageView = new ImageView(activity);
 	
 	        // Set icon
-	     		try {
-	     			AssetHelper assetHelper = new AssetHelper(activity);
-	     			Bitmap bm = assetHelper.getBitmapFromAsset("berry_images/" + berryList.get(i).getBerryName() + ".png");
-	     			imageView.setImageBitmap(bm);
-	     		} catch (IOException ioe) {
-	     			 Log.e(TAG, ioe.toString());
-	     		}
+ 			AssetHelper assetHelper = new AssetHelper(activity);
+ 			Bitmap bm = assetHelper.getBitmapFromAsset("berry_images/" + berryList.get(i).getBerryName() + ".png");
+ 			imageView.setImageBitmap(bm);
+ 			
 	        //setting image position
 	        imageView.setLayoutParams(new LayoutParams(
 				LayoutParams.WRAP_CONTENT,

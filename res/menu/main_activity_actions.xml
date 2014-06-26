@@ -3,8 +3,14 @@
     
     <!-- Search, should appear as action button -->
     <item android:id="@+id/action_search"
-          android:icon="@drawable/icon_trade"
+          android:icon="@drawable/ic_action_search"
           android:title="Search"
+          android:showAsAction="ifRoom" />
+    
+    <!-- Search, should appear as action button -->
+    <item android:id="@+id/action_type_table"
+          android:icon="@drawable/bug"
+          android:title="Type Matchups"
           android:showAsAction="ifRoom" />
     
     <!-- Search, should appear as action button -->

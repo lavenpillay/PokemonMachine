@@ -384,6 +384,21 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	return typeEfficacyMatrix;
     }
     
+    public ArrayList<Type> getTypes() {
+    	ArrayList<Type> types = new ArrayList<Type>();
+    	
+    	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES + " WHERE id < 10000 ORDER BY identifier ASC ";
+        Log.v(TAG, queryTypes);
+        
+        Cursor cursorTypes = db.rawQuery(queryTypes, null);
+    	
+        while (cursorTypes.moveToNext()) {
+        	types.add(new Type(cursorTypes.getString(1), cursorTypes.getString(0)));
+        }
+        
+    	return types;
+    }
+    
     public HashMap<String,Integer> getTypeIdsByNamesMap() {
     	HashMap<String,Integer> typeIdByName = new HashMap<String,Integer>();
     	

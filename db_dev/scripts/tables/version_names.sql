@@ -27,8 +27,8 @@ INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (16, 9, 'SoulSilver');
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (17, 9, 'Black');
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (18, 9, 'White');
-INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (19, 9, 'Colosseum');
-INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (20, 9, 'XD');
+--INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (19, 9, 'Colosseum');
+--INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (20, 9, 'XD');
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (21, 9, 'Black 2');
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (22, 9, 'White 2');
 INSERT INTO [version_names] ([version_id], [local_language_id], [name]) VALUES (23, 9, 'X');

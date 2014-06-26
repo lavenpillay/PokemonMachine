@@ -8,6 +8,7 @@ import android.app.Activity;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.Pokemon;
+import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
 
 public class Cache {
@@ -15,6 +16,7 @@ public class Cache {
 	private static HashMap<String, Pokemon> POKEMON_CACHE;
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
+	private static ArrayList<Type> TYPE_LIST_CACHE;
 	private static int[][] TYPE_EFFICACY_MATRIX;
 	
 	private static HashMap<String,Integer> TYPE_ID_BY_NAME;
@@ -30,16 +32,24 @@ public class Cache {
 	public Cache(Activity mainActivity) {
 		db = new DatabaseHelper(mainActivity);
 		
+		// Pokemon
 		POKEMON_CACHE = new HashMap<String, Pokemon>();
+		
+		// Types
+		TYPE_LIST_CACHE = db.getTypes();
 		TYPE_EFFICACY_MATRIX = db.getTypeEfficacyMatrix();
 		
 		TYPE_ID_BY_NAME = db.getTypeIdsByNamesMap();
 		TYPE_NAME_BY_ID = db.getTypeNamesByIdsMap();
 		
+		// Berries
 		BERRY_CACHE = db.getBerries();
 		setupBerryNameByIdMap();
 		
+		// Games
 		GAME_LIST_CACHE = db.getVideoGameList();
+		
+		
 	}
 	
 	public void setupBerryNameByIdMap() {
@@ -68,6 +78,10 @@ public class Cache {
 	
 	public ArrayList<VideoGame> getGameList() {
 		return GAME_LIST_CACHE;
+	}
+	
+	public ArrayList<Type> getTypeList() {
+		return TYPE_LIST_CACHE;
 	}
 	
 	public int getTypeIdByName(String typeName) {

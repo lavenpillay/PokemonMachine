@@ -54,7 +54,6 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		String name = this.getItem(position);
 		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
 		
-		//Pokemon pokemon = db.getPokemon(String.valueOf(pokemonId));
 		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(pokemonId);
 
 		// Set ID 
@@ -71,24 +70,20 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		
 		
 		// Set icon and types
-		try {
-			String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
-			Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
+		String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
+		Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
+		
+		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
+		imageView.setImageBitmap(bm);
+		
+		if (applicationSettings.getBoolean("pref_types_in_list", true)) {
+			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
+			imageType1.setImageBitmap(bmType1);
 			
-			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
-			imageView.setImageBitmap(bm);
-			
-			if (applicationSettings.getBoolean("pref_types_in_list", true)) {
-				Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
-				imageType1.setImageBitmap(bmType1);
-				
-				if (pokemon.getTypes().size() > 1) {
-					Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
-					imageType2.setImageBitmap(bmType2);
-				}
+			if (pokemon.getTypes().size() > 1) {
+				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
+				imageType2.setImageBitmap(bmType2);
 			}
-		} catch (IOException ioe) {
-			 Log.e(TAG, ioe.toString());
 		}
 
     return rowView;

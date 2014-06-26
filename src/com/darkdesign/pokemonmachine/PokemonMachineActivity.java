@@ -747,6 +747,12 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	        	
 	            return true;
 	            
+	        case R.id.action_type_table:
+	        	Log.d(TAG, "Show Type table");
+	        	Util.showTypeWeaknessPopup(this);
+	        	
+	            return true;
+	            
 	        case android.R.id.home:
 	            if(mDrawerLayout.isDrawerOpen(mDrawerList)) {
 	                mDrawerLayout.closeDrawer(mDrawerList);
