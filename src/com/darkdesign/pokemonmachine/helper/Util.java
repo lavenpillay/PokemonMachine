@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,6 +35,8 @@ import com.darkdesign.pokemonmachine.element.VideoGame;
 import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class Util {
+	private static String TAG = Util.class.getName();
+	
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
 	private static Point screenDimensions;
 	
@@ -344,8 +347,8 @@ public class Util {
 		
 		AssetHelper assetHelper = new AssetHelper(context);
 		
-		int popupWidth = 800;
-		int popupHeight = 800;
+		int popupWidth = 700;
+		int popupHeight = 700;
 		 
 		// Inflate the popup_layout.xml
 		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessDialog);
@@ -383,14 +386,15 @@ public class Util {
 		
 		// Add Top Row Type Symbols
 		for (int i=0; i < typeList.size(); i++) {
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images/" + typeList.get(i).getName() + ".png");
+			String typeName = typeList.get(i).getName();
+			Log.v(TAG, "Trying to load image for Type = " + typeName);
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeName + ".png");
 			ImageView rotatedImage = rotateImageView(typeImage, 90, context);
 			rotatedImage.setPadding(5, 5, 5, 5);
 			rotatedImage.setBackgroundResource(R.drawable.simple_grey_border);
 			
 			attackTypeHeaders.addView(rotatedImage);
 		}
-		
 		
 		TableLayout table = (TableLayout) layout.findViewById(R.id.typeWeaknessTable);
 		table.addView(attackTypeHeaders);
@@ -403,18 +407,36 @@ public class Util {
 			newRow.setLayoutParams(layoutParams);
 			newRow.setBackgroundColor(0xFFFFFFFF);
 			
-			
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images/" + typeList.get(i).getName() + ".png");
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeList.get(i).getName() + ".png");
 			typeImage.setPadding(5, 5, 5, 5);
 			typeImage.setBackgroundResource(R.drawable.simple_grey_border);
 			
 			newRow.addView(typeImage);
 			
 			for (int j=0; j < typeList.size(); j++) {
-				//ImageView damageImage = assetHelper.getImageViewFromAsset("berry_images/aguav-berry.png");
 				ImageView damageImage = new ImageView(context);
 				damageImage.setBackgroundResource(R.drawable.simple_grey_border);
-				damageImage.setImageResource(R.drawable.damage_double);
+				
+				// calc value
+				int attackTypeId = Integer.parseInt(typeList.get(j).getId());
+				int defenderTypeId = Integer.parseInt(typeList.get(i).getId());
+				int[][] efficacyMatrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
+				int damageCode = efficacyMatrix[attackTypeId][defenderTypeId];
+				//Log.v(TAG, "Attack Type = " + attackTypeId + "; Defender Type = " + defenderTypeId + "; Setting Damage Code = " + damageCode);
+				
+				int damageImageResourceId = -1;
+				
+				
+				if (damageCode == 200) {
+					damageImageResourceId = R.drawable.damage_double;
+				} else if (damageCode == 50) {
+					damageImageResourceId = R.drawable.damage_half;
+				} else {damageImageResourceId = R.drawable.spacer_30x30;
+				}
+				damageImage.setImageResource(damageImageResourceId);
+				
+				damageImage.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
+				damageImage.setPadding(0, 5, 0, 5);
 				
 				newRow.addView(damageImage);
 			}
@@ -422,11 +444,8 @@ public class Util {
 			table.addView(newRow);
 		}
 		
-		
-		
 		// Displaying the popup in the middle of the screen
 		popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
-	
 	}	
 	
 	public static ImageView rotateImageView(ImageView image, int rotation, Context context) {

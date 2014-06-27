@@ -77,11 +77,11 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		imageView.setImageBitmap(bm);
 		
 		if (applicationSettings.getBoolean("pref_types_in_list", true)) {
-			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(0).getName() + ".png");
+			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemon.getTypes().get(0).getName() + ".png");
 			imageType1.setImageBitmap(bmType1);
 			
 			if (pokemon.getTypes().size() > 1) {
-				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images/" + pokemon.getTypes().get(1).getName() + ".png");
+				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemon.getTypes().get(1).getName() + ".png");
 				imageType2.setImageBitmap(bmType2);
 			}
 		}
