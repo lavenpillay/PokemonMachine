@@ -208,7 +208,7 @@ public class PokemonDisplayFragment extends Fragment {
 	     String height = String.valueOf(Double.parseDouble(pokemon.getHeight()) / 10);
 	     
 	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
-	    	 height = Util.convertMetersToFeetAndInches(Double.parseDouble(height));
+	    	 height = Util.convertMetersToImperial(Double.parseDouble(height));
 	    	 TextView heightUnitTextView = (TextView)v.findViewById(R.id.lblHeightUnit);
 	    	 heightUnitTextView.setText("");
 	     }
@@ -219,7 +219,7 @@ public class PokemonDisplayFragment extends Fragment {
 	     String weight = String.valueOf(Double.parseDouble(pokemon.getWeight()) / 10);
 	     
 	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
-	    	 weight = Util.convertKilogramsToPounds(Double.parseDouble(pokemon.getWeight()));
+	    	 weight = Util.convertKilogramsToImperial(Double.parseDouble(pokemon.getWeight()));
 	    	 TextView weightUnitTextView = (TextView)v.findViewById(R.id.lblWeightUnit);
 	    	 weightUnitTextView.setText(" lb");
 	     }

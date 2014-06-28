@@ -433,22 +433,22 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
 			
 			// Set text styles for type weaknesses
-			if (damageText.equalsIgnoreCase(Constants.DAMAGE_REGULAR)) {
+			if (damageText.equalsIgnoreCase(Constants.DAMAGE__STRING_REGULAR)) {
 				textView.setTypeface(null, Typeface.NORMAL);
 				textView.setTextColor(Color.GRAY);
-			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_HALF)) {
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_HALF)) {
 				textView.setTypeface(null, Typeface.ITALIC);
 				textView.setTextColor(Color.parseColor("#7bce52"));
-			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_DOUBLE)) {
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_DOUBLE)) {
 				textView.setTypeface(null, Typeface.BOLD);
 				textView.setTextColor(Color.parseColor("#f08030"));
-			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_QUARTER)) {
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_QUARTER)) {
 				textView.setTypeface(null, Typeface.NORMAL);
 				textView.setTextColor(Color.BLUE);
-			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_QUADRUPLE)) {
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_QUADRUPLE)) {
 				textView.setTypeface(null, Typeface.BOLD);
 				textView.setTextColor(Color.parseColor("#ee0000"));
-			} if (damageText.equalsIgnoreCase(Constants.DAMAGE_IMMUNE)) {
+			} if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_IMMUNE)) {
 				textView.setTypeface(null, Typeface.ITALIC);
 				textView.setTextColor(Color.BLACK);
 			} 

@@ -48,12 +48,17 @@ public class Constants {
 	
 	public static final int TYPE_NULL = -1;
 	
-	public static final String DAMAGE_IMMUNE = "Immune";
-	public static final String DAMAGE_HALF = "Half";
-	public static final String DAMAGE_QUARTER = "Quarter";
-	public static final String DAMAGE_REGULAR = "Regular";
-	public static final String DAMAGE_DOUBLE = "x2";
-	public static final String DAMAGE_QUADRUPLE = "x4";
+	public static final String DAMAGE_STRING_IMMUNE = "Immune";
+	public static final String DAMAGE_STRING_HALF = "Half";
+	public static final String DAMAGE_STRING_QUARTER = "Quarter";
+	public static final String DAMAGE__STRING_REGULAR = "Regular";
+	public static final String DAMAGE_STRING_DOUBLE = "x2";
+	public static final String DAMAGE_STRING_QUADRUPLE = "x4";
+	
+	public static final int DAMAGE_IMMUNE = 0;
+	public static final int DAMAGE_HALF = 50;
+	public static final int DAMAGE_REGULAR = 100;
+	public static final int DAMAGE_DOUBLE = 200;
 	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 

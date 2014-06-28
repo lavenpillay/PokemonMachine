@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
+import com.darkdesign.pokemonmachine.dialog.TypeMatchupPopup;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
@@ -165,24 +166,36 @@ public class Util {
 		return list;
 	}
 	
+	/**
+	 * 
+	 * @param str
+	 * @return
+	 */
 	public static boolean stringIsInteger(String str) {
-		try  
-		  {  
+		try {  
 		    int i = Integer.parseInt(str);  
-		  }  
-		  catch(NumberFormatException nfe)  
-		  {  
-		    return false;  
-		  }  
-		
-		  return true;
+		}  
+		catch(NumberFormatException nfe) {  
+			return false;  
+		}  
+		return true;
 	}
 	
-	public static String convertKilogramsToPounds(double valueInKilograms) {
+	/**
+	 * 
+	 * @param valueInKilograms
+	 * @return
+	 */
+	public static String convertKilogramsToImperial(double valueInKilograms) {
 		return String.valueOf(round(valueInKilograms * 2.2046, 2));
 	}
 	
-	public static String convertMetersToFeetAndInches(double valueInMeters) {
+	/**
+	 * 
+	 * @param valueInMeters
+	 * @return
+	 */
+	public static String convertMetersToImperial(double valueInMeters) {
 		double valueInInches = valueInMeters * 39.37;
 		int feetPart = (int) (valueInInches / 12);
 		int inchesPart = (int) (valueInInches % 12);
@@ -203,37 +216,37 @@ public class Util {
 
 		if (damagePercentageType2 == Constants.TYPE_NULL) {
 			if (damagePercentageType1 == 0) {
-				damage = Constants.DAMAGE_IMMUNE;
+				damage = Constants.DAMAGE_STRING_IMMUNE;
 			} else if (damagePercentageType1 == 50) {
-				damage = Constants.DAMAGE_HALF;
+				damage = Constants.DAMAGE_STRING_HALF;
 			} else if (damagePercentageType1 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
+				damage = Constants.DAMAGE__STRING_REGULAR;
 			} else if (damagePercentageType1 == 200) {
-				damage = Constants.DAMAGE_DOUBLE;
+				damage = Constants.DAMAGE_STRING_DOUBLE;
 			}
 		} else {
 			if (damagePercentageType1 == 100 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
+				damage = Constants.DAMAGE__STRING_REGULAR;
 			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_REGULAR;
+				damage = Constants.DAMAGE__STRING_REGULAR;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_REGULAR;
+				damage = Constants.DAMAGE__STRING_REGULAR;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_REGULAR;
+				damage = Constants.DAMAGE__STRING_REGULAR;
 			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_HALF;
+				damage = Constants.DAMAGE_STRING_HALF;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_HALF;
+				damage = Constants.DAMAGE_STRING_HALF;
 			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_DOUBLE;
+				damage = Constants.DAMAGE_STRING_DOUBLE;
 			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE_DOUBLE;
+				damage = Constants.DAMAGE_STRING_DOUBLE;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE_QUARTER;
+				damage = Constants.DAMAGE_STRING_QUARTER;
 			} else if (damagePercentageType1 == 0 || damagePercentageType2 == 0) {
-				damage = Constants.DAMAGE_IMMUNE;
+				damage = Constants.DAMAGE_STRING_IMMUNE;
 			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE_QUADRUPLE;
+				damage = Constants.DAMAGE_STRING_QUADRUPLE;
 			}
 		}
 		
@@ -304,27 +317,23 @@ public class Util {
 	 * @param context
 	 */
 	public static void showGameFilterDialog(final Activity context) {
-	   int popupWidth = 500;
-	   int popupHeight = 350;
-	   
-	   String heading = "Select Games";
-	   String content = "";
-	 
-	   // Inflate the popup_layout.xml
-	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
-	   LayoutInflater layoutInflater = (LayoutInflater) context
-	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	   View layout = layoutInflater.inflate(R.layout.collection_game_filter_popup_layout, viewGroup);
-	   
-	   // Creating the PopupWindow
-	   final GameFilterDialog popup = new GameFilterDialog(context);
-	   popup.setContentView(layout);
-	   popup.setWidth(popupWidth);
-	   popup.setHeight(popupHeight);
-	   popup.setFocusable(true);
-	 
-	   // Clear the default translucent background
-	   popup.setBackgroundDrawable(new BitmapDrawable());
+		int popupWidth = 500;
+		int popupHeight = 350;
+
+		// Inflate the popup_layout.xml
+		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.gameFilterDialog);
+		LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = layoutInflater.inflate(R.layout.collection_game_filter_popup_layout, viewGroup);
+		   
+		// Creating the PopupWindow
+		final GameFilterDialog popup = new GameFilterDialog(context);
+		popup.setContentView(layout);
+		popup.setWidth(popupWidth);
+		popup.setHeight(popupHeight);
+		popup.setFocusable(true);
+		 
+		// Clear the default translucent background
+		popup.setBackgroundDrawable(new BitmapDrawable());
 	 
 		//LinearLayout gameFilterCheckboxHolder = (LinearLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
 		FlowLayout gameFilterCheckboxHolder = (FlowLayout) layout.findViewById(R.id.gameFilterCheckboxHolder);
@@ -343,13 +352,11 @@ public class Util {
 	
 	}
 	
+	/**
+	 * 
+	 * @param context
+	 */
 	public static void showTypeWeaknessPopup(final Activity context) {
-		
-		AssetHelper assetHelper = new AssetHelper(context);
-		
-		int popupWidth = 700;
-		int popupHeight = 700;
-		 
 		// Inflate the popup_layout.xml
 		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessDialog);
 		LayoutInflater layoutInflater = (LayoutInflater) context
@@ -357,97 +364,27 @@ public class Util {
 		View layout = layoutInflater.inflate(R.layout.type_weakness_table_popup_layout, viewGroup);
 		   
 		// Creating the PopupWindow
-		final GameFilterDialog popup = new GameFilterDialog(context);
+		final TypeMatchupPopup popup = new TypeMatchupPopup(context, layout);
 		popup.setContentView(layout);
-		popup.setWidth(popupWidth);
-		popup.setHeight(popupHeight);
-		popup.setFocusable(true);
 		 
-		// Clear the default translucent background
-		popup.setBackgroundDrawable(new BitmapDrawable());
-		
 		// Positioning
 		int width = getScreenWidth(context);
 		int height = getScreenHeight(context);
 		
-		int posX = (width / 2) - (popupWidth / 2);
-		int posY = (height / 2) - (popupHeight / 2);
-		
-		// Get Data and populate table
-		ArrayList<Type> typeList = PokemonMachineActivity.cache.getTypeList();
-		
-		// Add Top Header Row
-		TableRow attackTypeHeaders = new TableRow(context);
-		
-		ImageView spacer = new ImageView(context);
-		spacer.setImageResource(R.drawable.spacer_50x50);
-		
-		attackTypeHeaders.addView(spacer);
-		
-		// Add Top Row Type Symbols
-		for (int i=0; i < typeList.size(); i++) {
-			String typeName = typeList.get(i).getName();
-			Log.v(TAG, "Trying to load image for Type = " + typeName);
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeName + ".png");
-			ImageView rotatedImage = rotateImageView(typeImage, 90, context);
-			rotatedImage.setPadding(5, 5, 5, 5);
-			rotatedImage.setBackgroundResource(R.drawable.simple_grey_border);
-			
-			attackTypeHeaders.addView(rotatedImage);
-		}
-		
-		TableLayout table = (TableLayout) layout.findViewById(R.id.typeWeaknessTable);
-		table.addView(attackTypeHeaders);
-		
-		// Other Rows
-		for (int i=0; i < typeList.size(); i++) {
-			TableRow newRow = new TableRow(context);
-			LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 30);
-			newRow.setGravity(Gravity.CENTER_VERTICAL);
-			newRow.setLayoutParams(layoutParams);
-			newRow.setBackgroundColor(0xFFFFFFFF);
-			
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeList.get(i).getName() + ".png");
-			typeImage.setPadding(5, 5, 5, 5);
-			typeImage.setBackgroundResource(R.drawable.simple_grey_border);
-			
-			newRow.addView(typeImage);
-			
-			for (int j=0; j < typeList.size(); j++) {
-				ImageView damageImage = new ImageView(context);
-				damageImage.setBackgroundResource(R.drawable.simple_grey_border);
-				
-				// calc value
-				int attackTypeId = Integer.parseInt(typeList.get(j).getId());
-				int defenderTypeId = Integer.parseInt(typeList.get(i).getId());
-				int[][] efficacyMatrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
-				int damageCode = efficacyMatrix[attackTypeId][defenderTypeId];
-				//Log.v(TAG, "Attack Type = " + attackTypeId + "; Defender Type = " + defenderTypeId + "; Setting Damage Code = " + damageCode);
-				
-				int damageImageResourceId = -1;
-				
-				
-				if (damageCode == 200) {
-					damageImageResourceId = R.drawable.damage_double;
-				} else if (damageCode == 50) {
-					damageImageResourceId = R.drawable.damage_half;
-				} else {damageImageResourceId = R.drawable.spacer_30x30;
-				}
-				damageImage.setImageResource(damageImageResourceId);
-				
-				damageImage.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-				damageImage.setPadding(0, 5, 0, 5);
-				
-				newRow.addView(damageImage);
-			}
-			
-			table.addView(newRow);
-		}
+		int posX = (width / 2) - (popup.getPopupWidth() / 2);
+		int posY = (height / 2) - (popup.getPopupHeight() / 2) + popup.getPopupHeightOffset();
 		
 		// Displaying the popup in the middle of the screen
 		popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
-	}	
-	
+	}
+
+	/**
+	 * 
+	 * @param image
+	 * @param rotation
+	 * @param context
+	 * @return
+	 */
 	public static ImageView rotateImageView(ImageView image, int rotation, Context context) {
 		Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
 		
@@ -463,7 +400,11 @@ public class Util {
 		return rotatedImageView;
 	}
 
-	//public static void generateGameFilterCheckboxes(final Activity context, LinearLayout gameFilterCheckboxHolder) {
+	/**
+	 * 
+	 * @param context
+	 * @param gameFilterCheckboxHolder
+	 */
 	public static void generateGameFilterCheckboxes(final Activity context, FlowLayout gameFilterCheckboxHolder) {
 		
 		ArrayList<VideoGame> gameList = PokemonMachineActivity.cache.getGameList();
