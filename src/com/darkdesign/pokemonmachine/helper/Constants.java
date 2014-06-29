@@ -60,6 +60,14 @@ public class Constants {
 	public static final int DAMAGE_REGULAR = 100;
 	public static final int DAMAGE_DOUBLE = 200;
 	
+	public static final String GENDER_RATE_STRING_GENDERLESS = "Genderless";
+	public static final String GENDER_RATE_STRING_0 = "Male: 100% - Female: 0%";
+	public static final String GENDER_RATE_STRING_1 = "Male: 87.5% - Female: 12.5%";
+	public static final String GENDER_RATE_STRING_2 = "Male: 75% - Female: 25%";
+	public static final String GENDER_RATE_STRING_4 = "Male: 50% - Female: 50%";
+	public static final String GENDER_RATE_STRING_6 = "Male: 25% - Female: 75%";
+	public static final String GENDER_RATE_STRING_8 = "Male: 0% - Female: 100%";
+	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 
 		"160", "200", "201", "233", "234", "243", "244", "245", "249", "250", "251", "252", "253", "254", "258", 

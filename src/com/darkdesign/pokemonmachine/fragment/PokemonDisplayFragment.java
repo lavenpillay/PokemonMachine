@@ -267,19 +267,47 @@ public class PokemonDisplayFragment extends Fragment {
 	     
 	     // Breeding Info
 	     TextView genderTextView = (TextView)v.findViewById(R.id.txtMaleFemaleRatio);
-	     genderTextView.setText(pokemon.getGenderRate());
+	     genderTextView.setText(getGenderRatio(pokemon.getGenderRate()));
 	     
 	     TextView catchRateTextView = (TextView)v.findViewById(R.id.txtCatchRate);
 	     catchRateTextView.setText(String.valueOf(pokemon.getCatchRate()));
+
+	     TextView growthRateTextView = (TextView)v.findViewById(R.id.txtGrowthRate);
+	     growthRateTextView.setText(String.valueOf(pokemon.getGrowthRate()));	     
 	     
-	     TextView eggCyclesTextView = (TextView)v.findViewById(R.id.txtEggCycles);
-	     eggCyclesTextView.setText(String.valueOf(pokemon.getEggCycles()));
+	     //TextView eggCyclesTextView = (TextView)v.findViewById(R.id.txtEggCycles);
+	     //eggCyclesTextView.setText(String.valueOf(pokemon.getEggCycles()));
 	     
 	     TextView happinessTextView = (TextView)v.findViewById(R.id.txtHappiness);
 	     happinessTextView.setText(String.valueOf(pokemon.getHappiness()));
-	     
-	     TextView growthRateTextView = (TextView)v.findViewById(R.id.txtGrowthRate);
-	     growthRateTextView.setText(String.valueOf(pokemon.getGrowthRate()));
+	 }
+	 
+	 private String getGenderRatio(String genderRatio) {
+		 String returnString = "";
+		 
+		 if (genderRatio.equalsIgnoreCase("-1")) {
+			 returnString = Constants.GENDER_RATE_STRING_GENDERLESS;
+		 } else if (genderRatio.equalsIgnoreCase("0")) {
+			 returnString = Constants.GENDER_RATE_STRING_0;
+		 } else if (genderRatio.equalsIgnoreCase("1")) {
+			 returnString = Constants.GENDER_RATE_STRING_1;
+		 } else if (genderRatio.equalsIgnoreCase("2")) {
+			 returnString = Constants.GENDER_RATE_STRING_2;
+		 } else if (genderRatio.equalsIgnoreCase("4")) {
+			 returnString = Constants.GENDER_RATE_STRING_4;
+		 } else if (genderRatio.equalsIgnoreCase("6")) {
+			 returnString = Constants.GENDER_RATE_STRING_6;
+		 } else if (genderRatio.equalsIgnoreCase("8")) {
+			 returnString = Constants.GENDER_RATE_STRING_8;
+		 }
+		 
+		 return returnString;
+	 }
+	 
+	 private String getCatchRate(String catchRate) {
+		 int rate = (Integer.parseInt(catchRate) / 255) * 100;
+		 
+		 return String.valueOf(rate) + "%";
 	 }
 	 
 	@Override

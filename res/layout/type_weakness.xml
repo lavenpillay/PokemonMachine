@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Type Weaknesses"
+        android:text="Damage Taken"
         android:textSize="16sp" />
     
     <LinearLayout

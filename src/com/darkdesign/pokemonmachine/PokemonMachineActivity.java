@@ -45,6 +45,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
@@ -553,7 +554,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				       if (p != null) {
 				    	   String heading = "Level Up with Minimum Happiness";
 				    	   String content = "This Pokemon will evolve when it levels up with a minimum Happiness of " + happiness;
-				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				    	   PopupManager.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }
 				     }
 				   });				
@@ -578,7 +579,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				       if (p != null) {
 				    	   String heading = "Level Up";
 				    	   String content = "This Pokemon will evolve when it reaches level " + level;
-				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				    	   PopupManager.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }
 				     }
 				   });
@@ -614,7 +615,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				       if (p != null) {
 				    	   String heading = "Trade with Held Item";
 				    	   String content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
-				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				    	   PopupManager.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }
 				     }
 				   });				
@@ -636,7 +637,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 				       if (p != null) {
 				    	   String heading = "Trade";
 				    	   String content = "This Pokemon will evolve when it is traded";
-				    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+				    	   PopupManager.showPopup(PokemonMachineActivity.this, p, heading, content);
 				       }
 				     }
 				   });				
@@ -664,7 +665,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 			       if (p != null) {
 			    	   String heading = "Use Item";
 			    	   String content = "This Pokemon will evolve when a " + itemName + " is used on it.";
-			    	   Util.showPopup(PokemonMachineActivity.this, p, heading, content);
+			    	   PopupManager.showPopup(PokemonMachineActivity.this, p, heading, content);
 			       }
 			     }
 			   });			
@@ -743,13 +744,13 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	            
 	        case R.id.action_filter_games:
 	        	Log.d(TAG, "Open Filters");
-	        	Util.showGameFilterDialog(this);
+	        	PopupManager.showGameFilterDialog(this);
 	        	
 	            return true;
 	            
 	        case R.id.action_type_table:
 	        	Log.d(TAG, "Show Type table");
-	        	Util.showTypeWeaknessPopup(this);
+	        	PopupManager.showTypeWeaknessPopup(this);
 	        	
 	            return true;
 	            
