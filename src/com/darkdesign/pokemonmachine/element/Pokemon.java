@@ -8,10 +8,10 @@ public class Pokemon {
 	private String modifiedTimestamp; // masp to "modified" in json
 	
 	// Pokemon Values
-	private String id;
-	private String generationId;
-	private String evolvesFromId;
-	private String evolutionChainId;
+	private int id;
+	private int generationId;
+	private int evolvesFromId;
+	private int evolutionChainId;
 
 	private String name;
 	private String species;
@@ -50,10 +50,10 @@ public class Pokemon {
 		
 		this.createdTimestamp = "";
 		this.modifiedTimestamp = "";
-		this.id = "";
-		this.generationId = "";
-		this.evolvesFromId = "";
-		this.evolutionChainId = "";
+		this.id = -1;
+		this.generationId = -1;
+		this.evolvesFromId = -1;
+		this.evolutionChainId = -1;
 		this.name = "";
 		this.species = "";
 		this.hp = 0;
@@ -83,7 +83,7 @@ public class Pokemon {
 		this.isFormSwitchable = false;
 	}
 
-	public Pokemon(String id, String name) {
+	public Pokemon(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -112,11 +112,11 @@ public class Pokemon {
 
 	/* ----------------------------- GETTERS and SETTERS ------------------------ */
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -144,11 +144,11 @@ public class Pokemon {
 		this.modifiedTimestamp = modifiedTimestamp;
 	}
 
-	public String getNationalId() {
+	public int getNationalId() {
 		return id;
 	}
 
-	public void setNationalId(String nationalId) {
+	public void setNationalId(int nationalId) {
 		this.id = nationalId;
 	}
 
@@ -336,27 +336,27 @@ public class Pokemon {
 		this.resourceURI = resourceURI;
 	}
 
-	public String getGenerationId() {
+	public int getGenerationId() {
 		return generationId;
 	}
 
-	public void setGenerationId(String generationId) {
+	public void setGenerationId(int generationId) {
 		this.generationId = generationId;
 	}	
 
-	public String getEvolvesFromId() {
+	public int getEvolvesFromId() {
 		return evolvesFromId;
 	}
 
-	public void setEvolvesFromId(String evolvesFromId) {
+	public void setEvolvesFromId(int evolvesFromId) {
 		this.evolvesFromId = evolvesFromId;
 	}
 
-	public String getEvolutionChainId() {
+	public int getEvolutionChainId() {
 		return evolutionChainId;
 	}
 
-	public void setEvolutionChainId(String evolutionChainId) {
+	public void setEvolutionChainId(int evolutionChainId) {
 		this.evolutionChainId = evolutionChainId;
 	}
 

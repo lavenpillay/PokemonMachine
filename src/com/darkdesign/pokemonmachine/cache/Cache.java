@@ -13,7 +13,7 @@ import com.darkdesign.pokemonmachine.element.VideoGame;
 
 public class Cache {
 
-	private static HashMap<String, Pokemon> POKEMON_CACHE;
+	private static HashMap<Integer, Pokemon> POKEMON_CACHE;
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
 	private static ArrayList<Type> TYPE_LIST_CACHE;
@@ -33,7 +33,7 @@ public class Cache {
 		db = new DatabaseHelper(mainActivity);
 		
 		// Pokemon
-		POKEMON_CACHE = new HashMap<String, Pokemon>();
+		POKEMON_CACHE = new HashMap<Integer, Pokemon>();
 		
 		// Types
 		TYPE_LIST_CACHE = db.getTypes();

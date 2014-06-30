@@ -167,7 +167,7 @@ public class PokedexAPIResponderFragment extends RESTResponderFragment {
         			
             Log.i(TAG, "Checking Abilities...");
             JSONArray jArray = pokemonWrapper.getJSONArray("abilities");
-            String pId = pokemonWrapper.getString("national_id");
+            int pId = pokemonWrapper.getInt("national_id");
             String pName = pokemonWrapper.getString(JSON_FIELD_NAME);
             String pSpecies = pokemonWrapper.getString(JSON_FIELD_SPECIES);
             

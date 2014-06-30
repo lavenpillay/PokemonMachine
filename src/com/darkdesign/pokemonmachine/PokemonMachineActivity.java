@@ -206,8 +206,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
             }
         });
 		
-        // Perform Initial Search
-		executeSearch("001");
+        // Perform Initial Search : 1 == Bulbasaur
+		executeSearch(1);
 	}
 	
 	public void hideSoftKeyboard(TextView v) {
@@ -233,7 +233,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		String searchValue = searchValueTextbox.getText().toString();
 		
 		if (searchValue != null && !searchValue.equals("") && Util.stringIsInteger(searchValue)) {
-			executeSearch(searchValue);
+			executeSearch(Integer.parseInt(searchValue));
 		}
 	}
 
@@ -251,7 +251,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	public void onPokemonListItemSelected(String id) {
 		TextView pokemonNameFilterTextView = (TextView) findViewById(R.id.txtFilter);
 		hideSoftKeyboard(pokemonNameFilterTextView);
-		executeSearch(id);
+		executeSearch(Integer.valueOf(id));
 	}
 
 	
@@ -321,7 +321,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
 	}
 	
-	public void executeSearch(String nationalId) {
+	public void executeSearch(int nationalId) {
 		//executeSearchByREST(nationalId);
 		executeSearchByDatabase(nationalId);
 	}
@@ -349,8 +349,8 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 	 * 
 	 * @param nationalId
 	 */
-	public void executeSearchByDatabase(String nationalId) {
-		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.parseInt(nationalId));
+	public void executeSearchByDatabase(int nationalId) {
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(nationalId);
 		
 		onPokemonUpdated(pokemon);
 	}
@@ -698,7 +698,7 @@ public class PokemonMachineActivity extends Activity implements OnPokemonUpdated
 		evolutionImage.setOnClickListener(new OnClickListener() {
 		    public void onClick(View v) {
 		    	Log.v(TAG, "Evolution Image Clicked - Switching to ID = " + id);
-		    	executeSearch(id);
+		    	executeSearch(Integer.valueOf(id));
 		    }
 		});
 		

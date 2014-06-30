@@ -185,7 +185,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
      * @param id
      * @return
      */
-	public ArrayList<Evolution> getEvolutions(String id) /* throws DoesNotEvolveException */ 
+	public ArrayList<Evolution> getEvolutions(int id) /* throws DoesNotEvolveException */ 
 	{
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
@@ -279,11 +279,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor c = db.rawQuery(queryPokemon, null);
         c.moveToFirst();
         
-        pokemon.setId(c.getString(0));
+        pokemon.setId(c.getInt(0));
         pokemon.setName(c.getString(1));
-        pokemon.setGenerationId(c.getString(2));
-        pokemon.setEvolvesFromId(c.getString(3));
-        pokemon.setEvolutionChainId(c.getString(4));
+        pokemon.setGenerationId(c.getInt(2));
+        pokemon.setEvolvesFromId(c.getInt(3));
+        pokemon.setEvolutionChainId(c.getInt(4));
         pokemon.setGenderRate(c.getString(5));
         pokemon.setCatchRate(c.getString(6));
         pokemon.setHappiness(c.getString(7));

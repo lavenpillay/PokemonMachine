@@ -1,9 +1,10 @@
 package com.darkdesign.pokemonmachine.fragment;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -11,8 +12,10 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -21,12 +24,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
+import com.darkdesign.pokemonmachine.dialog.PokemonDetailedViewPopup;
+import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
@@ -50,7 +54,7 @@ public class PokemonDisplayFragment extends Fragment {
 	public static SimplePokemonListAdapter pokemonListAdapter;
 	public static SimpleMoveListAdapter movesListAdapter;
 	
-	private String lastViewedPokemonId;
+	private int lastViewedPokemonId = -1;
 
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 
@@ -163,23 +167,33 @@ public class PokemonDisplayFragment extends Fragment {
 	 @Override
 	 public void onResume() {
 		 super.onResume();
-		 if (lastViewedPokemonId != null) {
+		 if (lastViewedPokemonId != -1) {
 			 ((PokemonMachineActivity) getActivity()).executeSearch(lastViewedPokemonId);
 		 }
 	 }
 	 
-	 
-	 public void update(Pokemon pokemon) {
+	 public void update(final Pokemon pokemon) {
 	 
 		 // Handle Images
-		 ImageView i = (ImageView)v.findViewById(R.id.imageView1);
+		 ImageView pokemonArtView = (ImageView)v.findViewById(R.id.imageView1);
 		 ImageView pokemonType1 = (ImageView)v.findViewById(R.id.imgType1);
-		 ImageView pokemonType2 = (ImageView)v.findViewById(R.id.imgType2);;
+		 ImageView pokemonType2 = (ImageView)v.findViewById(R.id.imgType2);
+		 
+		 pokemonArtView.setClickable(true);
+		 pokemonArtView.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.v("ART", "Clicked Pokemon Image !");
+				PopupManager.showPokemondetailPopup((Activity) v.getContext(), pokemon.getId());
+			}
+		});
 
 		 String id = Util.padLeft(String.valueOf(pokemon.getId()), Constants.POKEMON_ID_LENGTH);
 		 Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_images/" + id + ".png");
 		 
-		 i.setImageBitmap(bm);
+		 pokemonArtView.setImageBitmap(bm);
 		 
 		 ArrayList<Type> pokemonTypes = pokemon.getTypes();
 		 

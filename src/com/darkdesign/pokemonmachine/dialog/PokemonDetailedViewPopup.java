@@ -1,14 +1,22 @@
 package com.darkdesign.pokemonmachine.dialog;
 
 import android.content.Context;
-import android.util.AttributeSet;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
+import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.helper.AssetHelper;
+import com.darkdesign.pokemonmachine.helper.Util;
 
 public class PokemonDetailedViewPopup extends PopupWindow {
 	
 	int popupWidth = 650;
 	int popupHeight = 700;
+	
+	private AssetHelper assetHelper;
 
 	public PokemonDetailedViewPopup() {
 		// TODO Auto-generated constructor stub
@@ -16,8 +24,21 @@ public class PokemonDetailedViewPopup extends PopupWindow {
 
 	public PokemonDetailedViewPopup(Context context, View layout, int pokemonId) {
 		super(context);
-		// TODO Auto-generated constructor stub
+		setWidth(popupWidth);
+		setHeight(popupHeight);
+		setFocusable(true);
 		
+		// Clear the default translucent background
+		setBackgroundDrawable(new BitmapDrawable());
+				
+		assetHelper = new AssetHelper(context);
+		
+		LinearLayout mainLayout = (LinearLayout) layout.findViewById(R.id.pokemonDetailedView);
+		
+		// Add Image
+		ImageView pokemonArt = assetHelper.getImageViewFromAsset("pokemon_images/" + Util.padLeft(String.valueOf(pokemonId), 3) + ".png");
+		
+		mainLayout.addView(pokemonArt);
 		
 	}
 
