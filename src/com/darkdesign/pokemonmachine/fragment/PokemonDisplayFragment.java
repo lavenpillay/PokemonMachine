@@ -1,12 +1,17 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Point;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -31,6 +36,7 @@ import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.dialog.PokemonDetailedViewPopup;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
+import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
@@ -55,6 +61,9 @@ public class PokemonDisplayFragment extends Fragment {
 	public static SimpleMoveListAdapter movesListAdapter;
 	
 	private int lastViewedPokemonId = -1;
+	
+	//The "x" and "y" position of the Popup Window
+    private Point p;
 
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 
@@ -74,6 +83,11 @@ public class PokemonDisplayFragment extends Fragment {
 
 	};
 	
+	/**
+	 * 
+	 * @param message
+	 * @return
+	 */
 	public static final PokemonDisplayFragment newInstance(String message)
 	{
 		PokemonDisplayFragment f = new PokemonDisplayFragment();
@@ -84,17 +98,17 @@ public class PokemonDisplayFragment extends Fragment {
 	 	return f;
 	}
 
-	 
-
+	/**
+	 * 
+	 */
 	@Override
-	  public void onActivityCreated(Bundle savedInstanceState) {
-	    super.onActivityCreated(savedInstanceState);
-	    
-	    Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
-	    
-	    //adapter.getFilter().filter("Sand");
-
-	  }	
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		    
+		Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
+		
+		//adapter.getFilter().filter("Sand");
+	}	
 	
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -150,8 +164,6 @@ public class PokemonDisplayFragment extends Fragment {
                 R.id.expandable_toggle_button,
                 R.id.expandable
         ));
-        
-		//movesListView.setAdapter(movesListAdapter);
 	   
 	   return v;
 	 }
@@ -334,5 +346,320 @@ public class PokemonDisplayFragment extends Fragment {
 	//Container Activity must implement this interface
 	public interface OnPokemonListItemSelectedListener {
 	    public void onPokemonListItemSelected(String id);
-	}	
+	}
+	
+	public void updateTypeWeaknessDisplay(Pokemon pokemon) {
+		// Update Type Weaknesses
+		int[][] matrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
+		
+		HashMap<Integer, Integer> textFieldIdByTypeId = new HashMap<Integer, Integer>();
+		textFieldIdByTypeId.put(Constants.TYPE_BUG, R.id.txtDamageBug);
+		textFieldIdByTypeId.put(Constants.TYPE_DARK, R.id.txtDamageDark);
+		textFieldIdByTypeId.put(Constants.TYPE_DRAGON, R.id.txtDamageDragon);
+		textFieldIdByTypeId.put(Constants.TYPE_ELECTRIC, R.id.txtDamageElectric);
+		textFieldIdByTypeId.put(Constants.TYPE_FAIRY, R.id.txtDamageFairy);
+		textFieldIdByTypeId.put(Constants.TYPE_FIGHTING, R.id.txtDamageFighting);
+		textFieldIdByTypeId.put(Constants.TYPE_FIRE, R.id.txtDamageFire);
+		textFieldIdByTypeId.put(Constants.TYPE_FLYING, R.id.txtDamageFlying);
+		textFieldIdByTypeId.put(Constants.TYPE_GHOST, R.id.txtDamageGhost);
+		textFieldIdByTypeId.put(Constants.TYPE_GRASS, R.id.txtDamageGrass);
+		textFieldIdByTypeId.put(Constants.TYPE_GROUND, R.id.txtDamageGround);
+		textFieldIdByTypeId.put(Constants.TYPE_ICE, R.id.txtDamageIce);
+		textFieldIdByTypeId.put(Constants.TYPE_NORMAL, R.id.txtDamageNormal);
+		textFieldIdByTypeId.put(Constants.TYPE_POISON, R.id.txtDamagePoison);
+		textFieldIdByTypeId.put(Constants.TYPE_PSYCHIC, R.id.txtDamagePsychic);
+		textFieldIdByTypeId.put(Constants.TYPE_ROCK, R.id.txtDamageRock);
+		textFieldIdByTypeId.put(Constants.TYPE_STEEL, R.id.txtDamageSteel);
+		textFieldIdByTypeId.put(Constants.TYPE_WATER, R.id.txtDamageWater);
+		
+		for (int i=1; i <= Constants.NUMBER_OF_TYPES; i++) {
+			TextView textView = (TextView) this.getActivity().findViewById(textFieldIdByTypeId.get(i));
+			// Handle damage against first type
+			int type1Id = Integer.parseInt(pokemon.getTypes().get(0).getId());
+			int damagePercentageForType1 = matrix[i][type1Id];
+			
+			// Handle damage against second type if applicable
+			int type2Id;
+			int damagePercentageForType2 = Constants.TYPE_NULL;
+			
+			if (pokemon.getTypes().size() == 2) {
+				type2Id = Integer.parseInt(pokemon.getTypes().get(1).getId());
+				damagePercentageForType2 = matrix[i][type2Id];
+			}
+			
+			// Resolve Efficacy
+			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
+			
+			// Set text styles for type weaknesses
+			if (damageText.equalsIgnoreCase(Constants.DAMAGE__STRING_REGULAR)) {
+				textView.setTypeface(null, Typeface.NORMAL);
+				textView.setTextColor(Color.GRAY);
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_HALF)) {
+				textView.setTypeface(null, Typeface.ITALIC);
+				textView.setTextColor(Color.parseColor("#7bce52"));
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_DOUBLE)) {
+				textView.setTypeface(null, Typeface.BOLD);
+				textView.setTextColor(Color.parseColor("#f08030"));
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_QUARTER)) {
+				textView.setTypeface(null, Typeface.NORMAL);
+				textView.setTextColor(Color.BLUE);
+			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_QUADRUPLE)) {
+				textView.setTypeface(null, Typeface.BOLD);
+				textView.setTextColor(Color.parseColor("#ee0000"));
+			} if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_IMMUNE)) {
+				textView.setTypeface(null, Typeface.ITALIC);
+				textView.setTextColor(Color.BLACK);
+			} 
+			
+			/*
+			Log.v(TAG, "AttackType=" + cache.getTypeNameById(i) + 
+					   " VS DefendingType=" + cache.getTypeNameById(type1Id) + 
+					   " = " + damagePercentageForType1 + " AND " + damagePercentageForType2);
+			*/
+			
+			textView.setText(damageText);
+		}
+	}
+	
+	/**
+	 * 
+	 * @param pokemon
+	 * @param assetHelper
+	 * @param evolutions
+	 * @param inflater
+	 * @param holder
+	 */
+	public void buildEvolutionChain(Pokemon pokemon, AssetHelper assetHelper, 
+			LayoutInflater inflater, LinearLayout holder) {
+		
+		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+			     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		layoutParams.setMargins(5, 5, 5, 5);		
+		
+		ArrayList<Evolution> evolutions = pokemon.getEvolutions();
+		
+		try {
+			Evolution evolution = evolutions.get(0);
+			
+			// State 1
+			LinearLayout evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+			holder.addView(evolutionStateView);
+			
+			if (evolutions.size() > 1) {
+				evolution = evolutions.get(1);
+				
+				// Add Method
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
+				holder.addView(evolutionMethodView, layoutParams);
+				
+				// State 2
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+				holder.addView(evolutionStateView);
+			}
+			
+			if (evolutions.size() > 2) {
+				evolution = evolutions.get(2);
+				
+				// Add Method
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
+				holder.addView(evolutionMethodView, layoutParams);
+				
+				// State 3
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+				holder.addView(evolutionStateView);
+			}			
+		} catch (IOException ioe) {
+			Log.e(TAG, ioe.toString());
+		}
+	}
+	
+	/**
+	 * 
+	 * @param pokemonId
+	 * @param assetHelper
+	 * @param inflater
+	 * @return
+	 * @throws IOException
+	 */
+	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
+			throws IOException 
+	{
+		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
+		Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
+		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+		
+		TextView txtName = (TextView) evolutionStateView.findViewById(R.id.txtPokemonEvolutionName);
+		txtName.setText(PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id)).getName());
+		
+		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
+		evolutionImage.setImageBitmap(bm);
+		
+		evolutionImage.setOnClickListener(new OnClickListener() {
+		    public void onClick(View v) {
+		    	Log.v(TAG, "Evolution Image Clicked - Switching to ID = " + id);
+		    	((PokemonMachineActivity) v.getContext()).executeSearch(Integer.valueOf(id));
+		    }
+		});
+		
+		return evolutionStateView;
+	}		
+	
+	/**
+	 * 
+	 * 
+	 * TODO Handle more Methods
+	 * 
+	 * @param inflater
+	 * @param evolution
+	 * @return
+	 */
+	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, Evolution evolution) 
+			throws IOException	{
+		
+		LinearLayout evolutionMethodView = null;
+		
+		if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_LEVEL_UP)) {
+			// LEVEL UP WITH MIN HAPPINESS
+			if (evolution.getMinimumHappiness() != null) {
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup_happiness, null );
+				
+				TextView happinessMinValue = (TextView) evolutionMethodView.findViewById(R.id.txtHappinessLevel);
+				final String happiness = evolution.getMinimumHappiness();
+				happinessMinValue.setText(happiness);
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];		
+							
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Level Up with Minimum Happiness";
+				    	   String content = "This Pokemon will evolve when it levels up with a minimum Happiness of " + happiness;
+				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				       }
+				     }
+				   });				
+				
+			} else {
+				// LEVEL UP NORMALLY
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_levelup, null );
+				
+				final String level = evolution.getLevel();
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Level Up";
+				    	   String content = "This Pokemon will evolve when it reaches level " + level;
+				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				       }
+				     }
+				   });
+			}
+			
+			if (evolution.getLevel() != null) {
+				TextView levelView = (TextView)evolutionMethodView.findViewById(R.id.txtEvolutionLevel);
+				levelView.setText(evolution.getLevel());
+			}
+		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_TRADE)) {
+			// EVOLVE WHEN TRADED - 01 - WITH HELD ITEM
+
+			// Check if there's a Held Item
+			if (evolution.getHeldItemId() != null && evolution.getHeldItemId().length() > 0) {
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade_held_item, null );
+				
+				ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgHoldItem);
+				final String itemName = PokemonMachineActivity.cache.getDatabaseHelper().getItemById(evolution.getHeldItemId()).getName();
+				Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
+				useItemView.setImageBitmap(bm);
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Trade with Held Item";
+				    	   String content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
+				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				       }
+				     }
+				   });				
+			} else {
+				// EVOLVE WHEN TRADED - 01 - WITH HELD ITEM
+				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade, null );
+				
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+				     @Override
+				     public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
+						 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];				    	 
+				    	 
+				       //Open popup window
+				       if (p != null) {
+				    	   String heading = "Trade";
+				    	   String content = "This Pokemon will evolve when it is traded";
+				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				       }
+				     }
+				   });				
+			}
+		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_USE_ITEM)) {
+			// EVOLVE WHEN AN ITEM IS USED ON IT
+			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
+			
+			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
+			final String itemName = PokemonMachineActivity.cache.getDatabaseHelper().getItemById(evolution.getTriggerItemId()).getName();
+			Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
+			useItemView.setImageBitmap(bm);
+			
+			evolutionMethodView.setOnClickListener(new OnClickListener() {
+			     @Override
+			     public void onClick(View evolutionMethodView) {
+					int[] location = new int[2];
+					evolutionMethodView.getLocationOnScreen(location);
+					 
+					p = new Point();
+					p.x = location[0];
+					p.y = location[1];				    	 
+			    	 
+			       //Open popup window
+			       if (p != null) {
+			    	   String heading = "Use Item";
+			    	   String content = "This Pokemon will evolve when a " + itemName + " is used on it.";
+			    	   PopupManager.showPopup(getActivity(), p, heading, content);
+			       }
+			     }
+			   });			
+		} 
+		
+		return evolutionMethodView;
+	}
+	
 }

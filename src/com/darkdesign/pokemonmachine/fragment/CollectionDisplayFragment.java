@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -39,7 +38,8 @@ import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView;
 
-public class CollectionDisplayFragment extends Fragment {
+public class CollectionDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
+{
 	private String TAG = CollectionDisplayFragment.class.toString();
 	private View v; 
 	
@@ -171,7 +171,8 @@ public class CollectionDisplayFragment extends Fragment {
 
 	          Log.i(TAG, "Item Clicked");
 	  		  
-	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
+	  		  //OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
+	          OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) parent.getParent();
 	  		  String name = pokemonListAdapter.getItem(position);
 	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
 	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));	        	
@@ -206,6 +207,12 @@ public class CollectionDisplayFragment extends Fragment {
 		TextView txtContent = (TextView) layout.findViewById(R.id.txtPopupContent);
 		txtHeading.setText(heading);
 		txtContent.setText(content);
+	}
+
+	@Override
+	public void onPokemonListItemSelected(String id) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, "[COLLECTION] Selected Pokemon with ID = " + id);
 	}
 }
 

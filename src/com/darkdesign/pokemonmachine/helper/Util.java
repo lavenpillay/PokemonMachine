@@ -17,6 +17,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -326,4 +327,14 @@ public class Util {
 		
 		return Util.screenDimensions.y;
 	}
+	
+	/**
+	 * 
+	 * @param v
+	 */
+	public static void hideSoftKeyboard(TextView v) {
+		// hide virtual keyboard - could also use InputMethodManager.HIDE_NOT_ALWAYS
+		InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+	}		
 }
