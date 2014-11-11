@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentItems"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container_dropshadow"
+    android:orientation="horizontal"
+    android:paddingLeft="10dip" >
+
+    <!-- List of Pokemon to choose from -->
+    <LinearLayout
+        android:id="@+id/itemList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" 
+        android:background="@drawable/shadow_left">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/txtFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="item name"
+                android:inputType=""
+                android:text=""
+                android:textColorHint="#AAAAAA" >
+            </EditText>
+
+            <ImageButton
+                android:id="@+id/btnClearNameFilter"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:onClick="onClearNameFilterClick"
+                android:src="@drawable/clear_cross_01" />
+        </LinearLayout>
+        
+        <ListView
+            android:id="@+id/plist"
+            android:layout_width="250dip"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:fadingEdge="vertical"
+            android:fastScrollAlwaysVisible="true"
+            android:fastScrollEnabled="true"
+            android:scrollbarStyle="outsideInset"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/list_item_item">
+
+		</ListView>
+
+
+    </LinearLayout>
+
+    <!-- END - List of Pokemon -->
+
+
+	<!-- START - Main Display Area -->
+    <LinearLayout
+        android:layout_width="0dip"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:background="@drawable/shadow_left"
+        android:orientation="vertical" 
+        android:paddingLeft="10dip">
+
+        
+        
+    </LinearLayout>
+
+</LinearLayout>
