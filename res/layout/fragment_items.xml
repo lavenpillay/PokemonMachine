@@ -61,7 +61,7 @@
 
     </LinearLayout>
 
-    <!-- END - List of Pokemon -->
+    <!-- END - List of Items -->
 
 
 	<!-- START - Main Display Area -->
@@ -73,7 +73,21 @@
         android:orientation="vertical" 
         android:paddingLeft="10dip">
 
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Name "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="15pt" />
         
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Item Description"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="10pt" />
         
     </LinearLayout>
 

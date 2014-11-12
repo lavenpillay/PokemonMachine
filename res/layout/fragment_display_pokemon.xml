@@ -58,16 +58,7 @@
 
 		</ListView>
 
-        <!-- 
-        <fragment
-            android:id="@+id/listPokemon"
-            android:name="com.darkdesign.pokemonmachine.fragment.PokemonListFragment"
-            android:layout_width="250dip"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:layout="@layout/fragment_pokemon_list"
-            android:tag="PokemonListFragment" />
-          -->
+
     </LinearLayout>
 
     <!-- END - List of Pokemon -->

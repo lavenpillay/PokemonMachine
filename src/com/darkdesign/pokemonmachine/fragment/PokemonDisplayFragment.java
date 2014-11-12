@@ -17,7 +17,6 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,7 +33,6 @@ import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
-import com.darkdesign.pokemonmachine.dialog.PokemonDetailedViewPopup;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -44,9 +42,11 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.listener.OnPokemonListItemSelectedListener;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
-public class PokemonDisplayFragment extends Fragment {
+public class PokemonDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
+{
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	private String TAG = PokemonDisplayFragment.class.getName();
 	
@@ -97,6 +97,24 @@ public class PokemonDisplayFragment extends Fragment {
 		
 	 	return f;
 	}
+	
+	/**
+	 * 
+	 */
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+	    super.setUserVisibleHint(isVisibleToUser);
+
+	    // Make sure that we are currently visible
+	    if (this.isVisible()) {
+	        // If we are becoming invisible, then...
+	    	Log.d(TAG, "PokemonDisplayFargment is Visible");
+	        if (!isVisibleToUser) {
+	            Log.d(TAG, "Not visible anymore.  Stopping audio.");
+	            // TODO stop audio playback
+	        }
+	    }
+	}
 
 	/**
 	 * 
@@ -134,11 +152,16 @@ public class PokemonDisplayFragment extends Fragment {
 	                int position, long id) {
 
 	          Log.i("PokemonListFragment", "Item Clicked");
-	  		  
-	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
+
+	          // TODO re-implment the listener
+	          /*
+	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) this;
 	  		  String name = pokemonListAdapter.getItem(position);
 	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));	        	
+	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
+	  		  */	        
+	          
+	          update(PokemonMachineActivity.cache.getPokemon(position + 1));
 	       }
 	    });
 	   
@@ -164,8 +187,11 @@ public class PokemonDisplayFragment extends Fragment {
                 R.id.expandable_toggle_button,
                 R.id.expandable
         ));
-	   
-	   return v;
+		
+		// Select default pokemon
+		update(PokemonMachineActivity.cache.getPokemon(1));
+
+		return v;
 	 }
 	 
 	 @Override
@@ -184,9 +210,66 @@ public class PokemonDisplayFragment extends Fragment {
 		 }
 	 }
 	 
-	 public void update(final Pokemon pokemon) {
+	public void update(final Pokemon pokemon) {
+	 	((PokemonMachineActivity) getActivity()).currentSelectedPokemon = pokemon;
+			 
+		updateBasicInformation(pokemon);
+			 
+		// Update Moves list and Notify Adapter
+		if (pokemon.getMoves().size() == 0) {
+			pokemon.setMoves(PokemonMachineActivity.db.getMovesForPokemon(pokemon));
+		
+			// Update Cache
+			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
+			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
+		}
+
+		updateMoveList(pokemon, Constants.LEARN_TYPE_LEVEL_UP);
+		
+		updateEvolutions(pokemon);
+		
+		updateTypeWeaknessDisplay(pokemon);
+	}
+
+	private void updateEvolutions(final Pokemon pokemon) {
+		// Update Evolutions
+		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
+		
+		// Update Cache if required
+		if (pokemon.getEvolutions().size() == 0) {
+			evolutions = PokemonMachineActivity.db.getEvolutions(pokemon.getId());
+			pokemon.setEvolutions(evolutions);
+			// Update Cache
+			Log.d(TAG, "[EVOLUTIONS_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
+			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
+		}
+
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		LinearLayout holder = (LinearLayout) v.findViewById(R.id.evolutionsHolder);
+		// Remove current displays
+		holder.removeAllViews();
+		
+		buildEvolutionChain(pokemon, assetHelper, inflater, holder);
+	}
 	 
-		 // Handle Images
+	/**
+	 * 
+	 * @param moveLearnType
+	 */
+	private void updateMoveList(Pokemon pokemon, String moveLearnType) {
+		ArrayList<Move> moveSubset = pokemon.getMovesByType(moveLearnType);
+		
+		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
+			moveSubset = Util.sortMovesByLevel(moveSubset);
+		}
+		
+		PokemonDisplayFragment.movesData.clear();
+		PokemonDisplayFragment.movesData.addAll(moveSubset);
+		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
+	}
+
+	private void updateBasicInformation(final Pokemon pokemon) {
+		// Handle Images
 		 ImageView pokemonArtView = (ImageView)v.findViewById(R.id.imageView1);
 		 ImageView pokemonType1 = (ImageView)v.findViewById(R.id.imgType1);
 		 ImageView pokemonType2 = (ImageView)v.findViewById(R.id.imgType2);
@@ -306,7 +389,7 @@ public class PokemonDisplayFragment extends Fragment {
 	     
 	     TextView happinessTextView = (TextView)v.findViewById(R.id.txtHappiness);
 	     happinessTextView.setText(String.valueOf(pokemon.getHappiness()));
-	 }
+	}
 	 
 	 private String getGenderRatio(String genderRatio) {
 		 String returnString = "";
@@ -342,11 +425,15 @@ public class PokemonDisplayFragment extends Fragment {
 	    filterText.removeTextChangedListener(filterTextWatcher);
 	}
 	
-	
-	//Container Activity must implement this interface
-	public interface OnPokemonListItemSelectedListener {
-	    public void onPokemonListItemSelected(String id);
-	}
+	/**
+	 * 
+	 */
+	public void onPokemonListItemSelected(String id) {
+		TextView pokemonNameFilterTextView = (TextView) v.findViewById(R.id.txtFilter);
+		Util.hideSoftKeyboard(pokemonNameFilterTextView);
+		
+		update(PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id)));
+	}	
 	
 	public void updateTypeWeaknessDisplay(Pokemon pokemon) {
 		// Update Type Weaknesses
@@ -373,7 +460,7 @@ public class PokemonDisplayFragment extends Fragment {
 		textFieldIdByTypeId.put(Constants.TYPE_WATER, R.id.txtDamageWater);
 		
 		for (int i=1; i <= Constants.NUMBER_OF_TYPES; i++) {
-			TextView textView = (TextView) this.getActivity().findViewById(textFieldIdByTypeId.get(i));
+			TextView textView = (TextView) v.findViewById(textFieldIdByTypeId.get(i));
 			// Handle damage against first type
 			int type1Id = Integer.parseInt(pokemon.getTypes().get(0).getId());
 			int damagePercentageForType1 = matrix[i][type1Id];

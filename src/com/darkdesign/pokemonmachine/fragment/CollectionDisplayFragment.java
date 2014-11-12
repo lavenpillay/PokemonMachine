@@ -32,11 +32,11 @@ import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.element.VideoGame;
-import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment.OnPokemonListItemSelectedListener;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.layout.NoFlingHorizontalScrollView;
+import com.darkdesign.pokemonmachine.listener.OnPokemonListItemSelectedListener;
 
 public class CollectionDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
 {

@@ -334,6 +334,56 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
     	return pokemon;
     }
+
+    /**
+     * 
+     * @return
+     */
+    public ArrayList<Item> getItems() {
+    	ArrayList<Item> itemsList = new ArrayList<Item>();
+    	
+    	String queryItem = "SELECT * FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id) WHERE f.version_group_id = 15";
+        Log.v(TAG, queryItem);
+        
+        Cursor cursorItems = db.rawQuery(queryItem, null);
+        while(cursorItems.moveToNext()) {
+        	// create Item object here
+        	
+        	//itemsList.add(cursorItems.getString(1));
+        }
+        
+        cursorItems.close();
+        
+        String[] namesArray = new String[itemsList.size()];
+        namesArray = itemsList.toArray(namesArray);
+    	
+    	return itemsList;
+    }
+    
+    /**
+     * Return an item from the database
+     * 
+     * @param itemId
+     * @return
+     */
+    public String[] getItemNames() {
+    	ArrayList<String> namesList = new ArrayList<String>();
+    	
+        String queryItem = "SELECT id, identifier FROM " + TABLE_ITEMS;
+        Log.v(TAG, queryItem);
+        
+        Cursor cursorItems = db.rawQuery(queryItem, null);
+        while(cursorItems.moveToNext()) {
+        	namesList.add(cursorItems.getString(1));
+        }
+        
+        cursorItems.close();
+        
+        String[] namesArray = new String[namesList.size()];
+        namesArray = namesList.toArray(namesArray);
+        
+        return namesArray;
+    }
     
     /**
      * Return an item from the database
@@ -352,7 +402,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor cursor = db.rawQuery(queryItem, null);
         cursor.moveToFirst();
         
-        item = new Item(cursor.getString(0), cursor.getString(1));
+        // TODO fix description field
+        item = new Item(cursor.getString(0), cursor.getString(1), "");
         
         cursor.close();
         
