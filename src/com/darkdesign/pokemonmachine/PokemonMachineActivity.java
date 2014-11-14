@@ -69,7 +69,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        forceDatabaseReload(this);
+        //forceDatabaseReload(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();

@@ -7,6 +7,7 @@ import android.app.Activity;
 
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Berry;
+import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
@@ -14,7 +15,7 @@ import com.darkdesign.pokemonmachine.element.VideoGame;
 public class Cache {
 
 	private static HashMap<Integer, Pokemon> POKEMON_CACHE;
-	private static ArrayList<Berry> ITEM_CACHE;
+	private static ArrayList<Item> ITEM_CACHE;
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
 	private static ArrayList<Type> TYPE_LIST_CACHE;
@@ -100,6 +101,14 @@ public class Cache {
 	
 	public ArrayList<Berry> getBerryList() {
 		return BERRY_CACHE;
+	}
+	
+	public ArrayList<Item> getItemList() {
+		return ITEM_CACHE;
+	}
+	
+	public Item getItemById(int id) {
+		return ITEM_CACHE.get(id - 1);
 	}
 	
 

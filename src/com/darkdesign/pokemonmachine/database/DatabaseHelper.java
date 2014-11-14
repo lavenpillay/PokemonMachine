@@ -13,6 +13,7 @@ import android.util.Log;
 import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
+import com.darkdesign.pokemonmachine.element.ItemCategory;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
@@ -342,21 +343,38 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Item> getItems() {
     	ArrayList<Item> itemsList = new ArrayList<Item>();
     	
-    	String queryItem = "SELECT * FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id) WHERE f.version_group_id = 15";
+    	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, f.flavor_text as description, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id)  WHERE f.version_group_id = 15";
         Log.v(TAG, queryItem);
         
         Cursor cursorItems = db.rawQuery(queryItem, null);
+        
         while(cursorItems.moveToNext()) {
         	// create Item object here
+        	Item item = new Item();
+        	item.setId(cursorItems.getString(0));
+        	item.setName(cursorItems.getString(2));
+        	item.setCost(cursorItems.getString(3));
+        	item.setDescription(cursorItems.getString(4));
+        	item.setIdentifier(cursorItems.getString(5));
         	
-        	//itemsList.add(cursorItems.getString(1));
+        	// Get category information
+        	ItemCategory itemCategory = null;
+        	String queryItemCategory = "SELECT c.id, c.identifier, p.name FROM items i JOIN item_categories c ON i.category_id = c.id JOIN item_category_prose p ON c.id = p.item_category_id WHERE i.id = " + item.getId();
+            Log.v(TAG, queryItemCategory);
+            
+            Cursor cursorItemCategories = db.rawQuery(queryItemCategory, null);
+            while(cursorItemCategories.moveToNext()) {
+            	itemCategory = new ItemCategory(cursorItemCategories.getInt(0), cursorItemCategories.getString(1), cursorItemCategories.getString(2));
+            }
+            cursorItemCategories.close();
+        	
+            item.setCategory(itemCategory);
+            
+        	itemsList.add(item);
         }
         
         cursorItems.close();
         
-        String[] namesArray = new String[itemsList.size()];
-        namesArray = itemsList.toArray(namesArray);
-    	
     	return itemsList;
     }
     
@@ -367,20 +385,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
      * @return
      */
     public String[] getItemNames() {
-    	ArrayList<String> namesList = new ArrayList<String>();
+
+    	ArrayList<Item> itemsList = getItems();
     	
-        String queryItem = "SELECT id, identifier FROM " + TABLE_ITEMS;
-        Log.v(TAG, queryItem);
-        
-        Cursor cursorItems = db.rawQuery(queryItem, null);
-        while(cursorItems.moveToNext()) {
-        	namesList.add(cursorItems.getString(1));
+        String[] namesArray = new String[itemsList.size()];
+        for (int i=0; i < itemsList.size(); i++) {
+        	namesArray[i] = itemsList.get(i).getName();
         }
-        
-        cursorItems.close();
-        
-        String[] namesArray = new String[namesList.size()];
-        namesArray = namesList.toArray(namesArray);
         
         return namesArray;
     }
@@ -391,6 +402,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
      * @param itemId
      * @return
      */
+    
+    // TODO this should be removed
     public Item getItemById(String itemId) {
     	Item item;
     	
@@ -403,7 +416,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursor.moveToFirst();
         
         // TODO fix description field
-        item = new Item(cursor.getString(0), cursor.getString(1), "");
+        item = new Item();
         
         cursor.close();
         

@@ -14,13 +14,17 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleItemListAdapter;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
+import com.darkdesign.pokemonmachine.helper.Constants;
+import com.darkdesign.pokemonmachine.helper.Util;
 
 public class ItemDisplayFragment extends Fragment {
 	private String TAG = ItemDisplayFragment.class.toString();
@@ -41,6 +45,8 @@ public class ItemDisplayFragment extends Fragment {
 	    }
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
+	    	Log.d(TAG, "[ItemDisplayFragment] Filter Text Changed" + s);
+	    	
 	    	if (s.length() > 0) {
 	    		itemsListAdapter.getFilter().filter(s);
 	    	} else if (s.length() == 0) {
@@ -77,6 +83,7 @@ public class ItemDisplayFragment extends Fragment {
 	   // Handle Pokemon List
 	   String[] names = PokemonMachineActivity.db.getItemNames();
 	   itemsListAdapter = new SimpleItemListAdapter(getActivity(), names);
+	   
 		
 	   ListView listView = (ListView) v.findViewById(R.id.plist);
 	   listView.setAdapter(itemsListAdapter);
@@ -97,7 +104,9 @@ public class ItemDisplayFragment extends Fragment {
 	  		  */	        
 	          
 	         // TODO Main stuff here
-	          //update(PokemonMachineActivity.cache.getPokemon(position + 1));
+	         String nameToCheck = (String) parent.getItemAtPosition(position);
+	         int itemId = Util.arrayIndexOf(PokemonMachineActivity.db.getItemNames(), nameToCheck) + 1; // because of zero-index
+	         update(PokemonMachineActivity.cache.getItemById(itemId));
 	       }
 	    });
 	   
@@ -109,5 +118,20 @@ public class ItemDisplayFragment extends Fragment {
 		//update(PokemonMachineActivity.cache.getPokemon(1));
 
 		return v;
+	 }
+	 
+	 public void update(Item item) {
+		 TextView txtName = (TextView) v.findViewById(R.id.txtName);
+		 txtName.setText(item.getName());
+		 
+		 TextView txtDescription = (TextView) v.findViewById(R.id.txtDescription);
+		 txtDescription.setText(item.getDescription());
+		 
+		 // Check category and update Additional information
+		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS)) {
+			 TextView txtCategory = (TextView) v.findViewById(R.id.txtCategory);
+			 
+			 txtCategory.setText(item.getCategory().getName());
+		 }
 	 }
 }

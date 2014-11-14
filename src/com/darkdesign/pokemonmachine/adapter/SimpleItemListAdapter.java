@@ -1,5 +1,7 @@
 package com.darkdesign.pokemonmachine.adapter;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -14,8 +16,8 @@ import android.widget.TextView;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimpleItemListAdapter extends ArrayAdapter<String> {
@@ -27,6 +29,8 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	private AssetHelper assetHelper;
 	private DatabaseHelper db;
 	private SharedPreferences applicationSettings;
+	
+	private ArrayList<Item> items;
 
 	public SimpleItemListAdapter(Context context, String[] values) {
 		super(context, R.layout.list_item_item, values);
@@ -35,6 +39,7 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	    
 	    assetHelper = new AssetHelper(context);
 	    db = new DatabaseHelper(context);
+	    items = PokemonMachineActivity.cache.getItemList();
 	}
 
 	@Override
@@ -45,33 +50,34 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.list_item_item, parent, false);
 	
-		/*
+		
 		String name = this.getItem(position);
-		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
-		*/
+		int itemId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
 		
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
-		idTextView.setText(String.valueOf(position));
-		
+		//idTextView.setText(String.valueOf(position + 1));
+		idTextView.setText(String.valueOf(itemId));
 		
 		// Set Name
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
-		nameTextView.setText(values[position]);
+		nameTextView.setText(name);
 		
 		// Set icon and types
-		String itemName = "";
+		String filename = "";
 		
 		if ((values[position]).contains("berry")) {
-			itemName = "berry_images/" + values[position];
+			filename = "berry_images/" + items.get(position).getIdentifier();
 		} else {
-			itemName = "items/" + values[position];
+			filename = "items/" + items.get(position).getIdentifier();
 		}
 		
-		Bitmap bm = assetHelper.getBitmapFromAsset(itemName + ".png");
+		Bitmap bm = assetHelper.getBitmapFromAsset(filename + ".png");
 		
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 		imageView.setImageBitmap(bm);
+		
+		
 		
 		/*
 		if (applicationSettings.getBoolean("pref_types_in_list", true)) {
