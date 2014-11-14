@@ -52,12 +52,11 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	
 		
 		String name = this.getItem(position);
-		int itemId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
+		int itemId = Util.arrayIndexOf(values, name); 
 		
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
-		//idTextView.setText(String.valueOf(position + 1));
-		idTextView.setText(String.valueOf(itemId));
+		idTextView.setText(String.valueOf(itemId + 1)); // because of zero-index
 		
 		// Set Name
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
@@ -67,9 +66,9 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 		String filename = "";
 		
 		if ((values[position]).contains("berry")) {
-			filename = "berry_images/" + items.get(position).getIdentifier();
+			filename = "berry_images/" + items.get(itemId).getIdentifier();
 		} else {
-			filename = "items/" + items.get(position).getIdentifier();
+			filename = "items/" + items.get(itemId).getIdentifier();
 		}
 		
 		Bitmap bm = assetHelper.getBitmapFromAsset(filename + ".png");

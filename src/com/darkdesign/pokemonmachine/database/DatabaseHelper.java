@@ -359,7 +359,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	
         	// Get category information
         	ItemCategory itemCategory = null;
-        	String queryItemCategory = "SELECT c.id, c.identifier, p.name FROM items i JOIN item_categories c ON i.category_id = c.id JOIN item_category_prose p ON c.id = p.item_category_id WHERE i.id = " + item.getId();
+        	String queryItemCategory = "SELECT c.id, c.identifier, p.name FROM items i JOIN item_categories c ON i.category_id = c.id JOIN item_category_prose p ON c.id = p.item_category_id WHERE p.local_language_id = 9 AND i.id = " + item.getId();
             Log.v(TAG, queryItemCategory);
             
             Cursor cursorItemCategories = db.rawQuery(queryItemCategory, null);

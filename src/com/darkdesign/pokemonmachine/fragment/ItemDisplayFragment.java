@@ -128,10 +128,12 @@ public class ItemDisplayFragment extends Fragment {
 		 txtDescription.setText(item.getDescription());
 		 
 		 // Check category and update Additional information
+		 // +---- Set common information
+		 TextView txtCategory = (TextView) v.findViewById(R.id.txtCategory);
+		 txtCategory.setText(item.getCategory().getName());
+		 
 		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS)) {
-			 TextView txtCategory = (TextView) v.findViewById(R.id.txtCategory);
 			 
-			 txtCategory.setText(item.getCategory().getName());
 		 }
 	 }
 }
