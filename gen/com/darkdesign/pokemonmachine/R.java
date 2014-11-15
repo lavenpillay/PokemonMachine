@@ -116,7 +116,7 @@ public final class R {
         public static final int emptyItem=0x7f0a0010;
         public static final int evolutionsHolder=0x7f0a004f;
         public static final int expandable=0x7f0a0067;
-        public static final int expandable_toggle_button=0x7f0a0060;
+        public static final int expandable_toggle_button=0x7f0a0061;
         public static final int fragmentDisplayPokemon=0x7f0a0022;
         public static final int fragmentItems=0x7f0a0056;
         public static final int gameFilterCheckboxHolder=0x7f0a0006;
@@ -168,10 +168,10 @@ public final class R {
         public static final int lblWeight=0x7f0a0034;
         public static final int lblWeightUnit=0x7f0a0036;
         public static final int list_item_accuracy=0x7f0a0065;
-        public static final int list_item_category=0x7f0a0062;
+        public static final int list_item_category=0x7f0a0060;
         public static final int list_item_id=0x7f0a005d;
         public static final int list_item_image=0x7f0a005e;
-        public static final int list_item_level=0x7f0a0061;
+        public static final int list_item_level=0x7f0a0062;
         public static final int list_item_move_type_image=0x7f0a0063;
         public static final int list_item_name=0x7f0a005f;
         public static final int list_item_power=0x7f0a0064;

@@ -45,6 +45,18 @@
         android:singleLine="true"
         android:text="Item Name"
         android:textSize="16sp" />
-
+    
+    <TextView
+        android:id="@+id/list_item_category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:layout_below="@id/list_item_name"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Item Category"
+        android:textSize="16sp" 
+        android:textColor="#AAA"/>
+ 
 
 </RelativeLayout>

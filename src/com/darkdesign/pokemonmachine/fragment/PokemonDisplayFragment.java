@@ -151,7 +151,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	        public void onItemClick(AdapterView<?> parent, View view,
 	                int position, long id) {
 
-	          Log.i("PokemonListFragment", "Item Clicked");
+	          Log.i(TAG, "Item Clicked");
 
 	          // TODO re-implment the listener
 	          /*
@@ -161,7 +161,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
 	  		  */	        
 	          
-	          update(PokemonMachineActivity.cache.getPokemon(position + 1));
+	          String name = pokemonListAdapter.getItem(position);
+	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+	          update(PokemonMachineActivity.cache.getPokemon(pokemonId));
 	       }
 	    });
 	   
@@ -722,7 +724,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
 			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
-			final String itemName = PokemonMachineActivity.cache.getDatabaseHelper().getItemById(evolution.getTriggerItemId()).getName();
+			final int itemId = Integer.valueOf(evolution.getTriggerItemId()) - 1;
+			final String itemName = PokemonMachineActivity.db.getItems().get(itemId).getName();
 			Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
 			useItemView.setImageBitmap(bm);
 			

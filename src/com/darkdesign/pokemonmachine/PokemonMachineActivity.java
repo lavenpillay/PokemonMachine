@@ -61,7 +61,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private BerryDisplayFragment berryDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
-    private ItemDisplayFragment itemDisplayFragment = null;
+    public static ItemDisplayFragment itemDisplayFragment = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +70,12 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         
         // TODO Remove this after DEBUG/TESTING
         //forceDatabaseReload(this);
+        
+        // Create and Initialise Database Connection
+        db = new DatabaseHelper(this);
+        
+        // Create and Initialise Cache 
+        cache = new Cache(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -106,11 +112,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         }
         
         
-        // Create and Initialise Database Connection
-        db = new DatabaseHelper(this);
         
-        // Create and Initialise Cache 
-        cache = new Cache(this);
         
         // Set to default Tab
         //mViewPager.setCurrentItem(1);

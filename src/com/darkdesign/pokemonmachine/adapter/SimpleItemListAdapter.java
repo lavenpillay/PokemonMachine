@@ -62,6 +62,10 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
 		nameTextView.setText(name);
 		
+		// Set Category
+		TextView categoryTextView = (TextView) rowView.findViewById(R.id.list_item_category);
+		categoryTextView.setText(PokemonMachineActivity.cache.getItemById(itemId).getCategory().getName());
+		
 		// Set icon and types
 		String filename = "";
 		

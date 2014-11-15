@@ -108,7 +108,7 @@ public class Cache {
 	}
 	
 	public Item getItemById(int id) {
-		return ITEM_CACHE.get(id - 1);
+		return ITEM_CACHE.get(id);
 	}
 	
 
