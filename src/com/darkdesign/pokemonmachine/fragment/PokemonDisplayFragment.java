@@ -687,9 +687,10 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade_held_item, null );
 				
 				ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgHoldItem);
-				final String itemName = PokemonMachineActivity.cache.getDatabaseHelper().getItemById(evolution.getHeldItemId()).getName();
-				Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
-				useItemView.setImageBitmap(bm);
+				final String itemName = PokemonMachineActivity.cache.getItemList().get(Integer.valueOf(evolution.getHeldItemId()) - 1).getIdentifier();
+				Bitmap bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + itemName + ".png");
+				bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.EVOLUTION_ITEM_IMAGE_SCALE, bmp.getHeight()*Constants.EVOLUTION_ITEM_IMAGE_SCALE, false);
+				useItemView.setImageBitmap(bmp);
 				
 				evolutionMethodView.setOnClickListener(new OnClickListener() {
 				     @Override

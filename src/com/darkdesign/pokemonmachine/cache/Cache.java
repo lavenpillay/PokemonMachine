@@ -53,6 +53,8 @@ public class Cache {
 		
 		// Items
 		ITEM_CACHE = db.getItems();
+		
+		int temp = 0;
 	}
 	
 	public void setupBerryNameByIdMap() {

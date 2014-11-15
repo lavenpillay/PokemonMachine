@@ -74,6 +74,7 @@ public class Constants {
 	
 	public static final int ITEM_IMAGE_SCALE_MULTIPLIER = 8;
 	public static final int EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER = 3;
+	public static final int EVOLUTION_ITEM_IMAGE_SCALE = 2;
 	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 

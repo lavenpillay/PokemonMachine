@@ -343,7 +343,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Item> getItems() {
     	ArrayList<Item> itemsList = new ArrayList<Item>();
     	
-    	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, f.flavor_text as description, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id)  WHERE f.version_group_id = 15";
+    	
+    	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, f.flavor_text as description, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id)  WHERE f.version_group_id = 15 ORDER BY i.id ASC";
+    	
+    	/*
+    	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id WHERE n.local_language_id = 9 ORDER BY i.id ASC";
+    	*/
         Log.v(TAG, queryItem);
         
         Cursor cursorItems = db.rawQuery(queryItem, null);
@@ -356,6 +361,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	item.setCost(cursorItems.getString(3));
         	item.setDescription(cursorItems.getString(4));
         	item.setIdentifier(cursorItems.getString(5));
+        	
+        	Log.v(TAG, "[ITEM] id = " + item.getId() + " identifier = " + item.getIdentifier());
         	
         	// Get category information
         	ItemCategory itemCategory = null;

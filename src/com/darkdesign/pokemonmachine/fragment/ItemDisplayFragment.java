@@ -115,7 +115,7 @@ public class ItemDisplayFragment extends Fragment {
 	         // TODO Main stuff here
 	         String nameToCheck = (String) parent.getItemAtPosition(position);
 	         int itemId = Util.arrayIndexOf(PokemonMachineActivity.db.getItemNames(), nameToCheck) + 1; // because of zero-index
-	         update(PokemonMachineActivity.cache.getItemById(itemId));
+	         update(PokemonMachineActivity.cache.getItemById(itemId - 1));
 	       }
 	    });
 	   

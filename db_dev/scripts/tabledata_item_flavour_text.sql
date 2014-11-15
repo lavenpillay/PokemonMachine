@@ -5,10 +5,7 @@ CREATE TABLE item_flavor_text (
     version_group_id INTEGER NOT NULL,
     language_id      INTEGER NOT NULL,
     flavor_text      TEXT    NOT NULL,
-    PRIMARY KEY ( item_id, version_group_id, language_id ),
-    FOREIGN KEY ( item_id ) REFERENCES items ( id ),
-    FOREIGN KEY ( version_group_id ) REFERENCES version_groups ( id ),
-    FOREIGN KEY ( language_id ) REFERENCES languages ( id ) 
+    PRIMARY KEY ( item_id, version_group_id, language_id ) 
 );
 
 INSERT INTO [item_flavor_text] ([item_id], [version_group_id], [language_id], [flavor_text]) VALUES (1, 5, 9, 'The best BALL that
