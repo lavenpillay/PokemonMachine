@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/container_dropshadow"
-    android:orientation="horizontal"
-    android:paddingLeft="10dip" >
+    android:orientation="horizontal" >
 
     <!-- List of Pokemon to choose from -->
     <LinearLayout
@@ -16,6 +15,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" 
         android:background="@drawable/shadow_left">
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Pokemon List"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_blue_bright" />  
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="pokemon name"
-                android:inputType=""
+                android:inputType="text"
                 android:text=""
                 android:textColorHint="#AAAAAA" >
             </EditText>
@@ -65,20 +75,35 @@
 
 
 	<!-- START - Main Display Area -->
+	<ScrollView 
+	    android:layout_width="0dip"
+	    android:layout_weight="2"
+	    android:layout_height="fill_parent">
+	
     <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
+		android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:background="@drawable/shadow_left"
-        android:orientation="vertical" 
-        android:paddingLeft="10dip">
+        android:orientation="vertical">
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Pokemon Information"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@android:color/holo_green_light" />
 
         <!-- START : Search Area -->
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:layout_marginLeft="10dp">
 
             <Button
                 android:id="@+id/btnSearch"
@@ -704,7 +729,8 @@
         <!-- END : Weaknesses -->
 
     </LinearLayout>
-
+	</ScrollView>
+	
     <!-- MOVES -->
 
 <LinearLayout 
@@ -712,6 +738,17 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_weight="1.25">
+        
+    <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:gravity="center_vertical"
+		android:paddingLeft="10dp"
+		android:text="Move Information"
+		android:textSize="10pt"
+		android:textStyle="bold"
+		android:textColor="@android:color/white"
+		android:background="@android:color/holo_orange_dark" />
     
 	<LinearLayout 
 	    android:layout_width="fill_parent"

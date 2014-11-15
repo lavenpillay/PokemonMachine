@@ -351,7 +351,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         while(cursorItems.moveToNext()) {
         	// create Item object here
         	Item item = new Item();
-        	item.setId(cursorItems.getString(0));
+        	item.setId(cursorItems.getInt(0));
         	item.setName(cursorItems.getString(2));
         	item.setCost(cursorItems.getString(3));
         	item.setDescription(cursorItems.getString(4));
@@ -367,9 +367,23 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             	itemCategory = new ItemCategory(cursorItemCategories.getInt(0), cursorItemCategories.getString(1), cursorItemCategories.getString(2));
             }
             cursorItemCategories.close();
-        	
+            
             item.setCategory(itemCategory);
             
+            // Get extra information
+            String extraInfo = "";
+        	String queryExtraInfo = "SELECT effect FROM item_extra_info WHERE id = " + item.getId();
+            Log.v(TAG, queryExtraInfo);
+            
+            Cursor cursorExtraInfo = db.rawQuery(queryExtraInfo, null);
+            if (cursorExtraInfo.moveToFirst()) {
+            	extraInfo = cursorExtraInfo.getString(0);
+            	item.setAdditionalInfo(extraInfo);
+            }
+
+            cursorExtraInfo.close();
+
+            // Add item to list
         	itemsList.add(item);
         }
         

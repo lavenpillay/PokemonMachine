@@ -2,17 +2,21 @@ package com.darkdesign.pokemonmachine.fragment;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +40,8 @@ public class ItemDisplayFragment extends Fragment {
 	private SharedPreferences applicationSettings;
 	
 	public static SimpleItemListAdapter itemsListAdapter;
+	
+	private LayoutInflater inflater;
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 		public void afterTextChanged(Editable s) {
@@ -71,7 +77,9 @@ public class ItemDisplayFragment extends Fragment {
 	
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	   v = inflater.inflate(R.layout.fragment_items, container, false);
+		 this.inflater = inflater;
+		 v = inflater.inflate(R.layout.fragment_items, container, false);
+	   
 
 	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
 	   
@@ -115,25 +123,62 @@ public class ItemDisplayFragment extends Fragment {
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	   
 		// Select default ITEM
-		//update(PokemonMachineActivity.cache.getPokemon(1));
+		update(PokemonMachineActivity.cache.getItemById(1));
 
 		return v;
 	 }
 	 
 	 public void update(Item item) {
-		 TextView txtName = (TextView) v.findViewById(R.id.txtName);
-		 txtName.setText(item.getName());
 		 
-		 TextView txtDescription = (TextView) v.findViewById(R.id.txtDescription);
-		 txtDescription.setText(item.getDescription());
+		LinearLayout mainInfoArea = (LinearLayout) v.findViewById(R.id.mainInfoArea);
+		LinearLayout additionalInfoArea = (LinearLayout) v.findViewById(R.id.additonalInfoArea);
 		 
-		 // Check category and update Additional information
-		 // +---- Set common information
-		 TextView txtCategory = (TextView) v.findViewById(R.id.txtCategory);
-		 txtCategory.setText(item.getCategory().getName());
+		 // Add Item image - scaled
+		String filename = "items/" + item.getIdentifier();
+		ImageView itemView = (ImageView)v.findViewById(R.id.imgItem);
+		Bitmap bmp = assetHelper.getBitmapFromAsset(filename + ".png");
+		bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, false);
+		itemView.setImageBitmap(bmp);
 		 
-		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS)) {
+		//clear current content
+		mainInfoArea.removeAllViews();
+		additionalInfoArea.removeAllViews();
+		 
+		LinearLayout descriptionText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
+			
+		TextView txtItemName = (TextView) descriptionText.findViewById(R.id.heading);
+		txtItemName.setText(item.getName());
+		 
+		TextView txtDescription = (TextView) descriptionText.findViewById(R.id.content);
+		txtDescription.setText(item.getDescription());
+		 
+		mainInfoArea.addView(descriptionText);
+		 
+		// Check category and update Additional information
+		// +---- Set common information
+		LinearLayout categoryText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
+			
+		TextView txtCategoryTitle = (TextView) categoryText.findViewById(R.id.heading);
+		txtCategoryTitle.setText("Category");
+		 
+		TextView txtCategory = (TextView) categoryText.findViewById(R.id.content);
+		txtCategory.setText(item.getCategory().getName());
+		txtCategory.setTextSize(TypedValue.COMPLEX_UNIT_PT, 9);
+		 
+		additionalInfoArea.addView(categoryText);
+		 
+		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS) ||
+			 item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_STANDARD_BALLS)) {
 			 
+			 LinearLayout catchRateText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
+				
+			 TextView txtCatchRateTitle = (TextView) catchRateText.findViewById(R.id.heading);
+			 txtCatchRateTitle.setText("Capture Information");
+			 
+			 TextView txtCatchRateContent = (TextView) catchRateText.findViewById(R.id.content);
+			 txtCatchRateContent.setText(item.getAdditionalInfo());
+			 
+			 mainInfoArea.addView(catchRateText);
 		 }
 	 }
 }

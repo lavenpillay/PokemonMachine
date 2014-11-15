@@ -1,21 +1,23 @@
 package com.darkdesign.pokemonmachine.element;
 
 public class Item {
-	private String id = "";
+	private int id;
 	private ItemCategory category = null;
 	private String name = "";
 	private String cost = "";
 	private String description = "";
 	private String identifier = "";
 	
+	private String additionalInfo = "";
+	
 	public Item() {
 		super();
 	}
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -55,6 +57,14 @@ public class Item {
 
 	public void setCategory(ItemCategory category) {
 		this.category = category;
+	}
+
+	public String getAdditionalInfo() {
+		return additionalInfo;
+	}
+
+	public void setAdditionalInfo(String additionalInfo) {
+		this.additionalInfo = additionalInfo;
 	}
 	
 
