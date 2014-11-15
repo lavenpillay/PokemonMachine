@@ -12,9 +12,11 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,7 +34,7 @@ import com.darkdesign.pokemonmachine.helper.Util;
 
 public class ItemDisplayFragment extends Fragment {
 	private String TAG = ItemDisplayFragment.class.toString();
-	private View v;
+	private View view;
 	private EditText filterText = null;
 	
 	private AssetHelper assetHelper;
@@ -59,7 +61,6 @@ public class ItemDisplayFragment extends Fragment {
 	    		itemsListAdapter.getFilter().filter("");
 	    	}
 	    }
-
 	};
 
 	/**
@@ -78,14 +79,14 @@ public class ItemDisplayFragment extends Fragment {
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 this.inflater = inflater;
-		 v = inflater.inflate(R.layout.fragment_items, container, false);
+		 view = inflater.inflate(R.layout.fragment_items, container, false);
 	   
 
 	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
 	   
 	   applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
 	   
-	   filterText = (EditText) v.findViewById(R.id.txtFilter);
+	   filterText = (EditText) view.findViewById(R.id.txtFilter);
 	   filterText.addTextChangedListener(filterTextWatcher);
 	   
 	   // Handle Pokemon List
@@ -93,7 +94,7 @@ public class ItemDisplayFragment extends Fragment {
 	   itemsListAdapter = new SimpleItemListAdapter(getActivity(), names);
 	   
 		
-	   ListView listView = (ListView) v.findViewById(R.id.plist);
+	   ListView listView = (ListView) view.findViewById(R.id.plist);
 	   listView.setAdapter(itemsListAdapter);
 	   listView.invalidate();
 	   
@@ -118,24 +119,34 @@ public class ItemDisplayFragment extends Fragment {
 	       }
 	    });
 	   
+	   ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
+	   btnClearNameFilter.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EditText edtName = (EditText)view.findViewById(R.id.txtFilter);
+				edtName.setText("");
+			}
+		});
+	   
 	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
 	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	   
 		// Select default ITEM
-		update(PokemonMachineActivity.cache.getItemById(1));
+		update(PokemonMachineActivity.cache.getItemById(0));
 
-		return v;
+		return view;
 	 }
 	 
 	 public void update(Item item) {
 		 
-		LinearLayout mainInfoArea = (LinearLayout) v.findViewById(R.id.mainInfoArea);
-		LinearLayout additionalInfoArea = (LinearLayout) v.findViewById(R.id.additonalInfoArea);
+		LinearLayout mainInfoArea = (LinearLayout) view.findViewById(R.id.mainInfoArea);
+		LinearLayout additionalInfoArea = (LinearLayout) view.findViewById(R.id.additonalInfoArea);
 		 
 		 // Add Item image - scaled
 		String filename = "items/" + item.getIdentifier();
-		ImageView itemView = (ImageView)v.findViewById(R.id.imgItem);
+		ImageView itemView = (ImageView)view.findViewById(R.id.imgItem);
 		Bitmap bmp = assetHelper.getBitmapFromAsset(filename + ".png");
 		bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, false);
 		itemView.setImageBitmap(bmp);

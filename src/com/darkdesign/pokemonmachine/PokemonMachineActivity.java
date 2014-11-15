@@ -36,6 +36,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 	
 	private static String TAG = PokemonMachineActivity.class.getName();
 	private static final int ENTER_KEY_PRESSED = 66;
+	
+	public static final int FRAGMENT_POSITION_ITEMS = 0; 
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,7 +52,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    ViewPager mViewPager;
+    private ViewPager mViewPager;
 
     public static DatabaseHelper db;
     public static Cache cache;
@@ -391,5 +393,13 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         db.close();
         db = dbHelper.getWritableDatabase();
     }
+
+	public ViewPager getViewPager() {
+		return mViewPager;
+	}
+
+	public void setViewPager(ViewPager mViewPager) {
+		this.mViewPager = mViewPager;
+	}
 
 }
