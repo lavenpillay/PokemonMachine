@@ -42,6 +42,9 @@ public class EggGroup {
 		this.identifier = identifier;
 	}
 
-
+	@Override
+	public String toString() {
+		return this.name;
+	}
 
 }

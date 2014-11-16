@@ -26,20 +26,24 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
+import android.widget.Spinner;
 import android.widget.TableRow.LayoutParams;
+import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.adapter.EggGroupSpinnerAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
+import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -422,34 +426,34 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     }
 	     weightTextView.setText(weight);
 	     
-			// TODO REMOVE
-			// init example series data
-			GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-			    new GraphViewData(1, pokemon.getHp())
-			    , new GraphViewData(2, pokemon.getAttack())
-			    , new GraphViewData(3, pokemon.getDefense())
-			    , new GraphViewData(4, pokemon.getSpAtk())
-			    , new GraphViewData(5, pokemon.getSpDef())
-			    , new GraphViewData(6, pokemon.getSpeed())
-			});
-			 
-			GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "");
-			graphView.setManualYAxisBounds(255, 0);
-			graphView.addSeries(exampleSeries); // data
-			graphView.setHorizontalLabels(new String[] {"HP", "ATK", "DEF", "SP.ATK", "SP.DEF", "SPD"});
-			//graphView.setVerticalLabels(new String[] {"255", "200", "150", "100", "50", "0"});
-			graphView.getGraphViewStyle().setNumVerticalLabels(6);
-			
-			graphView.getGraphViewStyle().setGridColor(Color.LTGRAY);
-			graphView.getGraphViewStyle().setGridStyle(GridStyle.HORIZONTAL);
-			graphView.getGraphViewStyle().setTextSize(12);
-			 
-			LinearLayout layout = (LinearLayout) view.findViewById(R.id.baseStatsGraphArea);
-			//layout.removeAllViews();
-			if (layout.getChildCount() > 1) {
-				layout.removeViewAt(1);
-			}
-			layout.addView(graphView);
+		// Add Base Stats Graph
+		// init example series data
+		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
+		    new GraphViewData(1, pokemon.getHp())
+		    , new GraphViewData(2, pokemon.getAttack())
+		    , new GraphViewData(3, pokemon.getDefense())
+		    , new GraphViewData(4, pokemon.getSpAtk())
+		    , new GraphViewData(5, pokemon.getSpDef())
+		    , new GraphViewData(6, pokemon.getSpeed())
+		});
+		 
+		GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "");
+		graphView.setManualYAxisBounds(255, 0);
+		graphView.addSeries(exampleSeries); // data
+		graphView.setHorizontalLabels(new String[] {"HP", "ATK", "DEF", "SP.ATK", "SP.DEF", "SPD"});
+		//graphView.setVerticalLabels(new String[] {"255", "200", "150", "100", "50", "0"});
+		graphView.getGraphViewStyle().setNumVerticalLabels(6);
+		
+		graphView.getGraphViewStyle().setGridColor(Color.LTGRAY);
+		graphView.getGraphViewStyle().setGridStyle(GridStyle.HORIZONTAL);
+		graphView.getGraphViewStyle().setTextSize(12);
+		 
+		LinearLayout layout = (LinearLayout) view.findViewById(R.id.baseStatsGraphArea);
+		//layout.removeAllViews();
+		if (layout.getChildCount() > 1) {
+			layout.removeViewAt(1);
+		}
+		layout.addView(graphView);
 	     
 	     
 		 LayoutParams labelParams = new LayoutParams(185, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -470,11 +474,20 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     txtCatchRateContent.setText(String.valueOf(pokemon.getCatchRate()));
 	     
 	     LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
-	     TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
-	     txtEggGroupHeading.setLayoutParams(labelParams);
-	     txtEggGroupHeading.setText("Egg Groups");
-	     TextView txtEggGroupContent = (TextView) layoutEggGroup.findViewById(R.id.content);
-	     txtEggGroupContent.setText("--List--");
+	     //TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
+	     //txtEggGroupHeading.setLayoutParams(labelParams);
+	     //txtEggGroupHeading.setText("Egg Groups");
+	     //TextView txtEggGroupContent = (TextView) layoutEggGroup.findViewById(R.id.content);
+	     //txtEggGroupContent.setText("--List--");
+	     //txtEggGroupContent.setText("");
+	     
+	     Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
+		 // Create an ArrayAdapter using the string array and a default spinner layout
+	     EggGroupSpinnerAdapter adapter = new EggGroupSpinnerAdapter(getActivity(), R.layout.simple_spinner_item, pokemon.getEggGroups());
+		 // Specify the layout to use when the list of choices appears
+		// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		 // Apply the adapter to the spinner
+		 spinner.setAdapter(adapter);
 	     
 	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
 	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
@@ -497,7 +510,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
 	     txtHappinessContent.setText(pokemon.getHappiness());
 	     
-	     
+
 	}
 	 
 	 private String getGenderRatio(String genderRatio) {
