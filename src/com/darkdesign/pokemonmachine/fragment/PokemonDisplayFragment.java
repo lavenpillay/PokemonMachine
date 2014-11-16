@@ -181,6 +181,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	       }
 	    });
 	   
+	   // Clear button listener for POKEMON field
 	   ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
 	   btnClearNameFilter.setOnClickListener(new OnClickListener() {
 			
@@ -191,6 +192,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			}
 		});
 	   
+	   // Clear button listener for SEARCH field
 	   ImageButton btnClearId = (ImageButton)view.findViewById(R.id.btnClearID);
 	   btnClearId.setOnClickListener(new OnClickListener() {
 			
@@ -431,7 +433,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			    , new GraphViewData(6, pokemon.getSpeed())
 			});
 			 
-			GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "Base Stats");
+			GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "");
 			graphView.setManualYAxisBounds(255, 0);
 			graphView.addSeries(exampleSeries); // data
 			graphView.setHorizontalLabels(new String[] {"HP", "ATK", "DEF", "SP.ATK", "SP.DEF", "SPD"});
@@ -443,11 +445,14 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			graphView.getGraphViewStyle().setTextSize(12);
 			 
 			LinearLayout layout = (LinearLayout) view.findViewById(R.id.baseStatsGraphArea);
-			layout.removeAllViews();
+			//layout.removeAllViews();
+			if (layout.getChildCount() > 1) {
+				layout.removeViewAt(1);
+			}
 			layout.addView(graphView);
 	     
 	     
-		 LayoutParams labelParams = new LayoutParams(180, LinearLayout.LayoutParams.WRAP_CONTENT);
+		 LayoutParams labelParams = new LayoutParams(185, LinearLayout.LayoutParams.WRAP_CONTENT);
 		 labelParams.leftMargin = 20;
 			
 	     LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
@@ -466,24 +471,28 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     
 	     LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
 	     TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
+	     txtEggGroupHeading.setLayoutParams(labelParams);
 	     txtEggGroupHeading.setText("Egg Groups");
 	     TextView txtEggGroupContent = (TextView) layoutEggGroup.findViewById(R.id.content);
 	     txtEggGroupContent.setText("--List--");
 	     
 	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
 	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
+	     txtGrowthRateHeading.setLayoutParams(labelParams);
 	     txtGrowthRateHeading.setText("Growth Rate");
 	     TextView txtGrowthRateContent = (TextView) layoutGrowthRate.findViewById(R.id.content);
 	     txtGrowthRateContent.setText(String.valueOf(pokemon.getGrowthRate()));
 	     
 	     LinearLayout layoutEVYield = (LinearLayout) view.findViewById(R.id.ceEVYield);
 	     TextView txtEVYieldHeading = (TextView) layoutEVYield.findViewById(R.id.heading);
+	     txtEVYieldHeading.setLayoutParams(labelParams);
 	     txtEVYieldHeading.setText("EV Yield");
 	     TextView txtEVYieldContent = (TextView) layoutEVYield.findViewById(R.id.content);
 	     txtEVYieldContent.setText(String.valueOf(pokemon.getEvYield()));
 	     
 	     LinearLayout layoutHappiness = (LinearLayout) view.findViewById(R.id.ceHappiness);
 	     TextView txtHappinessHeading = (TextView) layoutHappiness.findViewById(R.id.heading);
+	     txtHappinessHeading.setLayoutParams(labelParams);
 	     txtHappinessHeading.setText("Happiness");
 	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
 	     txtHappinessContent.setText(pokemon.getHappiness());
