@@ -2,12 +2,25 @@ package com.darkdesign.pokemonmachine.element;
 
 public class EggGroup {
 
+	private int id;
+	private String identifier;
 	private String name;
-	private String resourceURI;
+
 
 	public EggGroup() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public EggGroup(int id, String identifier, String name) {
+		super();
+		this.id = id;
+		this.identifier = identifier;
+		this.name = name;
+	}
+
+
 
 	public String getName() {
 		return name;
@@ -17,12 +30,18 @@ public class EggGroup {
 		this.name = name;
 	}
 
-	public String getResourceURI() {
-		return resourceURI;
+
+
+	public String getIdentifier() {
+		return identifier;
 	}
 
-	public void setResourceURI(String resourceURI) {
-		this.resourceURI = resourceURI;
+
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
+
+
 
 }

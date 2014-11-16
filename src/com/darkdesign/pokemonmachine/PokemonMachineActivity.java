@@ -14,11 +14,14 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
@@ -36,7 +39,6 @@ import com.darkdesign.pokemonmachine.helper.Util;
 public class PokemonMachineActivity extends Activity implements ActionBar.TabListener {
 	
 	private static String TAG = PokemonMachineActivity.class.getName();
-	private static final int ENTER_KEY_PRESSED = 66;
 	
 	public static final int FRAGMENT_POSITION_ITEMS = 0; 
 
@@ -72,7 +74,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        //forceDatabaseReload(this);
+        forceDatabaseReload(this);
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -114,8 +116,6 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
                             .setTabListener(this));
         }
         
-
-
         // Set to default Tab
         mViewPager.setCurrentItem(1);
 
@@ -139,39 +139,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 		onPokemonUpdated(pokemon);
 	}
 	
-	/**
-	 * 
-	 */
-	@Override
-	public void onAttachedToWindow() {
-		super.onAttachedToWindow();
-		
-		/*
-        // Search-By-ID Listener
-        EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
-        searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
-        searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
-        
-        searchValueTextbox.setOnEditorActionListener(new OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == ENTER_KEY_PRESSED) {
-                	
-                	Util.hideSoftKeyboard(v);
-                	clearFilterText();
-                	
-                	// Execute Search
-                	searchFromSearchBox();
-                	
-                    return true;
-                }
-                return false;
-            }
-        });
-        */
-		
-        // Perform Initial Search : 1 == Bulbasaur
-		// executeSearch(1);
-	}
+
 	
 	// -------------------------------------------------------------------------------------------------
 	
@@ -187,38 +155,6 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 		// Update Pokemon Display		
 		pokemonDisplayFragment.update(pokemon);
 		
-		/*
-		// Update Moves list and Notify Adapter
-		if (pokemon.getMoves().size() == 0) {
-			pokemon.setMoves(db.getMovesForPokemon(pokemon));
-			// Update Cache
-			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
-				PokemonMachineActivity.cache.addPokemonToCache(pokemon);
-		}
-		
-		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
-		
-		// Update Evolutions
-		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
-		
-		// Update Cache if required
-		if (pokemon.getEvolutions().size() == 0) {
-			evolutions = db.getEvolutions(pokemon.getId());
-			pokemon.setEvolutions(evolutions);
-			// Update Cache
-			Log.d(TAG, "[EVOLUTIONS_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
-			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
-		}
-		
-		LayoutInflater inflater = (LayoutInflater)this.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-		LinearLayout holder = (LinearLayout) findViewById(R.id.evolutionsHolder);
-		// Remove current displays
-		holder.removeAllViews();
-		
-		pokemonDisplayFragment.buildEvolutionChain(pokemon, assetHelper, inflater, holder);
-		
-		pokemonDisplayFragment.updateTypeWeaknessDisplay(pokemon);
-		*/
 	}
     
 	/**
@@ -238,39 +174,16 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 	}
 	
     // -------------------------------------------------------------------------------------------------
-	/**
-	 * 
-	 */
-	public void searchFromSearchBox() {
-		EditText searchValueTextbox = (EditText)findViewById(R.id.txtSearch);
-		
-		String searchValue = searchValueTextbox.getText().toString();
-		
-		if (searchValue != null && !searchValue.equals("") && Util.stringIsInteger(searchValue)) {
-			executeSearch(Integer.parseInt(searchValue));
-		}
-	}
 
 	/**
 	 * 
 	 * @param view
 	 */
 	public void onSearchClick(View view) {
-		searchFromSearchBox();
+		pokemonDisplayFragment.searchFromSearchBox();
 	}
 	
-	/**
-	 * 
-	 * @param view
-	 */
-	public void onClearNameFilterClick(View view) {
-		clearFilterText();
-	}
-
-	public void clearFilterText() {
-		EditText filterText = (EditText) findViewById(R.id.txtFilter);
-		filterText.setText("");
-	}	
+	
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

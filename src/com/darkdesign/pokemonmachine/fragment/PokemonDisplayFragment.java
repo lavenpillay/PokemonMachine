@@ -17,12 +17,13 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -31,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TableRow.LayoutParams;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
@@ -58,6 +61,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	private String TAG = PokemonDisplayFragment.class.getName();
+	private static final int ENTER_KEY_PRESSED = 66;
 	
 	private AssetHelper assetHelper;
 	private SharedPreferences applicationSettings;
@@ -135,8 +139,17 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
 		
 		//adapter.getFilter().filter("Sand");
-	}	
+	}
 	
+	@Override
+	public void onAttach(Activity activity) {
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		
+		
+	}
+	
+
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 	   view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
@@ -160,15 +173,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	        public void onItemClick(AdapterView<?> parent, View view,
 	                int position, long id) {
 
-	          Log.i(TAG, "Item Clicked");
-
-	          // TODO re-implment the listener
-	          /*
-	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) this;
-	  		  String name = pokemonListAdapter.getItem(position);
-	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
-	  		  */	        
+	          Log.i(TAG, "Item Clicked");        
 	          
 	          String name = pokemonListAdapter.getItem(position);
 	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
@@ -185,6 +190,16 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				edtName.setText("");
 			}
 		});
+	   
+	   ImageButton btnClearId = (ImageButton)view.findViewById(R.id.btnClearID);
+	   btnClearId.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				EditText edtId = (EditText)view.findViewById(R.id.txtSearch);
+				edtId.setText("");
+			}
+	   });
 	   
 	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
 	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
@@ -209,21 +224,69 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
                 R.id.expandable
         ));
 		
+		// Search-By-ID Listener
+        EditText searchValueTextbox = (EditText) view.findViewById(R.id.txtSearch);
+        searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+        searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
+        
+        searchValueTextbox.setOnEditorActionListener(new OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == ENTER_KEY_PRESSED) {
+                	
+                	Util.hideSoftKeyboard(v);
+                	clearFilterText();
+                	
+                	// Execute Search
+                	searchFromSearchBox();
+                	
+                    return true;
+                }
+                return false;
+            }
+        });
+		
+		
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
 		
-
-
 		return view;
 	 }
 	 
-	 @Override
-	 public void onPause() {
-		 super.onPause();
-		 if (((PokemonMachineActivity) getActivity()) != null) {
-			 lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
-		 }
-	 }
+	/**
+	 * 
+	 * @param view
+	 */
+	public void onClearNameFilterClick(View view) {
+		clearFilterText();
+	}
+	
+	public void clearFilterText() {
+		EditText filterText = (EditText) view.findViewById(R.id.txtFilter);
+		filterText.setText("");
+	}
+	
+	/**
+	 * 
+	 */
+	public void searchFromSearchBox() {
+		EditText searchValueTextbox = (EditText) view.findViewById(R.id.txtSearch);
+		
+		String searchValue = searchValueTextbox.getText().toString();
+		
+		if (searchValue != null && !searchValue.equals("") && Util.stringIsInteger(searchValue)) {
+			
+			int id = Integer.valueOf(searchValue);
+			update(PokemonMachineActivity.cache.getPokemon(id));
+		}
+	}
+	 
+	@Override
+	public void onPause() {
+		super.onPause();
+		if (((PokemonMachineActivity) getActivity()) != null) {
+			lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
+		}
+	}
 	 
 	 @Override
 	 public void onResume() {
@@ -360,15 +423,16 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			// TODO REMOVE
 			// init example series data
 			GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
-			    new GraphViewData(1, 200d)
-			    , new GraphViewData(2, 100d)
-			    , new GraphViewData(3, 34d)
-			    , new GraphViewData(4, 72d)
-			    , new GraphViewData(5, 72d)
-			    , new GraphViewData(6, 72d)
+			    new GraphViewData(1, pokemon.getHp())
+			    , new GraphViewData(2, pokemon.getAttack())
+			    , new GraphViewData(3, pokemon.getDefense())
+			    , new GraphViewData(4, pokemon.getSpAtk())
+			    , new GraphViewData(5, pokemon.getSpDef())
+			    , new GraphViewData(6, pokemon.getSpeed())
 			});
 			 
 			GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "Base Stats");
+			graphView.setManualYAxisBounds(255, 0);
 			graphView.addSeries(exampleSeries); // data
 			graphView.setHorizontalLabels(new String[] {"HP", "ATK", "DEF", "SP.ATK", "SP.DEF", "SPD"});
 			//graphView.setVerticalLabels(new String[] {"255", "200", "150", "100", "50", "0"});
@@ -376,68 +440,55 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			
 			graphView.getGraphViewStyle().setGridColor(Color.LTGRAY);
 			graphView.getGraphViewStyle().setGridStyle(GridStyle.HORIZONTAL);
-			graphView.getGraphViewStyle().setTextSize(10);
+			graphView.getGraphViewStyle().setTextSize(12);
 			 
 			LinearLayout layout = (LinearLayout) view.findViewById(R.id.baseStatsGraphArea);
+			layout.removeAllViews();
 			layout.addView(graphView);
 	     
-	     /*
-	     TextView hpTextView = (TextView)view.findViewById(R.id.txtHP);
-	     hpTextView.setText(String.valueOf(pokemon.getHp()));
 	     
-	     View hpBarView = (View)view.findViewById(R.id.barHP);
-	     hpBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getHp()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
+		 LayoutParams labelParams = new LayoutParams(180, LinearLayout.LayoutParams.WRAP_CONTENT);
+		 labelParams.leftMargin = 20;
+			
+	     LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
+	     TextView txtGenderHeading = (TextView) layoutGender.findViewById(R.id.heading);
+	     txtGenderHeading.setLayoutParams(labelParams);
+	     txtGenderHeading.setText("Gender");
+	     TextView txtGenderContent = (TextView) layoutGender.findViewById(R.id.content);
+	     txtGenderContent.setText(getGenderRatio(pokemon.getGenderRate()));
+	     	     
+	     LinearLayout layoutCatchRate = (LinearLayout) view.findViewById(R.id.ceCatchRate);
+	     TextView txtCatchRateHeading = (TextView) layoutCatchRate.findViewById(R.id.heading);
+	     txtCatchRateHeading.setLayoutParams(labelParams);
+	     txtCatchRateHeading.setText("Catch Rate");
+	     TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
+	     txtCatchRateContent.setText(String.valueOf(pokemon.getCatchRate()));
 	     
-	     TextView attackTextView = (TextView)view.findViewById(R.id.txtATK);
-	     attackTextView.setText(String.valueOf(pokemon.getAttack()));
+	     LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
+	     TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
+	     txtEggGroupHeading.setText("Egg Groups");
+	     TextView txtEggGroupContent = (TextView) layoutEggGroup.findViewById(R.id.content);
+	     txtEggGroupContent.setText("--List--");
 	     
-	     View attackBarView = (View)view.findViewById(R.id.barATK);
-	     attackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getAttack()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
+	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
+	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
+	     txtGrowthRateHeading.setText("Growth Rate");
+	     TextView txtGrowthRateContent = (TextView) layoutGrowthRate.findViewById(R.id.content);
+	     txtGrowthRateContent.setText(String.valueOf(pokemon.getGrowthRate()));
 	     
-	     TextView defenseTextView = (TextView)view.findViewById(R.id.txtDEF);
-	     defenseTextView.setText(String.valueOf(pokemon.getDefense()));
+	     LinearLayout layoutEVYield = (LinearLayout) view.findViewById(R.id.ceEVYield);
+	     TextView txtEVYieldHeading = (TextView) layoutEVYield.findViewById(R.id.heading);
+	     txtEVYieldHeading.setText("EV Yield");
+	     TextView txtEVYieldContent = (TextView) layoutEVYield.findViewById(R.id.content);
+	     txtEVYieldContent.setText(String.valueOf(pokemon.getEvYield()));
 	     
-	     View defenseBarView = (View)view.findViewById(R.id.barDEF);
-	     defenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getDefense()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));	     
+	     LinearLayout layoutHappiness = (LinearLayout) view.findViewById(R.id.ceHappiness);
+	     TextView txtHappinessHeading = (TextView) layoutHappiness.findViewById(R.id.heading);
+	     txtHappinessHeading.setText("Happiness");
+	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
+	     txtHappinessContent.setText(pokemon.getHappiness());
 	     
-	     TextView spAttackTextView = (TextView)view.findViewById(R.id.txtSPATK);
-	     spAttackTextView.setText(String.valueOf(pokemon.getSpAtk()));
 	     
-	     View spAttackBarView = (View)view.findViewById(R.id.barSPATK);
-	     spAttackBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpAtk()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
-	     
-	     TextView spDefenseTextView = (TextView)view.findViewById(R.id.txtSPDEF);
-	     spDefenseTextView.setText(String.valueOf(pokemon.getSpDef()));
-	     
-	     View spDefenseBarView = (View)view.findViewById(R.id.barSPDEF);
-	     spDefenseBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpDef()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
-	     
-	     TextView speedTextView = (TextView)view.findViewById(R.id.txtSPD);
-	     speedTextView.setText(String.valueOf(pokemon.getSpeed()));
-	     
-	     View speedBarView = (View)view.findViewById(R.id.barSPD);
-	     speedBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpeed()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
-			*/
-	     
-	     // EV Yield 
-	     TextView evTextView = (TextView)view.findViewById(R.id.txtEVYield);
-	     evTextView.setText(String.valueOf(pokemon.getEvYield()));
-	     
-	     // Breeding Info
-	     TextView genderTextView = (TextView)view.findViewById(R.id.txtMaleFemaleRatio);
-	     genderTextView.setText(getGenderRatio(pokemon.getGenderRate()));
-	     
-	     TextView catchRateTextView = (TextView)view.findViewById(R.id.txtCatchRate);
-	     catchRateTextView.setText(String.valueOf(pokemon.getCatchRate()));
-
-	     TextView growthRateTextView = (TextView)view.findViewById(R.id.txtGrowthRate);
-	     growthRateTextView.setText(String.valueOf(pokemon.getGrowthRate()));	     
-	     
-	     //TextView eggCyclesTextView = (TextView)v.findViewById(R.id.txtEggCycles);
-	     //eggCyclesTextView.setText(String.valueOf(pokemon.getEggCycles()));
-	     
-	     TextView happinessTextView = (TextView)view.findViewById(R.id.txtHappiness);
-	     happinessTextView.setText(String.valueOf(pokemon.getHappiness()));
 	}
 	 
 	 private String getGenderRatio(String genderRatio) {

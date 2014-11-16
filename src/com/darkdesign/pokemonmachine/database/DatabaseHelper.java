@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.darkdesign.pokemonmachine.element.Berry;
+import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.ItemCategory;
@@ -266,6 +267,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public Pokemon getPokemon(String id) {
     	Pokemon pokemon = new Pokemon();
     	ArrayList<Type> pokemonTypes = new ArrayList<Type>();
+    	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
     	
     	//SQLiteDatabase db = getReadableDatabase();
 
@@ -326,11 +328,25 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         while(cursorTypes.moveToNext()) {
         	pokemonTypes.add(new Type(cursorTypes.getString(0), cursorTypes.getString(1)));
         }
+        cursorStats.close();
         
         pokemon.setTypes(pokemonTypes);
-        
         cursorTypes.close();
-        cursorStats.close();
+        
+        // Get Egg Groups
+        String queryEggGroups = 
+        		"SELECT species_id, egg_group_id, identifier, name FROM pokemon_egg_groups g JOIN egg_group_prose p USING (egg_group_id) JOIN egg_groups e ON e.id = p.egg_group_id WHERE p.local_language_id = 9 AND species_id = " + pokemon.getId();
+        Log.v(TAG, queryEggGroups);
+        
+        Cursor cursorGroups = db.rawQuery(queryEggGroups, null);
+        while(cursorGroups.moveToNext()) {
+        	EggGroup eggGroup = new EggGroup(cursorGroups.getInt(1), cursorGroups.getString(2), cursorGroups.getString(3));
+        	eggGroupList.add(eggGroup);
+        }
+        
+        pokemon.setEggGroups(eggGroupList);
+        cursorGroups.close();
+        
         c.close();
         
     	return pokemon;
@@ -569,6 +585,21 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
     	
     	return gameList;
+    }
+    
+    public ArrayList<EggGroup> getEggGroups() {
+    	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
+    	
+    	String queryEggGroups = "SELECT e.id AS id, e.identifier AS identifier, p.name AS name FROM egg_groups e JOIN egg_group_prose p ON p.egg_group_id = e.id WHERE p.local_language_id = 9";
+        Log.v(TAG, queryEggGroups);
+        
+        Cursor cursorEggGroups = db.rawQuery(queryEggGroups, null);
+        
+        while (cursorEggGroups.moveToNext()) {
+        	eggGroupList.add(new EggGroup(cursorEggGroups.getInt(0), cursorEggGroups.getString(1), cursorEggGroups.getString(2)));
+        }
+    	
+    	return eggGroupList;
     }
     
 }

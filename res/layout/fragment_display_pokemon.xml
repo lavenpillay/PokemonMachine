@@ -120,13 +120,12 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="national id"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionSearch"
                 android:numeric="integer"
                 android:singleLine="true"
                 android:text=""
                 android:textColorHint="#AAAAAA" >
 
-                <!-- <requestFocus android:layout_width="wrap_content" /> -->
             </EditText>
 
             <ImageButton
@@ -301,210 +300,6 @@
                 android:orientation="vertical"
                 android:paddingTop="10dip" >
 
-                <!-- 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblHP"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:background="#AAFF7F"
-                        android:gravity="center"
-                        android:text="HP"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-
-                    <TextView
-                        android:id="@+id/txtHP"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="100"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/barHP"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblATK"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_marginTop="3dip"
-                        android:background="#FFFF7F"
-                        android:gravity="center"
-                        android:text="ATK"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-
-                    <TextView
-                        android:id="@+id/txtATK"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="200"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/barATK"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblDEF"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_marginTop="3dip"
-                        android:background="#FFD455"
-                        android:gravity="center"
-                        android:text="DEF"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-
-                    <TextView
-                        android:id="@+id/txtDEF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="300"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/barDEF"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblSPATK"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_marginTop="3dip"
-                        android:background="#2AD4FF"
-                        android:gravity="center"
-                        android:text="SP\nATK"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="5pt" />
-
-                    <TextView
-                        android:id="@+id/txtSPATK"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="400"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/barSPATK"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblSPDEF"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_marginTop="3dip"
-                        android:background="#7F7FFF"
-                        android:gravity="center"
-                        android:text="SP\nDEF"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="5pt" />
-
-                    <TextView
-                        android:id="@+id/txtSPDEF"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="500"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/barSPDEF"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/lblSPD"
-                        android:layout_width="30dip"
-                        android:layout_height="30dip"
-                        android:layout_marginTop="3dip"
-                        android:background="#FF55D4"
-                        android:gravity="center"
-                        android:text="SPD"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-
-                    <TextView
-                        android:id="@+id/txtSPD"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dip"
-                        android:layout_marginTop="3dip"
-                        android:gravity="center"
-                        android:text="600"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textSize="6pt" />
-                </LinearLayout>
-				
-                <View
-                    android:id="@+id/barSPD"
-                    android:layout_width="128dip"
-                    android:layout_height="3dp"
-                    android:background="@android:color/darker_gray" />
-                -->    
             </LinearLayout>
             <!-- END : Stats Area -->
 
@@ -521,101 +316,39 @@
 
                 <TableLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content" 
+                    android:layout_marginLeft="10dp">
 
                     <TableRow
                         android:layout_marginBottom="5dip">
-						<!-- 
-                        <TextView
-                            android:id="@+id/lblMaleFemaleRatio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Male/Female Ratio : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                        -->
                         
-                        <ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/gender_icon" />
-
-                        <TextView
-                            android:id="@+id/txtMaleFemaleRatio"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0.56"
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                        <include
+                            android:id="@+id/ceGender"
+                            layout="@layout/card_inner_single_entry" 
+                            android:layout_width="200dp"
+                            android:layout_height="wrap_content"/>
+                            
                     </TableRow>
 
                     <TableRow
                         android:layout_marginBottom="5dip">
+						
+                        <include
+                            android:id="@+id/ceCatchRate"
+                            layout="@layout/card_inner_single_entry" />
 
-                        <!-- 
-                        <TextView
-                            android:id="@+id/lblCatch"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Catch Rate : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-						 -->
-						<ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/icon_coll_pokeball" /> 
-						 
-                        <TextView
-                            android:id="@+id/txtCatchRate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
                     </TableRow>
 
-                    <!-- 
-                    <TableRow
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-
-                        <TextView
-                            android:id="@+id/lblEggCycles"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Egg Cycles : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                        <TextView
-                            android:id="@+id/txtEggCycles"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                    </TableRow>
-					-->
 					 
                     <TableRow
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dip" >
-						<!-- 
-                        <TextView
-                            android:id="@+id/lblEggGroups"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Egg Group : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-						 -->
-
-						<ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/icon_display_egg" /> 						                             
-
-                        <TextView
-                            android:id="@+id/txtEggGroups"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+						
+                        <include
+                            android:id="@+id/ceEggGroups"
+                            layout="@layout/card_inner_single_entry" />
+                        
                     </TableRow>
 
                     <TableRow
@@ -623,26 +356,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dip" >
 						
-                        <!-- 
-                        <TextView
-                            android:id="@+id/lblGrowthRate"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Growth Rate : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                         -->
-                         
-                        <ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/icon_display_growth" /> 	
+                        <include
+                            android:id="@+id/ceGrowthRate"
+                            layout="@layout/card_inner_single_entry" />
 
-                        <TextView
-                            android:id="@+id/txtGrowthRate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
                     </TableRow>
 
                     <TableRow
@@ -650,52 +367,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dip" >
 
-                        <!-- 
-                        <TextView
-                            android:id="@+id/lblEVYield"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="EV Yield : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-                         -->
-                         
-                        <ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/icon_display_ev_yield" />
-
-                        <TextView
-                            android:id="@+id/txtEVYield"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                        <include
+                            android:id="@+id/ceEVYield"
+                            layout="@layout/card_inner_single_entry" />
+                        
                     </TableRow>
 
                     <TableRow
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" >
-
-                        <!-- 
-                        <TextView
-                            android:id="@+id/lblHappiness"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Happiness : "
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
-						-->
-						
-						<ImageView
-                            android:layout_height="30dip"
-                            android:src="@drawable/icon_display_happiness" />
-						
-                        <TextView
-                            android:id="@+id/txtHappiness"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textAppearance="?android:attr/textAppearanceSmall" />
+                        
+                        <include
+                            android:id="@+id/ceHappiness"
+                            layout="@layout/card_inner_single_entry" />
+                        
                     </TableRow>
                 </TableLayout>
                 <!-- </LinearLayout> -->
