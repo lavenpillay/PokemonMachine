@@ -212,11 +212,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
 		
-		// Hide Keyboard
-		EditText myEditText = (EditText) view.findViewById(R.id.txtFilter);
-		myEditText.clearFocus();
-		//InputMethodManager imm = (InputMethodManager) ((PokemonMachineActivity)getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
-		//imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
+
 
 		return view;
 	 }
@@ -257,6 +253,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		updateTypeWeaknessDisplay(pokemon);
 		
+		TextView pokemonNameFilterTextView = (TextView) view.findViewById(R.id.txtFilter);
+		Util.hideSoftKeyboard(pokemonNameFilterTextView);
 	}
 
 	private void updateEvolutions(final Pokemon pokemon) {

@@ -18,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
@@ -113,12 +114,11 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
                             .setTabListener(this));
         }
         
-        
-        
-        
+
+
         // Set to default Tab
         mViewPager.setCurrentItem(1);
-        //executeSearch(1);
+
     }
     
     /**
