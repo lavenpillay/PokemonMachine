@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -46,6 +47,11 @@ import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.listener.OnPokemonListItemSelectedListener;
+import com.jjoe64.graphview.BarGraphView;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GraphView.GraphViewData;
+import com.jjoe64.graphview.GraphViewSeries;
+import com.jjoe64.graphview.GraphViewStyle.GridStyle;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 public class PokemonDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
@@ -205,6 +211,12 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
+		
+		// Hide Keyboard
+		EditText myEditText = (EditText) view.findViewById(R.id.txtFilter);
+		myEditText.clearFocus();
+		//InputMethodManager imm = (InputMethodManager) ((PokemonMachineActivity)getActivity()).getSystemService(Context.INPUT_METHOD_SERVICE);
+		//imm.hideSoftInputFromWindow(myEditText.getWindowToken(), 0);
 
 		return view;
 	 }
@@ -244,6 +256,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		updateEvolutions(pokemon);
 		
 		updateTypeWeaknessDisplay(pokemon);
+		
 	}
 
 	private void updateEvolutions(final Pokemon pokemon) {
@@ -307,22 +320,19 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 
 		 ArrayList<Type> pokemonTypes = pokemon.getTypes();
 		 
-		 Bitmap type1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(0).getName() + ".png");
+		 Bitmap type1 = assetHelper.getBitmapFromAsset("type_images_large/" + pokemonTypes.get(0).getName() + ".png");
 		 pokemonType1.setImageBitmap(type1);
 		 
 		 if (pokemonTypes.size() > 1) {
-			 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
+			 Bitmap type2 = assetHelper.getBitmapFromAsset("type_images_large/" + pokemonTypes.get(1).getName() + ".png");
 			 pokemonType2.setImageBitmap(type2);
 		 } else {
 			 // Remove 2nd Type icon
 			 pokemonType2.setImageResource(android.R.color.transparent);
 		 }
-
-		 TextView idTextView = (TextView)view.findViewById(R.id.txtID);
-	     idTextView.setText("#" + String.valueOf(pokemon.getId()) + " ");
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);
-	     nameTextView.setText(pokemon.getName());
+	     nameTextView.setText("#" + String.valueOf(pokemon.getId()) + " " + pokemon.getName());
 	     
 	     TextView speciesTextView = (TextView)view.findViewById(R.id.txtSpecies);
 	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");
@@ -349,6 +359,31 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     }
 	     weightTextView.setText(weight);
 	     
+			// TODO REMOVE
+			// init example series data
+			GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
+			    new GraphViewData(1, 200d)
+			    , new GraphViewData(2, 100d)
+			    , new GraphViewData(3, 34d)
+			    , new GraphViewData(4, 72d)
+			    , new GraphViewData(5, 72d)
+			    , new GraphViewData(6, 72d)
+			});
+			 
+			GraphView graphView = new BarGraphView (((PokemonMachineActivity) getActivity()), "Base Stats");
+			graphView.addSeries(exampleSeries); // data
+			graphView.setHorizontalLabels(new String[] {"HP", "ATK", "DEF", "SP.ATK", "SP.DEF", "SPD"});
+			//graphView.setVerticalLabels(new String[] {"255", "200", "150", "100", "50", "0"});
+			graphView.getGraphViewStyle().setNumVerticalLabels(6);
+			
+			graphView.getGraphViewStyle().setGridColor(Color.LTGRAY);
+			graphView.getGraphViewStyle().setGridStyle(GridStyle.HORIZONTAL);
+			graphView.getGraphViewStyle().setTextSize(10);
+			 
+			LinearLayout layout = (LinearLayout) view.findViewById(R.id.baseStatsGraphArea);
+			layout.addView(graphView);
+	     
+	     /*
 	     TextView hpTextView = (TextView)view.findViewById(R.id.txtHP);
 	     hpTextView.setText(String.valueOf(pokemon.getHp()));
 	     
@@ -384,7 +419,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     
 	     View speedBarView = (View)view.findViewById(R.id.barSPD);
 	     speedBarView.setLayoutParams(new LinearLayout.LayoutParams((int)(Integer.valueOf(pokemon.getSpeed()) * Constants.STAT_BAR_LENGTH_MULTIPLIER), Constants.STAT_BAR_HEIGHT));
-
+			*/
+	     
 	     // EV Yield 
 	     TextView evTextView = (TextView)view.findViewById(R.id.txtEVYield);
 	     evTextView.setText(String.valueOf(pokemon.getEvYield()));

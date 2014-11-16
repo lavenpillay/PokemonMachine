@@ -38,7 +38,8 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	    this.values = values;
 	    
 	    assetHelper = new AssetHelper(context);
-	    db = new DatabaseHelper(context);
+	    //db = new DatabaseHelper(context);
+	    db = PokemonMachineActivity.db;
 	    items = PokemonMachineActivity.cache.getItemList();
 	}
 

@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="400dip"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" 
-    android:gravity="center_horizontal">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout 
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Damage Taken"
-        android:textSize="16sp" />
+        android:orientation="horizontal">
+        
+	    <LinearLayout 
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:orientation="vertical"
+		     android:layout_marginLeft="5dp">
+		  	    
+			 <TextView
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:text="Damage Taken"
+			     android:textSize="8pt" 
+			     android:background="#33333311"
+			     android:padding="5dp"/>
+			 <View 
+			     android:background="@android:color/holo_blue_bright"
+			     android:layout_width="fill_parent"
+			     android:layout_height="6dp" />
+		</LinearLayout>
+		
+	    <TextView 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:textColor="#AAA"
+	        android:text="Damage multiplier when this Pokemon is hit by an attack of each type"
+	        android:textSize="6pt"
+	        android:layout_gravity="center"/>
+    </LinearLayout>
     
     <LinearLayout
 	    android:id="@+id/type_efficacy_holder"
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content">
+	    android:layout_height="wrap_content"
+	    android:layout_gravity="center_horizontal"
+	    android:layout_marginTop="10dp">
 	    
         <LinearLayout
 		    android:id="@+id/type_efficacy_col1"
@@ -87,71 +116,8 @@
 			        android:textSize="12sp"
 			        android:text="Damage"/>
 	        </LinearLayout>
-
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView4"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/electric" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageElectric"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-            
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView5"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/fairy" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageFairy"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-            
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView6"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:layout_below="@+id/imageView5"
-	                android:src="@drawable/fighting" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageFighting"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	       </LinearLayout>
 	    </LinearLayout>
+	    <!-- END COLUMN 1 -->
 	    
         <LinearLayout
 		    android:id="@+id/type_efficacy_col2"
@@ -224,69 +190,9 @@
 			        android:text="Damage"/>
 	        </LinearLayout>
             
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView10"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/grass" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageGrass"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
             
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView11"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/ground" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageGround"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-            
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView12"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/ice" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageIce"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
 	    </LinearLayout>
+	    <!-- END COLUMN 2 -->
 	    
         <LinearLayout
 		    android:id="@+id/type_efficacy_col3"
@@ -359,7 +265,165 @@
 			        android:text="Damage"/>
 	        </LinearLayout>
             
+            
+	    </LinearLayout>
+
+        <LinearLayout
+		    android:id="@+id/type_efficacy_col4"
+		    android:layout_width="0dip"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:padding="5dip"
+		    android:layout_weight="1">
+        <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/electric" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageElectric"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+            
             <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView5"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/fairy" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageFairy"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+            
+            <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView6"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_below="@+id/imageView5"
+	                android:src="@drawable/fighting" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageFighting"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	       </LinearLayout>    
+            
+        </LinearLayout>
+        
+        
+        <LinearLayout
+		    android:id="@+id/type_efficacy_col5"
+		    android:layout_width="0dip"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical"
+		    android:padding="5dip"
+		    android:layout_weight="1">
+            
+            <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView10"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/grass" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageGrass"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+            
+            <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView11"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ground" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageGround"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+            
+            <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView12"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/ice" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageIce"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+       </LinearLayout>
+       
+        
+       <LinearLayout
+		   android:id="@+id/type_efficacy_col6"
+		   android:layout_width="0dip"
+		   android:layout_height="wrap_content"
+		   android:orientation="vertical"
+		   android:padding="5dip"
+		   android:layout_weight="1">
+            
+           <LinearLayout
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:orientation="horizontal"
@@ -421,7 +485,7 @@
 			        android:textSize="12sp"
 			        android:text="Damage"/>
 	        </LinearLayout>
-	    </LinearLayout>
-
+      </LinearLayout>
+     
     </LinearLayout>
 </LinearLayout>

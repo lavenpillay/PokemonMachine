@@ -81,10 +81,11 @@
 	    android:layout_height="fill_parent">
 	
     <LinearLayout
-		android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:id="@+id/mainPokemonArea"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:background="@drawable/shadow_left"
-        android:orientation="vertical">
+        android:orientation="vertical" >
         
         <TextView
             android:layout_width="fill_parent"
@@ -103,14 +104,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" 
-            android:layout_marginLeft="10dp">
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left">
 
             <Button
                 android:id="@+id/btnSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onSearchClick"
-                android:text="Search" />
+                android:text="Search by National ID" />
 
             <EditText
                 android:id="@+id/txtSearch"
@@ -138,6 +140,9 @@
         </LinearLayout>
         <!-- END : Search Area -->
 
+		<include
+            layout="@layout/card_divider_grey" />
+
 
         <!-- START : Display Area -->
 
@@ -145,34 +150,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/txtID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" "
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="15pt" />
-
-            <TextView
-                android:id="@+id/txtName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pokemon Name "
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="15pt" />
-
-            <ImageView
-                android:id="@+id/imgType1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip" />
-
-            <ImageView
-                android:id="@+id/imgType2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dip" />
+				
+			<LinearLayout 
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:orientation="vertical">
+			  	    
+				 <TextView
+				     android:id="@+id/txtName"
+				     android:layout_width="wrap_content"
+				     android:layout_height="wrap_content"
+				     android:text="Pokemon Name "
+				     android:textSize="10pt" 
+				     android:layout_marginLeft="10dp"
+				     android:background="#33333311"
+				     android:padding="5dp"/>
+				 <View 
+				     android:background="@android:color/holo_blue_bright"
+				     android:layout_width="fill_parent"
+				     android:layout_height="6dp"
+				     android:layout_marginLeft="10dp" />
+			</LinearLayout>
+			
+			<LinearLayout 
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:orientation="vertical">
+				 
+	            <ImageView
+	                android:id="@+id/imgType1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dip" />
+	
+	            <ImageView
+	                android:id="@+id/imgType2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="5dip" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -279,11 +295,13 @@
             <!-- START : Stats Area -->
 
             <LinearLayout
-                android:layout_width="140dip"
-                android:layout_height="wrap_content"
+                android:id="@+id/baseStatsGraphArea"
+                android:layout_width="150dp"
+                android:layout_height="fill_parent"
                 android:orientation="vertical"
                 android:paddingTop="10dip" >
 
+                <!-- 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -480,12 +498,13 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textSize="6pt" />
                 </LinearLayout>
-
+				
                 <View
                     android:id="@+id/barSPD"
                     android:layout_width="128dip"
                     android:layout_height="3dp"
                     android:background="@android:color/darker_gray" />
+                -->    
             </LinearLayout>
             <!-- END : Stats Area -->
 
@@ -684,17 +703,34 @@
             </LinearLayout>
         </LinearLayout>
         <!-- END : Display Area -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
 
 
         <!-- START : Evolutions -->
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Evolution Chain"
-            android:textSize="16sp" />
-
+		
+		<LinearLayout 
+		     android:id="@+id/evolutionArea"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:orientation="vertical">
+		  	    
+			 <TextView
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:text="Evolution Chain"
+			     android:textSize="8pt" 
+			     android:layout_marginLeft="10dp"
+			     android:background="#33333311"
+			     android:padding="5dp"/>
+			 <View 
+			     android:background="@android:color/holo_blue_bright"
+			     android:layout_width="fill_parent"
+			     android:layout_height="6dp"
+			     android:layout_marginLeft="10dp" />
+		</LinearLayout>
+		
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -711,6 +747,9 @@
             </LinearLayout>
         </LinearLayout>
         <!-- END : Evolutions -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
 
 
         <!-- START : Weaknesses -->

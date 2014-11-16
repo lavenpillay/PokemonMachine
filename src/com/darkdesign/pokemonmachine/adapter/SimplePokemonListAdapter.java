@@ -40,7 +40,8 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 	    this.values = values;
 	    
 	    assetHelper = new AssetHelper(context);
-	    db = new DatabaseHelper(context);
+	    //db = new DatabaseHelper(context);
+	    db = PokemonMachineActivity.db;
 	}
 	
 	@Override
