@@ -254,31 +254,33 @@ public final class R {
         public static final int fragment_display_pokemon=0x7f030013;
         public static final int fragment_items=0x7f030014;
         public static final int fragment_move_list=0x7f030015;
-        public static final int fragment_planet=0x7f030016;
-        public static final int list_item_drawer=0x7f030017;
-        public static final int list_item_item=0x7f030018;
-        public static final int list_item_move=0x7f030019;
-        public static final int list_item_pokemon=0x7f03001a;
-        public static final int pokemon_detailed_view=0x7f03001b;
-        public static final int popup_layout=0x7f03001c;
-        public static final int simple_spinner_item=0x7f03001d;
-        public static final int type_weakness=0x7f03001e;
-        public static final int type_weakness_table_popup_layout=0x7f03001f;
+        public static final int fragment_moves=0x7f030016;
+        public static final int fragment_planet=0x7f030017;
+        public static final int list_item_drawer=0x7f030018;
+        public static final int list_item_item=0x7f030019;
+        public static final int list_item_move=0x7f03001a;
+        public static final int list_item_pokemon=0x7f03001b;
+        public static final int pokemon_detailed_view=0x7f03001c;
+        public static final int popup_layout=0x7f03001d;
+        public static final int simple_spinner_item=0x7f03001e;
+        public static final int type_weakness=0x7f03001f;
+        public static final int type_weakness_table_popup_layout=0x7f030020;
     }
     public static final class menu {
         public static final int main_activity_actions=0x7f090000;
     }
     public static final class string {
         public static final int action_settings=0x7f060002;
-        public static final int action_websearch=0x7f060008;
+        public static final int action_websearch=0x7f060009;
         public static final int app_name=0x7f060000;
-        public static final int app_not_available=0x7f060009;
-        public static final int drawer_close=0x7f060007;
-        public static final int drawer_open=0x7f060006;
+        public static final int app_not_available=0x7f06000a;
+        public static final int drawer_close=0x7f060008;
+        public static final int drawer_open=0x7f060007;
         public static final int testData=0x7f060001;
         public static final int title_section1=0x7f060003;
         public static final int title_section2=0x7f060004;
         public static final int title_section3=0x7f060005;
+        public static final int title_section4=0x7f060006;
     }
     public static final class style {
         /** 

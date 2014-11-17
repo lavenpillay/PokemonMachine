@@ -152,34 +152,35 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-	   view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
+		 Log.i(TAG, "onCreate()");
+		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
-	   this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
-	   
-	   applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
-	   
-	   filterText = (EditText) view.findViewById(R.id.txtFilter);
-	   filterText.addTextChangedListener(filterTextWatcher);
-	   
-	   // Handle Pokemon List
-	   String[] names = getResources().getStringArray(R.array.pokemon_names);
-	   pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
-		
-	   ListView listView = (ListView) view.findViewById(R.id.plist);
-	   listView.setAdapter(pokemonListAdapter);
-	   listView.invalidate();
-	   
-	   listView.setOnItemClickListener(new OnItemClickListener() {
-	        public void onItemClick(AdapterView<?> parent, View view,
-	                int position, long id) {
+		 this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
+   
+		 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+   
+		 filterText = (EditText) view.findViewById(R.id.txtFilter);
+		 filterText.addTextChangedListener(filterTextWatcher);
+   
+		 // Handle Pokemon List
+		 String[] names = getResources().getStringArray(R.array.pokemon_names);
+		 pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+	
+		 ListView listView = (ListView) view.findViewById(R.id.plist);
+		 listView.setAdapter(pokemonListAdapter);
+		 listView.invalidate();
+   
+		 listView.setOnItemClickListener(new OnItemClickListener() {
+			 public void onItemClick(AdapterView<?> parent, View view,
+					 int position, long id) {
 
-	          Log.i(TAG, "Item Clicked");        
-	          
-	          String name = pokemonListAdapter.getItem(position);
-	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-	          update(PokemonMachineActivity.cache.getPokemon(pokemonId));
-	       }
-	    });
+				 Log.i(TAG, "Item Clicked");        
+      
+				 String name = pokemonListAdapter.getItem(position);
+				 int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+				 update(PokemonMachineActivity.cache.getPokemon(pokemonId));
+			 }
+		 });
 	   
 	   // Clear button listener for POKEMON field
 	   ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentDisplayPokemon"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/container_dropshadow"
+    android:orientation="horizontal" >
+
+    
+
+
+	
+    <!-- MOVES -->
+
+<LinearLayout 
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:background="@drawable/shadow_left">
+        
+    <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:gravity="center_vertical"
+		android:paddingLeft="10dp"
+		android:text="Move List"
+		android:textSize="10pt"
+		android:textStyle="bold"
+		android:textColor="@android:color/white"
+		android:background="@android:color/holo_blue_light" />
+    
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="horizontal">
+
+		<Button
+		    android:id="@+id/btnMovesByLevel"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByLevelClick"
+		    android:text="Level" />
+
+		<Button
+		    android:id="@+id/btnMovesByMachine"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByMachineClick"
+		    android:text="TM" />
+
+		<Button
+		    android:id="@+id/btnMovesByEgg"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByEggClick"
+		    android:text="Egg Moves" />
+		
+		<Button
+		    android:id="@+id/btnMovesByTutor"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:onClick="onMoveByTutorClick"
+		    android:text="Tutor" />		
+	    
+	</LinearLayout>
+	    
+	<ListView 
+	  	android:id="@+id/mlist"
+	  	android:layout_width="match_parent"
+	  	android:layout_height="wrap_content">
+	</ListView>
+</LinearLayout>
+<!-- END Moves -->
+
+<!-- INFORMATION AREA -->
+<LinearLayout 
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:background="@drawable/shadow_left">
+	
+    <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:gravity="center_vertical"
+		android:paddingLeft="10dp"
+		android:text="Move Information"
+		android:textSize="10pt"
+		android:textStyle="bold"
+		android:textColor="@android:color/white"
+		android:background="@android:color/holo_green_light" />
+    
+</LinearLayout>
+<!-- END Information Area -->
+
+<!-- POKEMON AREA -->
+<LinearLayout 
+    android:layout_width="0dip"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:background="@drawable/shadow_left">
+	
+    <TextView
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:gravity="center_vertical"
+		android:paddingLeft="10dp"
+		android:text="Pokemon"
+		android:textSize="10pt"
+		android:textStyle="bold"
+		android:textColor="@android:color/white"
+		android:background="@android:color/holo_orange_light" />
+    
+</LinearLayout>
+<!-- END Pokemon Area -->
+
+</LinearLayout>

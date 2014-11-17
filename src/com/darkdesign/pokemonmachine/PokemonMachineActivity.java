@@ -22,6 +22,7 @@ import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
+import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 
 
@@ -54,6 +55,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     private PokemonDisplayFragment pokemonDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
     public static ItemDisplayFragment itemDisplayFragment = null;
+    private MoveDisplayFragment moveDisplayFragment = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,14 +230,18 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         		
         		returnFragment = pokemonDisplayFragment;
         	} else if (position == 2) {
+        		if (moveDisplayFragment == null) {
+        			moveDisplayFragment = new MoveDisplayFragment();
+        		}
+        		
+        		returnFragment = moveDisplayFragment;
+        		
+        	} else if (position == 3) {
         		if (collectionDisplayFragment == null) {
         			collectionDisplayFragment = new CollectionDisplayFragment();
         		}
         		
         		returnFragment = collectionDisplayFragment;
-        	} else if (position == 3) {
-        		
-
         	}
         	
         	return returnFragment;
@@ -243,8 +249,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -257,6 +262,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return getString(R.string.title_section4).toUpperCase(l);    
             }
             return null;
         }
