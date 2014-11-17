@@ -1,12 +1,9 @@
 package com.darkdesign.pokemonmachine.adapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +11,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Parser;
-import com.darkdesign.pokemonmachine.helper.Util;
 
 public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 	private final String TAG = SimpleMoveListAdapter.class.getName();

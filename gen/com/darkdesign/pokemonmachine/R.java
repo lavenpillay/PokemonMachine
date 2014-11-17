@@ -9,6 +9,8 @@ package com.darkdesign.pokemonmachine;
 
 public final class R {
     public static final class array {
+        /**  <item>Diancie</item> 
+         */
         public static final int pokemon_names=0x7f070001;
         public static final int type_names=0x7f070000;
     }

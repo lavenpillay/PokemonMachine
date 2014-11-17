@@ -1,6 +1,5 @@
 package com.darkdesign.pokemonmachine;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import android.app.ActionBar;
@@ -14,26 +13,16 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
-import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
-import com.darkdesign.pokemonmachine.fragment.BerryDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
-import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.Constants;
-import com.darkdesign.pokemonmachine.helper.Util;
 
 
 public class PokemonMachineActivity extends Activity implements ActionBar.TabListener {
@@ -60,11 +49,9 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     public static DatabaseHelper db;
     public static Cache cache;
     
-    private AssetHelper assetHelper = new AssetHelper(this);
     public Pokemon currentSelectedPokemon;
     
     private PokemonDisplayFragment pokemonDisplayFragment = null;
-    private BerryDisplayFragment berryDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
     public static ItemDisplayFragment itemDisplayFragment = null;
     
@@ -157,22 +144,6 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 		
 	}
     
-	/**
-	 * 
-	 * @param moveLearnType
-	 */
-	private void updateMoveList(String moveLearnType) {
-		ArrayList<Move> moveSubset = currentSelectedPokemon.getMovesByType(moveLearnType);
-		
-		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
-			moveSubset = Util.sortMovesByLevel(moveSubset);
-		}
-		
-		PokemonDisplayFragment.movesData.clear();
-		PokemonDisplayFragment.movesData.addAll(moveSubset);
-		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
-	}
-	
     // -------------------------------------------------------------------------------------------------
 
 	/**
@@ -263,11 +234,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         		
         		returnFragment = collectionDisplayFragment;
         	} else if (position == 3) {
-        		if (berryDisplayFragment == null) {
-        			berryDisplayFragment = new BerryDisplayFragment();
-                }
         		
-        		returnFragment = berryDisplayFragment;
 
         	}
         	
