@@ -26,7 +26,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -43,7 +42,6 @@ import com.darkdesign.pokemonmachine.adapter.EggGroupSpinnerAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
-import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -127,8 +125,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	        // If we are becoming invisible, then...
 	    	Log.d(TAG, "PokemonDisplayFargment is Visible");
 	        if (!isVisibleToUser) {
-	            Log.d(TAG, "Not visible anymore.  Stopping audio.");
-	            // TODO stop audio playback
+	            Log.d(TAG, "Not visible anymore.");
 	        }
 	    }
 	}
@@ -147,7 +144,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	
 	@Override
 	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
 		super.onAttach(activity);
 		
 		
@@ -330,14 +326,17 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		// Update Evolutions
 		ArrayList<Evolution> evolutions = new ArrayList<Evolution>();
 		
+		/*
 		// Update Cache if required
 		if (pokemon.getEvolutions().size() == 0) {
 			evolutions = PokemonMachineActivity.db.getEvolutions(pokemon.getId());
 			pokemon.setEvolutions(evolutions);
+			// TODO Add pokemon.getMEgaevolution from db here
 			// Update Cache
 			Log.d(TAG, "[EVOLUTIONS_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
+		*/
 
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		LinearLayout holder = (LinearLayout) view.findViewById(R.id.evolutionsHolder);
@@ -374,7 +373,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				Log.v("ART", "Clicked Pokemon Image !");
 				PopupManager.showPokemondetailPopup((Activity) v.getContext(), pokemon.getId());
 			}
@@ -471,9 +469,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     txtCatchRateHeading.setLayoutParams(labelParams);
 	     txtCatchRateHeading.setText("Catch Rate");
 	     TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
-	     txtCatchRateContent.setText(String.valueOf(pokemon.getCatchRate()));
+	     txtCatchRateContent.setText(String.valueOf(getCatchRate(pokemon.getCatchRate())));
 	     
-	     LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
+	     //LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
 	     //TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
 	     //txtEggGroupHeading.setLayoutParams(labelParams);
 	     //txtEggGroupHeading.setText("Egg Groups");
@@ -509,9 +507,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     txtHappinessHeading.setText("Happiness");
 	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
 	     txtHappinessContent.setText(pokemon.getHappiness());
-	     
-
-	}
+	 }
 	 
 	 private String getGenderRatio(String genderRatio) {
 		 String returnString = "";
@@ -536,9 +532,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 }
 	 
 	 private String getCatchRate(String catchRate) {
-		 int rate = (Integer.parseInt(catchRate) / 255) * 100;
+		 double rate = (Double.valueOf(catchRate) / 255) * 100;
 		 
-		 return String.valueOf(rate) + "%";
+		 return String.format("%.0f", rate) + "%";
 	 }
 	 
 	@Override
@@ -652,18 +648,18 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			Evolution evolution = evolutions.get(0);
 			
 			// State 1
-			LinearLayout evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+			LinearLayout evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater, false);
 			holder.addView(evolutionStateView);
 			
 			if (evolutions.size() > 1) {
 				evolution = evolutions.get(1);
 				
 				// Add Method
-				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution, false);
 				holder.addView(evolutionMethodView, layoutParams);
 				
 				// State 2
-				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater, false);
 				holder.addView(evolutionStateView);
 			}
 			
@@ -671,13 +667,26 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				evolution = evolutions.get(2);
 				
 				// Add Method
-				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution);
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution, false);
 				holder.addView(evolutionMethodView, layoutParams);
 				
 				// State 3
-				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater);
+				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater, false);
 				holder.addView(evolutionStateView);
-			}			
+			}
+			
+			if (pokemon.getMegaEvolution() != null) {
+				evolution = pokemon.getMegaEvolution();
+				
+				// Add Method
+				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution, true);
+				holder.addView(evolutionMethodView, layoutParams);
+				
+				// State Mega
+				evolutionStateView = buildEvolutionStateView(evolution.getPreviousEvolutionId(), assetHelper, inflater, true);
+				holder.addView(evolutionStateView);
+			}
+			
 		} catch (IOException ioe) {
 			Log.e(TAG, ioe.toString());
 		}
@@ -691,15 +700,25 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 * @return
 	 * @throws IOException
 	 */
-	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater)
+	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater, boolean isMegaEvolution)
 			throws IOException 
 	{
 		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
-		Bitmap bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
+		Bitmap bm;
+		
 		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
 		
+		String pokemonEvolutionName = "";
 		TextView txtName = (TextView) evolutionStateView.findViewById(R.id.txtPokemonEvolutionName);
-		txtName.setText(PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id)).getName());
+		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id));
+		if (isMegaEvolution)  {
+			bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + pokemon.getMegaEvolution().getPokemonId() + ".png");
+			pokemonEvolutionName = pokemon.getMegaEvolution().getIdentifier();
+		} else {
+			bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
+			pokemonEvolutionName = pokemon.getName();
+		}
+		txtName.setText(pokemonEvolutionName);
 		
 		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
 		evolutionImage.setImageBitmap(bm);
@@ -723,7 +742,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 * @param evolution
 	 * @return
 	 */
-	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, Evolution evolution) 
+	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, Evolution evolution, final boolean isMegaEvolution) 
 			throws IOException	{
 		
 		LinearLayout evolutionMethodView = null;
@@ -811,8 +830,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				    	 
 				       //Open popup window
 				       if (p != null) {
-				    	   String heading = "Trade with Held Item";
-				    	   String content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
+				    	   String heading;
+				    	   String content;
+				    	   heading = "Trade with Held Item";
+					       content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
+				    	   
 				    	   PopupManager.showPopup(getActivity(), p, heading, content);
 				       }
 				     }
@@ -840,7 +862,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				     }
 				   });				
 			}
-		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_USE_ITEM)) {
+		} else if (evolution.getMethod().equalsIgnoreCase(Constants.EVOLUTION_METHOD_USE_ITEM)  || isMegaEvolution) {
 			// EVOLVE WHEN AN ITEM IS USED ON IT
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
@@ -863,8 +885,16 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		    	 
 		       //Open popup window
 		       if (p != null) {
-		    	   String heading = "Use Item";
-		    	   String content = "This Pokemon will evolve when a " + itemName + " is used on it.";
+		    	   String heading;
+		    	   String content;
+		    	   if (isMegaEvolution) {
+			    	   heading = "MegaEvolution Stone";
+			    	   content = "This Pokemon can Mega Evolve in battle if holding " + Util.toTitleCase(itemName);
+		    	   } else {
+		    		   heading = "Use Item";
+			    	   content = "This Pokemon will evolve when a " + itemName + " is used on it.";
+		    	   }
+		    	   
 		    	   PopupManager.showPopup(getActivity(), p, heading, content);
 		       }
 		     }

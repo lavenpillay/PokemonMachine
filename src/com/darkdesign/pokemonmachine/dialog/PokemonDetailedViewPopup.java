@@ -19,7 +19,7 @@ public class PokemonDetailedViewPopup extends PopupWindow {
 	private AssetHelper assetHelper;
 
 	public PokemonDetailedViewPopup() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public PokemonDetailedViewPopup(Context context, View layout, int pokemonId) {

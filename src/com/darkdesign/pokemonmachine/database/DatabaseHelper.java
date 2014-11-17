@@ -71,7 +71,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	
         	berry.setBerryId(berryId);
         	berry.setBerryItemId(berryItemId);
-        	berry.setBerryName(getItemById(berryItemId).getName());
+        	//TODO Fix berries ?
+        	berry.setBerryName("");
         	
         	berryList.add(berry);
         }
@@ -322,7 +323,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         // Get Pokemon Types
         String queryPokemonTypes = 
         		"SELECT identifier, type_id FROM pokemon_types INNER JOIN types ON id = type_id WHERE pokemon_id = " + pokemon.getId();
-        Log.v(TAG, queryPokemonTypes);
         
         Cursor cursorTypes = db.rawQuery(queryPokemonTypes, null);
         while(cursorTypes.moveToNext()) {
@@ -336,7 +336,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         // Get Egg Groups
         String queryEggGroups = 
         		"SELECT species_id, egg_group_id, identifier, name FROM pokemon_egg_groups g JOIN egg_group_prose p USING (egg_group_id) JOIN egg_groups e ON e.id = p.egg_group_id WHERE p.local_language_id = 9 AND species_id = " + pokemon.getId();
-        Log.v(TAG, queryEggGroups);
         
         Cursor cursorGroups = db.rawQuery(queryEggGroups, null);
         while(cursorGroups.moveToNext()) {
@@ -347,10 +346,39 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         pokemon.setEggGroups(eggGroupList);
         cursorGroups.close();
         
+        // Get regular evolutions
+        pokemon.setEvolutions(getEvolutions(pokemon.getId()));
+        
+        // Get Mega Evolution
+     // Get Mega-Evolutions
+        String queryMegaEvolution =
+        		"SELECT id, identifier, species_id, megastone_item_id FROM pokemon p JOIN pokemon_megaevolution m ON p.id = m.pokemon_id WHERE p.species_id = " + pokemon.getId() + " AND p.id != p.species_id";
+        
+        Cursor cursorMegaEvo = db.rawQuery(queryMegaEvolution, null);
+        if (cursorMegaEvo.moveToFirst()) {
+        	Evolution megaEvolution = new Evolution();
+        	megaEvolution.setPokemonId(cursorMegaEvo.getString(0));
+        	megaEvolution.setIdentifier(cursorMegaEvo.getString(1));
+        	megaEvolution.setPreviousEvolutionId(cursorMegaEvo.getString(2));
+        	megaEvolution.setTriggerItemId(cursorMegaEvo.getString(3));
+        	megaEvolution.setMethod(Constants.EVOLUTION_METHOD_MEGAEVOLUTION);
+        	pokemon.setMegaEvolution(megaEvolution);
+        	
+        	// TODO Extract and lazy-load
+        	// Add to other states
+        	if (pokemon.getEvolutions().size() > 0) {
+        		
+        	}
+        } else {
+        	// No mega evolution
+        }
+        cursorMegaEvo.close();
+        
         c.close();
         
     	return pokemon;
     }
+
 
     /**
      * 
@@ -431,33 +459,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         
         return namesArray;
-    }
-    
-    /**
-     * Return an item from the database
-     * 
-     * @param itemId
-     * @return
-     */
-    
-    // TODO this should be removed
-    public Item getItemById(String itemId) {
-    	Item item;
-    	
-    	//SQLiteDatabase db = getReadableDatabase();
-
-        String queryItem = "SELECT id, identifier FROM " + TABLE_ITEMS + " WHERE id = " + itemId;
-        Log.v(TAG, queryItem);
-        
-        Cursor cursor = db.rawQuery(queryItem, null);
-        cursor.moveToFirst();
-        
-        // TODO fix description field
-        item = new Item();
-        
-        cursor.close();
-        
-        return item;
     }
     
     /**

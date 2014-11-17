@@ -19,7 +19,7 @@ import com.darkdesign.pokemonmachine.layout.FlowLayout;
 public class PopupManager {
 
 	public PopupManager() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	// The method that displays the popup.

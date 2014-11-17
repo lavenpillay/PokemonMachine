@@ -12,17 +12,16 @@ public class VideoGameList extends ArrayList<VideoGame> {
 
 	public VideoGameList() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public VideoGameList(Collection<? extends VideoGame> collection) {
 		super(collection);
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public VideoGameList(int capacity) {
 		super(capacity);
-		// TODO Auto-generated constructor stub
 	}
 
 	

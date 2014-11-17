@@ -6,7 +6,6 @@ public class Ability {
 	private String resourceURI;
 
 	public Ability() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getName() {

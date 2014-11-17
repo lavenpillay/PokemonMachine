@@ -31,6 +31,7 @@ public class Pokemon {
 	private ArrayList<Ability> abilities;
 	private ArrayList<Move> moves;
 	private ArrayList<Evolution> evolutions;
+	private Evolution megaEvolution;
 	
 	private String catchRate;
 	private String eggCycles;
@@ -65,10 +66,11 @@ public class Pokemon {
 		this.total = 0;
 		this.height = "";
 		this.weight = "";
-		this.types = new ArrayList<Type>(); // TODO Implement getting Pokemon Type(s) 
+		this.types = new ArrayList<Type>(); 
 		this.abilities = new ArrayList<Ability>();
 		this.moves = new ArrayList<Move>();
 		this.evolutions = new ArrayList<Evolution>();
+		this.megaEvolution = null;
 		this.catchRate = "";
 		this.eggCycles = "";
 		this.hatchCounter = "";
@@ -254,6 +256,14 @@ public class Pokemon {
 
 	public void setEvolutions(ArrayList<Evolution> evolutions) {
 		this.evolutions = evolutions;
+	}
+
+	public Evolution getMegaEvolution() {
+		return megaEvolution;
+	}
+
+	public void setMegaEvolution(Evolution megaEvolution) {
+		this.megaEvolution = megaEvolution;
 	}
 
 	public ArrayList<Move> getMoves() {

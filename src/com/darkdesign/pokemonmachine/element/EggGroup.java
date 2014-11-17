@@ -8,7 +8,7 @@ public class EggGroup {
 
 
 	public EggGroup() {
-		// TODO Auto-generated constructor stub
+
 	}
 	
 	

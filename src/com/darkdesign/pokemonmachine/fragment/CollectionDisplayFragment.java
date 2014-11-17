@@ -96,7 +96,6 @@ public class CollectionDisplayFragment extends Fragment implements OnPokemonList
 
 		    @Override
 		    public boolean onTouch(View view, MotionEvent event) {
-		        // TODO Auto-generated method stub
 
 		        int scrollX = view.getScrollX();
 		        int scrollY = view.getScrollY();
@@ -211,7 +210,6 @@ public class CollectionDisplayFragment extends Fragment implements OnPokemonList
 
 	@Override
 	public void onPokemonListItemSelected(String id) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "[COLLECTION] Selected Pokemon with ID = " + id);
 	}
 }

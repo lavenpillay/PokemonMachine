@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
-	public static final int TOTAL_POKEMON_COUNT = 718;
+	public static final int TOTAL_POKEMON_COUNT = 719;
 	public static final int POKEMON_ID_LENGTH = 3;
 	
 	public static final String PATH_TO_POKEMON_SPRITES = "pokemon_sprites/";
@@ -21,6 +21,7 @@ public class Constants {
 	public static final String EVOLUTION_METHOD_TRADE = "2";
 	public static final String EVOLUTION_METHOD_USE_ITEM = "3";
 	public static final String EVOLUTION_METHOD_SHED = "4";
+	public static final String EVOLUTION_METHOD_MEGAEVOLUTION = "100";
 	
 	public static final String VERSION_GROUP_XY = "15";
 	public static final String VERSION_GROUP_BLACKWHITE_2 = "14";

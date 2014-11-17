@@ -43,7 +43,6 @@ public class TypeMatchupPopup extends PopupWindow {
 	int popupHeightOffset = 20;
 	
 	public TypeMatchupPopup() {
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

@@ -6,7 +6,7 @@ public class Type {
 	private String resourceURI;
 
 	public Type() {
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public Type(String name, String id) {

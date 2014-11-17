@@ -4,6 +4,7 @@ public class Evolution {
 	private String level;
 	private String method;
 	private String resourceURI;
+	private String identifier;
 	private String pokemonId;
 	private String previousEvolutionId;
 	private String triggerItemId;
@@ -11,7 +12,6 @@ public class Evolution {
 	private String minimumHappiness;
 
 	public Evolution() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public Evolution(String pokemonId, String previousEvolutionId, String method) {
@@ -51,6 +51,14 @@ public class Evolution {
 	public void setPreviousEvolutionId(String previousEvolutionId) {
 		this.previousEvolutionId = previousEvolutionId;
 	}
+	
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
 
 	public String getPokemonId() {
 		return pokemonId;
@@ -82,5 +90,6 @@ public class Evolution {
 
 	public void setHeldItemId(String heldItemId) {
 		this.heldItemId = heldItemId;
-	}	
+	}
+	
 }
