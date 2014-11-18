@@ -13,14 +13,9 @@
           android:title="Type Matchups"
           android:showAsAction="ifRoom" />
     
-    <!-- Game Filters, should appear as action button -->
-    <item android:id="@+id/action_filter_games"
-          android:icon="@drawable/filter"
-          android:title="Filter"
-          android:showAsAction="ifRoom" />
-    
     <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/action_settings"
+          android:icon="@drawable/ic_menu_preferences"
           android:title="@string/action_settings"
-          android:showAsAction="never" />
+          android:showAsAction="ifRoom" />
 </menu>

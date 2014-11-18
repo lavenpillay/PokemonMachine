@@ -1,7 +1,11 @@
 package com.darkdesign.pokemonmachine.preferences;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.darkdesign.pokemonmachine.R;
 
@@ -15,12 +19,12 @@ public class SettingsFragment extends PreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
     }
     
-/*
-    // Display the fragment as the main content.
-    FragmentManager mFragmentManager = getFragmentManager();
-    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-    PrefsFragment mPrefsFragment = new PrefsFragment();
-    mFragmentTransaction.replace(android.R.id.content, mPrefsFragment);
-    mFragmentTransaction.commit();
-*/    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+        view.setBackgroundColor(Color.LTGRAY);
+
+        return view;
+    }
+        
 }

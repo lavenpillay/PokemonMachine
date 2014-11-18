@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentManager.OnBackStackChangedListener;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -24,9 +25,10 @@ import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
+import com.darkdesign.pokemonmachine.preferences.SettingsFragment;
 
 
-public class PokemonMachineActivity extends Activity implements ActionBar.TabListener {
+public class PokemonMachineActivity extends Activity implements ActionBar.TabListener, OnBackStackChangedListener {
 	
 	private static String TAG = PokemonMachineActivity.class.getName();
 	
@@ -56,6 +58,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     private CollectionDisplayFragment collectionDisplayFragment = null;
     public static ItemDisplayFragment itemDisplayFragment = null;
     private MoveDisplayFragment moveDisplayFragment = null;
+    private SettingsFragment settingsFragment = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,9 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
                 actionBar.setSelectedNavigationItem(position);
             }
         });
+        
+        FragmentManager fragmentManager = getFragmentManager();     
+        fragmentManager.addOnBackStackChangedListener(this);      
 
         // For each of the sections in the app, add a tab to the action bar.
         for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -172,10 +178,24 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+        	showSettings();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
+    
+	public void showSettings() {
+		if (settingsFragment == null) {
+			settingsFragment = new SettingsFragment();
+		}
+		
+	    // Display the fragment as the main content.
+	    FragmentManager mFragmentManager = getFragmentManager();
+	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+	    mFragmentTransaction.replace(R.id.layerSettings, settingsFragment);
+	    mFragmentTransaction.addToBackStack(null);
+	    mFragmentTransaction.commit();
+	}
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -242,7 +262,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         		}
         		
         		returnFragment = collectionDisplayFragment;
-        	}
+        	} 
         	
         	return returnFragment;
         }
@@ -287,6 +307,12 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 
 	public void setViewPager(ViewPager mViewPager) {
 		this.mViewPager = mViewPager;
+	}
+
+	@Override
+	public void onBackStackChanged() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

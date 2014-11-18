@@ -404,25 +404,33 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");
 
 	     TextView heightTextView = (TextView)view.findViewById(R.id.txtHeight);
+	     TextView heightUnitTextView = (TextView)view.findViewById(R.id.lblHeightUnit);
+	     TextView weightTextView = (TextView)view.findViewById(R.id.txtWeight);
+	     TextView weightUnitTextView = (TextView)view.findViewById(R.id.lblWeightUnit);
+	     
 	     // Convert to meters
 	     String height = String.valueOf(Double.parseDouble(pokemon.getHeight()) / 10);
 	     
 	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
 	    	 height = Util.convertMetersToImperial(Double.parseDouble(height));
-	    	 TextView heightUnitTextView = (TextView)view.findViewById(R.id.lblHeightUnit);
 	    	 heightUnitTextView.setText("");
+	     } else {
+	    	 heightUnitTextView.setText(" m");
 	     }
 	     heightTextView.setText(height);
 	     
-	     TextView weightTextView = (TextView)view.findViewById(R.id.txtWeight);
+
 	     // Convert to kg
 	     String weight = String.valueOf(Double.parseDouble(pokemon.getWeight()) / 10);
 	     
+
 	     if (applicationSettings.getBoolean("pref_use_imperial", false)) {
 	    	 weight = Util.convertKilogramsToImperial(Double.parseDouble(pokemon.getWeight()));
-	    	 TextView weightUnitTextView = (TextView)view.findViewById(R.id.lblWeightUnit);
 	    	 weightUnitTextView.setText(" lb");
+	     } else {
+	    	 weightUnitTextView.setText(" kg");
 	     }
+	     
 	     weightTextView.setText(weight);
 	     
 		// Add Base Stats Graph

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+  
 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pager"
@@ -7,3 +11,14 @@
     android:layout_height="match_parent"
     android:windowSoftInputMode="stateHidden"
     tools:context="com.darkdesign.pokemonmachine.PokemonMachineActivity" />
+
+<LinearLayout 
+    android:id="@+id/layerSettings"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+
+    
+</LinearLayout>
+</FrameLayout>
