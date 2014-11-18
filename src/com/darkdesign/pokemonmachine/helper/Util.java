@@ -156,9 +156,9 @@ public class Util {
 		Collections.sort(list, new Comparator<Move>() {
 		    @Override
 		    public int compare(Move move1, Move move2) {
-		        if (Integer.valueOf(move1.getLevel()) > Integer.valueOf(move2.getLevel()))
+		        if (move1.getLevel() > move2.getLevel())
 		            return 1;
-		        if (Integer.valueOf(move1.getLevel()) < Integer.valueOf(move2.getLevel()))
+		        if (move1.getLevel() < move2.getLevel())
 		            return -1;
 		        return 0;
 		    }

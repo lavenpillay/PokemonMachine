@@ -15,4 +15,11 @@
 	   android:gravity="center_horizontal"
 	   android:textAppearance="?android:attr/textAppearanceLarge" 
 	   android:layout_marginBottom="10dip"/>
+
+	<ImageView
+	    android:id="@+id/imgPokemonArtBig"
+	    android:layout_width="400dp"
+	    android:layout_height="400dp"
+	    android:src="@drawable/pokeball" />
+	
 </LinearLayout>

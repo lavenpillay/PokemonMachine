@@ -1,8 +1,10 @@
 package com.darkdesign.pokemonmachine.dialog;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -36,9 +38,12 @@ public class PokemonDetailedViewPopup extends PopupWindow {
 		LinearLayout mainLayout = (LinearLayout) layout.findViewById(R.id.pokemonDetailedView);
 		
 		// Add Image
-		ImageView pokemonArt = assetHelper.getImageViewFromAsset("pokemon_images/" + Util.padLeft(String.valueOf(pokemonId), 3) + ".png");
+		//ImageView pokemonArt = assetHelper.getImageViewFromAsset("pokemon_images/" + Util.padLeft(String.valueOf(pokemonId), 3) + ".png");
+		ImageView pokemonArt = (ImageView) layout.findViewById(R.id.imgPokemonArtBig);
+		Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_images/" + Util.padLeft(String.valueOf(pokemonId), 3) + ".png");
+		pokemonArt.setImageBitmap(bmp);
 		
-		mainLayout.addView(pokemonArt);
+		//mainLayout.addView(pokemonArt);
 		
 	}
 

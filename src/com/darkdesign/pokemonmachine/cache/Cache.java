@@ -5,9 +5,11 @@ import java.util.HashMap;
 
 import android.app.Activity;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.Item;
+import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
@@ -19,6 +21,7 @@ public class Cache {
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
 	private static ArrayList<Type> TYPE_LIST_CACHE;
+	private static ArrayList<Move> MOVE_LIST_CACHE;
 	private static int[][] TYPE_EFFICACY_MATRIX;
 	
 	private static HashMap<String,Integer> TYPE_ID_BY_NAME;
@@ -32,10 +35,13 @@ public class Cache {
 	}
 
 	public Cache(Activity mainActivity) {
-		db = new DatabaseHelper(mainActivity);
+		db = PokemonMachineActivity.db;
 		
 		// Pokemon
 		POKEMON_CACHE = new HashMap<Integer, Pokemon>();
+		
+		// Moves
+		MOVE_LIST_CACHE = db.getAllMoves();
 		
 		// Types
 		TYPE_LIST_CACHE = db.getTypes();
@@ -71,7 +77,7 @@ public class Cache {
 	}
 	
 	public Pokemon getPokemon(int id) {
-		Pokemon pokemon = POKEMON_CACHE.get(String.valueOf(id));
+		Pokemon pokemon = POKEMON_CACHE.get(id);
 		
 		if (pokemon == null) {
 			pokemon = db.getPokemon(String.valueOf(id));
@@ -79,6 +85,23 @@ public class Cache {
 		}
 		
 		return pokemon;
+	}
+	
+	public ArrayList<Move> getAllMoves() {
+		return MOVE_LIST_CACHE;
+	}
+	
+	public String[] getAllMoveNames() {
+		ArrayList<String> namesList = new ArrayList<String>();
+		String[] namesArray = new String[MOVE_LIST_CACHE.size()];
+		
+		for (Move move : MOVE_LIST_CACHE) {
+			namesList.add(move.getName());
+		}
+		
+		namesArray = namesList.toArray(namesArray);
+		
+		return namesArray;
 	}
 	
 	public ArrayList<VideoGame> getGameList() {
@@ -111,6 +134,14 @@ public class Cache {
 	
 	public Item getItemById(int id) {
 		return ITEM_CACHE.get(id);
+	}
+
+	public static ArrayList<Move> getMOVE_LIST_CACHE() {
+		return MOVE_LIST_CACHE;
+	}
+
+	public static void setMOVE_LIST_CACHE(ArrayList<Move> mOVE_LIST_CACHE) {
+		MOVE_LIST_CACHE = mOVE_LIST_CACHE;
 	}
 	
 

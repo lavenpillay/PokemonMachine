@@ -53,7 +53,7 @@ public class ItemDisplayFragment extends Fragment {
 	    }
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-	    	Log.d(TAG, "[ItemDisplayFragment] Filter Text Changed" + s);
+	    	Log.d(TAG, "Filter Text Changed: " + s);
 	    	
 	    	if (s.length() > 0) {
 	    		itemsListAdapter.getFilter().filter(s);

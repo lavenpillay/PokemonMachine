@@ -81,12 +81,76 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	
     	return berryList;
     }
+    
+    public ArrayList<Move> getAllMoves() {
+    	ArrayList<Move> moveList = new ArrayList<Move>(); 
+    	
+    	String queryMoves = "SELECT id, identifier, type_id, power, pp, accuracy, priority, target_id, damage_class_id, effect_id, effect_chance FROM moves ";
+        Cursor cursorMoves = db.rawQuery(queryMoves, null);
+    	
+        while (cursorMoves.moveToNext()) {
+        	Move move = new Move();
+        	
+        	move.setId(cursorMoves.getInt(0));
+        	move.setName(cursorMoves.getString(1));
+        	move.setPower(cursorMoves.getInt(3));
+        	move.setPP(cursorMoves.getInt(4));
+        	move.setAccuracy(cursorMoves.getInt(5));
+        	move.setPriority(cursorMoves.getInt(6));
+        	move.setEffectChance(cursorMoves.getString(10) == null ? "" : cursorMoves.getString(10));
+        	
+        	int mId = move.getId();
+        	
+        	int typeId = cursorMoves.getInt(2);
+        	
+        	// Get move Type
+        	String queryType = "SELECT identifier FROM types WHERE id = " + typeId;
+            Cursor cursorType = db.rawQuery(queryType, null);
+            cursorType.moveToFirst();
+            move.setType(cursorType.getString(0));
+            cursorType.close();
+        	
+        	int effectId = cursorMoves.getInt(9);
+        	
+        	// Get Effects
+            String queryEffect = "SELECT effect, short_effect FROM move_effect_prose WHERE move_effect_id = " + effectId;
+            Cursor cursorEffect = db.rawQuery(queryEffect, null);
+            cursorEffect.moveToFirst();
+            move.setEffectLong(cursorEffect.getString(0));
+            move.setEffectShort(cursorEffect.getString(1));
+            cursorEffect.close();
+            
+            int targetId = cursorMoves.getInt(7);
+            
+            // Get Targets
+            String queryTarget = "SELECT identifier FROM move_targets WHERE id = " + targetId;
+            Cursor cursorTarget = db.rawQuery(queryTarget, null);
+            cursorTarget.moveToFirst();
+            move.setTargets(cursorTarget.getString(0));
+            cursorTarget.close();
+            
+            int damageClassId = cursorMoves.getInt(8);
+            
+            // Get Damage Class
+            String queryDamageClass = "SELECT identifier FROM move_damage_classes WHERE id = " + damageClassId;
+            Cursor cursorDamageClass = db.rawQuery(queryDamageClass, null);
+            cursorDamageClass.moveToFirst();
+            move.setDamageClass(cursorDamageClass.getString(0));
+            cursorDamageClass.close();
+            
+            moveList.add(move);
+        }
+        
+    	return moveList;
+    }
 
     /**
      * 
      * @param pokemon
      * @return
      */
+    
+    // TODO optimise this - get move from cache then add extra fields like Method
     public ArrayList<Move> getMovesForPokemon(Pokemon pokemon) {
     	
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
@@ -108,13 +172,13 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         while(c.moveToNext()) {
         	Move move = new Move();
         	
-        	String moveId = c.getString(0);
+        	int moveId = c.getInt(0);
         	String methodId = c.getString(1);
         	
         	Log.v(TAG, "Getting info for Move with ID = " + moveId);
         	
         	move.setId(moveId);
-        	move.setLevel(c.getString(2));
+        	move.setLevel(c.getInt(2));
         	
         	// Get Move Main Info
         	String queryMove = "SELECT identifier, type_id, power, pp, accuracy, priority," 
@@ -130,10 +194,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             
             move.setEffectChance(effectChance);
             move.setName(cursorMove.getString(0));
-            move.setPower(cursorMove.getString(2));
-            move.setPP(cursorMove.getString(3));
-            move.setAccuracy(cursorMove.getString(4));
-            move.setPriority(cursorMove.getString(5));
+            move.setPower(cursorMove.getInt(2));
+            move.setPP(cursorMove.getInt(3));
+            move.setAccuracy(cursorMove.getInt(4));
+            move.setPriority(cursorMove.getInt(5));
             cursorMove.close();
             
             // Get move Type

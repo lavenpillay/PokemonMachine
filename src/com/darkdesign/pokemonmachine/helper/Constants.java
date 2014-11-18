@@ -62,12 +62,12 @@ public class Constants {
 	public static final int DAMAGE_DOUBLE = 200;
 	
 	public static final String GENDER_RATE_STRING_GENDERLESS = "Genderless";
-	public static final String GENDER_RATE_STRING_0 = "Male: 100% - Female: 0%";
-	public static final String GENDER_RATE_STRING_1 = "Male: 87.5% - Female: 12.5%";
-	public static final String GENDER_RATE_STRING_2 = "Male: 75% - Female: 25%";
-	public static final String GENDER_RATE_STRING_4 = "Male: 50% - Female: 50%";
-	public static final String GENDER_RATE_STRING_6 = "Male: 25% - Female: 75%";
-	public static final String GENDER_RATE_STRING_8 = "Male: 0% - Female: 100%";
+	public static final String GENDER_RATE_STRING_0 = "Male: 100%\nFemale: 0%";
+	public static final String GENDER_RATE_STRING_1 = "Male: 87.5%\nFemale: 12.5%";
+	public static final String GENDER_RATE_STRING_2 = "Male: 75%\nFemale: 25%";
+	public static final String GENDER_RATE_STRING_4 = "Male: 50%\nFemale: 50%";
+	public static final String GENDER_RATE_STRING_6 = "Male: 25%\nFemale: 75%";
+	public static final String GENDER_RATE_STRING_8 = "Male: 0%\nFemale: 100%";
 	
 	public static final String ITEM_CATEGORY_SPECIAL_BALLS = "special-balls";
 	public static final String ITEM_CATEGORY_STANDARD_BALLS = "standard-balls";

@@ -1,16 +1,12 @@
 package com.darkdesign.pokemonmachine.fragment;
 
-import java.util.ArrayList;
-
 import android.app.Fragment;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,22 +15,14 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
-import com.darkdesign.pokemonmachine.adapter.SimpleItemListAdapter;
+import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
-import com.darkdesign.pokemonmachine.element.Item;
-import com.darkdesign.pokemonmachine.element.Move;
-import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
-import com.darkdesign.pokemonmachine.helper.Constants;
-import com.darkdesign.pokemonmachine.helper.Util;
 
 public class MoveDisplayFragment extends Fragment {
 	private String TAG = MoveDisplayFragment.class.toString();
@@ -45,9 +33,7 @@ public class MoveDisplayFragment extends Fragment {
 	private DatabaseHelper db;
 	private SharedPreferences applicationSettings;
 	
-	public static SimpleItemListAdapter itemsListAdapter;
-	
-	private LayoutInflater inflater;
+	public static SimpleMoveListAdapter movesListAdapter;
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 		public void afterTextChanged(Editable s) {
@@ -57,16 +43,16 @@ public class MoveDisplayFragment extends Fragment {
 	    }
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-	    	Log.d(TAG, "[ItemDisplayFragment] Filter Text Changed" + s);
+	    	Log.d(TAG, "Filter Text Changed" + s);
 	    	
 	    	if (s.length() > 0) {
-	    		itemsListAdapter.getFilter().filter(s);
+	    		movesListAdapter.getFilter().filter(s);
 	    	} else if (s.length() == 0) {
-	    		itemsListAdapter.getFilter().filter("");
+	    		movesListAdapter.getFilter().filter("");
 	    	}
 	    }
 	};
-
+	
 	/**
 	 * 
 	 */
@@ -84,7 +70,6 @@ public class MoveDisplayFragment extends Fragment {
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 Log.i(TAG, "onCreateView() - Called");
 		 
-		 this.inflater = inflater;
 		 view = inflater.inflate(R.layout.fragment_moves, container, false);
 	   
 
@@ -92,32 +77,32 @@ public class MoveDisplayFragment extends Fragment {
 	   
 	   applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
 	   
-	   /*
+	   
 	   filterText = (EditText) view.findViewById(R.id.txtFilter);
 	   filterText.addTextChangedListener(filterTextWatcher);
 	   
 	   // Handle List
-	   String[] names = PokemonMachineActivity.db.getItemNames();
-	   itemsListAdapter = new SimpleItemListAdapter(getActivity(), names);
-	   
+	   String[] moveNames = PokemonMachineActivity.cache.getAllMoveNames();
+	   movesListAdapter = new SimpleMoveListAdapter(getActivity(), moveNames);
 		
-	   ListView listView = (ListView) view.findViewById(R.id.plist);
-	   listView.setAdapter(itemsListAdapter);
+	   ListView listView = (ListView) view.findViewById(R.id.mlist);
+	   listView.setAdapter(movesListAdapter);
 	   listView.invalidate();
 	   
 	   listView.setOnItemClickListener(new OnItemClickListener() {
 	        public void onItemClick(AdapterView<?> parent, View view,
 	                int position, long id) {
 
-	          Log.i(TAG, "Item Clicked");
-
-	                 
-	          
-	         String nameToCheck = (String) parent.getItemAtPosition(position);
-	         int itemId = Util.arrayIndexOf(PokemonMachineActivity.db.getItemNames(), nameToCheck) + 1; // because of zero-index
-	         update(PokemonMachineActivity.cache.getItemById(itemId - 1));
+	        	Log.i(TAG, "Item Clicked");
+	        	
+	        	/*
+				String nameToCheck = (String) parent.getItemAtPosition(position);
+				int itemId = Util.arrayIndexOf(PokemonMachineActivity.db.getItemNames(), nameToCheck) + 1; // because of zero-index
+				update(PokemonMachineActivity.cache.getItemById(itemId - 1));
+				*/
 	       }
 	    });
+	   
 	   
 	   ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
 	   btnClearNameFilter.setOnClickListener(new OnClickListener() {
@@ -128,11 +113,11 @@ public class MoveDisplayFragment extends Fragment {
 				edtName.setText("");
 			}
 		});
+		
 	   
 	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
 	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
-	   */
 	   
 	   // Select default MOVE
 	   //update(PokemonMachineActivity.cache.getItemById(0));

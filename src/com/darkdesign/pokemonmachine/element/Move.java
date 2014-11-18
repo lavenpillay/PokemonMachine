@@ -9,18 +9,18 @@ import com.darkdesign.pokemonmachine.helper.Util;
  */
 public class Move {
 	
-	private String id = "";
+	private int id;
 	private String name = "";
 	private String type = "";
 
 	private String resourceURI = "";
 	
-	private String power = "";
-	private String pp = "";
-	private String accuracy = "";
-	private String priority = "";
+	private int power;
+	private int pp;
+	private int accuracy;
+	private int priority;
 
-	private String level = "";
+	private int level;
 	
 	private String effectShort = "";
 	private String effectLong = "";
@@ -34,24 +34,7 @@ public class Move {
 	
 	public Move() {
 		super();
-		this.id = "";
-		this.name = "";
-		this.type = "";
-		this.resourceURI = "";
-		this.power = "";
-		this.pp = "";
-		this.accuracy = "";
-		this.priority = "";
-		this.level = "";
-		this.effectShort = "";
-		this.effectLong = "";
-		this.effectChance = "";
-		this.targets = "";
-		this.damageClass = "";
-		this.method = "";
 	}
-
-
 
 	public String getName() {
 		return name;
@@ -69,37 +52,35 @@ public class Move {
 		this.resourceURI = resourceURI;
 	}
 
-	public String getPower() {
+	public int getPower() {
 		return power;
 	}
 
-	public void setPower(String power) {
+	public void setPower(int power) {
 		this.power = power;
 	}
 
-	public String getPP() {
+	public int getPP() {
 		return pp;
 	}
 
-	public void setPP(String pp) {
+	public void setPP(int pp) {
 		this.pp = pp;
 	}
 
-	public String getAccuracy() {
+	public int getAccuracy() {
 		return accuracy;
 	}
 
-	public void setAccuracy(String accuracy) {
+	public void setAccuracy(int accuracy) {
 		this.accuracy = accuracy;
 	}
-
 	
-	
-	public String getLevel() {
+	public int getLevel() {
 		return level;
 	}
 
-	public void setLevel(String level) {
+	public void setLevel(int level) {
 		this.level = level;
 	}	
 
@@ -111,11 +92,11 @@ public class Move {
 		this.type = type;
 	}
 
-	public String getPriority() {
+	public int getPriority() {
 		return priority;
 	}
 
-	public void setPriority(String priority) {
+	public void setPriority(int priority) {
 		this.priority = priority;
 	}
 
@@ -167,11 +148,11 @@ public class Move {
 		this.method = method;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 }

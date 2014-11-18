@@ -39,7 +39,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.EggGroupSpinnerAdapter;
-import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
+import com.darkdesign.pokemonmachine.adapter.PokemonMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Evolution;
@@ -73,7 +73,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public static ArrayList<Move> movesData = new ArrayList<Move>();	
 	
 	public static SimplePokemonListAdapter pokemonListAdapter;
-	public static SimpleMoveListAdapter movesListAdapter;
+	public static PokemonMoveListAdapter movesListAdapter;
 	
 	private int lastViewedPokemonId = -1;
 	
@@ -217,7 +217,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		PokemonDisplayFragment.movesData.add(testMove1);
 		
-		movesListAdapter = new SimpleMoveListAdapter(getActivity(), movesData);
+		movesListAdapter = new PokemonMoveListAdapter(getActivity(), movesData);
 		
 		ListView movesListView = (ListView) view.findViewById(R.id.mlist);
 		
@@ -365,7 +365,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 	private void updateBasicInformation(final Pokemon pokemon) {
 		// Handle Images
-		 ImageView pokemonArtView = (ImageView)view.findViewById(R.id.imageView1);
+		 ImageView pokemonArtView = (ImageView)view.findViewById(R.id.imgPokemonArt);
 		 ImageView pokemonType1 = (ImageView)view.findViewById(R.id.imgType1);
 		 ImageView pokemonType2 = (ImageView)view.findViewById(R.id.imgType2);
 		 
