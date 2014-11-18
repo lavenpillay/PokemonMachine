@@ -91,8 +91,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	
-        //SQLiteDatabase db = getReadableDatabase();
-        
         String versionGroupToQuery = "";
         
         // TODO Update/Remove this check after data is updated

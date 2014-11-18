@@ -137,7 +137,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		    
-		Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
+		Log.i(TAG, "onActivityCreated() - Called");
 		
 		//adapter.getFilter().filter("Sand");
 	}
@@ -152,7 +152,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		 Log.i(TAG, "onCreate()");
+		 Log.i(TAG, "onCreate() - Called");
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
 		 this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
@@ -705,7 +705,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			throws IOException 
 	{
 		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);
-		Bitmap bm;
+		Bitmap bmp;
 		
 		LinearLayout evolutionStateView = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
 		
@@ -713,16 +713,17 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		TextView txtName = (TextView) evolutionStateView.findViewById(R.id.txtPokemonEvolutionName);
 		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id));
 		if (isMegaEvolution)  {
-			bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + pokemon.getMegaEvolution().getPokemonId() + ".png");
+			bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + pokemon.getMegaEvolution().getPokemonId() + ".png");
 			pokemonEvolutionName = pokemon.getMegaEvolution().getIdentifier();
 		} else {
-			bm = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
+			bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_POKEMON_SPRITES + id + ".png");
 			pokemonEvolutionName = pokemon.getName();
 		}
 		txtName.setText(pokemonEvolutionName);
 		
 		ImageView evolutionImage = (ImageView) evolutionStateView.findViewById(R.id.imgPokemonEvolution);
-		evolutionImage.setImageBitmap(bm);
+		bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.POKEMON_EVOLUTION_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.POKEMON_EVOLUTION_IMAGE_SCALE_MULTIPLIER, false);
+		evolutionImage.setImageBitmap(bmp);
 		
 		evolutionImage.setOnClickListener(new OnClickListener() {
 		    public void onClick(View v) {
@@ -816,7 +817,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgHoldItem);
 				final String itemName = PokemonMachineActivity.cache.getItemList().get(Integer.valueOf(evolution.getHeldItemId()) - 1).getIdentifier();
 				Bitmap bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + itemName + ".png");
-				bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.EVOLUTION_ITEM_IMAGE_SCALE, bmp.getHeight()*Constants.EVOLUTION_ITEM_IMAGE_SCALE, false);
+				bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, false);
 				useItemView.setImageBitmap(bmp);
 				
 				evolutionMethodView.setOnClickListener(new OnClickListener() {

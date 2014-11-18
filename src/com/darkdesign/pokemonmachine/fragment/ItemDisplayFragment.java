@@ -70,7 +70,7 @@ public class ItemDisplayFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		    
-		Log.d(TAG, "PokemonListFragment.onActivityCreated() - Called");
+		Log.i(TAG, "onActivityCreated() - Called");
 		
 		//adapter.getFilter().filter("Sand");
 	}
@@ -78,6 +78,8 @@ public class ItemDisplayFragment extends Fragment {
 	
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		 Log.i(TAG, "onCreateView() - Called");
+		 
 		 this.inflater = inflater;
 		 view = inflater.inflate(R.layout.fragment_items, container, false);
 	   

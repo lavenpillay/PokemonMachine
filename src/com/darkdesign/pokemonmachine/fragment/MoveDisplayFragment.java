@@ -1,5 +1,7 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -27,6 +29,8 @@ import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleItemListAdapter;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Item;
+import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
@@ -70,7 +74,7 @@ public class MoveDisplayFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		    
-		Log.d(TAG, "onActivityCreated() - Called");
+		Log.i(TAG, "onActivityCreated() - Called");
 		
 		//adapter.getFilter().filter("Sand");
 	}
@@ -78,6 +82,8 @@ public class MoveDisplayFragment extends Fragment {
 	
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		 Log.i(TAG, "onCreateView() - Called");
+		 
 		 this.inflater = inflater;
 		 view = inflater.inflate(R.layout.fragment_moves, container, false);
 	   
@@ -134,57 +140,21 @@ public class MoveDisplayFragment extends Fragment {
 		return view;
 	 }
 	 
-	 public void update(Item item) {
-		 
-		LinearLayout mainInfoArea = (LinearLayout) view.findViewById(R.id.mainInfoArea);
-		LinearLayout additionalInfoArea = (LinearLayout) view.findViewById(R.id.additonalInfoArea);
-		 
-		 // Add Item image - scaled
-		String filename = "items/" + item.getIdentifier();
-		ImageView itemView = (ImageView)view.findViewById(R.id.imgItem);
-		Bitmap bmp = assetHelper.getBitmapFromAsset(filename + ".png");
-		bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.ITEM_IMAGE_SCALE_MULTIPLIER, false);
-		itemView.setImageBitmap(bmp);
-		 
-		//clear current content
-		mainInfoArea.removeAllViews();
-		additionalInfoArea.removeAllViews();
-		 
-		LinearLayout descriptionText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
-			
-		TextView txtItemName = (TextView) descriptionText.findViewById(R.id.heading);
-		txtItemName.setText(item.getName());
-		 
-		TextView txtDescription = (TextView) descriptionText.findViewById(R.id.content);
-		txtDescription.setText(item.getDescription());
-		 
-		mainInfoArea.addView(descriptionText);
-		 
-		// Check category and update Additional information
-		// +---- Set common information
-		LinearLayout categoryText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
-			
-		TextView txtCategoryTitle = (TextView) categoryText.findViewById(R.id.heading);
-		txtCategoryTitle.setText("Category");
-		 
-		TextView txtCategory = (TextView) categoryText.findViewById(R.id.content);
-		txtCategory.setText(item.getCategory().getName());
-		txtCategory.setTextSize(TypedValue.COMPLEX_UNIT_PT, 9);
-		 
-		additionalInfoArea.addView(categoryText);
-		 
-		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS) ||
-			 item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_STANDARD_BALLS)) {
-			 
-			 LinearLayout catchRateText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
-				
-			 TextView txtCatchRateTitle = (TextView) catchRateText.findViewById(R.id.heading);
-			 txtCatchRateTitle.setText("Capture Information");
-			 
-			 TextView txtCatchRateContent = (TextView) catchRateText.findViewById(R.id.content);
-			 txtCatchRateContent.setText(item.getAdditionalInfo());
-			 
-			 mainInfoArea.addView(catchRateText);
-		 }
-	 }
+	/**
+	 * 
+	 * @param moveLearnType
+	 */
+	private void updateMoveList() {
+		/*
+		ArrayList<Move> moveToDisplay = pokemon.getMovesByType(moveLearnType);
+		
+		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
+			moveSubset = Util.sortMovesByLevel(moveSubset);
+		}
+		
+		PokemonDisplayFragment.movesData.clear();
+		PokemonDisplayFragment.movesData.addAll(moveSubset);
+		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
+		*/
+	}
 }

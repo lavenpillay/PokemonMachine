@@ -63,7 +63,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        //forceDatabaseReload(this);
+        forceDatabaseReload(this);
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -257,13 +257,13 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.title_fragment1).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.title_fragment2).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_fragment3).toUpperCase(l);
                 case 3:
-                    return getString(R.string.title_section4).toUpperCase(l);    
+                    return getString(R.string.title_fragment4).toUpperCase(l);    
             }
             return null;
         }
