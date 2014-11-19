@@ -18,6 +18,7 @@ public class Cache {
 
 	private static HashMap<Integer, Pokemon> POKEMON_CACHE;
 	private static ArrayList<Item> ITEM_CACHE;
+	private static String[] ITEM_NAMES;
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
 	private static ArrayList<Type> TYPE_LIST_CACHE;
@@ -59,6 +60,7 @@ public class Cache {
 		
 		// Items
 		ITEM_CACHE = db.getItems();
+		ITEM_NAMES = db.getItemNames();
 		
 		int temp = 0;
 	}
@@ -128,7 +130,7 @@ public class Cache {
 		return BERRY_CACHE;
 	}
 	
-	public ArrayList<Item> getItemList() {
+	public ArrayList<Item> getAllItems() {
 		return ITEM_CACHE;
 	}
 	
@@ -136,13 +138,7 @@ public class Cache {
 		return ITEM_CACHE.get(id);
 	}
 
-	public static ArrayList<Move> getMOVE_LIST_CACHE() {
-		return MOVE_LIST_CACHE;
+	public String[] getItemNames() {
+		return ITEM_NAMES;
 	}
-
-	public static void setMOVE_LIST_CACHE(ArrayList<Move> mOVE_LIST_CACHE) {
-		MOVE_LIST_CACHE = mOVE_LIST_CACHE;
-	}
-	
-
 }

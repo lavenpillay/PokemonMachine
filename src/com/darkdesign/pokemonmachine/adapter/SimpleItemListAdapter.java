@@ -37,7 +37,7 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	    this.values = values;
 	    
 	    assetHelper = new AssetHelper(context);
-	    items = PokemonMachineActivity.cache.getItemList();
+	    items = PokemonMachineActivity.cache.getAllItems();
 	}
 
 	@Override

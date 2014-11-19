@@ -8,6 +8,27 @@
     <string name="title_fragment2">Pokemon</string>
     <string name="title_fragment3">Moves</string>
     <string name="title_fragment4">Collection</string>
+    
+    <string name="move_selector_prompt">Filter by</string>
+    
+    <string-array name="move_selectors">
+        <item>Bug</item>
+	    <item>Dark</item> 
+	    <item>Dragon</item>
+	    <item>Electric</item>
+	    <item>Fighting</item>
+	    <item>Fire</item>
+	    <item>Flying</item>
+	    <item>Ghost</item>
+	    <item>Ground</item>
+	    <item>Ice</item>
+	    <item>Normal</item>
+	    <item>Poison</item>
+	    <item>Psychic</item>
+	    <item>Rock</item>
+	    <item>Steel</item>
+	    <item>Water</item>
+    </string-array>
 
 	<string-array name="type_names">
 	    <item>Bug</item>

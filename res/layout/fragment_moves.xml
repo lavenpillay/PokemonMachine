@@ -19,7 +19,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_weight="0.75"
-    android:background="@drawable/shadow_left">
+    android:background="@drawable/shadow_left"
+    android:paddingRight="10dp">
         
     <TextView
 		android:layout_width="fill_parent"
@@ -41,7 +42,10 @@
 		    android:id="@+id/spnMoveSetSelector"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_weight="1" />
+		    android:layout_weight="1" 
+		    android:prompt="@string/move_selector_prompt"
+		    android:entries="@array/move_selectors"
+        	android:spinnerMode="dropdown"/>
 		
 		<LinearLayout
             android:layout_width="wrap_content"
@@ -81,7 +85,8 @@
 <!-- END Moves -->
 
 <!-- INFORMATION AREA -->
-<LinearLayout 
+<LinearLayout
+    
     android:layout_width="0dip"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -98,6 +103,20 @@
 		android:textStyle="bold"
 		android:textColor="@android:color/white"
 		android:background="@android:color/holo_green_light" />
+    
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+		
+        <LinearLayout 
+            android:id="@+id/moveInformationArea" 
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="5dp">
+            
+        </LinearLayout>
+    </ScrollView>
     
 </LinearLayout>
 <!-- END Information Area -->

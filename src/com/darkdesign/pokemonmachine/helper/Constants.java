@@ -77,6 +77,12 @@ public class Constants {
 	public static final int EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER = 3;
 	public static final int POKEMON_EVOLUTION_IMAGE_SCALE_MULTIPLIER = 1;
 	
+	public static final String COLOR_EFFECT_CHANCE = "#007FFF";
+	public static final String COLOR_MOVE_NAME = "#1111AA";
+	public static final String COLOR_MECHANIC_NAME = "#cc0029";
+	public static final String COLOR_ABILITY_NAME = "#FF7F2A";
+	public static final String COLOR_ITEM_NAME = "#00D4FF";
+	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 
 		"160", "200", "201", "233", "234", "243", "244", "245", "249", "250", "251", "252", "253", "254", "258", 
