@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -19,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class MoveDisplayFragment extends Fragment {
 	private String TAG = MoveDisplayFragment.class.toString();
@@ -136,6 +139,9 @@ public class MoveDisplayFragment extends Fragment {
 		 LinearLayout moveInformationArea = (LinearLayout) view.findViewById(R.id.moveInformationArea);
 		 moveInformationArea.removeAllViews();
 		 
+		 FlowLayout pokemonArea = (FlowLayout) view.findViewById(R.id.pokemonArea);
+		 pokemonArea.removeAllViews();
+		 
 		 // Name
 		 LinearLayout moveNameLayout = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
 		
@@ -153,6 +159,21 @@ public class MoveDisplayFragment extends Fragment {
 		 TextView txtEffectLong = (TextView) moveEffectLayout.findViewById(R.id.content);
 		 txtEffectLong.setText(Html.fromHtml(getFormattedLongEffect(move)));
 		 //txtDescription.setTextSize(TypedValue.COMPLEX_UNIT_PT, 9);
+		 
+		 // Get Pokemon with selected move
+		 int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
+		 
+		 for (int i=0; i < compatiblePokemonIds.length; i++) {
+			 LinearLayout pokemonLayout = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
+			 FlowLayout.LayoutParams lp = new FlowLayout.LayoutParams(10, 10);
+			 pokemonLayout.setLayoutParams(lp);
+			 
+			 ImageView imgPokemon = (ImageView) pokemonLayout.findViewById(R.id.imgPokemonEvolution);
+			 Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(compatiblePokemonIds[i], Constants.POKEMON_ID_LENGTH) + ".png");
+			 imgPokemon.setImageBitmap(bmp);
+			 
+			 pokemonArea.addView(pokemonLayout);
+		 }
 		
 		 moveInformationArea.addView(moveEffectLayout);
 	 }
@@ -249,7 +270,7 @@ public class MoveDisplayFragment extends Fragment {
         m.appendTail(formattedString);
         htmlString = formattedString.toString();
         
-        Log.d(TAG, "NEW TEXT: " + htmlString);
+        //Log.d(TAG, "NEW TEXT: " + htmlString);
         
 		return htmlString;
 	}

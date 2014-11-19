@@ -143,6 +143,26 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
     	return moveList;
     }
+    
+    public int[] getPokemonIdsForMove(int moveId) {
+    	ArrayList<Integer> pokemonIdList = new ArrayList<Integer>();
+    	int[] pokemonIds = null;
+    	
+    	// Get Targets
+        String queryPokemon = "SELECT pokemon_id FROM pokemon_moves WHERE version_group_id = 15 AND move_id = " + moveId;
+        Cursor cursorPokemon = db.rawQuery(queryPokemon, null);
+        while (cursorPokemon.moveToNext()) {
+        	pokemonIdList.add(cursorPokemon.getInt(0));
+        }
+        cursorPokemon.close();
+    	
+        pokemonIds = new int[pokemonIdList.size()];
+        for (int i=0; i < pokemonIdList.size(); i++) {
+        	pokemonIds[i] = pokemonIdList.get(i);
+        }
+        
+    	return pokemonIds;
+    }
 
     /**
      * 
@@ -263,18 +283,15 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		//SQLiteDatabase db = getReadableDatabase();
 
         String querySpecies = "SELECT id, evolves_from_species_id FROM " + TABLE_SPECIES + " WHERE evolution_chain_id = (SELECT evolution_chain_id FROM " + TABLE_SPECIES + " WHERE id = " + id + ")";
-        Log.d(TAG, querySpecies);
         
         cursorSpecies = db.rawQuery(querySpecies, null);
         
         while (cursorSpecies.moveToNext()) {
-	        Log.d(TAG, "CHAIN : " + cursorSpecies.getString(0));
 	        
         	evolvedSpeciesId =  cursorSpecies.getString(0);
 	        
 	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness, held_item_id " +
 	        		"FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + evolvedSpeciesId;
-	        Log.d(TAG, queryEvolutions);
 	        cursorEvolutions = db.rawQuery(queryEvolutions, null);
 	        cursorEvolutions.moveToFirst();
 	        
@@ -340,8 +357,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         		+ " FROM pokemon p, pokemon_species ps, pokemon_species_names psn, growth_rates gr "
         		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id";
         
-        Log.v(TAG, queryPokemon);
-        
         Cursor c = db.rawQuery(queryPokemon, null);
         c.moveToFirst();
         
@@ -364,8 +379,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         // Get Base Stats
         String queryBaseStats = 
         		"SELECT base_stat FROM pokemon_stats WHERE pokemon_id = " + id + " ORDER BY stat_id ASC";
-        
-        Log.v(TAG, queryBaseStats);
         
         Cursor cursorStats = db.rawQuery(queryBaseStats, null);
         cursorStats.moveToFirst();
@@ -449,14 +462,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Item> getItems() {
     	ArrayList<Item> itemsList = new ArrayList<Item>();
     	
-    	
     	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, f.flavor_text as description, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id INNER JOIN item_flavor_text f USING (item_id)  WHERE f.version_group_id = 15 ORDER BY i.id ASC";
     	
-    	/*
-    	String queryItem = "SELECT i.id as id, i.category_id as category_id, n.name as name, i.cost as cost, i.identifier as identifier FROM items i JOIN item_names n ON i.id = n.item_id WHERE n.local_language_id = 9 ORDER BY i.id ASC";
-    	*/
-        Log.v(TAG, queryItem);
-        
         Cursor cursorItems = db.rawQuery(queryItem, null);
         
         while(cursorItems.moveToNext()) {
@@ -468,12 +475,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	item.setDescription(cursorItems.getString(4));
         	item.setIdentifier(cursorItems.getString(5));
         	
-        	Log.v(TAG, "[ITEM] id = " + item.getId() + " identifier = " + item.getIdentifier());
-        	
         	// Get category information
         	ItemCategory itemCategory = null;
         	String queryItemCategory = "SELECT c.id, c.identifier, p.name FROM items i JOIN item_categories c ON i.category_id = c.id JOIN item_category_prose p ON c.id = p.item_category_id WHERE p.local_language_id = 9 AND i.id = " + item.getId();
-            Log.v(TAG, queryItemCategory);
             
             Cursor cursorItemCategories = db.rawQuery(queryItemCategory, null);
             while(cursorItemCategories.moveToNext()) {
@@ -531,7 +535,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	int[][] typeEfficacyMatrix = new int[Constants.NUMBER_OF_TYPES+1][Constants.NUMBER_OF_TYPES+1];
     	
     	String queryTypeEfficacy = "SELECT damage_type_id, target_type_id, damage_factor FROM " + TABLE_TYPE_EFFICACY;
-        Log.v(TAG, queryTypeEfficacy);
         
         Cursor cursorTypeEfficacy = db.rawQuery(queryTypeEfficacy, null);
         
@@ -552,8 +555,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	ArrayList<Type> types = new ArrayList<Type>();
     	
     	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES + " WHERE id < 10000 ORDER BY identifier ASC ";
-        Log.v(TAG, queryTypes);
-        
+       
         Cursor cursorTypes = db.rawQuery(queryTypes, null);
     	
         while (cursorTypes.moveToNext()) {
@@ -567,7 +569,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	HashMap<String,Integer> typeIdByName = new HashMap<String,Integer>();
     	
     	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES;
-        Log.v(TAG, queryTypes);
         
         Cursor cursorTypes = db.rawQuery(queryTypes, null);
         
@@ -582,7 +583,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	HashMap<Integer,String> typeNameById = new HashMap<Integer,String>();
     	
     	String queryTypes = "SELECT id, identifier FROM " + TABLE_TYPES;
-        Log.v(TAG, queryTypes);
         
         Cursor cursorTypes = db.rawQuery(queryTypes, null);
         
@@ -638,8 +638,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	queryGames += "WHERE n.version_id = v.id AND v.version_group_id = g.id ";
     	queryGames += "GROUP BY v.id";
     	
-        Log.v(TAG, queryGames);
-        
         Cursor cursorGames = db.rawQuery(queryGames, null);
         
         // Build Game List from results
@@ -654,7 +652,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
     	
     	String queryEggGroups = "SELECT e.id AS id, e.identifier AS identifier, p.name AS name FROM egg_groups e JOIN egg_group_prose p ON p.egg_group_id = e.id WHERE p.local_language_id = 9";
-        Log.v(TAG, queryEggGroups);
         
         Cursor cursorEggGroups = db.rawQuery(queryEggGroups, null);
         

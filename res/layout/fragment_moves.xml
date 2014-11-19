@@ -140,6 +140,19 @@
 		android:textColor="@android:color/white"
 		android:background="@android:color/holo_orange_light" />
     
+    <ScrollView 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+		
+        <com.darkdesign.pokemonmachine.layout.FlowLayout
+            android:id="@+id/pokemonArea"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+        
+        </com.darkdesign.pokemonmachine.layout.FlowLayout>
+    </ScrollView>
+    
 </LinearLayout>
 <!-- END Pokemon Area -->
 
