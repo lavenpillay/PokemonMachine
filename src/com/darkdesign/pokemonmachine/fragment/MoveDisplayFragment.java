@@ -174,6 +174,9 @@ public class MoveDisplayFragment extends Fragment {
 			 Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH) + ".png");
 			 imgPokemon.setImageBitmap(bmp);
 			 
+			 TextView txtName = (TextView) view.findViewById(R.id.txtPokemonEvolutionName);
+			 txtName.setText(PokemonMachineActivity.cache.getPokemon(pokemonId).getName());
+			 
 			 imgPokemon.setOnClickListener(new OnClickListener() {
 			    public void onClick(View v) {
 			    	PokemonMachineActivity.pokemonDisplayFragment.update(PokemonMachineActivity.cache.getPokemon(pokemonId));

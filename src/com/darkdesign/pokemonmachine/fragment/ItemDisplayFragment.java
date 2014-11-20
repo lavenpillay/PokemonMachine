@@ -137,7 +137,7 @@ public class ItemDisplayFragment extends Fragment {
 	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	   
 		// Select default ITEM
-		update(PokemonMachineActivity.cache.getItemById(0));
+		update(PokemonMachineActivity.cache.getItemById(1));
 
 		return view;
 	 }

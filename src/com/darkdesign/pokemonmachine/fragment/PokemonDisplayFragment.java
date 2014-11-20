@@ -823,7 +823,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				evolutionMethodView = (LinearLayout)inflater.inflate( R.layout.evolution_method_trade_held_item, null );
 				
 				ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgHoldItem);
-				final String itemName = PokemonMachineActivity.cache.getAllItems().get(Integer.valueOf(evolution.getHeldItemId()) - 1).getIdentifier();
+				final String itemName = PokemonMachineActivity.cache.getItemById(Integer.valueOf(evolution.getHeldItemId())).getName();
 				Bitmap bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + itemName.toLowerCase() + ".png");
 				bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, false);
 				useItemView.setImageBitmap(bmp);
@@ -877,8 +877,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			evolutionMethodView = (LinearLayout)inflater.inflate(R.layout.evolution_method_use_item, null );
 			
 			ImageView useItemView = (ImageView)evolutionMethodView.findViewById(R.id.imgUseItem);
-			final int itemId = Integer.valueOf(evolution.getTriggerItemId()) - 1;
-			final String itemName = PokemonMachineActivity.cache.getAllItems().get(itemId).getName();
+			final int itemId = Integer.valueOf(evolution.getTriggerItemId());
+			final String itemName = PokemonMachineActivity.cache.getItemById(itemId).getName();
 			Bitmap bmp = assetHelper.getBitmapFromAsset(Constants.PATH_TO_ITEM_SPRITES + Util.toAllLowerCase(itemName) + ".png");
 			bmp = Bitmap.createScaledBitmap(bmp, bmp.getWidth()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, bmp.getHeight()*Constants.EVOLUTION_ITEM_IMAGE_SCALE_MULTIPLIER, false);
 			useItemView.setImageBitmap(bmp);
@@ -917,7 +917,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 					
 					Log.d(TAG, "LongClick");
 					
-					Item evolutionItem = PokemonMachineActivity.cache.getAllItems().get(itemId);
+					Item evolutionItem = PokemonMachineActivity.cache.getItemById(itemId);
 					
 					if (evolutionItem.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_EVOLUTION)) {
 						PokemonMachineActivity.itemDisplayFragment.update(evolutionItem);

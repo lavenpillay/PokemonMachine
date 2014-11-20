@@ -17,7 +17,8 @@ import com.darkdesign.pokemonmachine.element.VideoGame;
 public class Cache {
 
 	private static HashMap<Integer, Pokemon> POKEMON_CACHE;
-	private static ArrayList<Item> ITEM_CACHE;
+	private static HashMap<Integer, Item> ITEM_CACHE_BY_ID;
+	private static HashMap<String, Item> ITEM_CACHE_BY_NAME;
 	private static String[] ITEM_NAMES;
 	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
@@ -59,10 +60,22 @@ public class Cache {
 		GAME_LIST_CACHE = db.getVideoGameList();
 		
 		// Items
-		ITEM_CACHE = db.getItems();
+		buildItemMaps();
 		ITEM_NAMES = db.getItemNames();
 		
 		int temp = 0;
+	}
+
+	private void buildItemMaps() {
+		ITEM_CACHE_BY_ID = new HashMap<Integer, Item>();
+		ITEM_CACHE_BY_NAME = new HashMap<String, Item>();
+		
+		ArrayList<Item> itemList = db.getItems();
+		
+		for (Item item : itemList) {
+			ITEM_CACHE_BY_ID.put(item.getId(), item);
+			ITEM_CACHE_BY_NAME.put(item.getName(), item);
+		}
 	}
 	
 	public void setupBerryNameByIdMap() {
@@ -122,20 +135,21 @@ public class Cache {
 		return TYPE_NAME_BY_ID.get(typeId);
 	}
 	
+	public Item getItemById(int itemId) {
+		return ITEM_CACHE_BY_ID.get(itemId);
+	}
+	
+	public Item getItemByName(String itemName) {
+		return ITEM_CACHE_BY_NAME.get(itemName);
+				
+	}
+	
 	public int[][] getTypeEfficacyMatrix() {
 		return TYPE_EFFICACY_MATRIX;
 	}
 	
 	public ArrayList<Berry> getBerryList() {
 		return BERRY_CACHE;
-	}
-	
-	public ArrayList<Item> getAllItems() {
-		return ITEM_CACHE;
-	}
-	
-	public Item getItemById(int id) {
-		return ITEM_CACHE.get(id);
 	}
 
 	public String[] getItemNames() {

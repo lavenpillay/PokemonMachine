@@ -37,7 +37,6 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	    this.values = values;
 	    
 	    assetHelper = new AssetHelper(context);
-	    items = PokemonMachineActivity.cache.getAllItems();
 	}
 
 	@Override
@@ -50,11 +49,11 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 	
 		
 		String name = this.getItem(position);
-		int itemId = Util.arrayIndexOf(values, name); 
+		Item item = PokemonMachineActivity.cache.getItemByName(name); 
 		
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
-		idTextView.setText(String.valueOf(itemId + 1)); // because of zero-index
+		idTextView.setText(String.valueOf(item.getId())); 
 		
 		// Set Name
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
@@ -62,15 +61,15 @@ public class SimpleItemListAdapter extends ArrayAdapter<String> {
 		
 		// Set Category
 		TextView categoryTextView = (TextView) rowView.findViewById(R.id.list_item_category);
-		categoryTextView.setText(PokemonMachineActivity.cache.getItemById(itemId).getCategory().getName());
+		categoryTextView.setText(item.getCategory().getName());
 		
 		// Set icon and types
 		String filename = "";
 		
 		if ((values[position]).contains("berry")) {
-			filename = "berry_images/" + items.get(itemId).getIdentifier();
+			filename = "berry_images/" + item.getIdentifier();
 		} else {
-			filename = "items/" + items.get(itemId).getIdentifier();
+			filename = "items/" + item.getIdentifier();
 		}
 		
 		Bitmap bm = assetHelper.getBitmapFromAsset(filename + ".png");
