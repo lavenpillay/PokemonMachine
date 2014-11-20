@@ -161,16 +161,25 @@ public class MoveDisplayFragment extends Fragment {
 		 //txtDescription.setTextSize(TypedValue.COMPLEX_UNIT_PT, 9);
 		 
 		 // Get Pokemon with selected move
-		 int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
+		 final int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
 		 
 		 for (int i=0; i < compatiblePokemonIds.length; i++) {
+			 
+			 final int pokemonId = compatiblePokemonIds[i];
 			 LinearLayout pokemonLayout = (LinearLayout)inflater.inflate( R.layout.evolution_state_image, null );
 			 FlowLayout.LayoutParams lp = new FlowLayout.LayoutParams(10, 10);
 			 pokemonLayout.setLayoutParams(lp);
 			 
 			 ImageView imgPokemon = (ImageView) pokemonLayout.findViewById(R.id.imgPokemonEvolution);
-			 Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(compatiblePokemonIds[i], Constants.POKEMON_ID_LENGTH) + ".png");
+			 Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH) + ".png");
 			 imgPokemon.setImageBitmap(bmp);
+			 
+			 imgPokemon.setOnClickListener(new OnClickListener() {
+			    public void onClick(View v) {
+			    	PokemonMachineActivity.pokemonDisplayFragment.update(PokemonMachineActivity.cache.getPokemon(pokemonId));
+					((PokemonMachineActivity)getActivity()).getViewPager().setCurrentItem(PokemonMachineActivity.FRAGMENT_POSITION_POKEMON, true);
+			    }
+			 });
 			 
 			 pokemonArea.addView(pokemonLayout);
 		 }

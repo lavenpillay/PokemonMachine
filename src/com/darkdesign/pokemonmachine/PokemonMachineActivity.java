@@ -32,7 +32,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 	
 	private static String TAG = PokemonMachineActivity.class.getName();
 	
-	public static final int FRAGMENT_POSITION_ITEMS = 0; 
+	public static final int FRAGMENT_POSITION_ITEMS = 0;
+	public static final int FRAGMENT_POSITION_POKEMON = 1;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -54,7 +55,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     
     public Pokemon currentSelectedPokemon;
     
-    private PokemonDisplayFragment pokemonDisplayFragment = null;
+    public static PokemonDisplayFragment pokemonDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
     public static ItemDisplayFragment itemDisplayFragment = null;
     private MoveDisplayFragment moveDisplayFragment = null;

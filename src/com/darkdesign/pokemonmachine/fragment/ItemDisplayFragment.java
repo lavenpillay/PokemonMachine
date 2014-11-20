@@ -72,9 +72,7 @@ public class ItemDisplayFragment extends Fragment {
 		    
 		Log.i(TAG, "onActivityCreated() - Called");
 		
-		// Handle Pokemon List
-		String[] names = PokemonMachineActivity.db.getItemNames();
-		itemsListAdapter = new SimpleItemListAdapter(getActivity(), names);
+		
 		
 		//adapter.getFilter().filter("Sand");
 	}
@@ -95,7 +93,9 @@ public class ItemDisplayFragment extends Fragment {
 	   filterText = (EditText) view.findViewById(R.id.txtFilter);
 	   filterText.addTextChangedListener(filterTextWatcher);
 	   
-	   
+	// Handle Pokemon List
+			String[] names = PokemonMachineActivity.db.getItemNames();
+			itemsListAdapter = new SimpleItemListAdapter(getActivity(), names);
 	   
 		
 	   ListView listView = (ListView) view.findViewById(R.id.plist);
