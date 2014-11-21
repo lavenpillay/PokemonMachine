@@ -12,11 +12,12 @@
     <string name="move_selector_prompt">Filter by</string>
     
     <string-array name="move_selectors">
-        <item>filter by#8230;</item>
+        <item>All Moves</item>
         <item>Bug</item>
 	    <item>Dark</item> 
 	    <item>Dragon</item>
 	    <item>Electric</item>
+	    <item>Fairy</item>
 	    <item>Fighting</item>
 	    <item>Fire</item>
 	    <item>Flying</item>

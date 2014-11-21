@@ -129,11 +129,11 @@ public class Util {
 		int index = 0;
 		boolean valueFound = false;
 		
-		while (!valueFound) {
-			if (array[index].equalsIgnoreCase(value)) {
+		for (int i=0; i < array.length; i++) {
+			if (array[i].equalsIgnoreCase(value)) {
+				index = i;
 				break;
 			}
-			index++;
 		}
 		
 		return index;

@@ -67,7 +67,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        forceDatabaseReload(this);
+        //forceDatabaseReload(this);
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);

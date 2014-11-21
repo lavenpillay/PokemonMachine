@@ -3,9 +3,7 @@ package com.darkdesign.pokemonmachine.adapter;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,43 +11,38 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
-import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.helper.Constants;
+import com.darkdesign.pokemonmachine.helper.Parser;
 
-public class SimpleMoveListAdapter extends ArrayAdapter<String> {
+public class SimpleMoveListAdapter extends ArrayAdapter<Move> {
 	private final String TAG = SimpleMoveListAdapter.class.getName();
 
 	private Context context;
-	private String[] values;
-	
+	private ArrayList<Move> moveList;
 	private AssetHelper assetHelper;
-	private SharedPreferences applicationSettings;
 	
-	private ArrayList<Move> moves;
-
-	public SimpleMoveListAdapter(Context context, String[] values) {
-		super(context, R.layout.list_item_move_main, values);
+	public SimpleMoveListAdapter(Context context, ArrayList<Move> moves) {
+	    super(context, R.layout.list_item_move, moves);
 	    this.context = context;
-	    this.values = values;
-	    
+	    this.moveList = moves;
 	    assetHelper = new AssetHelper(context);
-	    this.moves = PokemonMachineActivity.cache.getAllMoves();
 	}
-
+	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		
-		applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)context);
+		//applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)context);
 		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.list_item_move_main, parent, false);
 		
-		String name = this.getItem(position);
-		int moveId = Util.arrayIndexOf(values, name);
-		Move move = moves.get(moveId);
+		//String name = this.getItem(position).get;
+		//int moveId = Util.arrayIndexOf(moveNames, name);
+		Move move = moveList.get(position);
+
 		
 		// Set Name
 		TextView nameTextView = (TextView) rowView.findViewById(R.id.list_item_name);
@@ -60,7 +53,7 @@ public class SimpleMoveListAdapter extends ArrayAdapter<String> {
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
-		nameTextView.setText(name);
+		nameTextView.setText(move.getName());
 		powerTextView.setText(String.valueOf(move.getPower()));
 		ppTextView.setText(String.valueOf(move.getPP()));
 		accuracyTextView.setText(String.valueOf(move.getAccuracy()));
@@ -86,6 +79,12 @@ public class SimpleMoveListAdapter extends ArrayAdapter<String> {
 		
 	    return rowView;
 	}
-	
-	
+
+	public void setMoveList(ArrayList<Move> moveList) {
+		this.moveList = moveList;
+	}
+
+	public ArrayList<Move> getMoveList() {
+		return moveList;
+	}
 }

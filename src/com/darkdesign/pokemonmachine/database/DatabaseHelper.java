@@ -85,7 +85,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Move> getAllMoves() {
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	
-    	String queryMoves = "SELECT id, identifier, type_id, power, pp, accuracy, priority, target_id, damage_class_id, effect_id, effect_chance FROM moves ";
+    	String queryMoves = "SELECT id, identifier, type_id, power, pp, accuracy, priority, target_id, damage_class_id, effect_id, effect_chance FROM moves ORDER BY id ASC ";
         Cursor cursorMoves = db.rawQuery(queryMoves, null);
     	
         while (cursorMoves.moveToNext()) {
@@ -162,6 +162,23 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
         
     	return pokemonIds;
+    }
+    
+    public int[] getMoveIdsByType(int typeId) {
+    	ArrayList<Move> movesofType = new ArrayList<Move>();
+    	
+    	String movesQuery = "SELECT id FROM moves WHERE type_id = " + typeId;
+        Cursor movesCursor = db.rawQuery(movesQuery, null);
+        
+        int totalMoves = movesCursor.getCount();
+        int[] moveIds = new int[totalMoves];
+        int index = 0;
+        
+        while(movesCursor.moveToNext()) {
+        	moveIds[index++] = movesCursor.getInt(0);
+        }
+        
+    	return moveIds;
     }
 
     /**
@@ -472,8 +489,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	item.setId(cursorItems.getInt(0));
         	item.setName(cursorItems.getString(2));
         	item.setCost(cursorItems.getString(3));
-        	item.setDescription("");
         	item.setIdentifier(cursorItems.getString(4));
+
+        	item.setDescription("");
         	
         	// Get category information
         	ItemCategory itemCategory = null;
@@ -573,7 +591,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor cursorTypes = db.rawQuery(queryTypes, null);
         
         while (cursorTypes.moveToNext()) {
-        	typeIdByName.put(cursorTypes.getString(1), cursorTypes.getInt(0));
+        	typeIdByName.put(Util.toTitleCase(cursorTypes.getString(1)), cursorTypes.getInt(0));
         }
     	
     	return typeIdByName;
@@ -587,7 +605,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor cursorTypes = db.rawQuery(queryTypes, null);
         
         while (cursorTypes.moveToNext()) {
-        	typeNameById.put(cursorTypes.getInt(0), cursorTypes.getString(1));
+        	typeNameById.put(cursorTypes.getInt(0), Util.toTitleCase(cursorTypes.getString(1)));
         }
     	
     	return typeNameById;

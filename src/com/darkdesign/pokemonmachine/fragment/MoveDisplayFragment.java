@@ -1,11 +1,14 @@
 package com.darkdesign.pokemonmachine.fragment;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.app.Fragment;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.shapes.ArcShape;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
@@ -18,11 +21,13 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
@@ -30,6 +35,7 @@ import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
@@ -46,7 +52,10 @@ public class MoveDisplayFragment extends Fragment {
 	private SharedPreferences applicationSettings;
 	private LayoutInflater inflater;
 	
-	public static SimpleMoveListAdapter movesListAdapter;
+	ArrayList<Move> allMoves;
+	ArrayList<Move> movesList;
+	
+	public SimpleMoveListAdapter movesListAdapter;
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 		public void afterTextChanged(Editable s) {
@@ -75,8 +84,16 @@ public class MoveDisplayFragment extends Fragment {
 		    
 		Log.i(TAG, "onActivityCreated() - Called");
 		
+		this.allMoves = PokemonMachineActivity.cache.getAllMoves();
+		
 		//adapter.getFilter().filter("Sand");
 	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+	};
 	
 	
 	 @Override
@@ -95,8 +112,8 @@ public class MoveDisplayFragment extends Fragment {
 		 filterText.addTextChangedListener(filterTextWatcher);
    
 		 // Handle List
-		 String[] moveNames = PokemonMachineActivity.cache.getAllMoveNames();
-		 movesListAdapter = new SimpleMoveListAdapter(getActivity(), moveNames);
+		 movesList = PokemonMachineActivity.db.getAllMoves();
+		 movesListAdapter = new SimpleMoveListAdapter(getActivity(), movesList);
 	
 		 ListView listView = (ListView) view.findViewById(R.id.mlist);
 		 listView.setAdapter(movesListAdapter);
@@ -108,12 +125,16 @@ public class MoveDisplayFragment extends Fragment {
 
 				Log.i(TAG, "Item Clicked");
 
-				String nameToCheck = (String) parent.getItemAtPosition(position);
-				int moveId = Util.arrayIndexOf(PokemonMachineActivity.cache.getAllMoveNames(), nameToCheck); // because of zero-index
-				update(PokemonMachineActivity.cache.getAllMoves().get(moveId));
+				//String nameToCheck = (String) parent.getItemAtPosition(position);
+				//int moveId = Util.arrayIndexOf(PokemonMachineActivity.cache.getAllMoveNames(), nameToCheck); // because of zero-index
+				//update(allMoves.get(moveId));
+				update((Move) parent.getItemAtPosition(position));
 
 			 }
 		 });
+		 
+		 TextView txtMoveCount = (TextView) view.findViewById(R.id.txtMoveCount);
+		 txtMoveCount.setText(String.valueOf(movesList.size()));
    
 		 ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
 
@@ -124,7 +145,43 @@ public class MoveDisplayFragment extends Fragment {
 				 edtName.setText("");
 			 }
 		 });
-   
+		 
+		Spinner spnMovesetSelector = (Spinner) view.findViewById(R.id.spnMoveSetSelector);
+		spnMovesetSelector.setOnItemSelectedListener(new OnItemSelectedListener() {
+		    @Override
+		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		    	movesList.clear();
+		    	
+		        if (position != 0) {
+		        	
+		        	String[] movesetNames = getResources().getStringArray(R.array.move_selectors);
+		        	int typeId = PokemonMachineActivity.cache.getTypeIdByName(movesetNames[position]);
+		        	int[] moveIds = PokemonMachineActivity.db.getMoveIdsByType(typeId);
+		        	
+		        	
+		        	ArrayList<Move> movesByType = new ArrayList<Move>();
+		        	for (int i=0; i < moveIds.length; i++) {
+		        		movesByType.add(allMoves.get(moveIds[i] - 1));
+		        	}
+		        	movesList.addAll(movesByType);
+		        } else {
+		        	movesList.addAll(allMoves);
+		        }
+		        	
+		        movesListAdapter.notifyDataSetChanged();
+
+		        TextView txtMoveCount = (TextView) view.findViewById(R.id.txtMoveCount);
+		        txtMoveCount.setText(String.valueOf(movesList.size()));
+		    }
+
+
+		    @Override
+		    public void onNothingSelected(AdapterView<?> parentView) {
+		        // your code here
+		    }
+
+		});
+
 		 listView.setFastScrollEnabled(Config.FAST_SCROLL);
 		 listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
 		 listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
@@ -133,6 +190,18 @@ public class MoveDisplayFragment extends Fragment {
 		 //update(PokemonMachineActivity.cache.getItemById(0));
 
 		 return view;
+	 }
+	 
+	 public void updateMovesList(String[] moveNames) {
+		 Log.d(TAG, "ATTEMPTING TO UPDATE MOVESLIST");
+
+		 //ListView listView = (ListView) view.findViewById(R.id.mlist);
+		 //listView.setAdapter(null);
+		 //listView.invalidate();
+		 
+		 //SimpleMoveListAdapter movesListAdapter2 = new SimpleMoveListAdapter(getActivity(), moveNames);
+		 //listView.setAdapter(movesListAdapter2);
+		 //listView.invalidate();
 	 }
 	 
 	 public void update(Move move) {
@@ -160,8 +229,13 @@ public class MoveDisplayFragment extends Fragment {
 		 txtEffectLong.setText(Html.fromHtml(getFormattedLongEffect(move)));
 		 //txtDescription.setTextSize(TypedValue.COMPLEX_UNIT_PT, 9);
 		 
+		 moveInformationArea.addView(moveEffectLayout);
+		 
 		 // Get Pokemon with selected move
 		 final int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
+		 
+		 TextView txtPokemonCount = (TextView) view.findViewById(R.id.txtPokemonCount);
+		 txtPokemonCount.setText(String.valueOf(compatiblePokemonIds.length));
 		 
 		 for (int i=0; i < compatiblePokemonIds.length; i++) {
 			 
@@ -174,7 +248,7 @@ public class MoveDisplayFragment extends Fragment {
 			 Bitmap bmp = assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH) + ".png");
 			 imgPokemon.setImageBitmap(bmp);
 			 
-			 TextView txtName = (TextView) view.findViewById(R.id.txtPokemonEvolutionName);
+			 TextView txtName = (TextView) pokemonLayout.findViewById(R.id.txtPokemonEvolutionName);
 			 txtName.setText(PokemonMachineActivity.cache.getPokemon(pokemonId).getName());
 			 
 			 imgPokemon.setOnClickListener(new OnClickListener() {
@@ -186,27 +260,8 @@ public class MoveDisplayFragment extends Fragment {
 			 
 			 pokemonArea.addView(pokemonLayout);
 		 }
-		
-		 moveInformationArea.addView(moveEffectLayout);
 	 }
-	 
-	/**
-	 * 
-	 * @param moveLearnType
-	 */
-	private void updateMoveList() {
-		/*
-		ArrayList<Move> moveToDisplay = pokemon.getMovesByType(moveLearnType);
-		
-		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
-			moveSubset = Util.sortMovesByLevel(moveSubset);
-		}
-		
-		PokemonDisplayFragment.movesData.clear();
-		PokemonDisplayFragment.movesData.addAll(moveSubset);
-		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
-		*/
-	}
+
 	
 	private String getFormattedLongEffect(Move move) {
 		String htmlString = move.getEffectLong();
