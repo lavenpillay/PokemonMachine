@@ -51,9 +51,10 @@ public class MoveDisplayFragment extends Fragment {
 	private DatabaseHelper db;
 	private SharedPreferences applicationSettings;
 	private LayoutInflater inflater;
+	private ListView mList;
 	
-	ArrayList<Move> allMoves;
-	ArrayList<Move> movesList;
+	private ArrayList<Move> allMoves;
+	public static ArrayList<Move> movesList;
 	
 	public SimpleMoveListAdapter movesListAdapter;
 	
@@ -69,6 +70,7 @@ public class MoveDisplayFragment extends Fragment {
 	    	
 	    	if (s.length() > 0) {
 	    		movesListAdapter.getFilter().filter(s);
+	    		mList.invalidate();
 	    	} else if (s.length() == 0) {
 	    		movesListAdapter.getFilter().filter("");
 	    	}
@@ -102,7 +104,7 @@ public class MoveDisplayFragment extends Fragment {
 		 
 		 this.inflater = inflater;
 		 view = inflater.inflate(R.layout.fragment_moves, container, false);
-	   
+	     mList = (ListView) view.findViewById(R.id.mlist); 
 
 		 this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
    
@@ -150,7 +152,7 @@ public class MoveDisplayFragment extends Fragment {
 		spnMovesetSelector.setOnItemSelectedListener(new OnItemSelectedListener() {
 		    @Override
 		    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		    	movesList.clear();
+		    	movesListAdapter.clear();
 		    	
 		        if (position != 0) {
 		        	
@@ -163,15 +165,16 @@ public class MoveDisplayFragment extends Fragment {
 		        	for (int i=0; i < moveIds.length; i++) {
 		        		movesByType.add(allMoves.get(moveIds[i] - 1));
 		        	}
-		        	movesList.addAll(movesByType);
+		        	//movesList.addAll(movesByType);
+		        	movesListAdapter.addAll(movesByType);
 		        } else {
-		        	movesList.addAll(allMoves);
+		        	movesListAdapter.addAll(allMoves);
 		        }
 		        	
 		        movesListAdapter.notifyDataSetChanged();
 
 		        TextView txtMoveCount = (TextView) view.findViewById(R.id.txtMoveCount);
-		        txtMoveCount.setText(String.valueOf(movesList.size()));
+		        txtMoveCount.setText(String.valueOf(movesListAdapter.getCount()));
 		    }
 
 
