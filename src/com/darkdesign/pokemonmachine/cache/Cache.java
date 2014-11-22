@@ -8,6 +8,7 @@ import android.app.Activity;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Berry;
+import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
@@ -25,6 +26,7 @@ public class Cache {
 	private static ArrayList<Type> TYPE_LIST_CACHE;
 	private static ArrayList<Move> MOVE_LIST_CACHE;
 	private static int[][] TYPE_EFFICACY_MATRIX;
+	private static ArrayList<EggGroup> EGG_GROUP_CACHE;
 	
 	private static HashMap<String,Integer> TYPE_ID_BY_NAME;
 	private static HashMap<Integer,String> TYPE_NAME_BY_ID;
@@ -58,6 +60,9 @@ public class Cache {
 		
 		// Games
 		GAME_LIST_CACHE = db.getVideoGameList();
+		
+		// Egg Groups
+		EGG_GROUP_CACHE = db.getEggGroups();
 		
 		// Items
 		buildItemMaps();
@@ -117,6 +122,10 @@ public class Cache {
 		namesArray = namesList.toArray(namesArray);
 		
 		return namesArray;
+	}
+	
+	public ArrayList<EggGroup> getEggGroups() {
+		return EGG_GROUP_CACHE;
 	}
 	
 	public ArrayList<VideoGame> getGameList() {

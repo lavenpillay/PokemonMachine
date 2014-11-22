@@ -479,7 +479,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Item> getItems() {
     	ArrayList<Item> itemsList = new ArrayList<Item>();
     	
-    	String queryItem = "SELECT i.id AS id, i.category_id AS category_id, n.name AS name, i.cost AS cost, i.identifier AS identifier FROM items i JOIN item_names n ON i.id = n.item_id WHERE n.local_language_id = 9 ORDER BY i.id ASC";
+    	String queryItem = "SELECT i.id AS id, i.category_id AS category_id, n.name AS name, i.cost AS cost, i.identifier AS identifier, f.flavor_text AS description FROM items i JOIN item_names n ON i.id = n.item_id JOIN item_flavor_text f ON i.id = f.item_id WHERE n.local_language_id = 9 ORDER BY i.id ASC;";
     	
         Cursor cursorItems = db.rawQuery(queryItem, null);
         
@@ -491,7 +491,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	item.setCost(cursorItems.getString(3));
         	item.setIdentifier(cursorItems.getString(4));
 
-        	item.setDescription("");
+        	item.setDescription(cursorItems.getString(5));
         	
         	// Get category information
         	ItemCategory itemCategory = null;
@@ -666,6 +666,10 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	return gameList;
     }
     
+    /**
+     * 
+     * @return
+     */
     public ArrayList<EggGroup> getEggGroups() {
     	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
     	
@@ -674,10 +678,34 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor cursorEggGroups = db.rawQuery(queryEggGroups, null);
         
         while (cursorEggGroups.moveToNext()) {
-        	eggGroupList.add(new EggGroup(cursorEggGroups.getInt(0), cursorEggGroups.getString(1), cursorEggGroups.getString(2)));
+        	int id = cursorEggGroups.getInt(0);
+        	String identifier = cursorEggGroups.getString(1);
+        	String name = cursorEggGroups.getString(2);
+        	int[] pokemonIds = getPokemonIdsForEggGroup(id);
+        	
+        	EggGroup eggGroup = new EggGroup(id, identifier, name);
+        	eggGroup.setPokemonIds(pokemonIds);
+        	eggGroupList.add(eggGroup);
         }
     	
     	return eggGroupList;
+    }
+    
+    public int[] getPokemonIdsForEggGroup(int eggGroupId) {
+    	int[] pokemonIds;
+    	
+    	String queryEggGroupIds = "SELECT species_id FROM pokemon_egg_groups WHERE egg_group_id = " + eggGroupId;
+        
+        Cursor cursorEggGroups = db.rawQuery(queryEggGroupIds, null);
+        
+        pokemonIds = new int[cursorEggGroups.getCount()];
+        int index = 0;
+        
+        while (cursorEggGroups.moveToNext()) {
+        	pokemonIds[index++] = cursorEggGroups.getInt(0);
+        }
+    	
+    	return pokemonIds;
     }
     
 }

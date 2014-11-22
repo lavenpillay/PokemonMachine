@@ -38,8 +38,8 @@ public class TypeMatchupPopup extends PopupWindow {
 	
 	private int currentHighlightedRow = - 1;
 
-	int popupWidth = 650;
-	int popupHeight = 700;
+	int popupWidth = 870;
+	int popupHeight = 1150;
 	int popupHeightOffset = 20;
 	
 	public TypeMatchupPopup() {

@@ -20,6 +20,7 @@ import android.view.View;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
@@ -113,7 +114,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         }
         
         // Set to default Tab
-        mViewPager.setCurrentItem(2);
+        mViewPager.setCurrentItem(1);
 
     }
     
@@ -181,6 +182,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         if (id == R.id.action_settings) {
         	showSettings();
             return true;
+        } else if (id == R.id.action_type_table) {
+        	PopupManager.showTypeWeaknessPopup(this);
         }
         return super.onOptionsItemSelected(item);
     }

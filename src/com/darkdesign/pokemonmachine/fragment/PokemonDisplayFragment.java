@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -35,6 +36,7 @@ import android.widget.Spinner;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
@@ -178,6 +180,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
       
 				 String name = pokemonListAdapter.getItem(position);
 				 int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+					
 				 update(PokemonMachineActivity.cache.getPokemon(pokemonId));
 			 }
 		 });
@@ -300,6 +303,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 }
 	 
 	public void update(final Pokemon pokemon) {
+		
+		
 	 	((PokemonMachineActivity) getActivity()).currentSelectedPokemon = pokemon;
 			 
 		updateBasicInformation(pokemon);
@@ -487,13 +492,31 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     //txtEggGroupContent.setText("--List--");
 	     //txtEggGroupContent.setText("");
 	     
-	     Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
+	     final Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
 		 // Create an ArrayAdapter using the string array and a default spinner layout
 	     EggGroupSpinnerAdapter adapter = new EggGroupSpinnerAdapter(getActivity(), R.layout.simple_spinner_item, pokemon.getEggGroups());
 		 // Specify the layout to use when the list of choices appears
 		// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		 // Apply the adapter to the spinner
 		 spinner.setAdapter(adapter);
+		 
+		 spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+		        @Override
+		        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+		            // TODO Auto-generated method stub
+		            String  mselection = spinner.getSelectedItem().toString();    
+		            Log.d(TAG, "SELECTED: " + mselection);
+		            
+		            PopupManager.showEggGroupPopup(getActivity(), spinner.getSelectedItemPosition() + 1);
+		            /**** do your code*****/
+		        }
+		        
+		        @Override
+		        public void onNothingSelected(AdapterView<?> arg0) {
+		            // TODO Auto-generated method stub
+		        //  
+		        }
+		    });
 	     
 	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
 	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);

@@ -106,19 +106,9 @@ public class ItemDisplayFragment extends Fragment {
 	        public void onItemClick(AdapterView<?> parent, View view,
 	                int position, long id) {
 
-	          Log.i(TAG, "Item Clicked");
-
-	          // TODO re-implment the listener
-	          /*
-	  		  OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) this;
-	  		  String name = pokemonListAdapter.getItem(position);
-	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
-	  		  */	        
-	          
 	         String nameToCheck = (String) parent.getItemAtPosition(position);
 	         int itemId = Util.arrayIndexOf(PokemonMachineActivity.cache.getItemNames(), nameToCheck) + 1; // because of zero-index
-	         update(PokemonMachineActivity.cache.getItemById(itemId - 1));
+	         update(PokemonMachineActivity.cache.getItemById(itemId));
 	       }
 	    });
 	   

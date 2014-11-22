@@ -157,4 +157,23 @@ public class PopupManager {
 		// Displaying the popup in the middle of the screen
 		popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 	}
+	
+	/**
+	 * 
+	 * @param context
+	 */
+	public static void showEggGroupPopup(final Activity context, int eggGroupId) {
+		// Inflate the popup_layout.xml
+		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.pokemonEggGroupView);
+		
+		LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = layoutInflater.inflate(R.layout.pokemon_egg_group_view, viewGroup);
+		   
+		// Creating the PopupWindow
+		final PokemonEggGroupsPopup popup = new PokemonEggGroupsPopup(context, layout, eggGroupId);
+		popup.setContentView(layout);
+		 
+		// Displaying the popup in the middle of the screen
+		popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
+	}
 }
