@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,60 +15,13 @@ import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 
-public class SimpleMoveListAdapter extends ArrayAdapter<Move> //implements Filterable 
+public class SimpleMoveListAdapter extends ArrayAdapter<Move> 
 {
 	private final String TAG = SimpleMoveListAdapter.class.getName();
 
 	private Context context;
 	private ArrayList<Move> moveList;
 	private AssetHelper assetHelper;
-	
-	/*
-	Filter myFilter = new Filter() {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-         FilterResults filterResults = new FilterResults();   
-         ArrayList<Move> tempList = new ArrayList<Move>();
-         //constraint is the result from text you want to filter against. 
-         //objects is your data set you will filter from
-         if(constraint != null && moveList != null) {
-            int length = moveList.size();
-            int i=0;
-			while(i<length){
-				Move move = moveList.get(i);
-				  
-				if (move.getName().toLowerCase().startsWith(String.valueOf(constraint))) {
-					tempList.add(move);
-				}
-				
-				i++;
-			}
-			//following two lines is very important
-			//as publish result can only take FilterResults objects
-			filterResults.values = tempList;
-			filterResults.count = tempList.size();
-          }
-          return filterResults;
-      }
-
-      @SuppressWarnings("unchecked")
-      @Override
-      protected void publishResults(CharSequence contraint, FilterResults results) {
-    	  
-          moveList = (ArrayList<Move>) results.values;
-          if (results.count > 0) {
-        	  notifyDataSetChanged();
-          } else {
-              notifyDataSetInvalidated();
-          }  
-      }
-     };
-     
-	@Override
-	public Filter getFilter() {
-		return myFilter;
-	}
-	*/
 	
 	public SimpleMoveListAdapter(Context context, ArrayList<Move> moves) {
 	    super(context, R.layout.list_item_move, moves);
@@ -86,10 +38,6 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move> //implements Filte
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.list_item_move_main, parent, false);
 		
-		//String name = this.getItem(position).get;
-		//int moveId = Util.arrayIndexOf(moveNames, name);
-		int moveId = getItem(position).getId();
-		Log.d(TAG, "MOVE ID: " + moveId);
 		Move move = getItem(position);
 		
 		// Set Name

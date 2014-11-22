@@ -60,17 +60,17 @@ public class MoveDisplayFragment extends Fragment {
 	
 	private TextWatcher filterTextWatcher = new TextWatcher() {
 		public void afterTextChanged(Editable s) {
+			
 	    }
 
 	    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+	    	//updateMoveCounter();
 	    }
 
 	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-	    	Log.d(TAG, "Filter Text Changed" + s);
-	    	
 	    	if (s.length() > 0) {
 	    		movesListAdapter.getFilter().filter(s);
-	    		mList.invalidate();
+	    		//mList.invalidate();
 	    	} else if (s.length() == 0) {
 	    		movesListAdapter.getFilter().filter("");
 	    	}
@@ -125,18 +125,13 @@ public class MoveDisplayFragment extends Fragment {
 			 public void onItemClick(AdapterView<?> parent, View view,
 					 int position, long id) {
 
-				Log.i(TAG, "Item Clicked");
-
-				//String nameToCheck = (String) parent.getItemAtPosition(position);
-				//int moveId = Util.arrayIndexOf(PokemonMachineActivity.cache.getAllMoveNames(), nameToCheck); // because of zero-index
-				//update(allMoves.get(moveId));
-				update((Move) parent.getItemAtPosition(position));
+				 update((Move) parent.getItemAtPosition(position));
 
 			 }
 		 });
 		 
-		 TextView txtMoveCount = (TextView) view.findViewById(R.id.txtMoveCount);
-		 txtMoveCount.setText(String.valueOf(movesList.size()));
+		 // Update Move Counter
+		 updateMoveCounter();
    
 		 ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
 
@@ -190,22 +185,15 @@ public class MoveDisplayFragment extends Fragment {
 		 listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
    
 		 // Select default MOVE
-		 //update(PokemonMachineActivity.cache.getItemById(0));
+		 update(movesListAdapter.getItem(0));
 
 		 return view;
 	 }
 	 
-	 public void updateMovesList(String[] moveNames) {
-		 Log.d(TAG, "ATTEMPTING TO UPDATE MOVESLIST");
-
-		 //ListView listView = (ListView) view.findViewById(R.id.mlist);
-		 //listView.setAdapter(null);
-		 //listView.invalidate();
-		 
-		 //SimpleMoveListAdapter movesListAdapter2 = new SimpleMoveListAdapter(getActivity(), moveNames);
-		 //listView.setAdapter(movesListAdapter2);
-		 //listView.invalidate();
-	 }
+	private void updateMoveCounter() {
+		TextView txtMoveCount = (TextView) view.findViewById(R.id.txtMoveCount);
+		txtMoveCount.setText(String.valueOf(movesListAdapter.getCount()));
+	}
 	 
 	 public void update(Move move) {
 		 LinearLayout moveInformationArea = (LinearLayout) view.findViewById(R.id.moveInformationArea);
@@ -219,10 +207,27 @@ public class MoveDisplayFragment extends Fragment {
 		
 		 TextView txtMoveName = (TextView) moveNameLayout.findViewById(R.id.heading);
 		 txtMoveName.setText(move.getName());
+		 TextView txtEffectShort = (TextView) moveNameLayout.findViewById(R.id.content);
+		 txtEffectShort.setText(move.getEffectShort());
 		 
 		 moveInformationArea.addView(moveNameLayout);
 		 
-		 // Description
+		 // Stats display
+		 LinearLayout statsLayout = (LinearLayout)inflater.inflate( R.layout.move_stats_icons_display, null );
+		 
+		 String power = (move.getPower() != 0) ? String.valueOf(move.getPower()) : "n/a";
+		 String accuracy = (move.getAccuracy() != 0) ? String.valueOf(move.getAccuracy()) : "n/a";
+		 
+		 TextView txtMovePower = (TextView) statsLayout.findViewById(R.id.txtMovePower);
+		 txtMovePower.setText(power);
+		 TextView txtMoveAccuracy = (TextView) statsLayout.findViewById(R.id.txtMoveAccuracy);
+		 txtMoveAccuracy.setText(accuracy);
+		 TextView txtMovePowerPoints = (TextView) statsLayout.findViewById(R.id.txtMovePowerPoints);
+		 txtMovePowerPoints.setText(String.valueOf(move.getPP()));
+		 
+		 moveInformationArea.addView(statsLayout);
+		 
+		 // Detailed Description
 		 LinearLayout moveEffectLayout = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
 			
 		 TextView txtEffectTitle = (TextView) moveEffectLayout.findViewById(R.id.heading);

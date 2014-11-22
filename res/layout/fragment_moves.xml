@@ -184,13 +184,14 @@
 	
     <ScrollView 
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent">
 		
         <com.darkdesign.pokemonmachine.layout.FlowLayout
             android:id="@+id/pokemonArea"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp">
+            android:paddingTop="25dp"
+            android:paddingLeft="25dp">
         
         </com.darkdesign.pokemonmachine.layout.FlowLayout>
     </ScrollView>

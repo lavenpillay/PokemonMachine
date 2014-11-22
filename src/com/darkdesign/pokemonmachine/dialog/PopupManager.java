@@ -24,9 +24,9 @@ public class PopupManager {
 	}
 
 	// The method that displays the popup.
-	public static void showPopup(final Activity context, Point p, String heading, String content) {
-	   int popupWidth = 200;
-	   int popupHeight = 250;
+	public static void showPopup(final Activity context, Point p, String heading, String content, int width, int height) {
+	   int popupWidth = width;
+	   int popupHeight = height;
 	 
 	   // Inflate the popup_layout.xml
 	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
@@ -154,14 +154,7 @@ public class PopupManager {
 		final PokemonDetailedViewPopup popup = new PokemonDetailedViewPopup(context, layout, pokemonId);
 		popup.setContentView(layout);
 		 
-		// Positioning
-		int width = Util.getScreenWidth(context);
-		int height = Util.getScreenHeight(context);
-		
-		int posX = (width / 2) - (popup.getPopupWidth() / 2);
-		int posY = (height / 2) - (popup.getPopupHeight() / 2);
-		
 		// Displaying the popup in the middle of the screen
-		popup.showAtLocation(layout, Gravity.NO_GRAVITY, posX, posY);
+		popup.showAtLocation(layout, Gravity.CENTER, 0, 0);
 	}
 }

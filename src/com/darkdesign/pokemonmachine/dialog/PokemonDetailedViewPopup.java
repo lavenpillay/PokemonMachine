@@ -26,8 +26,10 @@ public class PokemonDetailedViewPopup extends PopupWindow {
 
 	public PokemonDetailedViewPopup(Context context, View layout, int pokemonId) {
 		super(context);
-		setWidth(popupWidth);
-		setHeight(popupHeight);
+		//setWidth(popupWidth);
+		//setHeight(popupHeight);
+		setWidth(LinearLayout.LayoutParams.WRAP_CONTENT);
+		setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
 		setFocusable(true);
 		
 		// Clear the default translucent background

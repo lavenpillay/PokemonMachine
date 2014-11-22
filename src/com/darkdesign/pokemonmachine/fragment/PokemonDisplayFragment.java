@@ -374,7 +374,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 			@Override
 			public void onClick(View v) {
-				Log.v("ART", "Clicked Pokemon Image !");
 				PopupManager.showPokemondetailPopup((Activity) v.getContext(), pokemon.getId());
 			}
 		});
@@ -780,7 +779,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				       if (p != null) {
 				    	   String heading = "Level Up with Minimum Happiness";
 				    	   String content = "This Pokemon will evolve when it levels up with a minimum Happiness of " + happiness;
-				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				    	   PopupManager.showPopup(getActivity(), p, heading, content, 400, 250);
 				       }
 				     }
 				   });				
@@ -805,7 +804,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				       if (p != null) {
 				    	   String heading = "Level Up";
 				    	   String content = "This Pokemon will evolve when it reaches level " + level;
-				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				    	   PopupManager.showPopup(getActivity(), p, heading, content, 400, 250);
 				       }
 				     }
 				   });
@@ -845,7 +844,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				    	   heading = "Trade with Held Item";
 					       content = "This Pokemon will evolve when it is traded while holding " + Util.toTitleCase(itemName);
 				    	   
-				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				    	   PopupManager.showPopup(getActivity(), p, heading, content, 400, 250);
 				       }
 				     }
 				   });				
@@ -867,7 +866,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				       if (p != null) {
 				    	   String heading = "Trade";
 				    	   String content = "This Pokemon will evolve when it is traded";
-				    	   PopupManager.showPopup(getActivity(), p, heading, content);
+				    	   PopupManager.showPopup(getActivity(), p, heading, content, 400, 200);
 				       }
 				     }
 				   });				
@@ -905,7 +904,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			    	   content = "This Pokemon will evolve when a " + itemName + " is used on it.";
 		    	   }
 		    	   
-		    	   PopupManager.showPopup(getActivity(), p, heading, content);
+		    	   PopupManager.showPopup(getActivity(), p, heading, content, 400, 250);
 		       }
 		     }
 		   });
