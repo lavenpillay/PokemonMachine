@@ -122,7 +122,8 @@ public class PopupManager {
 		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessGridLayout);
 		LayoutInflater layoutInflater = (LayoutInflater) context
 		   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		GridLayout layout = (GridLayout) layoutInflater.inflate(R.layout.type_weakness_grid_popup_layout, viewGroup);
+		//GridLayout layout = (GridLayout) layoutInflater.inflate(R.layout.type_weakness_grid_popup_layout, viewGroup);
+		LinearLayout layout = (LinearLayout) layoutInflater.inflate(R.layout.type_weakness_table_popup_layout, viewGroup);
 		   
 		// Creating the PopupWindow
 		final TypeMatchupPopup popup = new TypeMatchupPopup(context, layout);

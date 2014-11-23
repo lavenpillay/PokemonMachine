@@ -18,17 +18,6 @@
 	   android:textAppearance="?android:attr/textAppearanceLarge" 
 	   android:layout_marginBottom="10dip"/>
 	
-	<!--
-	<TextView
-	   android:id="@+id/txtPopupContent"
-	   android:layout_marginTop="5dp"
-	   android:layout_width="fill_parent"
-	   android:layout_height="wrap_content"
-	   android:textColor="#DDDDDD"
-	   android:gravity="center_horizontal"
-	   android:text="" />
-	 -->
-
 	<ImageView
 	    android:id="@+id/headerAttackerType"
 	    android:layout_width="wrap_content"
@@ -48,13 +37,19 @@
 		    android:layout_gravity="center_vertical"
 		    android:src="@drawable/table_header_defendertype" />
 		
-		<TableLayout
-		    android:id="@+id/typeWeaknessTable"
-		    android:layout_width="500dp"
-		    android:layout_height="500dp"
-		    android:layout_below="@id/headerAttackerType">
-		
-		</TableLayout>
+		<GridLayout 
+		    android:id="@+id/typeWeaknessGridLayout"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:columnCount="19"
+		    android:rowCount="19"
+		    android:orientation="horizontal">
+		    
+		    <Space 
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"/>
+		    
+		</GridLayout>
 					
 	</LinearLayout>
 

@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
-import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Space;
 import android.widget.TableRow;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
@@ -19,7 +18,6 @@ import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
-import com.darkdesign.pokemonmachine.helper.Util;
 
 public class TypeMatchupPopup extends PopupWindow {
 	private final String TAG = TypeMatchupPopup.class.getName();
@@ -54,7 +52,7 @@ public class TypeMatchupPopup extends PopupWindow {
 	public TypeMatchupPopup(Activity context, View layout) {
 		super(context);
 		
-		this.layout = layout;
+		this.layout = (GridLayout) ((LinearLayout)layout).findViewById(R.id.typeWeaknessGridLayout);
 		setWidth(popupWidth);
 		setHeight(popupHeight);
 		setFocusable(true);
@@ -155,7 +153,7 @@ public class TypeMatchupPopup extends PopupWindow {
 	 */
 	private void buildTable(final Activity context, AssetHelper assetHelper, View layout) {
 
-		GridLayout gridLayout = (GridLayout) layout;
+		//GridLayout gridLayout = (GridLayout) layout;
 		
 		/*
 		// Add Top Header Row
@@ -176,7 +174,7 @@ public class TypeMatchupPopup extends PopupWindow {
 			typeImage.setClickable(true);
 			typeImage.setOnClickListener(new OnAttackTypeClickListener(this));
 			
-			gridLayout.addView(typeImage);
+			((GridLayout)this.layout).addView(typeImage);
 		}
 
 		
@@ -191,7 +189,7 @@ public class TypeMatchupPopup extends PopupWindow {
 			typeImage.setOnClickListener(new OnDefenderTypeClickListener(this));
 			
 			// Add to view
-			gridLayout.addView(typeImage);
+			((GridLayout)this.layout).addView(typeImage);
 			
 			for (int j=0; j < typeList.size(); j++) {
 				ImageView damageImage = new ImageView(context);
@@ -221,7 +219,7 @@ public class TypeMatchupPopup extends PopupWindow {
 				damageImage.setPadding(5, 5, 5, 5);
 				
 				// Add to view
-				gridLayout.addView(damageImage);
+				((GridLayout)this.layout).addView(damageImage);
 			}
 		}
 	}		

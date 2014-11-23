@@ -90,9 +90,9 @@ public final class R {
         public static final int water=0x7f02003d;
     }
     public static final class id {
-        public static final int action_search=0x7f0a0099;
-        public static final int action_settings=0x7f0a009b;
-        public static final int action_type_table=0x7f0a009a;
+        public static final int action_search=0x7f0a0098;
+        public static final int action_settings=0x7f0a009a;
+        public static final int action_type_table=0x7f0a0099;
         public static final int activity_splash_progress_bar=0x7f0a0002;
         public static final int additonalInfoArea=0x7f0a004d;
         public static final int baseStatsGraphArea=0x7f0a0030;
@@ -237,7 +237,6 @@ public final class R {
         public static final int txt_move_description=0x7f0a0060;
         public static final int typeWeaknessDialog=0x7f0a0095;
         public static final int typeWeaknessGridLayout=0x7f0a0094;
-        public static final int typeWeaknessTable=0x7f0a0098;
         public static final int type_efficacy=0x7f0a0043;
         public static final int type_efficacy_col1=0x7f0a006a;
         public static final int type_efficacy_col2=0x7f0a0071;
