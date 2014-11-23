@@ -11,28 +11,16 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.InputMethodManager;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TableLayout;
-import android.widget.TableRow;
+import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
-import com.darkdesign.pokemonmachine.R;
-import com.darkdesign.pokemonmachine.dialog.GameFilterDialog;
-import com.darkdesign.pokemonmachine.dialog.TypeMatchupPopup;
 import com.darkdesign.pokemonmachine.element.Move;
-import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
 import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
@@ -268,23 +256,34 @@ public class Util {
 	/**
 	 * 
 	 * @param image
-	 * @param rotation
+	 * @param rotationAngle
 	 * @param context
 	 * @return
 	 */
-	public static ImageView rotateImageView(ImageView image, int rotation, Context context) {
+	public static ImageView rotateImageView(ImageView image, int rotationAngle, Context context) {
+		/*
 		Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
 		
 		Matrix mat = new Matrix();
-		mat.postRotate(rotation);
+		mat.postRotate(rotationAngle);
 		Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
 		BitmapDrawable bmd = new BitmapDrawable(bMapRotate);
 		
 		ImageView rotatedImageView = new ImageView(context);
 		rotatedImageView.setImageBitmap(bMapRotate);
 		rotatedImageView.setImageDrawable(bmd);
+		*/
 		
-		return rotatedImageView;
+		//
+		
+		Matrix matrix = new Matrix();
+		image.setScaleType(ScaleType.MATRIX);   //required
+		int pivotX = image.getDrawable().getBounds().width()/2;
+		float pivotY = image.getDrawable().getBounds().height()/2;
+		matrix.postRotate((float) rotationAngle, pivotX, pivotY);
+		image.setImageMatrix(matrix);
+		
+		return image;
 	}
 
 	/**

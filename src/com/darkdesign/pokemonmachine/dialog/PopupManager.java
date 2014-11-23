@@ -8,11 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.layout.FlowLayout;
@@ -119,10 +119,10 @@ public class PopupManager {
 	 */
 	public static void showTypeWeaknessPopup(final Activity context) {
 		// Inflate the popup_layout.xml
-		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessDialog);
+		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.typeWeaknessGridLayout);
 		LayoutInflater layoutInflater = (LayoutInflater) context
 		   .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View layout = layoutInflater.inflate(R.layout.type_weakness_table_popup_layout, viewGroup);
+		GridLayout layout = (GridLayout) layoutInflater.inflate(R.layout.type_weakness_grid_popup_layout, viewGroup);
 		   
 		// Creating the PopupWindow
 		final TypeMatchupPopup popup = new TypeMatchupPopup(context, layout);

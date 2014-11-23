@@ -26,7 +26,9 @@ import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
+import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.preferences.SettingsFragment;
+import com.darkdesign.pokemonmachine.task.LoadingTask;
 
 
 public class PokemonMachineActivity extends Activity implements ActionBar.TabListener, OnBackStackChangedListener {
@@ -54,7 +56,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     public static DatabaseHelper db;
     public static Cache cache;
     
-    public Pokemon currentSelectedPokemon;
+    public static Pokemon currentSelectedPokemon;
     
     public static PokemonDisplayFragment pokemonDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
@@ -74,7 +76,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         db = new DatabaseHelper(this);
         
         // Create and Initialise Cache 
-        cache = new Cache(this);
+        cache = new Cache();
+        //cache = LoadingTask.cache;
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -273,7 +276,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 
         @Override
         public int getCount() {
-            return 4;
+            //return 4;
+        	return 3;
         }
 
         @Override
@@ -319,4 +323,35 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 
 	}
 
+	/**
+	 * 
+	 * @param view
+	 */
+	public void onMoveByLevelClick(View view) {
+		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
+	}
+	
+	/**
+	 * 
+	 * @param view
+	 */
+	public void onMoveByMachineClick(View view) {
+		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_MACHINE);
+	}
+
+	/**
+	 * 
+	 * @param view
+	 */
+	public void onMoveByEggClick(View view) {
+		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_EGG_MOVE);
+	}
+	
+	/**
+	 * 
+	 * @param view
+	 */
+	public void onMoveByTutorClick(View view) {
+		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_TUTOR);
+	}
 }

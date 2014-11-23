@@ -38,7 +38,7 @@ public class Cache {
 		return db;
 	}
 
-	public Cache(Activity mainActivity) {
+	public Cache() {
 		db = PokemonMachineActivity.db;
 		
 		// Pokemon

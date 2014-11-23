@@ -3,16 +3,15 @@ package com.darkdesign.pokemonmachine.dialog;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
-import android.widget.TableLayout;
+import android.widget.Space;
 import android.widget.TableRow;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
@@ -37,8 +36,10 @@ public class TypeMatchupPopup extends PopupWindow {
 	private int currentHighlightedColumn = -1;
 	
 	private int currentHighlightedRow = - 1;
+	
+	private View layout;
 
-	int popupWidth = 870;
+	int popupWidth = 1070;
 	int popupHeight = 1150;
 	int popupHeightOffset = 20;
 	
@@ -53,6 +54,7 @@ public class TypeMatchupPopup extends PopupWindow {
 	public TypeMatchupPopup(Activity context, View layout) {
 		super(context);
 		
+		this.layout = layout;
 		setWidth(popupWidth);
 		setHeight(popupHeight);
 		setFocusable(true);
@@ -74,11 +76,12 @@ public class TypeMatchupPopup extends PopupWindow {
 	 * @param column
 	 */
 	public void resetColumn(int column) {
-		attackTypeHeaders.getChildAt(column + 1).setBackgroundColor(0xffffffff);
+		GridLayout gridLayout = (GridLayout) layout;
+		gridLayout.getChildAt(column).setBackgroundColor(0xffffffff);
 		
-		for (int i=0; i < tableRows.length; i++) {
-			if (i != currentHighlightedRow) {
-				ImageView cellImage = (ImageView) tableRows[i].getChildAt(column+1);
+		for (int i=0; i < gridLayout.getRowCount(); i++) {
+			if (i != (currentHighlightedRow + 1)) {
+				ImageView cellImage = (ImageView) gridLayout.getChildAt(((i * gridLayout.getRowCount()) + (column + 1)));
 				cellImage.setBackgroundResource(R.drawable.simple_grey_border);
 			}
 		}
@@ -89,11 +92,16 @@ public class TypeMatchupPopup extends PopupWindow {
 	 * @param row
 	 */
 	public void resetRow(int row) {
-		tableRows[row].getChildAt(0).setBackgroundColor(0xffffffff);
+		GridLayout gridLayout = (GridLayout) layout;
+		int startCell = (row + 1) * gridLayout.getColumnCount();
 		
-		for (int i=1; i < tableRows[row].getChildCount(); i++) {
-			if (i != currentHighlightedColumn + 1) {
-				ImageView cellImage = (ImageView) tableRows[row].getChildAt(i);
+		// Reset type name
+		//gridLayout.getChildAt((row * gridLayout.getColumnCount()) + 1).setBackgroundColor(0xffffffff);
+		gridLayout.getChildAt(startCell).setBackgroundColor(0xffffffff);
+		
+		for (int i=1; i < gridLayout.getColumnCount(); i++) {
+			if (i != (currentHighlightedColumn + 1)) {
+				ImageView cellImage = (ImageView) gridLayout.getChildAt(startCell + i);
 				cellImage.setBackgroundResource(R.drawable.simple_grey_border);
 			}
 		}
@@ -105,15 +113,15 @@ public class TypeMatchupPopup extends PopupWindow {
 	 * @param color
 	 */
 	public void highlightColumn(int column, int color) {
-		//attackTypeHeaders.setBackgroundColor(0xff00ff00);
 		if (currentHighlightedColumn != -1) {
 			resetColumn((currentHighlightedColumn));
 		}
 		
 		currentHighlightedColumn = column;
+		GridLayout gridLayout = (GridLayout) layout;
 		
-		for (int i=0; i < tableRows.length; i++) {
-			ImageView cellImage = (ImageView) tableRows[i].getChildAt(column+1);
+		for (int i=0; i < gridLayout.getRowCount(); i++) {
+			ImageView cellImage = (ImageView) gridLayout.getChildAt(((i * gridLayout.getRowCount()) + (column + 1)));
 			cellImage.setBackgroundColor(color);
 		}
 	}
@@ -129,9 +137,12 @@ public class TypeMatchupPopup extends PopupWindow {
 		}
 		
 		currentHighlightedRow = row;
+		GridLayout gridLayout = (GridLayout) layout;
 		
-		for (int i=1; i < tableRows[row].getChildCount(); i++) {
-			ImageView cellImage = (ImageView) tableRows[row].getChildAt(i);
+		int startCell = (row + 1) * gridLayout.getColumnCount();
+		
+		for (int i=1; i < gridLayout.getColumnCount(); i++) {
+			ImageView cellImage = (ImageView) gridLayout.getChildAt(startCell + i);
 			cellImage.setBackgroundColor(color);
 		}
 	}
@@ -143,53 +154,44 @@ public class TypeMatchupPopup extends PopupWindow {
 	 * @param layout
 	 */
 	private void buildTable(final Activity context, AssetHelper assetHelper, View layout) {
+
+		GridLayout gridLayout = (GridLayout) layout;
 		
+		/*
 		// Add Top Header Row
-		attackTypeHeaders = new TableRow(context);
-		attackTypeHeaders.setClickable(true);
-		//attackTypeHeaders.setOnClickListener(new OnAttackTypeClickListener());
+		Space cornerSpace = new Space(context);
+		cornerSpace.setLayoutParams(new LayoutParams(30, 30));
 		
-		ImageView spacer = new ImageView(context);
-		spacer.setImageResource(R.drawable.spacer_50x50);
-		
-		attackTypeHeaders.addView(spacer);
-		
+		gridLayout.addView(cornerSpace);
+		*/
+
 		// Add Top Row Type Symbols
 		for (int i=0; i < typeList.size(); i++) {
 			String typeName = typeList.get(i).getName();
-			Log.v(TAG, "Trying to load image for Type = " + typeName);
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeName + ".png");
-			ImageView rotatedImage = Util.rotateImageView(typeImage, 90, context);
-			rotatedImage.setPadding(5, 5, 5, 5);
-			rotatedImage.setBackgroundResource(R.drawable.simple_grey_border);
-			rotatedImage.setTag(i);
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_medium/rotated/" + typeName + ".png");
+			typeImage.setBackgroundResource(R.drawable.simple_grey_border);
+			typeImage.setPadding(13, 5, 12, 5);
+			typeImage.setTag(i);
 			
-			rotatedImage.setClickable(true);
-			rotatedImage.setOnClickListener(new OnAttackTypeClickListener(this));
+			typeImage.setClickable(true);
+			typeImage.setOnClickListener(new OnAttackTypeClickListener(this));
 			
-			attackTypeHeaders.addView(rotatedImage);
+			gridLayout.addView(typeImage);
 		}
-		
-		TableLayout table = (TableLayout) layout.findViewById(R.id.typeWeaknessTable);
-		table.addView(attackTypeHeaders);
+
 		
 		// Other Rows
 		for (int i=0; i < typeList.size(); i++) {
-			TableRow newRow = new TableRow(context);
-			LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 30);
-			newRow.setGravity(Gravity.CENTER_VERTICAL);
-			newRow.setLayoutParams(layoutParams);
-			newRow.setBackgroundColor(0xFFFFFFFF);
 			
-			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_small/" + typeList.get(i).getName() + ".png");
-			typeImage.setPadding(5, 5, 5, 5);
+			ImageView typeImage = assetHelper.getImageViewFromAsset("type_images_medium/" + typeList.get(i).getName() + ".png");
+			typeImage.setPadding(5, 13, 5, 12);
 			typeImage.setBackgroundResource(R.drawable.simple_grey_border);
 			typeImage.setTag(i);
 			
 			typeImage.setOnClickListener(new OnDefenderTypeClickListener(this));
 			
 			// Add to view
-			newRow.addView(typeImage);
+			gridLayout.addView(typeImage);
 			
 			for (int j=0; j < typeList.size(); j++) {
 				ImageView damageImage = new ImageView(context);
@@ -215,16 +217,12 @@ public class TypeMatchupPopup extends PopupWindow {
 				}
 				damageImage.setImageResource(damageImageResourceId);
 				
-				damageImage.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
-				damageImage.setPadding(0, 5, 0, 5);
+				damageImage.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+				damageImage.setPadding(5, 5, 5, 5);
 				
 				// Add to view
-				newRow.addView(damageImage);
+				gridLayout.addView(damageImage);
 			}
-			tableRows[i] = newRow;
-			
-			// Add to view
-			table.addView(newRow);
 		}
 	}		
 
@@ -246,7 +244,7 @@ public class TypeMatchupPopup extends PopupWindow {
 	}
 	
 	class OnDefenderTypeClickListener implements OnClickListener {
-		private final String TAG = OnAttackTypeClickListener.class.getName();
+		private final String TAG = OnDefenderTypeClickListener.class.getName();
 
 		private TypeMatchupPopup controller;
 		

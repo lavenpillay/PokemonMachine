@@ -97,7 +97,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	    		pokemonListAdapter.getFilter().filter("");
 	    	}
 	    }
-
 	};
 	
 	/**
@@ -305,7 +304,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public void update(final Pokemon pokemon) {
 		
 		
-	 	((PokemonMachineActivity) getActivity()).currentSelectedPokemon = pokemon;
+	 	PokemonMachineActivity.currentSelectedPokemon = pokemon;
 			 
 		updateBasicInformation(pokemon);
 			 
@@ -954,6 +953,16 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		return evolutionMethodView;
 	}
 	
-	
+	public void updateMoveList(String moveLearnType) {
+		ArrayList<Move> moveSubset = PokemonMachineActivity.currentSelectedPokemon.getMovesByType(moveLearnType);
+		
+		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
+			moveSubset = Util.sortMovesByLevel(moveSubset);
+		}
+		
+		PokemonDisplayFragment.movesData.clear();
+		PokemonDisplayFragment.movesData.addAll(moveSubset);
+		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
+	}
 	
 }

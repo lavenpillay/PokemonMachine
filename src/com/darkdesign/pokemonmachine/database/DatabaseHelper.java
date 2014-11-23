@@ -508,7 +508,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             // Get extra information
             String extraInfo = "";
         	String queryExtraInfo = "SELECT effect FROM item_extra_info WHERE id = " + item.getId();
-            Log.v(TAG, queryExtraInfo);
             
             Cursor cursorExtraInfo = db.rawQuery(queryExtraInfo, null);
             if (cursorExtraInfo.moveToFirst()) {
