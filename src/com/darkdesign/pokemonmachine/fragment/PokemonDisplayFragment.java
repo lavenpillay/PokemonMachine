@@ -53,6 +53,7 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
+import com.darkdesign.pokemonmachine.layout.FlowLayout;
 import com.darkdesign.pokemonmachine.listener.OnPokemonListItemSelectedListener;
 import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
@@ -306,7 +307,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 }
 	 
 	public void update(final Pokemon pokemon) {
-		
+		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		
 	 	PokemonMachineActivity.currentSelectedPokemon = pokemon;
 			 
@@ -326,6 +327,25 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		updateEvolutions(pokemon);
 		
 		updateTypeWeaknessDisplay(pokemon);
+		
+		// Add Abilities
+		LinearLayout pokemonInformationArea = (LinearLayout) view.findViewById(R.id.additionalInformationArea);
+		pokemonInformationArea.removeAllViews();
+		
+		for (int i=0; i < pokemon.getAbilities().size(); i++) {
+			// Name
+			LinearLayout pokemonAbilityLayout = (LinearLayout) inflater.inflate(R.layout.card_entry, null );
+			
+			TextView txtAbilityName = (TextView) pokemonAbilityLayout.findViewById(R.id.heading);
+			txtAbilityName.setText("Ability: " + pokemon.getAbilities().get(i).getName());
+			//TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.content);
+			TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.subHeading);
+			txtAbilityFlavour.setText(pokemon.getAbilities().get(i).getFlavourText());
+			 
+			pokemonInformationArea.addView(pokemonAbilityLayout);
+		}
+		 
+		// ------------
 		
 		TextView pokemonNameFilterTextView = (TextView) view.findViewById(R.id.txtFilter);
 		Util.hideSoftKeyboard(pokemonNameFilterTextView);
@@ -486,14 +506,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     txtCatchRateHeading.setText("Catch Rate");
 	     TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
 	     txtCatchRateContent.setText(String.valueOf(getCatchRate(pokemon.getCatchRate())));
-	     
-	     //LinearLayout layoutEggGroup = (LinearLayout) view.findViewById(R.id.ceEggGroups);
-	     //TextView txtEggGroupHeading = (TextView) layoutEggGroup.findViewById(R.id.heading);
-	     //txtEggGroupHeading.setLayoutParams(labelParams);
-	     //txtEggGroupHeading.setText("Egg Groups");
-	     //TextView txtEggGroupContent = (TextView) layoutEggGroup.findViewById(R.id.content);
-	     //txtEggGroupContent.setText("--List--");
-	     //txtEggGroupContent.setText("");
 	     
 	     final Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
 		 // Create an ArrayAdapter using the string array and a default spinner layout

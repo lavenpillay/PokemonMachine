@@ -249,6 +249,10 @@ public class Pokemon {
 	public void setAbilities(ArrayList<Ability> abilities) {
 		this.abilities = abilities;
 	}
+	
+	public void addAbility(Ability ability) {
+		this.abilities.add(ability);
+	}
 
 	public ArrayList<Evolution> getEvolutions() {
 		return evolutions;

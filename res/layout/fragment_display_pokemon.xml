@@ -493,6 +493,17 @@
                 layout="@layout/type_weakness" />
         </LinearLayout>
         <!-- END : Weaknesses -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
+        
+        <LinearLayout 
+            android:id="@+id/additionalInformationArea"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            
+        </LinearLayout>
 
     </LinearLayout>
 	</ScrollView>

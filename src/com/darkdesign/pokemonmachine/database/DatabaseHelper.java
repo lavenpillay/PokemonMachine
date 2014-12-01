@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.darkdesign.pokemonmachine.element.Ability;
 import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Evolution;
@@ -437,6 +438,24 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         pokemon.setEggGroups(eggGroupList);
         cursorGroups.close();
+        
+        // Get Abilities
+        String queryAbilities = 
+        		"SELECT pa.ability_id as id, pa.is_hidden as ishidden, a.identifier as identifier, aft.flavor_text as flavour_text, an.name FROM pokemon_abilities pa JOIN abilities a ON pa.ability_id = a.id JOIN ability_flavor_text aft ON pa.ability_id = aft.ability_id JOIN ability_names an ON pa.ability_id = an.ability_id WHERE an.local_language_id = 9 AND aft.language_id = 9 AND aft.version_group_id = 15 AND pokemon_id = " + pokemon.getId();
+        
+        Cursor cursorAbilities = db.rawQuery(queryAbilities, null);
+        while(cursorAbilities.moveToNext()) {
+        	Ability ability = new Ability();
+        	ability.setId(cursorAbilities.getInt(0));
+        	ability.setHidden(cursorAbilities.getInt(1) == 1);
+        	ability.setIdentifier(cursorAbilities.getString(2));
+        	ability.setFlavourText(cursorAbilities.getString(3));
+        	ability.setName(cursorAbilities.getString(4));
+        	
+        	pokemon.addAbility(ability);
+        }
+        
+        cursorAbilities.close();
         
         // Get regular evolutions
         pokemon.setEvolutions(getEvolutions(pokemon.getId()));
