@@ -261,21 +261,6 @@ public class Util {
 	 * @return
 	 */
 	public static ImageView rotateImageView(ImageView image, int rotationAngle, Context context) {
-		/*
-		Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-		
-		Matrix mat = new Matrix();
-		mat.postRotate(rotationAngle);
-		Bitmap bMapRotate = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), mat, true);
-		BitmapDrawable bmd = new BitmapDrawable(bMapRotate);
-		
-		ImageView rotatedImageView = new ImageView(context);
-		rotatedImageView.setImageBitmap(bMapRotate);
-		rotatedImageView.setImageDrawable(bmd);
-		*/
-		
-		//
-		
 		Matrix matrix = new Matrix();
 		image.setScaleType(ScaleType.MATRIX);   //required
 		int pivotX = image.getDrawable().getBounds().width()/2;

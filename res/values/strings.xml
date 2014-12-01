@@ -7,7 +7,7 @@
     <string name="title_fragment1">Items</string>
     <string name="title_fragment2">Pokemon</string>
     <string name="title_fragment3">Moves</string>
-    <string name="title_fragment4">Collection</string>
+    <string name="title_fragment4">Settings</string>
     
     <string name="move_selector_prompt">Filter by</string>
     

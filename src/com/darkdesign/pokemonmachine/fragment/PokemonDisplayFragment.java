@@ -156,9 +156,13 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 Log.i(TAG, "onCreate() - Called");
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
-		 this.assetHelper = new AssetHelper((PokemonMachineActivity)getActivity());
+		 if (this.assetHelper == null) {
+			 this.assetHelper = PokemonMachineActivity.assetHelper;
+		 }
    
-		 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+		 if (applicationSettings == null) {
+			 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+		 }
    
 		 filterText = (EditText) view.findViewById(R.id.txtFilter);
 		 filterText.addTextChangedListener(filterTextWatcher);

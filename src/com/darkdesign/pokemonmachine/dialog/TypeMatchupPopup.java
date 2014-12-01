@@ -28,9 +28,6 @@ public class TypeMatchupPopup extends PopupWindow {
 	private ArrayList<Type> typeList;
 	private AssetHelper assetHelper;
 	
-	private TableRow attackTypeHeaders;
-	private TableRow[] tableRows;
-	
 	private int currentHighlightedColumn = -1;
 	
 	private int currentHighlightedRow = - 1;
@@ -64,7 +61,7 @@ public class TypeMatchupPopup extends PopupWindow {
 				
 		// Get Data and populate table
 		typeList = PokemonMachineActivity.cache.getTypeList();
-		tableRows = new TableRow[typeList.size()];
+
 		
 		buildTable(context, assetHelper, layout);
 	}
@@ -152,16 +149,6 @@ public class TypeMatchupPopup extends PopupWindow {
 	 * @param layout
 	 */
 	private void buildTable(final Activity context, AssetHelper assetHelper, View layout) {
-
-		//GridLayout gridLayout = (GridLayout) layout;
-		
-		/*
-		// Add Top Header Row
-		Space cornerSpace = new Space(context);
-		cornerSpace.setLayoutParams(new LayoutParams(30, 30));
-		
-		gridLayout.addView(cornerSpace);
-		*/
 
 		// Add Top Row Type Symbols
 		for (int i=0; i < typeList.size(); i++) {

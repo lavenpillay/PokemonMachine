@@ -26,6 +26,7 @@ import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
+import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.preferences.SettingsFragment;
 import com.darkdesign.pokemonmachine.task.LoadingTask;
@@ -64,6 +65,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     private MoveDisplayFragment moveDisplayFragment = null;
     private SettingsFragment settingsFragment = null;
     
+    public static AssetHelper assetHelper;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +81,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         // Create and Initialise Cache 
         cache = new Cache();
         //cache = LoadingTask.cache;
+        
+        this.assetHelper = new AssetHelper(this);
 
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
@@ -196,12 +201,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
 			settingsFragment = new SettingsFragment();
 		}
 		
-	    // Display the fragment as the main content.
-	    FragmentManager mFragmentManager = getFragmentManager();
-	    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-	    mFragmentTransaction.replace(R.id.layerSettings, settingsFragment);
-	    mFragmentTransaction.addToBackStack(null);
-	    mFragmentTransaction.commit();
+		 mViewPager.setCurrentItem(3);
 	}
 
     @Override
@@ -264,20 +264,29 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         		returnFragment = moveDisplayFragment;
         		
         	} else if (position == 3) {
+        		if (settingsFragment == null) {
+        			settingsFragment = new SettingsFragment();
+        		}
+        		
+        		returnFragment = settingsFragment;
+        	} 
+        	
+        	/*
+        	else if (position == 3) {
         		if (collectionDisplayFragment == null) {
         			collectionDisplayFragment = new CollectionDisplayFragment();
         		}
         		
         		returnFragment = collectionDisplayFragment;
         	} 
+        	*/
         	
         	return returnFragment;
         }
 
         @Override
         public int getCount() {
-            //return 4;
-        	return 3;
+            return 4;
         }
 
         @Override
