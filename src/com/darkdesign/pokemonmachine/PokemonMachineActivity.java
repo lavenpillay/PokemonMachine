@@ -122,7 +122,7 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
         }
         
         // Set to default Tab
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(2);
 
     }
     
