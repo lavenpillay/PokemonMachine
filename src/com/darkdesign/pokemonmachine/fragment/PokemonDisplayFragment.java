@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -490,19 +491,19 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		layout.addView(graphView);
 	     
 	     
-		 LayoutParams labelParams = new LayoutParams(185, LinearLayout.LayoutParams.WRAP_CONTENT);
-		 labelParams.leftMargin = 20;
+		 //LayoutParams labelParams = new LayoutParams(185, LinearLayout.LayoutParams.WRAP_CONTENT);
+		 //labelParams.leftMargin = 20;
 			
 	     LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
 	     TextView txtGenderHeading = (TextView) layoutGender.findViewById(R.id.heading);
-	     txtGenderHeading.setLayoutParams(labelParams);
+	     //txtGenderHeading.setLayoutParams(labelParams);
 	     txtGenderHeading.setText("Gender");
 	     TextView txtGenderContent = (TextView) layoutGender.findViewById(R.id.content);
 	     txtGenderContent.setText(getGenderRatio(pokemon.getGenderRate()));
 	     	     
 	     LinearLayout layoutCatchRate = (LinearLayout) view.findViewById(R.id.ceCatchRate);
 	     TextView txtCatchRateHeading = (TextView) layoutCatchRate.findViewById(R.id.heading);
-	     txtCatchRateHeading.setLayoutParams(labelParams);
+	     //txtCatchRateHeading.setLayoutParams(labelParams);
 	     txtCatchRateHeading.setText("Catch Rate");
 	     TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
 	     txtCatchRateContent.setText(String.valueOf(getCatchRate(pokemon.getCatchRate())));
@@ -529,27 +530,26 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		        @Override
 		        public void onNothingSelected(AdapterView<?> arg0) {
 		            // TODO Auto-generated method stub
-		        //  
 		        }
 		    });
 	     
 	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
 	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
-	     txtGrowthRateHeading.setLayoutParams(labelParams);
+	     //txtGrowthRateHeading.setLayoutParams(labelParams);
 	     txtGrowthRateHeading.setText("Growth Rate");
 	     TextView txtGrowthRateContent = (TextView) layoutGrowthRate.findViewById(R.id.content);
 	     txtGrowthRateContent.setText(String.valueOf(pokemon.getGrowthRate()));
 	     
 	     LinearLayout layoutEVYield = (LinearLayout) view.findViewById(R.id.ceEVYield);
 	     TextView txtEVYieldHeading = (TextView) layoutEVYield.findViewById(R.id.heading);
-	     txtEVYieldHeading.setLayoutParams(labelParams);
+	     //txtEVYieldHeading.setLayoutParams(labelParams);
 	     txtEVYieldHeading.setText("EV Yield");
 	     TextView txtEVYieldContent = (TextView) layoutEVYield.findViewById(R.id.content);
 	     txtEVYieldContent.setText(String.valueOf(pokemon.getEvYield()));
 	     
 	     LinearLayout layoutHappiness = (LinearLayout) view.findViewById(R.id.ceHappiness);
 	     TextView txtHappinessHeading = (TextView) layoutHappiness.findViewById(R.id.heading);
-	     txtHappinessHeading.setLayoutParams(labelParams);
+	     //txtHappinessHeading.setLayoutParams(labelParams);
 	     txtHappinessHeading.setText("Happiness");
 	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
 	     txtHappinessContent.setText(pokemon.getHappiness());

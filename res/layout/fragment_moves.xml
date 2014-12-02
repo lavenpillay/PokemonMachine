@@ -8,10 +8,6 @@
     android:background="@drawable/container_dropshadow"
     android:orientation="horizontal" >
 
-    
-
-
-	
     <!-- MOVES -->
 
 <LinearLayout 
@@ -61,7 +57,7 @@
 
 		<Spinner
 		    android:id="@+id/spnMoveSetSelector"
-		    android:layout_width="wrap_content"
+		    android:layout_width="0dp"
 		    android:layout_height="wrap_content"
 		    android:layout_weight="1" 
 		    android:prompt="@string/move_selector_prompt"
@@ -69,16 +65,17 @@
         	android:spinnerMode="dropdown"/>
 		
 		<LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center"
             android:orientation="horizontal" >
 
             <EditText
                 android:id="@+id/txtFilter"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                
                 android:hint="move name"
                 android:inputType="text"
                 android:text=""

@@ -14,7 +14,7 @@
 		     android:layout_width="wrap_content"
 		     android:layout_height="wrap_content"
 		     android:text="Item Name "
-		     android:textSize="7pt" 
+		     android:textSize="10sp" 
 		     android:layout_marginLeft="10dp"
 		     android:background="#33333311"
 		     android:paddingLeft="5dp"
@@ -33,7 +33,7 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:text="Item Description"
-	    android:textSize="6pt"
+	    android:textSize="9sp"
 	    android:layout_marginLeft="10dp" 
 	    android:layout_gravity="center_vertical"/>
 

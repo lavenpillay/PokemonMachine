@@ -12,50 +12,72 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
             
-            <ImageView 
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/power_icon"
-                android:layout_marginLeft="10dp"/>
+    		<LinearLayout 
+    		    android:layout_width="0dp"
+    		    android:layout_height="wrap_content"
+    		    android:orientation="horizontal"
+    		    android:layout_weight="1">
+    		    
+	            <ImageView 
+	                android:layout_width="48dp"
+	                android:layout_height="48dp"
+	                android:src="@drawable/power_icon"
+	                android:layout_marginLeft="10dp"/>
+	            
+	            <TextView 
+	                android:id="@+id/txtMovePower"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="99"
+	                android:textSize="30sp"
+	                android:textStyle="bold"
+	                android:layout_margin="10dp"/>
+            </LinearLayout>
+
+    		<LinearLayout 
+    		    android:layout_width="0dp"
+    		    android:layout_height="wrap_content"
+    		    android:orientation="horizontal"
+    		    android:layout_weight="1">
+	                		
+	            <ImageView 
+	                android:layout_width="48dp"
+	                android:layout_height="48dp"
+	                android:src="@drawable/accuracy_icon"
+	                android:layout_marginLeft="10dp"/>
+	            
+	            <TextView 
+	                android:id="@+id/txtMoveAccuracy"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="99"
+	                android:textSize="30sp"
+	                android:textStyle="bold"
+	                android:layout_margin="10dp"/>
+            </LinearLayout>
             
-            <TextView 
-                android:id="@+id/txtMovePower"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textSize="20pt"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
+    		<LinearLayout 
+    		    android:layout_width="0dp"
+    		    android:layout_height="wrap_content"
+    		    android:orientation="horizontal"
+    		    android:layout_weight="1">
+	                		
+	            <ImageView 
+	                android:layout_width="48dp"
+	                android:layout_height="48dp"
+	                android:src="@drawable/power_points"
+	                android:layout_marginLeft="10dp"/>
+	            
+	            <TextView 
+	                android:id="@+id/txtMovePowerPoints"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="99"
+	                android:textSize="30sp"
+	                android:textStyle="bold"
+	                android:layout_margin="10dp"/>
+            </LinearLayout>
             
-            <ImageView 
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/accuracy_icon"
-                android:layout_marginLeft="10dp"/>
-            
-            <TextView 
-                android:id="@+id/txtMoveAccuracy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textSize="20pt"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
-            
-            <ImageView 
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:src="@drawable/power_points"
-                android:layout_marginLeft="10dp"/>
-            
-            <TextView 
-                android:id="@+id/txtMovePowerPoints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="99"
-                android:textSize="20pt"
-                android:textStyle="bold"
-                android:layout_margin="10dp"/>
         </LinearLayout>
         
 		<View 

@@ -23,7 +23,7 @@
                 android:background="#33333311"
                 android:padding="5dp"
                 android:text="Heading"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <View
                 android:layout_width="fill_parent"
@@ -42,7 +42,7 @@
             android:paddingLeft="5dp"
             android:text=""
             android:textColor="#FFAAAAAA"
-            android:textSize="10sp" 
+            android:textSize="12sp" 
             android:gravity="center_vertical"/>
     </LinearLayout>
 		
@@ -51,7 +51,7 @@
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:text=""
-	    android:textSize="12sp"
+	    android:textSize="14sp"
 	    android:layout_marginLeft="10dp"
 	    android:layout_marginTop="10dp" />
 	

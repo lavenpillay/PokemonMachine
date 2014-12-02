@@ -4,12 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@drawable/container_lightgray_round">
+    android:background="@drawable/container_lightgray_round"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <ImageView
         android:id="@+id/imgPokemonEvolution"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher" />
     
     <View
@@ -25,6 +27,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dip"
         android:text="Name"
-        android:textSize="10sp"/>
+        android:textSize="12sp"/>
 
 </LinearLayout>
