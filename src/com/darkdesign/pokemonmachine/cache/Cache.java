@@ -21,7 +21,6 @@ public class Cache {
 	private static HashMap<Integer, Item> ITEM_CACHE_BY_ID;
 	private static HashMap<String, Item> ITEM_CACHE_BY_NAME;
 	private static String[] ITEM_NAMES;
-	private static ArrayList<Berry> BERRY_CACHE;
 	private static ArrayList<VideoGame> GAME_LIST_CACHE;
 	private static ArrayList<Type> TYPE_LIST_CACHE;
 	private static ArrayList<Move> MOVE_LIST_CACHE;
@@ -54,10 +53,6 @@ public class Cache {
 		TYPE_ID_BY_NAME = db.getTypeIdsByNamesMap();
 		TYPE_NAME_BY_ID = db.getTypeNamesByIdsMap();
 		
-		// Berries
-		BERRY_CACHE = db.getBerries();
-		setupBerryNameByIdMap();
-		
 		// Games
 		GAME_LIST_CACHE = db.getVideoGameList();
 		
@@ -80,15 +75,6 @@ public class Cache {
 		for (Item item : itemList) {
 			ITEM_CACHE_BY_ID.put(item.getId(), item);
 			ITEM_CACHE_BY_NAME.put(item.getName(), item);
-		}
-	}
-	
-	public void setupBerryNameByIdMap() {
-		BERRY_NAME_BY_ID = new HashMap<String,String>();
-		
-		for (int i=0; i < BERRY_CACHE.size(); i++) {
-			Berry berry = BERRY_CACHE.get(i);
-			BERRY_NAME_BY_ID.put(berry.getBerryId(), berry.getBerryName()); 
 		}
 	}
 	
@@ -157,10 +143,6 @@ public class Cache {
 		return TYPE_EFFICACY_MATRIX;
 	}
 	
-	public ArrayList<Berry> getBerryList() {
-		return BERRY_CACHE;
-	}
-
 	public String[] getItemNames() {
 		return ITEM_NAMES;
 	}

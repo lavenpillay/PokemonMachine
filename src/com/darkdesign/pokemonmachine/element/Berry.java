@@ -1,39 +1,65 @@
 package com.darkdesign.pokemonmachine.element;
 
-public class Berry {
+public class Berry extends Item {
+	int firmnessId;
+	int naturalGiftPower;
+	int naturalGiftTypeId;
+	int size;
+	int maxHarvest;
+	int growthTime;
+	int soilDryness;
+	int smoothness;	
 	
-	private String berryId;
-	private String berryItemId;
-	private String berryName;
+	public int getFirmnessId() {
+		return firmnessId;
+	}
+	public void setFirmnessId(int firmnessId) {
+		this.firmnessId = firmnessId;
+	}
+	public int getNaturalGiftPower() {
+		return naturalGiftPower;
+	}
+	public void setNaturalGiftPower(int naturalGiftPower) {
+		this.naturalGiftPower = naturalGiftPower;
+	}
+	public int getNaturalGiftTypeId() {
+		return naturalGiftTypeId;
+	}
+	public void setNaturalGiftTypeId(int naturalGiftTypeId) {
+		this.naturalGiftTypeId = naturalGiftTypeId;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+	public int getMaxHarvest() {
+		return maxHarvest;
+	}
+	public void setMaxHarvest(int maxHarvest) {
+		this.maxHarvest = maxHarvest;
+	}
+	public int getGrowthTime() {
+		return growthTime;
+	}
+	public void setGrowthTime(int growthTime) {
+		this.growthTime = growthTime;
+	}
+	public int getSoilDryness() {
+		return soilDryness;
+	}
+	public void setSoilDryness(int soilDryness) {
+		this.soilDryness = soilDryness;
+	}
+	public int getSmoothness() {
+		return smoothness;
+	}
+	public void setSmoothness(int smoothness) {
+		this.smoothness = smoothness;
+	}
+
 	
-	public Berry() {
-		super();
-	}
-
-	public String getBerryId() {
-		return berryId;
-	}
-
-	public void setBerryId(String berryId) {
-		this.berryId = berryId;
-	}
-
-	public String getBerryName() {
-		return berryName;
-	}
-
-	public void setBerryName(String berryName) {
-		this.berryName = berryName;
-	}
-
-	public String getBerryItemId() {
-		return berryItemId;
-	}
-
-	public void setBerryItemId(String berryItemId) {
-		this.berryItemId = berryItemId;
-	}
 	
 	
-
 }

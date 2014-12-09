@@ -53,36 +53,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         db = getReadableDatabase();
     }
     
-    /**
-     * 
-     * @param 
-     * @return
-     */
-    public ArrayList<Berry> getBerries() {
-    	ArrayList<Berry> berryList = new ArrayList<Berry>();
-    	
-    	String query = "SELECT id, item_id FROM berries";
-        Cursor berryCursor = db.rawQuery(query, null);
-        
-        while(berryCursor.moveToNext()) {
-        	Berry berry = new Berry();
-        	
-        	String berryId = berryCursor.getString(0);
-        	String berryItemId = berryCursor.getString(1);
-        	
-        	berry.setBerryId(berryId);
-        	berry.setBerryItemId(berryItemId);
-        	//TODO Fix berries ?
-        	berry.setBerryName("");
-        	
-        	berryList.add(berry);
-        }
-        
-        berryCursor.close();
-    	
-    	return berryList;
-    }
-    
     public ArrayList<Move> getAllMoves() {
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	

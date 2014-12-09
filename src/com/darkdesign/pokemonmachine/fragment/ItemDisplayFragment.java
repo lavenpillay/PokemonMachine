@@ -134,6 +134,9 @@ public class ItemDisplayFragment extends Fragment {
 	 
 	 public void update(Item item) {
 		 
+		String category = item.getCategory().getIdentifier();
+		String itemName = item.getName();
+		 
 		LinearLayout mainInfoArea = (LinearLayout) view.findViewById(R.id.mainInfoArea);
 		LinearLayout additionalInfoArea = (LinearLayout) view.findViewById(R.id.additonalInfoArea);
 		 
@@ -171,18 +174,39 @@ public class ItemDisplayFragment extends Fragment {
 		 
 		additionalInfoArea.addView(categoryText);
 		 
-		 if (item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS) ||
-			 item.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_STANDARD_BALLS)) {
+		if (category.equalsIgnoreCase(Constants.ITEM_CATEGORY_SPECIAL_BALLS) ||
+			category.equalsIgnoreCase(Constants.ITEM_CATEGORY_STANDARD_BALLS)) {
 			 
-			 LinearLayout catchRateText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
-				
-			 TextView txtCatchRateTitle = (TextView) catchRateText.findViewById(R.id.heading);
-			 txtCatchRateTitle.setText("Capture Information");
-			 
-			 TextView txtCatchRateContent = (TextView) catchRateText.findViewById(R.id.content);
-			 txtCatchRateContent.setText(item.getAdditionalInfo());
-			 
-			 mainInfoArea.addView(catchRateText);
-		 }
+			addPokeballInformation(item, mainInfoArea);
+		} 
+		else if (itemName.contains("Berry")) {
+			
+		}
+		
 	 }
+
+
+	private void addPokeballInformation(Item item, LinearLayout mainInfoArea) {
+		LinearLayout catchRateText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
+					
+		TextView txtCatchRateTitle = (TextView) catchRateText.findViewById(R.id.heading);
+		txtCatchRateTitle.setText("Capture Information");
+		 
+		TextView txtCatchRateContent = (TextView) catchRateText.findViewById(R.id.content);
+		txtCatchRateContent.setText(item.getAdditionalInfo());
+		 
+		mainInfoArea.addView(catchRateText);
+	}
+	
+	private void addBerryInformation(Item item, LinearLayout mainInfoArea) {
+		LinearLayout catchRateText = (LinearLayout)inflater.inflate( R.layout.card_entry, null );
+					
+		TextView txtCatchRateTitle = (TextView) catchRateText.findViewById(R.id.heading);
+		txtCatchRateTitle.setText("Capture Information");
+		 
+		TextView txtCatchRateContent = (TextView) catchRateText.findViewById(R.id.content);
+		txtCatchRateContent.setText(item.getAdditionalInfo());
+		 
+		mainInfoArea.addView(catchRateText);
+	}
 }
