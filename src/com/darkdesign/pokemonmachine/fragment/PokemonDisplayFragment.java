@@ -66,7 +66,7 @@ import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 public class PokemonDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
 {
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
-	private String TAG = PokemonDisplayFragment.class.getName();
+	private String TAG = "PM_POKEMON_DISPLAY";
 	private static final int ENTER_KEY_PRESSED = 66;
 	
 	private AssetHelper assetHelper;
@@ -74,6 +74,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	private View view; 
 	private EditText filterText = null;
 	
+	private String[] names;
 	public static ArrayList<Move> movesData = new ArrayList<Move>();	
 	
 	public static SimplePokemonListAdapter pokemonListAdapter;
@@ -148,8 +149,12 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
+
+		 if (this.assetHelper == null) {
+			 this.assetHelper = PokemonMachineActivity.assetHelper;
+		 }
 		
-		
+		 names = getResources().getStringArray(R.array.pokemon_names);
 	}
 	
 
@@ -157,10 +162,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 Log.i(TAG, "onCreate() - Called");
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
-
-		 if (this.assetHelper == null) {
-			 this.assetHelper = PokemonMachineActivity.assetHelper;
-		 }
    
 		 if (applicationSettings == null) {
 			 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
@@ -168,9 +169,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
    
 		 filterText = (EditText) view.findViewById(R.id.txtFilter);
 		 filterText.addTextChangedListener(filterTextWatcher);
-   
+
 		 // Handle Pokemon List
-		 String[] names = getResources().getStringArray(R.array.pokemon_names);
 		 pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
 	
 		 ListView listView = (ListView) view.findViewById(R.id.plist);
@@ -315,6 +315,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		updateBasicInformation(pokemon);
 			 
 		// Update Moves list and Notify Adapter
+		long startTime = System.currentTimeMillis();
+		
 		if (pokemon.getMoves().size() == 0) {
 			pokemon.setMoves(PokemonMachineActivity.db.getMovesForPokemon(pokemon));
 		
@@ -322,8 +324,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
-
 		updateMoveList(pokemon, Constants.LEARN_TYPE_LEVEL_UP);
+		
+		long stopTime = System.currentTimeMillis();
+	    long elapsedTime = stopTime - startTime;
+	    Log.v(TAG, "Time to Get and Update Moves: " + elapsedTime);
 		
 		updateEvolutions(pokemon);
 		
@@ -339,7 +344,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			
 			TextView txtAbilityName = (TextView) pokemonAbilityLayout.findViewById(R.id.heading);
 			txtAbilityName.setText("Ability: " + pokemon.getAbilities().get(i).getName());
-			//TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.content);
 			TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.subHeading);
 			txtAbilityFlavour.setText(pokemon.getAbilities().get(i).getFlavourText());
 			 
@@ -350,6 +354,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		TextView pokemonNameFilterTextView = (TextView) view.findViewById(R.id.txtFilter);
 		Util.hideSoftKeyboard(pokemonNameFilterTextView);
+		
+		ListView pokemonListView = (ListView) view.findViewById(R.id.plist);
+		pokemonListView.requestFocus();
 	}
 
 	private void updateEvolutions(final Pokemon pokemon) {
