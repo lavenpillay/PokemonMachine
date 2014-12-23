@@ -12,13 +12,5 @@
     android:windowSoftInputMode="stateHidden"
     tools:context="com.darkdesign.pokemonmachine.PokemonMachineActivity" />
 
-<!-- 
-<LinearLayout 
-    android:id="@+id/layerSettings"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-</LinearLayout>
- -->
  
 </FrameLayout>

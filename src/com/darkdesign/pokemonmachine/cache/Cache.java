@@ -3,7 +3,7 @@ package com.darkdesign.pokemonmachine.cache;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.Activity;
+import android.util.Log;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
@@ -16,6 +16,7 @@ import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
 
 public class Cache {
+	private String TAG = "PM_CACHE";
 
 	private static HashMap<Integer, Pokemon> POKEMON_CACHE;
 	private static HashMap<Integer, Item> ITEM_CACHE_BY_ID;
@@ -83,12 +84,17 @@ public class Cache {
 	}
 	
 	public Pokemon getPokemon(int id) {
+		Log.v(TAG, "Requesting Pokemon with ID = " + id);
 		Pokemon pokemon = POKEMON_CACHE.get(id);
 		
 		if (pokemon == null) {
+			Log.v(TAG, "Pokemon not in Cache. Fetching from DB...");
 			pokemon = db.getPokemon(String.valueOf(id));
 			addPokemonToCache(pokemon);
+		} else {
+			Log.v(TAG, "Fetching from Cache...");
 		}
+		
 		
 		return pokemon;
 	}

@@ -126,9 +126,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	    // Make sure that we are currently visible
 	    if (this.isVisible()) {
 	        // If we are becoming invisible, then...
-	    	Log.d(TAG, "PokemonDisplayFargment is Visible");
+	    	Log.v(TAG, "PokemonDisplayFargment is Visible");
 	        if (!isVisibleToUser) {
-	            Log.d(TAG, "Not visible anymore.");
+	            Log.v(TAG, "Not visible anymore.");
 	        }
 	    }
 	}

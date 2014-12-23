@@ -1,13 +1,12 @@
 package com.darkdesign.pokemonmachine.adapter;
 
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,7 @@ import android.widget.TextView;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
-import com.darkdesign.pokemonmachine.element.Pokemon;
+import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
@@ -55,7 +54,8 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		String name = this.getItem(position);
 		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
 		
-		Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(pokemonId);
+		//Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(pokemonId);
+		ArrayList<Type> pokemonTypes = db.getPokemonTypes(pokemonId); 
 
 		// Set ID 
 		TextView idTextView = (TextView) rowView.findViewById(R.id.list_item_id);
@@ -77,15 +77,17 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
 		imageView.setImageBitmap(bm);
 		
+		
 		if (applicationSettings.getBoolean("pref_types_in_list", true)) {
-			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemon.getTypes().get(0).getName() + ".png");
+			Bitmap bmType1 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(0).getName() + ".png");
 			imageType1.setImageBitmap(bmType1);
 			
-			if (pokemon.getTypes().size() > 1) {
-				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemon.getTypes().get(1).getName() + ".png");
+			if (pokemonTypes.size() > 1) {
+				Bitmap bmType2 = assetHelper.getBitmapFromAsset("type_images_medium/" + pokemonTypes.get(1).getName() + ".png");
 				imageType2.setImageBitmap(bmType2);
 			}
 		}
+		
 
     return rowView;
   }

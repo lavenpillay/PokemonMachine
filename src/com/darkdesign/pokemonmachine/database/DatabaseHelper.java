@@ -334,7 +334,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     // Getting single pokemon
     public Pokemon getPokemon(String id) {
     	Pokemon pokemon = new Pokemon();
-    	ArrayList<Type> pokemonTypes = new ArrayList<Type>();
     	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
     	
     	//SQLiteDatabase db = getReadableDatabase();
@@ -383,18 +382,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         cursorStats.moveToNext();
         pokemon.setSpeed(cursorStats.getInt(0));
         
-        // Get Pokemon Types
-        String queryPokemonTypes = 
-        		"SELECT identifier, type_id FROM pokemon_types INNER JOIN types ON id = type_id WHERE pokemon_id = " + pokemon.getId();
-        
-        Cursor cursorTypes = db.rawQuery(queryPokemonTypes, null);
-        while(cursorTypes.moveToNext()) {
-        	pokemonTypes.add(new Type(cursorTypes.getString(0), cursorTypes.getString(1)));
-        }
         cursorStats.close();
         
+        // Get Pokemon Types
+        ArrayList<Type> pokemonTypes = getPokemonTypes(pokemon.getId());
         pokemon.setTypes(pokemonTypes);
-        cursorTypes.close();
         
         // Get Egg Groups
         String queryEggGroups = 
@@ -459,6 +451,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
     	return pokemon;
     }
+
+	public ArrayList<Type> getPokemonTypes(int pokemonId) {
+		// Get Pokemon Types
+        ArrayList<Type> pokemonTypes = new ArrayList<Type>();
+        
+        String queryPokemonTypes = 
+        		"SELECT identifier, type_id FROM pokemon_types INNER JOIN types ON id = type_id WHERE pokemon_id = " + pokemonId;
+        
+        Cursor cursorTypes = db.rawQuery(queryPokemonTypes, null);
+        while(cursorTypes.moveToNext()) {
+        	pokemonTypes.add(new Type(cursorTypes.getString(0), cursorTypes.getString(1)));
+        }
+        cursorTypes.close();
+        
+		return pokemonTypes;
+	}
 
 
     /**

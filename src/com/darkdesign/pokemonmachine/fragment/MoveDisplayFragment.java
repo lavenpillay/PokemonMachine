@@ -240,6 +240,7 @@ public class MoveDisplayFragment extends Fragment {
 		 moveInformationArea.addView(moveEffectLayout);
 		 
 		 // Get Pokemon with selected move
+		 /*
 		 final int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
 		 
 		 TextView txtPokemonCount = (TextView) view.findViewById(R.id.txtPokemonCount);
@@ -268,6 +269,7 @@ public class MoveDisplayFragment extends Fragment {
 			 
 			 pokemonArea.addView(pokemonLayout);
 		 }
+		 */
 	 }
 
 	
