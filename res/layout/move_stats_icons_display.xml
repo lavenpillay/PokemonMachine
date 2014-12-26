@@ -21,7 +21,7 @@
 	            <ImageView 
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:src="@drawable/power_icon"
+	                android:src="@drawable/icon_move_power"
 	                android:layout_marginLeft="10dp"/>
 	            
 	            <TextView 
@@ -43,7 +43,7 @@
 	            <ImageView 
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:src="@drawable/accuracy_icon"
+	                android:src="@drawable/icon_move_accuracy"
 	                android:layout_marginLeft="10dp"/>
 	            
 	            <TextView 
@@ -65,7 +65,7 @@
 	            <ImageView 
 	                android:layout_width="48dp"
 	                android:layout_height="48dp"
-	                android:src="@drawable/power_points"
+	                android:src="@drawable/icon_move_powerpoints"
 	                android:layout_marginLeft="10dp"/>
 	            
 	            <TextView 

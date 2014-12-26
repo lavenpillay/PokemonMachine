@@ -332,7 +332,15 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		updateEvolutions(pokemon);
 		
+		// -----------------------------------------------------------------------
+		
+		
+		
+		// -----------------------------------------------------------------------
+		
+		
 		updateTypeWeaknessDisplay(pokemon);
+		
 		
 		// Add Abilities
 		LinearLayout pokemonInformationArea = (LinearLayout) view.findViewById(R.id.additionalInformationArea);
@@ -368,7 +376,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		if (pokemon.getEvolutions().size() == 0) {
 			evolutions = PokemonMachineActivity.db.getEvolutions(pokemon.getId());
 			pokemon.setEvolutions(evolutions);
-			// TODO Add pokemon.getMEgaevolution from db here
+			
 			// Update Cache
 			Log.d(TAG, "[EVOLUTIONS_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
@@ -606,6 +614,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		update(PokemonMachineActivity.cache.getPokemon(Integer.valueOf(id)));
 	}	
 	
+	// TODO Delete this method
 	public void updateTypeWeaknessDisplay(Pokemon pokemon) {
 		// Update Type Weaknesses
 		int[][] matrix = PokemonMachineActivity.cache.getTypeEfficacyMatrix();
@@ -645,6 +654,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				damagePercentageForType2 = matrix[i][type2Id];
 			}
 			
+			
 			// Resolve Efficacy
 			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
 			
@@ -668,12 +678,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				textView.setTypeface(null, Typeface.ITALIC);
 				textView.setTextColor(Color.BLACK);
 			} 
-			
-			/*
-			Log.v(TAG, "AttackType=" + cache.getTypeNameById(i) + 
-					   " VS DefendingType=" + cache.getTypeNameById(type1Id) + 
-					   " = " + damagePercentageForType1 + " AND " + damagePercentageForType2);
-			*/
 			
 			textView.setText(damageText);
 		}

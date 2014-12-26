@@ -772,4 +772,6 @@
 		<item>Zygarde</item>
 		<item>Diancie</item>
     </string-array>
+    
+	<string name="damage_amount">damage amount</string>
 </resources>

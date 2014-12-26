@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout 
+        android:id="@+id/thumbnail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+		android:layout_alignParentLeft="true"
+		android:orientation="horizontal"
+		android:gravity="center">
+		
+        <TextView
+            android:id="@+id/list_item_id"
+	        android:layout_width="40dip"
+	        android:layout_height="wrap_content"
+	        android:layout_toLeftOf="@+id/thumbnail"
+	        android:singleLine="true"
+	        android:text=""
+	        android:textSize="19sp"
+	        android:textStyle="bold"
+	        android:gravity="center"/>
+
+	    <ImageView
+	        android:id="@+id/list_item_image"
+	        android:layout_width="48dp"
+	        android:layout_height="48dp"
+	        android:layout_marginRight="6dip"
+	        android:contentDescription="TODO"
+	        
+	        android:src="@drawable/ic_launcher" />
+        
+    </LinearLayout>
+    
+
+    <TextView
+        android:id="@+id/list_item_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/thumbnail"
+        android:layout_toRightOf="@+id/thumbnail"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Pokemon Name"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/list_item_type1"
+        android:layout_width="50dip"
+        android:layout_height="20dip"
+        android:layout_below="@+id/list_item_name"
+        android:layout_toRightOf="@+id/thumbnail"/>
+    
+    <ImageView
+        android:id="@+id/list_item_type2"
+        android:layout_width="50dip"
+        android:layout_height="20dip"
+        android:layout_below="@+id/list_item_name"
+        android:layout_toRightOf="@+id/list_item_type1"/>
+
+</RelativeLayout>

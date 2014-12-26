@@ -355,11 +355,129 @@
 
 
             
+        </LinearLayout>
+        <!-- END : Display Area -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
 
-            <!-- START : Capture and Breeding -->
+
+        <!-- START : Evolutions -->
+		
+		<LinearLayout 
+		     android:id="@+id/evolutionArea"
+		     android:layout_width="wrap_content"
+		     android:layout_height="wrap_content"
+		     android:orientation="vertical">
+		  	    
+			 <TextView
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:text="Evolution Chain"
+			     android:textSize="14sp" 
+			     android:layout_marginLeft="10dp"
+			     android:background="#33333311"
+			     android:padding="5dp"/>
+			 <View 
+			     android:background="@android:color/holo_blue_bright"
+			     android:layout_width="fill_parent"
+			     android:layout_height="6dp"
+			     android:layout_marginLeft="10dp" />
+		</LinearLayout>
+		
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dip" >
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:id="@+id/evolutionsHolder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+            </LinearLayout>
+        </LinearLayout>
+        <!-- END : Evolutions -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
+        
+        <LinearLayout
+            android:id="@+id/typeEfficacyTable"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dip" >
+            
+            <LinearLayout 
+			     android:layout_width="wrap_content"
+			     android:layout_height="wrap_content"
+			     android:orientation="vertical">
+			  	    
+				 <TextView
+				     android:layout_width="wrap_content"
+				     android:layout_height="wrap_content"
+				     android:text="Damage Taken"
+				     android:textSize="14sp" 
+				     android:layout_marginLeft="10dp"
+				     android:background="#33333311"
+				     android:padding="5dp"/>
+				 <View 
+				     android:background="@android:color/holo_blue_bright"
+				     android:layout_width="fill_parent"
+				     android:layout_height="6dp"
+				     android:layout_marginLeft="10dp" />
+			</LinearLayout>
+			
+            <LinearLayout 
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+				
+                <ImageView 
+                    android:layout_width="64dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/bug"/>
+                
+                <ImageView 
+                    android:id="@+id/imgDamageBug"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/damage_double"
+                    android:contentDescription="@string/damage_amount"/>
+                
+            </LinearLayout>
+            
+        </LinearLayout>    
+        
+
+		<include
+            layout="@layout/card_divider_grey" />
+        
+        <!-- START : Weaknesses -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dip" >
+
+            <include
+                android:id="@+id/type_efficacy"
+                layout="@layout/type_weakness" />
+        </LinearLayout>
+        <!-- END : Weaknesses -->
+        
+        <include
+            layout="@layout/card_divider_grey" />
+        
+        <!-- BEGIN : Breeding and Catching Information -->
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical"
@@ -431,75 +549,8 @@
                       layout="@layout/card_inner_single_entry" />
                         
 				</LinearLayout>
-
-        </LinearLayout>
-        <!-- END : Display Area -->
         
-        <include
-            layout="@layout/card_divider_grey" />
-
-
-        <!-- START : Evolutions -->
-		
-		<LinearLayout 
-		     android:id="@+id/evolutionArea"
-		     android:layout_width="wrap_content"
-		     android:layout_height="wrap_content"
-		     android:orientation="vertical">
-		  	    
-			 <TextView
-			     android:layout_width="wrap_content"
-			     android:layout_height="wrap_content"
-			     android:text="Evolution Chain"
-			     android:textSize="8sp" 
-			     android:layout_marginLeft="10dp"
-			     android:background="#33333311"
-			     android:padding="5dp"/>
-			 <View 
-			     android:background="@android:color/holo_blue_bright"
-			     android:layout_width="fill_parent"
-			     android:layout_height="6dp"
-			     android:layout_marginLeft="10dp" />
-		</LinearLayout>
-		
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5dip" >
-
-            <LinearLayout
-                android:id="@+id/evolutionsHolder"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal" >
-            </LinearLayout>
-        </LinearLayout>
-        <!-- END : Evolutions -->
-        
-        <include
-            layout="@layout/card_divider_grey" />
-
-
-        <!-- START : Weaknesses -->
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="5dip" >
-
-            <include
-                android:id="@+id/type_efficacy"
-                layout="@layout/type_weakness" />
-        </LinearLayout>
-        <!-- END : Weaknesses -->
-        
-        <include
-            layout="@layout/card_divider_grey" />
+        <!--  END : Breeding and Catching Information -->
         
         <LinearLayout 
             android:id="@+id/additionalInformationArea"
@@ -512,6 +563,9 @@
     </LinearLayout>
 	</ScrollView>
 	</LinearLayout>
+	
+	
+	
     <!-- MOVES -->
 
 <LinearLayout 
@@ -531,7 +585,7 @@
 		android:background="@android:color/holo_orange_dark" 
 		android:paddingLeft="10dp"
 		android:paddingTop="10dp"
-		android:paddingBottom="10dp"/>
+		android:paddingBottom="12dp"/>
     
 	<LinearLayout 
 	    android:layout_width="fill_parent"
@@ -545,7 +599,7 @@
 		    android:layout_weight="1"
 		    android:onClick="onMoveByLevelClick"
 		    android:text="Level"
-		    android:textSize="10sp" />
+		    android:textSize="12sp" />
 
 		<Button
 		    android:id="@+id/btnMovesByMachine"
@@ -554,8 +608,9 @@
 		    android:layout_weight="1"
 		    android:onClick="onMoveByMachineClick"
 		    android:text="TM" 
-		    android:textSize="10sp"/>
+		    android:textSize="12sp"/>
 
+		<!-- 	
 		<Button
 		    android:id="@+id/btnMovesByEgg"
 		    android:layout_width="0dp"
@@ -564,7 +619,8 @@
 		    android:onClick="onMoveByEggClick"
 		    android:text="Egg Moves" 
 		    android:textSize="10sp"/>
-		
+		 -->
+		 
 		<Button
 		    android:id="@+id/btnMovesByTutor"
 		    android:layout_width="0dp"
