@@ -19,7 +19,7 @@
 			     android:layout_width="wrap_content"
 			     android:layout_height="wrap_content"
 			     android:text="Damage Taken"
-			     android:textSize="8pt" 
+			     android:textSize="14sp" 
 			     android:background="#33333311"
 			     android:padding="5dp"/>
 			 <View 
@@ -34,7 +34,7 @@
 	        android:layout_marginLeft="10dp"
 	        android:textColor="#AAA"
 	        android:text="Damage multiplier when this Pokemon is hit by an attack of each type"
-	        android:textSize="6pt"
+	        android:textSize="10sp"
 	        android:layout_gravity="center"/>
     </LinearLayout>
     
@@ -116,6 +116,27 @@
 			        android:textSize="12sp"
 			        android:text="Damage"/>
 	        </LinearLayout>
+	        
+            <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView16"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/rock" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageRock"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
 	    </LinearLayout>
 	    <!-- END COLUMN 1 -->
 	    
@@ -191,6 +212,27 @@
 	        </LinearLayout>
             
             
+           <LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView18"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/water" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageWater"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
+            
 	    </LinearLayout>
 	    <!-- END COLUMN 2 -->
 	    
@@ -265,6 +307,26 @@
 			        android:text="Damage"/>
 	        </LinearLayout>
             
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:orientation="horizontal"
+			    android:layout_gravity="center_vertical">
+	            
+	            <ImageView
+	                android:id="@+id/imageView17"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:src="@drawable/steel" />
+	            
+	            <TextView
+	                android:id="@+id/txtDamageSteel"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:paddingLeft="5dip"
+			        android:textSize="12sp"
+			        android:text="Damage"/>
+	        </LinearLayout>
             
 	    </LinearLayout>
 
@@ -414,78 +476,7 @@
 	        </LinearLayout>
        </LinearLayout>
        
-        
-       <LinearLayout
-		   android:id="@+id/type_efficacy_col6"
-		   android:layout_width="0dip"
-		   android:layout_height="wrap_content"
-		   android:orientation="vertical"
-		   android:padding="5dip"
-		   android:layout_weight="1">
-            
-           <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView16"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/rock" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageRock"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-            
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView17"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/steel" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageSteel"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-            
-            <LinearLayout
-			    android:layout_width="wrap_content"
-			    android:layout_height="wrap_content"
-			    android:orientation="horizontal"
-			    android:layout_gravity="center_vertical">
-	            
-	            <ImageView
-	                android:id="@+id/imageView18"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
-	                android:src="@drawable/water" />
-	            
-	            <TextView
-	                android:id="@+id/txtDamageWater"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:paddingLeft="5dip"
-			        android:textSize="12sp"
-			        android:text="Damage"/>
-	        </LinearLayout>
-      </LinearLayout>
+
      
     </LinearLayout>
 </LinearLayout>

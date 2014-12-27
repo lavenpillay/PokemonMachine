@@ -25,11 +25,13 @@
 
 	    <ImageView
 	        android:id="@+id/list_item_image"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_width="48dp"
+	        android:layout_height="48dp"
 	        android:layout_marginRight="6dip"
 	        android:contentDescription="TODO"
-	        
+	        android:scaleType="fitCenter"
+	        android:scaleX="1"
+	        android:scaleY="1"
 	        android:src="@drawable/ic_launcher" />
         
     </LinearLayout>

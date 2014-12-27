@@ -75,7 +75,12 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		Bitmap bm = assetHelper.getBitmapFromAsset("pokemon_icons/" + id + ".png");
 		
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.list_item_image);
+		/*
+		imageView.getLayoutParams().width = 80;
+		imageView.getLayoutParams().height = 80;
+		*/
 		imageView.setImageBitmap(bm);
+		imageView.requestLayout();
 		
 		
 		if (applicationSettings.getBoolean("pref_types_in_list", true)) {

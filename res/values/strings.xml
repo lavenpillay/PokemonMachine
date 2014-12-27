@@ -774,4 +774,6 @@
     </string-array>
     
 	<string name="damage_amount">damage amount</string>
+    
+	<string name="damage_type">damage type</string>
 </resources>
