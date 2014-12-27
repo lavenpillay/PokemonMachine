@@ -506,97 +506,96 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		layout.addView(graphView);
 	     
 	     
-		 //LayoutParams labelParams = new LayoutParams(185, LinearLayout.LayoutParams.WRAP_CONTENT);
-		 //labelParams.leftMargin = 20;
-			
-	     LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
-	     TextView txtGenderHeading = (TextView) layoutGender.findViewById(R.id.heading);
-	     //txtGenderHeading.setLayoutParams(labelParams);
-	     txtGenderHeading.setText("Gender");
-	     TextView txtGenderContent = (TextView) layoutGender.findViewById(R.id.content);
-	     txtGenderContent.setText(getGenderRatio(pokemon.getGenderRate()));
-	     	     
-	     LinearLayout layoutCatchRate = (LinearLayout) view.findViewById(R.id.ceCatchRate);
-	     TextView txtCatchRateHeading = (TextView) layoutCatchRate.findViewById(R.id.heading);
-	     //txtCatchRateHeading.setLayoutParams(labelParams);
-	     txtCatchRateHeading.setText("Catch Rate");
-	     TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
-	     txtCatchRateContent.setText(String.valueOf(getCatchRate(pokemon.getCatchRate())));
-	     
-	     final Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
-		 // Create an ArrayAdapter using the string array and a default spinner layout
-	     EggGroupSpinnerAdapter adapter = new EggGroupSpinnerAdapter(getActivity(), R.layout.simple_spinner_item, pokemon.getEggGroups());
-		 // Specify the layout to use when the list of choices appears
+		LayoutParams labelParams = new LayoutParams(150, LinearLayout.LayoutParams.WRAP_CONTENT);
+		labelParams.leftMargin = 20;
+	
+		LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
+		TextView txtGenderHeading = (TextView) layoutGender.findViewById(R.id.heading);
+		txtGenderHeading.setLayoutParams(labelParams);
+		txtGenderHeading.setText("Gender");
+		TextView txtGenderContent = (TextView) layoutGender.findViewById(R.id.content);
+		txtGenderContent.setText(getGenderRatio(pokemon.getGenderRate()));
+ 	     
+		LinearLayout layoutCatchRate = (LinearLayout) view.findViewById(R.id.ceCatchRate);
+		TextView txtCatchRateHeading = (TextView) layoutCatchRate.findViewById(R.id.heading);
+		txtCatchRateHeading.setLayoutParams(labelParams);
+		txtCatchRateHeading.setText("Catch Rate");
+		TextView txtCatchRateContent = (TextView) layoutCatchRate.findViewById(R.id.content);
+		txtCatchRateContent.setText(String.valueOf(getCatchRate(pokemon.getCatchRate())));
+ 
+		final Spinner spinner = (Spinner) view.findViewById(R.id.spinEggGroups);
+		// Create an ArrayAdapter using the string array and a default spinner layout
+		EggGroupSpinnerAdapter adapter = new EggGroupSpinnerAdapter(getActivity(), R.layout.simple_spinner_item, pokemon.getEggGroups());
+		// Specify the layout to use when the list of choices appears
 		// adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		 // Apply the adapter to the spinner
-		 spinner.setAdapter(adapter);
-		 
-		 spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
-		        @Override
-		        public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-		            // TODO Auto-generated method stub
-		            String  mselection = spinner.getSelectedItem().toString();    
-		            Log.d(TAG, "SELECTED: " + mselection);
-		            
-		            PopupManager.showEggGroupPopup(getActivity(), spinner.getSelectedItemPosition() + 1);
-		            /**** do your code*****/
-		        }
-		        
-		        @Override
-		        public void onNothingSelected(AdapterView<?> arg0) {
-		            // TODO Auto-generated method stub
-		        }
-		    });
+		// Apply the adapter to the spinner
+		spinner.setAdapter(adapter);
+ 
+		spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				String  mselection = spinner.getSelectedItem().toString();    
+				Log.d(TAG, "SELECTED: " + mselection);
+				
+				PopupManager.showEggGroupPopup(getActivity(), spinner.getSelectedItemPosition() + 1);
+				/**** do your code*****/
+			}
+		
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+			    	// TODO Auto-generated method stub
+			    }
+		});
 	     
-	     LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
-	     TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
-	     //txtGrowthRateHeading.setLayoutParams(labelParams);
-	     txtGrowthRateHeading.setText("Growth Rate");
-	     TextView txtGrowthRateContent = (TextView) layoutGrowthRate.findViewById(R.id.content);
-	     txtGrowthRateContent.setText(String.valueOf(pokemon.getGrowthRate()));
-	     
-	     LinearLayout layoutEVYield = (LinearLayout) view.findViewById(R.id.ceEVYield);
-	     TextView txtEVYieldHeading = (TextView) layoutEVYield.findViewById(R.id.heading);
-	     //txtEVYieldHeading.setLayoutParams(labelParams);
-	     txtEVYieldHeading.setText("EV Yield");
-	     TextView txtEVYieldContent = (TextView) layoutEVYield.findViewById(R.id.content);
-	     txtEVYieldContent.setText(String.valueOf(pokemon.getEvYield()));
-	     
-	     LinearLayout layoutHappiness = (LinearLayout) view.findViewById(R.id.ceHappiness);
-	     TextView txtHappinessHeading = (TextView) layoutHappiness.findViewById(R.id.heading);
-	     //txtHappinessHeading.setLayoutParams(labelParams);
-	     txtHappinessHeading.setText("Happiness");
-	     TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
-	     txtHappinessContent.setText(pokemon.getHappiness());
-	 }
+		LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
+		TextView txtGrowthRateHeading = (TextView) layoutGrowthRate.findViewById(R.id.heading);
+		txtGrowthRateHeading.setLayoutParams(labelParams);
+		txtGrowthRateHeading.setText("Growth Rate");
+		TextView txtGrowthRateContent = (TextView) layoutGrowthRate.findViewById(R.id.content);
+		txtGrowthRateContent.setText(String.valueOf(pokemon.getGrowthRate()));
+     
+		LinearLayout layoutEVYield = (LinearLayout) view.findViewById(R.id.ceEVYield);
+		TextView txtEVYieldHeading = (TextView) layoutEVYield.findViewById(R.id.heading);
+		txtEVYieldHeading.setLayoutParams(labelParams);
+		txtEVYieldHeading.setText("EV Yield");
+		TextView txtEVYieldContent = (TextView) layoutEVYield.findViewById(R.id.content);
+		txtEVYieldContent.setText(String.valueOf(pokemon.getEvYield()));
+     
+		LinearLayout layoutHappiness = (LinearLayout) view.findViewById(R.id.ceHappiness);
+		TextView txtHappinessHeading = (TextView) layoutHappiness.findViewById(R.id.heading);
+		txtHappinessHeading.setLayoutParams(labelParams);
+		txtHappinessHeading.setText("Happiness");
+		TextView txtHappinessContent = (TextView) layoutHappiness.findViewById(R.id.content);
+		txtHappinessContent.setText(pokemon.getHappiness());
+	}
 	 
-	 private String getGenderRatio(String genderRatio) {
-		 String returnString = "";
+	private String getGenderRatio(String genderRatio) {
+		String returnString = "";
 		 
-		 if (genderRatio.equalsIgnoreCase("-1")) {
-			 returnString = Constants.GENDER_RATE_STRING_GENDERLESS;
-		 } else if (genderRatio.equalsIgnoreCase("0")) {
-			 returnString = Constants.GENDER_RATE_STRING_0;
-		 } else if (genderRatio.equalsIgnoreCase("1")) {
-			 returnString = Constants.GENDER_RATE_STRING_1;
-		 } else if (genderRatio.equalsIgnoreCase("2")) {
-			 returnString = Constants.GENDER_RATE_STRING_2;
-		 } else if (genderRatio.equalsIgnoreCase("4")) {
-			 returnString = Constants.GENDER_RATE_STRING_4;
-		 } else if (genderRatio.equalsIgnoreCase("6")) {
-			 returnString = Constants.GENDER_RATE_STRING_6;
-		 } else if (genderRatio.equalsIgnoreCase("8")) {
-			 returnString = Constants.GENDER_RATE_STRING_8;
-		 }
-		 
-		 return returnString;
-	 }
+		if (genderRatio.equalsIgnoreCase("-1")) {
+			returnString = Constants.GENDER_RATE_STRING_GENDERLESS;
+		} else if (genderRatio.equalsIgnoreCase("0")) {
+			returnString = Constants.GENDER_RATE_STRING_0;
+		} else if (genderRatio.equalsIgnoreCase("1")) {
+			returnString = Constants.GENDER_RATE_STRING_1;
+		} else if (genderRatio.equalsIgnoreCase("2")) {
+			returnString = Constants.GENDER_RATE_STRING_2;
+		} else if (genderRatio.equalsIgnoreCase("4")) {
+			returnString = Constants.GENDER_RATE_STRING_4;
+		} else if (genderRatio.equalsIgnoreCase("6")) {
+			returnString = Constants.GENDER_RATE_STRING_6;
+		} else if (genderRatio.equalsIgnoreCase("8")) {
+			returnString = Constants.GENDER_RATE_STRING_8;
+		}
+			 
+		return returnString;
+	}
 	 
-	 private String getCatchRate(String catchRate) {
-		 double rate = (Double.valueOf(catchRate) / 255) * 100;
-		 
-		 return String.format("%.0f", rate) + "%";
-	 }
+	private String getCatchRate(String catchRate) {
+		double rate = (Double.valueOf(catchRate) / 255) * 100;
+			 
+		return String.format("%.0f", rate) + "%";
+	}
 	 
 	@Override
 	public void onDestroy() {

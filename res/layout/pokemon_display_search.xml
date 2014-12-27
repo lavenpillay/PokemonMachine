@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal" >
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onSearchClick"
+        android:text="Search by National ID"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/txtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="national id"
+        android:imeOptions="actionSearch"
+        android:numeric="integer"
+        android:singleLine="true"
+        android:text=""
+        android:textColorHint="#AAAAAA"
+        android:textSize="16sp" >
+    </EditText>
+
+    <ImageButton
+        android:id="@+id/btnClearID"
+        android:layout_width="30dip"
+        android:layout_height="30dip"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:onClick="onClearIDClick"
+        android:src="@drawable/clear_cross_01" />
+
+</LinearLayout>
