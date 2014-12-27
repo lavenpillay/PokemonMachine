@@ -4,4 +4,11 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <dimen name="move_stat_list_icon_width">20dp</dimen>
+    <dimen name="move_stat_list_icon_height">20dp</dimen>
+    <dimen name="move_stat_list_icon_textsize">12dp</dimen>
+    <dimen name="move_name_textsize">13sp</dimen>
+    <dimen name="move_stat_list_icon_padding_left">0dp</dimen>
+    <dimen name="move_type_icon_width">50dp</dimen>
+    <dimen name="move_type_icon_height">20dp</dimen>
 </resources>

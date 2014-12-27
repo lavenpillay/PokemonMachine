@@ -104,7 +104,7 @@ public class MoveListAdapter extends ArrayAdapter<Move> {
 		Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
 		categoryImageView.setImageBitmap(bm);
 				 
-		Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images_medium/" + move.getType() + ".png");
+		Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images_large/" + move.getType() + ".png");
 		typeImageView.setImageBitmap(typeBitmap);
 		
     return rowView;

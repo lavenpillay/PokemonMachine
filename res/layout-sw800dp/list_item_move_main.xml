@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <!--  MAIN Row -->
+	<LinearLayout 
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="horizontal">   
+
+		<include 
+		    layout="@layout/move_info_inner"  
+		    android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content"/>
+		
+	</LinearLayout>
+
+		<!-- put whatever you want in the expandable view -->
+		<View
+		    android:layout_width="fill_parent"
+		    android:layout_height="1dip"
+		    android:background="@android:color/darker_gray"/>	
+		
+	<!-- this is the expandable view that is initially hidden and will slide out when the more button is pressed -->
+</LinearLayout>	
