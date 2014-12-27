@@ -96,7 +96,7 @@ public final class R {
         public static final int activity_splash_progress_bar=0x7f0a0001;
         public static final int additionalInformationArea=0x7f0a0044;
         public static final int additonalInfoArea=0x7f0a004d;
-        public static final int baseStatsGraphArea=0x7f0a0030;
+        public static final int baseStatsGraphArea=0x7f0a0039;
         public static final int berryHolder=0x7f0a0019;
         public static final int btnClearID=0x7f0a002c;
         public static final int btnClearNameFilter=0x7f0a0027;
@@ -156,7 +156,7 @@ public final class R {
         public static final int imgCaught=0x7f0a0010;
         public static final int imgHoldItem=0x7f0a0016;
         public static final int imgItem=0x7f0a004b;
-        public static final int imgPokemonArt=0x7f0a0031;
+        public static final int imgPokemonArt=0x7f0a0030;
         public static final int imgPokemonArtBig=0x7f0a0068;
         public static final int imgPokemonEvolution=0x7f0a0013;
         public static final int imgSeen=0x7f0a000f;
@@ -165,12 +165,12 @@ public final class R {
         public static final int imgType2=0x7f0a002f;
         public static final int imgUseItem=0x7f0a0017;
         public static final int itemList=0x7f0a004a;
-        public static final int lblHeight=0x7f0a0034;
-        public static final int lblHeightUnit=0x7f0a0036;
-        public static final int lblSpecies=0x7f0a0032;
+        public static final int lblHeight=0x7f0a0033;
+        public static final int lblHeightUnit=0x7f0a0035;
+        public static final int lblSpecies=0x7f0a0031;
         public static final int lblTableName=0x7f0a001c;
-        public static final int lblWeight=0x7f0a0037;
-        public static final int lblWeightUnit=0x7f0a0039;
+        public static final int lblWeight=0x7f0a0036;
+        public static final int lblWeightUnit=0x7f0a0038;
         public static final int list_item_accuracy=0x7f0a005e;
         public static final int list_item_category=0x7f0a0059;
         public static final int list_item_id=0x7f0a0056;
@@ -222,7 +222,7 @@ public final class R {
         public static final int txtEvolutionLevel=0x7f0a0014;
         public static final int txtFilter=0x7f0a0026;
         public static final int txtHappinessLevel=0x7f0a0015;
-        public static final int txtHeight=0x7f0a0035;
+        public static final int txtHeight=0x7f0a0034;
         public static final int txtMoveAccuracy=0x7f0a0065;
         public static final int txtMoveCount=0x7f0a004f;
         public static final int txtMovePower=0x7f0a0064;
@@ -233,8 +233,8 @@ public final class R {
         public static final int txtPopupContent=0x7f0a0007;
         public static final int txtPopupHeading=0x7f0a0006;
         public static final int txtSearch=0x7f0a002b;
-        public static final int txtSpecies=0x7f0a0033;
-        public static final int txtWeight=0x7f0a0038;
+        public static final int txtSpecies=0x7f0a0032;
+        public static final int txtWeight=0x7f0a0037;
         public static final int txt_move_description=0x7f0a0061;
         public static final int typeWeaknessDialog=0x7f0a0095;
         public static final int typeWeaknessGridLayout=0x7f0a0094;
