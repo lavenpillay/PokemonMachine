@@ -17,7 +17,6 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +32,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
@@ -54,7 +53,6 @@ import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
-import com.darkdesign.pokemonmachine.layout.FlowLayout;
 import com.darkdesign.pokemonmachine.listener.OnPokemonListItemSelectedListener;
 import com.jjoe64.graphview.BarGraphView;
 import com.jjoe64.graphview.GraphView;
@@ -81,6 +79,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public static PokemonMoveListAdapter movesListAdapter;
 	
 	private int lastViewedPokemonId = -1;
+	
+	
 	
 	//The "x" and "y" position of the Popup Window
     private Point p;
@@ -134,18 +134,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	    }
 	}
 
-	/**
-	 * 
-	 */
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		    
-		Log.i(TAG, "onActivityCreated() - Called");
-		
-		//adapter.getFilter().filter("Sand");
-	}
-	
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -161,6 +149,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 Log.i(TAG, "onCreate() - Called");
+		 
+		 //PokemonMachineActivity.spinner.setVisibility(View.VISIBLE);	
+		 
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
    
 		 if (applicationSettings == null) {
@@ -260,8 +251,24 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
 		
+		PokemonMachineActivity.spinner.setVisibility(View.GONE);	
+		
 		return view;
 	 }
+	 
+	/**
+	 * 
+	 */
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		    
+		Log.i(TAG, "onActivityCreated() - Called");
+		
+		//adapter.getFilter().filter("Sand");
+		
+		PokemonMachineActivity.spinner.setVisibility(View.GONE);
+	}
 	 
 	/**
 	 * 

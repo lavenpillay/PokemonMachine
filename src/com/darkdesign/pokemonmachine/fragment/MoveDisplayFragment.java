@@ -215,8 +215,8 @@ public class MoveDisplayFragment extends Fragment {
 		 // Stats display
 		 LinearLayout statsLayout = (LinearLayout)inflater.inflate( R.layout.move_stats_icons_display, null );
 		 
-		 String power = (move.getPower() != 0) ? String.valueOf(move.getPower()) : "n/a";
-		 String accuracy = (move.getAccuracy() != 0) ? String.valueOf(move.getAccuracy()) : "n/a";
+		 String power = (move.getDamageClass().equalsIgnoreCase("non-damaging")) ? "--" : String.valueOf(move.getPower());
+		 String accuracy = (move.getAccuracy() > 0) ? String.valueOf(move.getAccuracy()) : "--" ;
 		 
 		 TextView txtMovePower = (TextView) statsLayout.findViewById(R.id.txtMovePower);
 		 txtMovePower.setText(power);
@@ -240,7 +240,7 @@ public class MoveDisplayFragment extends Fragment {
 		 moveInformationArea.addView(moveEffectLayout);
 		 
 		 // Get Pokemon with selected move
-		 /*
+		 
 		 final int[] compatiblePokemonIds = PokemonMachineActivity.db.getPokemonIdsForMove(move.getId());
 		 
 		 TextView txtPokemonCount = (TextView) view.findViewById(R.id.txtPokemonCount);
@@ -258,7 +258,8 @@ public class MoveDisplayFragment extends Fragment {
 			 imgPokemon.setImageBitmap(bmp);
 			 
 			 TextView txtName = (TextView) pokemonLayout.findViewById(R.id.txtPokemonEvolutionName);
-			 txtName.setText(PokemonMachineActivity.cache.getPokemon(pokemonId).getName());
+			 //txtName.setText(PokemonMachineActivity.cache.getPokemon(pokemonId).getName());
+			 txtName.setText(Util.toTitleCase(PokemonMachineActivity.db.getPokemonName(pokemonId)));
 			 
 			 imgPokemon.setOnClickListener(new OnClickListener() {
 			    public void onClick(View v) {
@@ -269,9 +270,7 @@ public class MoveDisplayFragment extends Fragment {
 			 
 			 pokemonArea.addView(pokemonLayout);
 		 }
-		 */
 	 }
-
 	
 	private String getFormattedLongEffect(Move move) {
 		String htmlString = move.getEffectLong();

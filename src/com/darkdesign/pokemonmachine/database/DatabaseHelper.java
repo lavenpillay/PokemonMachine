@@ -27,7 +27,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class DatabaseHelper extends SQLiteAssetHelper {
 	
-	private static final String TAG = DatabaseHelper.class.getName();
+	private static final String TAG = "DatabaseHelper";
 
     public static final String DATABASE_NAME = "pokemon_machine_db";
     public static final int DATABASE_VERSION = 1;
@@ -136,8 +136,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     }
     
     public int[] getMoveIdsByType(int typeId) {
-    	ArrayList<Move> movesofType = new ArrayList<Move>();
-    	
     	String movesQuery = "SELECT id FROM moves WHERE type_id = " + typeId;
         Cursor movesCursor = db.rawQuery(movesQuery, null);
         
@@ -329,10 +327,25 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		
 		return evolutions;
 	}
+	
+	public String getPokemonName(int id) {
+		
+		String queryPokemonName = "SELECT identifier FROM pokemon WHERE id = " + id;
+		
+		Cursor c = db.rawQuery(queryPokemonName, null);
+        c.moveToFirst();
+        
+        String name = c.getString(0);
+        c.close();
+        
+        return name;
+	}
     
     
     // Getting single pokemon
     public Pokemon getPokemon(String id) {
+    	Log.d(TAG, "Getting Pokemon from Database " + id);
+    	
     	Pokemon pokemon = new Pokemon();
     	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
     	

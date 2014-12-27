@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
@@ -66,6 +67,8 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
     private SettingsFragment settingsFragment = null;
     
     public static AssetHelper assetHelper;
+    
+    public static ProgressBar spinner;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,8 +124,10 @@ public class PokemonMachineActivity extends Activity implements ActionBar.TabLis
                             .setTabListener(this));
         }
         
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        
         // Set to default Tab
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(2);
 
     }
     

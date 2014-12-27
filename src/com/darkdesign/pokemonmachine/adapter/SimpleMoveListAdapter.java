@@ -49,10 +49,13 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move>
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
+		String power = (move.getDamageClass().equalsIgnoreCase("non-damaging")) ? "--" : String.valueOf(move.getPower());
+		String accuracy = (move.getAccuracy() > 0) ? String.valueOf(move.getAccuracy()) : "--" ;
+		
 		nameTextView.setText(move.getName());
-		powerTextView.setText(String.valueOf(move.getPower()));
+		powerTextView.setText(power);
 		ppTextView.setText(String.valueOf(move.getPP()));
-		accuracyTextView.setText(String.valueOf(move.getAccuracy()));
+		accuracyTextView.setText(accuracy);
 
 		/*
 		// Set Images

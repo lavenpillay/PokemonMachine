@@ -12,5 +12,12 @@
     android:windowSoftInputMode="stateHidden"
     tools:context="com.darkdesign.pokemonmachine.PokemonMachineActivity" />
 
+<ProgressBar
+   android:id="@+id/progressBar1"
+   style="?android:attr/progressBarStyleLarge"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:layout_centerHorizontal="true"
+   android:visibility="gone" />
  
 </FrameLayout>
