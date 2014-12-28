@@ -57,11 +57,10 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move>
 		ppTextView.setText(String.valueOf(move.getPP()));
 		accuracyTextView.setText(accuracy);
 
-		/*
+		
 		// Set Images
 		Bitmap bmp = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
 		categoryImageView.setImageBitmap(bmp);
-		*/
 		
 		Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images_medium/" + move.getType() + ".png");
 		typeImageView.setImageBitmap(typeBitmap);

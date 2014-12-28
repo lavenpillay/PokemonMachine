@@ -26,8 +26,7 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
         public static final int move_name_textsize=0x7f050005;
         public static final int move_stat_list_icon_height=0x7f050003;
-        public static final int move_stat_list_icon_padding=0x7f050006;
-        public static final int move_stat_list_icon_padding_left=0x7f050009;
+        public static final int move_stat_list_icon_padding_left=0x7f050006;
         public static final int move_stat_list_icon_textsize=0x7f050004;
         /** 
          Customize dimensions originally defined in res/values/dimens.xml (such as

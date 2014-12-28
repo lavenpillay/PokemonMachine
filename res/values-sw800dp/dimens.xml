@@ -9,7 +9,7 @@
     <dimen name="move_stat_list_icon_height">30dp</dimen>
     <dimen name="move_stat_list_icon_textsize">20sp</dimen>
     <dimen name="move_name_textsize">18sp</dimen>
-    <dimen name="move_stat_list_icon_padding_left">70dp</dimen>
+    <dimen name="move_stat_list_icon_padding_left">0dp</dimen>
     <dimen name="move_type_icon_width">62dp</dimen>
     <dimen name="move_type_icon_height">25dp</dimen>
 </resources>
