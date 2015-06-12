@@ -736,9 +736,17 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				evolutionStateView = buildEvolutionStateView(evolution.getPokemonId(), assetHelper, inflater, false);
 				holder.addView(evolutionStateView);
 			}
-			
-			if (pokemon.getMegaEvolution() != null) {
-				evolution = pokemon.getMegaEvolution();
+
+			Evolution lastEvolution = pokemon.getEvolutions().get(pokemon.getEvolutions().size() - 1);
+
+			if (pokemon.getMegaEvolution() != null || PokemonMachineActivity.cache.getPokemon(lastEvolution.getPokemonId()).getMegaEvolution() != null) {
+
+
+				if (pokemon.getMegaEvolution() != null ) {
+					evolution = pokemon.getMegaEvolution();
+				} else {
+					evolution = PokemonMachineActivity.cache.getPokemon(lastEvolution.getPokemonId()).getMegaEvolution();
+				}
 				
 				// Add Method
 				LinearLayout evolutionMethodView = buildEvolutionMethod(inflater, assetHelper, evolution, true);
@@ -762,7 +770,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 * @return
 	 * @throws IOException
 	 */
-	private LinearLayout buildEvolutionStateView(String pokemonId, AssetHelper assetHelper, LayoutInflater inflater, boolean isMegaEvolution)
+	private LinearLayout buildEvolutionStateView(int pokemonId, AssetHelper assetHelper, LayoutInflater inflater, boolean isMegaEvolution)
 			throws IOException 
 	{
 		final String id = Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH);

@@ -281,8 +281,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	        cursorEvolutions = db.rawQuery(queryEvolutions, null);
 	        cursorEvolutions.moveToFirst();
 	        
-	        String pokemonId = cursorSpecies.getString(0);
-	        String prevEvolutionId = cursorSpecies.getString(1);
+	        int pokemonId = cursorSpecies.getInt(0);
+	        int prevEvolutionId = cursorSpecies.getInt(1);
 	        
 	        evolution = new Evolution();
 	        evolution.setPokemonId(pokemonId);
@@ -311,14 +311,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (evolutions.size() > 1) {
 	        // Sort evolutions - get pre-evolutions first
 	        for (int i=0; i < evolutions.size(); i++) {
-	        	if (evolutions.get(i).getPreviousEvolutionId() == null) {
+	        	if (evolutions.get(i).getPreviousEvolutionId() == -1) {
 	        		Collections.swap(evolutions, 0, i);
 	        	}
 	        }
 
 	        // If theres 3 evolutions check and swap
 	        if (evolutions.size() > 2) {
-	        	if (evolutions.get(1).getPreviousEvolutionId().equals(evolutions.get(2).getPokemonId())) {
+	        	if (evolutions.get(1).getPreviousEvolutionId() == evolutions.get(2).getPokemonId()) {
 	        		Collections.swap(evolutions, 1, 2);
 	        	}
 	        }
@@ -443,9 +443,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         Cursor cursorMegaEvo = db.rawQuery(queryMegaEvolution, null);
         if (cursorMegaEvo.moveToFirst()) {
         	Evolution megaEvolution = new Evolution();
-        	megaEvolution.setPokemonId(cursorMegaEvo.getString(0));
+        	megaEvolution.setPokemonId(cursorMegaEvo.getInt(0));
         	megaEvolution.setIdentifier(cursorMegaEvo.getString(1));
-        	megaEvolution.setPreviousEvolutionId(cursorMegaEvo.getString(2));
+        	megaEvolution.setPreviousEvolutionId(cursorMegaEvo.getInt(2));
         	megaEvolution.setTriggerItemId(cursorMegaEvo.getString(3));
         	megaEvolution.setMethod(Constants.EVOLUTION_METHOD_MEGAEVOLUTION);
         	pokemon.setMegaEvolution(megaEvolution);
@@ -539,7 +539,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     /**
      * Return an item from the database
      * 
-     * @param itemId
      * @return
      */
     public String[] getItemNames() {

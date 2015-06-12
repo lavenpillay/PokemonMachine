@@ -5,8 +5,8 @@ public class Evolution {
 	private String method;
 	private String resourceURI;
 	private String identifier;
-	private String pokemonId;
-	private String previousEvolutionId;
+	private int pokemonId;
+	private int previousEvolutionId = -1;
 	private String triggerItemId;
 	private String heldItemId;
 	private String minimumHappiness;
@@ -14,7 +14,7 @@ public class Evolution {
 	public Evolution() {
 	}
 	
-	public Evolution(String pokemonId, String previousEvolutionId, String method) {
+	public Evolution(int pokemonId, int previousEvolutionId, String method) {
 		this.pokemonId = pokemonId;
 		this.method = method;
 		this.previousEvolutionId = previousEvolutionId;
@@ -44,11 +44,11 @@ public class Evolution {
 		this.resourceURI = resourceURI;
 	}
 
-	public String getPreviousEvolutionId() {
+	public int getPreviousEvolutionId() {
 		return previousEvolutionId;
 	}
 
-	public void setPreviousEvolutionId(String previousEvolutionId) {
+	public void setPreviousEvolutionId(int previousEvolutionId) {
 		this.previousEvolutionId = previousEvolutionId;
 	}
 	
@@ -60,11 +60,11 @@ public class Evolution {
 		this.identifier = identifier;
 	}
 
-	public String getPokemonId() {
+	public int getPokemonId() {
 		return pokemonId;
 	}
 
-	public void setPokemonId(String pokemonId) {
+	public void setPokemonId(int pokemonId) {
 		this.pokemonId = pokemonId;
 	}
 
