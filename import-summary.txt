@@ -1,0 +1,177 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .gitattributes
+* .gitignore
+* db_dev/
+* db_dev/pokemon_machine_db.sqlite
+* db_dev/scripts/
+* db_dev/scripts/create_table_berries.txt
+* db_dev/scripts/create_table_items.sql
+* db_dev/scripts/create_table_moves.sql
+* db_dev/scripts/create_table_pokemon.sql
+* db_dev/scripts/create_table_pokemon_evolution.sql
+* db_dev/scripts/create_table_pokemon_species.txt
+* db_dev/scripts/item_flavor_text.sql
+* db_dev/scripts/tabledata_abilities.sql
+* db_dev/scripts/tabledata_ability_flavor_text.sql
+* db_dev/scripts/tabledata_ability_names.sql
+* db_dev/scripts/tabledata_abiliy_prose.sql
+* db_dev/scripts/tabledata_berries.sql
+* db_dev/scripts/tabledata_egg_group_prose.sql
+* db_dev/scripts/tabledata_egg_groups.sql
+* db_dev/scripts/tabledata_evolution_chains.sql
+* db_dev/scripts/tabledata_growth_rates.sql
+* db_dev/scripts/tabledata_item_categories.sql
+* db_dev/scripts/tabledata_item_category_prose.sql
+* db_dev/scripts/tabledata_item_flavour_text.sql
+* db_dev/scripts/tabledata_item_names.sql
+* db_dev/scripts/tabledata_item_prose.sql
+* db_dev/scripts/tabledata_items.sql
+* db_dev/scripts/tabledata_language_names.sql
+* db_dev/scripts/tabledata_languages.sql
+* db_dev/scripts/tabledata_move_damage_classes.sql
+* db_dev/scripts/tabledata_move_effect_prose.sql
+* db_dev/scripts/tabledata_move_targets.sql
+* db_dev/scripts/tabledata_moves.sql
+* db_dev/scripts/tabledata_pokemon.sql
+* db_dev/scripts/tabledata_pokemon_abilities.sql
+* db_dev/scripts/tabledata_pokemon_colors.sql
+* db_dev/scripts/tabledata_pokemon_egg_groups.sql
+* db_dev/scripts/tabledata_pokemon_evolution.sql
+* db_dev/scripts/tabledata_pokemon_habitats.sql
+* db_dev/scripts/tabledata_pokemon_move_method_prose.sql
+* db_dev/scripts/tabledata_pokemon_moves.sql
+* db_dev/scripts/tabledata_pokemon_species.sql
+* db_dev/scripts/tabledata_pokemon_species_names.sql
+* db_dev/scripts/tabledata_pokemon_stats.sql
+* db_dev/scripts/tabledata_pokemon_types.sql
+* db_dev/scripts/tabledata_shapes.sql
+* db_dev/scripts/tabledata_stats.sql
+* db_dev/scripts/tabledata_type_efficacy.sql
+* db_dev/scripts/tabledata_types.sql
+* db_dev/scripts/tables/
+* db_dev/scripts/tables/generations.sql
+* db_dev/scripts/tables/pokemon_game_indices.sql
+* db_dev/scripts/tables/version_group_pokemon_move_methods.sql
+* db_dev/scripts/tables/version_group_regions.sql
+* db_dev/scripts/tables/version_groups.sql
+* db_dev/scripts/tables/version_names.sql
+* db_dev/scripts/tables/versions.sql
+* db_dev/scripts/update_pokemon.sql
+* db_dev/scripts/update_pokemon_species.sql
+* db_dev/scripts/update_pokemon_species_names.sql
+* db_dev/scripts/update_pokemon_stats.sql
+* db_dev/scripts/update_pokemon_types.sql
+* db_dev/veekun-pokedex.sqlite
+* ic_launcher-web.png
+* image_dev/
+* image_dev/Cancel-icon.png
+* image_dev/Icons/
+* image_dev/Icons/accuracy.psd
+* image_dev/Icons/coll_pokeball_icon.png
+* image_dev/Icons/coll_seen_icon.png
+* image_dev/Icons/coll_shiny_icon.png
+* image_dev/Icons/collection_icons.ai
+* image_dev/Icons/collection_icons.png
+* image_dev/Icons/damage_class_icons.ai
+* image_dev/Icons/male-and-female-signs.psd
+* image_dev/Icons/power.psd
+* image_dev/Icons/power_points.psd
+* image_dev/Type Images (medium)/
+* image_dev/Type Images (medium)/bug.png
+* image_dev/Type Images (medium)/dark.png
+* image_dev/Type Images (medium)/electric.png
+* image_dev/Type Images (medium)/fairy.png
+* image_dev/Type Images (medium)/fighting.png
+* image_dev/Type Images (medium)/fire.png
+* image_dev/Type Images (medium)/flying.png
+* image_dev/Type Images (medium)/ghost.png
+* image_dev/Type Images (medium)/grass.png
+* image_dev/Type Images (medium)/ground.png
+* image_dev/Type Images (medium)/ice.png
+* image_dev/Type Images (medium)/normal.png
+* image_dev/Type Images (medium)/poison.png
+* image_dev/Type Images (medium)/psychic.png
+* image_dev/Type Images (medium)/rock.png
+* image_dev/Type Images (medium)/steel.png
+* image_dev/Type Images (medium)/water.png
+* image_dev/Type Images (small)/
+* image_dev/Type Images (small)/bug.png
+* image_dev/Type Images (small)/dark.png
+* image_dev/Type Images (small)/dragon.png
+* image_dev/Type Images (small)/electric.png
+* image_dev/Type Images (small)/fairy.png
+* image_dev/Type Images (small)/fighting.png
+* image_dev/Type Images (small)/fire.png
+* image_dev/Type Images (small)/flying.png
+* image_dev/Type Images (small)/ghost.png
+* image_dev/Type Images (small)/grass.png
+* image_dev/Type Images (small)/ground.png
+* image_dev/Type Images (small)/ice.png
+* image_dev/Type Images (small)/normal.png
+* image_dev/Type Images (small)/poison.png
+* image_dev/Type Images (small)/psychic.png
+* image_dev/Type Images (small)/rock.png
+* image_dev/Type Images (small)/steel.png
+* image_dev/Type Images (small)/water.png
+* image_dev/TypeWeaknessHeaders.psd
+* image_dev/TypeWeaknessHeaders2.psd
+* image_dev/button_expand_move.psd
+* image_dev/damage_icons.psd
+* image_dev/icon_level_up.psd
+* image_dev/icon_level_up_happiness.psd
+* image_dev/icon_trade.psd
+* image_dev/main_background.png
+* image_dev/main_background.psd
+* image_dev/shadow.psd
+* image_dev/types.psd
+* proguard-project.txt
+* screenshots/
+* screenshots/device-2014-11-21-233624_pokemon-01.png
+
+Replaced Jars with Dependencies:
+--------------------------------
+The importer recognized the following .jar files as third party
+libraries and replaced them with Gradle dependencies instead. This has
+the advantage that more explicit version information is known, and the
+libraries can be updated automatically. However, it is possible that
+the .jar file in your project was of an older version than the
+dependency we picked, which could render the project not compileable.
+You can disable the jar replacement in the import wizard and try again:
+
+android-support-v4.jar => com.android.support:support-v4:18.0.0
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* assets/ => app/src/main/assets/
+* libs/GraphView-3.1.3.jar => app/libs/GraphView-3.1.3.jar
+* libs/android-sqlite-asset-helper.jar => app/libs/android-sqlite-asset-helper.jar
+* libs/android-support-v13.jar => app/libs/android-support-v13.jar
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)
