@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,8 +55,11 @@ public class SimpleMoveListAdapter extends ArrayAdapter<Move>
 		
 		nameTextView.setText(move.getName());
 		powerTextView.setText(power);
+		//powerTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 		ppTextView.setText(String.valueOf(move.getPP()));
+		//ppTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 		accuracyTextView.setText(accuracy);
+		//accuracyTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13);
 
 		
 		// Set Images

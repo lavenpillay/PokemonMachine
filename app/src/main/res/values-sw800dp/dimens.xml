@@ -5,10 +5,10 @@
          screen margins) for sw800dp devices (e.g. 7" tablets) here.
     -->
 
-	<dimen name="move_stat_list_icon_width">30dp</dimen>
-    <dimen name="move_stat_list_icon_height">30dp</dimen>
-    <dimen name="move_stat_list_icon_textsize">20sp</dimen>
-    <dimen name="move_name_textsize">18sp</dimen>
+	<dimen name="move_stat_list_icon_width">25dp</dimen>
+    <dimen name="move_stat_list_icon_height">25dp</dimen>
+    <dimen name="move_stat_list_icon_textsize">15sp</dimen>
+    <dimen name="move_name_textsize">16sp</dimen>
     <dimen name="move_stat_list_icon_padding_left">0dp</dimen>
     <dimen name="move_type_icon_width">62dp</dimen>
     <dimen name="move_type_icon_height">25dp</dimen>

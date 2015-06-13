@@ -11,15 +11,6 @@
     <!-- <uses-permission android:name="android.permission.INTERNET"/>  -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- 
-    <supports-screens android:resizeable="true"
-              android:smallScreens="true"
-              android:normalScreens="true"
-              android:largeScreens="true"
-              android:xlargeScreens="true"
-              android:anyDensity="true"/>
-	-->
-	
 	<supports-screens android:resizeable="true"
               android:largeScreens="true"
               android:xlargeScreens="true"
@@ -36,7 +27,8 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.PokemonMachineTheme" >
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
+        <!--android:theme="@style/Theme.PokemonMachineTheme" -->
 
         <activity
             android:name="com.darkdesign.pokemonmachine.PokemonMachineActivity"
@@ -50,22 +42,4 @@
         </activity>
     </application>
 
-    
-    <!--  
-    <application
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name" 
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
-        <activity
-            android:name="com.darkdesign.pokemonmachine.activity.SplashActivity"
-            android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.darkdesign.pokemonmachine.PokemonMachineActivity" />
-    </application>
-     -->
 </manifest>

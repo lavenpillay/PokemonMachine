@@ -167,7 +167,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         //crossfade();
         
         // Set to default Tab
-        mViewPager.setCurrentItem(1);
+        mViewPager.setCurrentItem(2);
 
     }
     

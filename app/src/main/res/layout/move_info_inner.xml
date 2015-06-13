@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="14dp"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
+
+	<TextView
+		android:id="@+id/list_item_name"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="5dp"
+		android:text="Move Name"
+		android:textSize="@dimen/move_name_textsize" />
 
     <LinearLayout 
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+		android:layout_gravity="bottom" >
         
 	    <ImageView
 	        android:id="@+id/list_item_move_type_image"
@@ -25,27 +34,8 @@
 	        android:layout_marginRight="6dip"
 	        android:padding="2dip"
 	        android:src="@drawable/physical" />
-	    
-    </LinearLayout>
-    
-    <LinearLayout 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-	    <LinearLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:weightSum="7" >
-	
-	        <TextView
-	            android:id="@+id/list_item_name"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="Move Name"
-	            android:textSize="@dimen/move_name_textsize" />
-	    </LinearLayout>
-	
+
+
 	    <LinearLayout
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"

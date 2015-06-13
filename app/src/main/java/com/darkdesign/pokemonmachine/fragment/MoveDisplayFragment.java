@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -220,6 +221,7 @@ public class MoveDisplayFragment extends Fragment {
 		 
 		 TextView txtMovePower = (TextView) statsLayout.findViewById(R.id.txtMovePower);
 		 txtMovePower.setText(power);
+		 //txtMovePower.setTextSize(TypedValue.COMPLEX_UNIT_SP, 7);
 		 TextView txtMoveAccuracy = (TextView) statsLayout.findViewById(R.id.txtMoveAccuracy);
 		 txtMoveAccuracy.setText(accuracy);
 		 TextView txtMovePowerPoints = (TextView) statsLayout.findViewById(R.id.txtMovePowerPoints);
