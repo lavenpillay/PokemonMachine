@@ -3,6 +3,7 @@ package com.darkdesign.pokemonmachine.fragment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.prefs.Preferences;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -350,16 +351,20 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		
 		// Add Abilities
-		LinearLayout pokemonInformationArea = (LinearLayout) view.findViewById(R.id.additionalInformationArea);
+		LinearLayout pokemonInformationArea = (LinearLayout) view.findViewById(R.id.abilitiesArea);
 		pokemonInformationArea.removeAllViews();
 		
 		for (int i=0; i < pokemon.getAbilities().size(); i++) {
 			// Name
 			LinearLayout pokemonAbilityLayout = (LinearLayout) inflater.inflate(R.layout.card_entry, null );
+
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+			layoutParams.weight = 1;
+			pokemonAbilityLayout.setLayoutParams(layoutParams);
 			
 			TextView txtAbilityName = (TextView) pokemonAbilityLayout.findViewById(R.id.heading);
 			txtAbilityName.setText("Ability: " + pokemon.getAbilities().get(i).getName());
-			TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.subHeading);
+			TextView txtAbilityFlavour = (TextView) pokemonAbilityLayout.findViewById(R.id.content);
 			txtAbilityFlavour.setText(pokemon.getAbilities().get(i).getFlavourText());
 			 
 			pokemonInformationArea.addView(pokemonAbilityLayout);
@@ -665,9 +670,13 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
 			
 			// Set text styles for type weaknesses
-			if (damageText.equalsIgnoreCase(Constants.DAMAGE__STRING_REGULAR)) {
-				textView.setTypeface(null, Typeface.NORMAL);
-				textView.setTextColor(Color.GRAY);
+			if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_REGULAR)) {
+				if (applicationSettings.getBoolean("pref_show_normal_damage_label", true) == false) {
+					damageText = "";
+				} else {
+					textView.setTypeface(null, Typeface.NORMAL);
+					textView.setTextColor(Color.GRAY);
+				}
 			} else if (damageText.equalsIgnoreCase(Constants.DAMAGE_STRING_HALF)) {
 				textView.setTypeface(null, Typeface.ITALIC);
 				textView.setTextColor(Color.parseColor("#7bce52"));

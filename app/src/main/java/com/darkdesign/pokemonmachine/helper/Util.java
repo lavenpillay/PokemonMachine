@@ -209,19 +209,19 @@ public class Util {
 			} else if (damagePercentageType1 == 50) {
 				damage = Constants.DAMAGE_STRING_HALF;
 			} else if (damagePercentageType1 == 100) {
-				damage = Constants.DAMAGE__STRING_REGULAR;
+				damage = Constants.DAMAGE_STRING_REGULAR;
 			} else if (damagePercentageType1 == 200) {
 				damage = Constants.DAMAGE_STRING_DOUBLE;
 			}
 		} else {
 			if (damagePercentageType1 == 100 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE__STRING_REGULAR;
+				damage = Constants.DAMAGE_STRING_REGULAR;
 			} else if (damagePercentageType1 == 200 && damagePercentageType2 == 50) {
-				damage = Constants.DAMAGE__STRING_REGULAR;
+				damage = Constants.DAMAGE_STRING_REGULAR;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 200) {
-				damage = Constants.DAMAGE__STRING_REGULAR;
+				damage = Constants.DAMAGE_STRING_REGULAR;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {
-				damage = Constants.DAMAGE__STRING_REGULAR;
+				damage = Constants.DAMAGE_STRING_REGULAR;
 			} else if (damagePercentageType1 == 100 && damagePercentageType2 == 50) {
 				damage = Constants.DAMAGE_STRING_HALF;
 			} else if (damagePercentageType1 == 50 && damagePercentageType2 == 100) {

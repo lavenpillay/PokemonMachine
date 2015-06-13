@@ -15,6 +15,12 @@
 		    android:title="Display Pokemon Types in Pokemon List"
 		    android:summary=""
 		    android:defaultValue="false" />
+
+		<CheckBoxPreference
+			android:key="pref_show_normal_damage_label"
+			android:title="Display 'Normal' in Pokemon Type Weakness table"
+			android:summary=""
+			android:defaultValue="true" />
     </PreferenceCategory>
     
 </PreferenceScreen>

@@ -34,13 +34,13 @@
 	        android:layout_marginLeft="10dp"
 	        android:textColor="#AAA"
 	        android:text="Damage multiplier when this Pokemon is hit by an attack of each type"
-	        android:textSize="10sp"
+	        android:textSize="12sp"
 	        android:layout_gravity="center"/>
     </LinearLayout>
     
     <LinearLayout
 	    android:id="@+id/type_efficacy_holder"
-	    android:layout_width="fill_parent"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_gravity="center_horizontal"
 	    android:layout_marginTop="10dp">

@@ -52,7 +52,7 @@ public class Constants {
 	public static final String DAMAGE_STRING_IMMUNE = "0";
 	public static final String DAMAGE_STRING_HALF = "1/2";
 	public static final String DAMAGE_STRING_QUARTER = "1/4";
-	public static final String DAMAGE__STRING_REGULAR = "";
+	public static final String DAMAGE_STRING_REGULAR = "Normal";
 	public static final String DAMAGE_STRING_DOUBLE = "x2";
 	public static final String DAMAGE_STRING_QUADRUPLE = "x4";
 	

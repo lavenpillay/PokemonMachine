@@ -171,10 +171,10 @@
                 <!-- END : Breeding and Catching Information -->
 
                 <LinearLayout
-                    android:id="@+id/additionalInformationArea"
+                    android:id="@+id/abilitiesArea"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" >
+                    android:orientation="horizontal" >
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
