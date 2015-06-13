@@ -1,0 +1,27 @@
+-- Describe MOVES
+CREATE TABLE moves (
+	id INTEGER NOT NULL, 
+	identifier VARCHAR(24) NOT NULL, 
+	generation_id INTEGER NOT NULL, 
+	type_id INTEGER NOT NULL, 
+	power SMALLINT NOT NULL, 
+	pp SMALLINT, 
+	accuracy SMALLINT, 
+	priority SMALLINT NOT NULL, 
+	target_id INTEGER NOT NULL, 
+	damage_class_id INTEGER NOT NULL, 
+	effect_id INTEGER NOT NULL, 
+	effect_chance INTEGER, 
+	contest_type_id INTEGER, 
+	contest_effect_id INTEGER, 
+	super_contest_effect_id INTEGER, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(generation_id) REFERENCES generations (id), 
+	FOREIGN KEY(type_id) REFERENCES types (id), 
+	FOREIGN KEY(target_id) REFERENCES move_targets (id), 
+	FOREIGN KEY(damage_class_id) REFERENCES move_damage_classes (id), 
+	FOREIGN KEY(effect_id) REFERENCES move_effects (id), 
+	FOREIGN KEY(contest_type_id) REFERENCES contest_types (id), 
+	FOREIGN KEY(contest_effect_id) REFERENCES contest_effects (id), 
+	FOREIGN KEY(super_contest_effect_id) REFERENCES super_contest_effects (id)
+)

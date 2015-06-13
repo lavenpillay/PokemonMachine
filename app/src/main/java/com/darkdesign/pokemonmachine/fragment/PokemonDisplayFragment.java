@@ -251,7 +251,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
 		
-		PokemonMachineActivity.spinner.setVisibility(View.GONE);	
+		//PokemonMachineActivity.spinner.setVisibility(View.GONE);
 		
 		return view;
 	 }
@@ -267,7 +267,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		//adapter.getFilter().filter("Sand");
 		
-		PokemonMachineActivity.spinner.setVisibility(View.GONE);
+		//PokemonMachineActivity.spinner.setVisibility(View.GONE);
 	}
 	 
 	/**

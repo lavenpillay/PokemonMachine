@@ -1,0 +1,17 @@
+-- Describe BERRIES
+CREATE TABLE berries (
+	id INTEGER NOT NULL, 
+	item_id INTEGER NOT NULL, 
+	firmness_id INTEGER NOT NULL, 
+	natural_gift_power INTEGER, 
+	natural_gift_type_id INTEGER, 
+	size INTEGER NOT NULL, 
+	max_harvest INTEGER NOT NULL, 
+	growth_time INTEGER NOT NULL, 
+	soil_dryness INTEGER NOT NULL, 
+	smoothness INTEGER NOT NULL, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(item_id) REFERENCES items (id), 
+	FOREIGN KEY(firmness_id) REFERENCES berry_firmness (id), 
+	FOREIGN KEY(natural_gift_type_id) REFERENCES types (id)
+)

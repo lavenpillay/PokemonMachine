@@ -2,6 +2,8 @@ package com.darkdesign.pokemonmachine;
 
 import java.util.Locale;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
@@ -18,6 +20,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
@@ -58,10 +62,42 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
     public static ItemDisplayFragment itemDisplayFragment = null;
     private MoveDisplayFragment moveDisplayFragment = null;
     private Fragment settingsFragment = null;
+
+    private LinearLayout loadingLayout;
+    private int mShortAnimationDuration;
     
     public static AssetHelper assetHelper;
     
     public static ProgressBar spinner;
+
+    private void crossfade() {
+
+        // Set the content view to 0% opacity but visible, so that it is visible
+        // (but fully transparent) during the animation.
+        mViewPager.setAlpha(0f);
+        mViewPager.setVisibility(View.VISIBLE);
+
+        // Animate the content view to 100% opacity, and clear any animation
+        // listener set on the view.
+        mViewPager.animate()
+                .alpha(1f)
+                .setDuration(mShortAnimationDuration)
+                .setListener(null);
+
+        // Animate the loading view to 0% opacity. After the animation ends,
+        // set its visibility to GONE as an optimization step (it won't
+        // participate in layout passes, etc.)
+        loadingLayout.animate()
+                .alpha(0f)
+                //.setDuration(mShortAnimationDuration)
+                .setDuration(2000)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        loadingLayout.setVisibility(View.GONE);
+                    }
+                });
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +120,9 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
+        // Reference to loading image
+        loadingLayout = (LinearLayout) findViewById(R.id.loadingLayout);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -91,6 +130,14 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // CROSSFADE
+        // Initially hide the content view.
+        // mViewPager.setVisibility(View.GONE);
+
+        // Retrieve and cache the system's default "short" animation time.
+        mShortAnimationDuration = getResources().getInteger(
+                android.R.integer.config_shortAnimTime);
 
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
@@ -116,11 +163,11 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
+        //crossfade();
         
         // Set to default Tab
-        mViewPager.setCurrentItem(2);
+        mViewPager.setCurrentItem(1);
 
     }
     

@@ -1,0 +1,1 @@
+INSERT INTO pokemon_species (id, identifier, generation_id, evolves_from_species_id, evolution_chain_id, color_id, shape_id, habitat_id, gender_rate, capture_rate, base_happiness, is_baby, hatch_counter, has_gender_differences, growth_rate_id, forms_switchable, order, conquest_order) VALUES (719, 'diancie', 6, null, 371, 6, 4, null, -1, 3, 70, 0, 25, 0, 1, 0, 719, null);
