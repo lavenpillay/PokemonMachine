@@ -29,7 +29,7 @@ public class Move {
 	private String targets = "";
 	private String damageClass = "";
 
-	private String method = ""; // learn method
+	private MoveMethod method = null;
 
 	
 	public Move() {
@@ -145,11 +145,11 @@ public class Move {
 		this.damageClass = damageClass;
 	}
 
-	public String getMethod() {
+	public MoveMethod getMethod() {
 		return method;
 	}
 
-	public void setMethod(String method) {
+	public void setMethod(MoveMethod method) {
 		this.method = method;
 	}
 

@@ -212,7 +212,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	   		// Create Test Data
 		Move testMove1 = new Move();
 		testMove1.setName("Test Name 1");
-		testMove1.setMethod("Test Learn Type 1");
+		testMove1.setMethod(null);
 		testMove1.setResourceURI("/etc");
 		
 		PokemonDisplayFragment.movesData.add(testMove1);
@@ -332,7 +332,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
-		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
+		updateMoveList(Constants.MOVE_LEARN_TYPE_LEVEL_UP);
 		
 		long stopTime = System.currentTimeMillis();
 	    long elapsedTime = stopTime - startTime;
@@ -1010,10 +1010,10 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		return evolutionMethodView;
 	}
 	
-	public void updateMoveList(String moveLearnType) {
+	public void updateMoveList(int moveLearnType) {
 		ArrayList<Move> moveSubset = PokemonMachineActivity.currentSelectedPokemon.getMovesByType(moveLearnType);
 		
-		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
+		if (moveLearnType == Constants.MOVE_LEARN_TYPE_LEVEL_UP) {
 			moveSubset = Util.sortMovesByLevel(moveSubset);
 		}
 		

@@ -12,10 +12,11 @@ public class Constants {
 	public static final String PATH_TO_POKEMON_IMAGES = "pokemon_images/";
 	public static final String PATH_TO_ITEM_SPRITES = "items/";
 
-	public static final String LEARN_TYPE_LEVEL_UP = "Level up";
-	public static final String LEARN_TYPE_TUTOR = "Tutor";
-	public static final String LEARN_TYPE_MACHINE = "Machine";
-	public static final String LEARN_TYPE_EGG_MOVE = "Egg";
+	public static final int MOVE_LEARN_TYPE_LEVEL_UP = 1;
+	public static final int MOVE_LEARN_TYPE_EGG_MOVE = 2;
+	public static final int MOVE_LEARN_TYPE_TUTOR = 3;
+	public static final int MOVE_LEARN_TYPE_MACHINE = 4;
+	public static final int MOVE_LEARN_TYPE_ROTOM_FORM = 10;
 
 	public static final String EVOLUTION_METHOD_LEVEL_UP = "1";
 	public static final String EVOLUTION_METHOD_TRADE = "2";

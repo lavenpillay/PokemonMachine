@@ -105,7 +105,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        //forceDatabaseReload(this);
+        forceDatabaseReload(this);
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -167,7 +167,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         //crossfade();
         
         // Set to default Tab
-        mViewPager.setCurrentItem(2);
+        mViewPager.setCurrentItem(1);
 
     }
     
@@ -382,7 +382,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	 * @param view
 	 */
 	public void onMoveByLevelClick(View view) {
-		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
+		pokemonDisplayFragment.updateMoveList(Constants.MOVE_LEARN_TYPE_LEVEL_UP);
 	}
 	
 	/**
@@ -390,7 +390,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	 * @param view
 	 */
 	public void onMoveByMachineClick(View view) {
-		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_MACHINE);
+		pokemonDisplayFragment.updateMoveList(Constants.MOVE_LEARN_TYPE_MACHINE);
 	}
 
 	/**
@@ -398,7 +398,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	 * @param view
 	 */
 	public void onMoveByEggClick(View view) {
-		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_EGG_MOVE);
+		pokemonDisplayFragment.updateMoveList(Constants.MOVE_LEARN_TYPE_EGG_MOVE);
 	}
 	
 	/**
@@ -406,6 +406,6 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	 * @param view
 	 */
 	public void onMoveByTutorClick(View view) {
-		pokemonDisplayFragment.updateMoveList(Constants.LEARN_TYPE_TUTOR);
+		pokemonDisplayFragment.updateMoveList(Constants.MOVE_LEARN_TYPE_TUTOR);
 	}
 }

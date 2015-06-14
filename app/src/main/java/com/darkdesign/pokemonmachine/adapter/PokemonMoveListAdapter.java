@@ -48,7 +48,7 @@ public class PokemonMoveListAdapter extends ArrayAdapter<Move> {
 		ImageView categoryImageView = (ImageView) rowView.findViewById(R.id.list_item_category);
 		ImageView typeImageView = (ImageView) rowView.findViewById(R.id.list_item_move_type_image);
 		
-		if (move.getMethod().equals(Constants.LEARN_TYPE_LEVEL_UP)) {
+		if (move.getMethod().getId() == Constants.MOVE_LEARN_TYPE_LEVEL_UP) {
 			levelTextView.setText(String.valueOf(move.getLevel()));
 		} else {
 			levelTextView.setText("");

@@ -17,6 +17,7 @@ import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.ItemCategory;
 import com.darkdesign.pokemonmachine.element.Move;
+import com.darkdesign.pokemonmachine.element.MoveMethod;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
 import com.darkdesign.pokemonmachine.element.VideoGame;
@@ -163,14 +164,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
     	
-        String versionGroupToQuery = "";
-        
-        // TODO Update/Remove this check after data is updated
-        if (Arrays.asList(Constants.POKEMON_WITH_NO_GEN_6_MOVEDATA).contains(pokemon.getId())) {
-        	versionGroupToQuery = Constants.VERSION_GROUP_BLACKWHITE_2;
-        } else {
-        	versionGroupToQuery = Constants.VERSION_GROUP_XY;
-        }
+        String versionGroupToQuery = Constants.VERSION_GROUP_XY;
         
         String query = "SELECT move_id, pokemon_move_method_id, level FROM pokemon_moves WHERE pokemon_id = " + pokemon.getId() + " AND version_group_id = " + versionGroupToQuery;
         Cursor c = db.rawQuery(query, null);
@@ -257,10 +251,16 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
 
         // Get Method Name
-        String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
+        String queryMethod = "SELECT pokemon_move_method_id, name, description FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
         Cursor cursorMethod = db.rawQuery(queryMethod, null);
         cursorMethod.moveToFirst();
-        move.setMethod(cursorMethod.getString(0));
+
+        MoveMethod moveMethod = new MoveMethod();
+        moveMethod.setId(cursorMethod.getInt(0));
+        moveMethod.setName(cursorMethod.getString(1));
+        moveMethod.setDescription(cursorMethod.getString(2));
+
+        move.setMethod(moveMethod);
         cursorMethod.close();
 
 

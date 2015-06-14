@@ -98,12 +98,12 @@ public class Pokemon {
 	 * @param type
 	 * @return
 	 */
-	public ArrayList<Move> getMovesByType(String type) {
+	public ArrayList<Move> getMovesByType(int moveType) {
 		ArrayList<Move> moveSubset = new ArrayList<Move>();
 		
 		for (int i=0; i < moves.size(); i++) {
 			Move move = moves.get(i);
-			if (move.getMethod().equals(type)) {
+			if (move.getMethod().getId() == moveType) {
 				moveSubset.add(move);
 			}
 		}
