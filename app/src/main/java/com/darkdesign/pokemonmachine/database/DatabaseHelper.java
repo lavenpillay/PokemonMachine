@@ -276,7 +276,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 	        
         	evolvedSpeciesId =  cursorSpecies.getString(0);
 	        
-	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness, held_item_id " +
+	        String queryEvolutions = "SELECT evolved_species_id, evolution_trigger_id, minimum_level, trigger_item_id, minimum_happiness, held_item_id, known_move_id " +
 	        		"FROM " + TABLE_EVOLUTION + " WHERE evolved_species_id = " + evolvedSpeciesId;
 	        cursorEvolutions = db.rawQuery(queryEvolutions, null);
 	        cursorEvolutions.moveToFirst();
@@ -294,12 +294,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 		        String triggerItemId = cursorEvolutions.getString(3);
 		        String minimumHappiness = cursorEvolutions.getString(4);
 		        String heldItemId = cursorEvolutions.getString(5);
+                int knownMoveId = cursorEvolutions.getInt(6);
 		        
 		        evolution.setMethod(method);
 		        evolution.setLevel(level);
 		        evolution.setTriggerItemId(triggerItemId);
 		        evolution.setMinimumHappiness(minimumHappiness);
 		        evolution.setHeldItemId(heldItemId);
+                evolution.setKnownMoveId(knownMoveId);
 	        }
 	        
 	        evolutions.add(evolution);
@@ -311,7 +313,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         if (evolutions.size() > 1) {
 	        // Sort evolutions - get pre-evolutions first
 	        for (int i=0; i < evolutions.size(); i++) {
-	        	if (evolutions.get(i).getPreviousEvolutionId() == -1) {
+	        	if (evolutions.get(i).getPreviousEvolutionId() < 1) {
 	        		Collections.swap(evolutions, 0, i);
 	        	}
 	        }

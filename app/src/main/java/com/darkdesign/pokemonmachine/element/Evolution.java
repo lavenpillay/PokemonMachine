@@ -10,6 +10,7 @@ public class Evolution {
 	private String triggerItemId;
 	private String heldItemId;
 	private String minimumHappiness;
+	private int knownMoveId;
 
 	public Evolution() {
 	}
@@ -18,6 +19,14 @@ public class Evolution {
 		this.pokemonId = pokemonId;
 		this.method = method;
 		this.previousEvolutionId = previousEvolutionId;
+	}
+
+	public int getKnownMoveId() {
+		return knownMoveId;
+	}
+
+	public void setKnownMoveId(int knownMoveId) {
+		this.knownMoveId = knownMoveId;
 	}
 
 	public String getLevel() {
