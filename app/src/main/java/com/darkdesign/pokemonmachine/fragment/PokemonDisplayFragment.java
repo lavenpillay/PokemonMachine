@@ -822,7 +822,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 * @param evolution
 	 * @return
 	 */
-	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, Evolution evolution, final boolean isMegaEvolution) 
+	private LinearLayout buildEvolutionMethod(LayoutInflater inflater, AssetHelper assetHelper, final Evolution evolution, final boolean isMegaEvolution)
 			throws IOException {
 
 		LinearLayout evolutionMethodView = null;
@@ -860,7 +860,24 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				// LEVEL UP WITH KNOWN MOVE
 				evolutionMethodView = (LinearLayout) inflater.inflate(R.layout.evolution_method_levelup_move, null);
 
+				evolutionMethodView.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View evolutionMethodView) {
+						int[] location = new int[2];
+						evolutionMethodView.getLocationOnScreen(location);
 
+						p = new Point();
+						p.x = location[0];
+						p.y = location[1];
+
+						//Open popup window
+						if (p != null) {
+							String heading = "Level Up with Move";
+							String content = "This Pokemon will evolve when it levels up while knowing the move " + PokemonMachineActivity.db.getMoveById(evolution.getKnownMoveId()).getName();
+							PopupManager.showPopup(getActivity(), p, heading, content, 400, 250);
+						}
+					}
+				});
 
 			} else {
 				// LEVEL UP NORMALLY

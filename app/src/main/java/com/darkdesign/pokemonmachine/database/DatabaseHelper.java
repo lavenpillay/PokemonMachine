@@ -134,7 +134,9 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
     	return pokemonIds;
     }
-    
+
+
+
     public int[] getMoveIdsByType(int typeId) {
     	String movesQuery = "SELECT id FROM moves WHERE type_id = " + typeId;
         Cursor movesCursor = db.rawQuery(movesQuery, null);
@@ -176,71 +178,17 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         int totalMoves = c.getCount();
         
         while(c.moveToNext()) {
-        	Move move = new Move();
-        	
-        	int moveId = c.getInt(0);
-        	String methodId = c.getString(1);
-        	
-        	Log.v(TAG, "Getting info for Move with ID = " + moveId);
-        	
-        	move.setId(moveId);
-        	move.setLevel(c.getInt(2));
-        	
-        	// Get Move Main Info
-        	String queryMove = "SELECT identifier, type_id, power, pp, accuracy, priority," 
-        			+ " target_id, damage_class_id, effect_id, effect_chance from moves where id = " + moveId;
-            Cursor cursorMove = db.rawQuery(queryMove, null);
-            cursorMove.moveToFirst();
-            
-            String typeId = cursorMove.getString(1);
-            String targetId = cursorMove.getString(6);
-            String damageClassId = cursorMove.getString(7);
-            String effectId = cursorMove.getString(8);
-            String effectChance = cursorMove.getString(9) == null ? "" : cursorMove.getString(9);
-            
-            move.setEffectChance(effectChance);
-            move.setName(cursorMove.getString(0));
-            move.setPower(cursorMove.getInt(2));
-            move.setPP(cursorMove.getInt(3));
-            move.setAccuracy(cursorMove.getInt(4));
-            move.setPriority(cursorMove.getInt(5));
-            cursorMove.close();
-            
-            // Get move Type
-        	String queryType = "SELECT identifier FROM types WHERE id = " + typeId;
-            Cursor cursorType = db.rawQuery(queryType, null);
-            cursorType.moveToFirst();
-            move.setType(cursorType.getString(0));
-            cursorType.close();
-            
-            // Get Targets
-            String queryTarget = "SELECT identifier FROM move_targets WHERE id = " + targetId;
-            Cursor cursorTarget = db.rawQuery(queryTarget, null);
-            cursorTarget.moveToFirst();
-            move.setTargets(cursorTarget.getString(0));
-            cursorTarget.close();
-            
-            // Get Damage Class
-            String queryDamageClass = "SELECT identifier FROM move_damage_classes WHERE id = " + damageClassId;
-            Cursor cursorDamageClass = db.rawQuery(queryDamageClass, null);
-            cursorDamageClass.moveToFirst();
-            move.setDamageClass(cursorDamageClass.getString(0));
-            cursorDamageClass.close();
-            
-            // Get Effects
-            String queryEffect = "SELECT effect, short_effect FROM move_effect_prose WHERE move_effect_id = " + effectId;
-            Cursor cursorEffect = db.rawQuery(queryEffect, null);
-            cursorEffect.moveToFirst();
-            move.setEffectLong(cursorEffect.getString(0));
-            move.setEffectShort(cursorEffect.getString(1));
-            cursorEffect.close();
-        	
-        	// Get Method Name
-        	String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
-            Cursor cursorMethod = db.rawQuery(queryMethod, null);
-            cursorMethod.moveToFirst();
-            move.setMethod(cursorMethod.getString(0));
-            cursorMethod.close();
+            int moveId = c.getInt(0);
+            String methodId = c.getString(1);
+
+            // Get generic Move data
+        	Move move = getMoveById(moveId, methodId);
+
+            // Add method for learning move, for this Pokemon
+            move.setMethod(methodId);
+
+            // Level learned at, for this Pokemon
+            move.setLevel(c.getInt(2));
         	
         	moveList.add(move);
         }
@@ -249,7 +197,79 @@ public class DatabaseHelper extends SQLiteAssetHelper {
 
         return moveList;
     }
-    
+
+    public Move getMoveById(int moveId) {
+        return getMoveById(moveId, null);
+    }
+
+    private Move getMoveById(int moveId, String methodId) {
+        Move move = new Move();
+
+        Log.v(TAG, "Getting info for Move with ID = " + moveId);
+
+        move.setId(moveId);
+
+        // Get Move Main Info
+        String queryMove = "SELECT identifier, type_id, power, pp, accuracy, priority,"
+                + " target_id, damage_class_id, effect_id, effect_chance from moves where id = " + moveId;
+        Cursor cursorMove = db.rawQuery(queryMove, null);
+        cursorMove.moveToFirst();
+
+        String typeId = cursorMove.getString(1);
+        String targetId = cursorMove.getString(6);
+        String damageClassId = cursorMove.getString(7);
+        String effectId = cursorMove.getString(8);
+        String effectChance = cursorMove.getString(9) == null ? "" : cursorMove.getString(9);
+
+        move.setEffectChance(effectChance);
+        move.setName(cursorMove.getString(0));
+        move.setPower(cursorMove.getInt(2));
+        move.setPP(cursorMove.getInt(3));
+        move.setAccuracy(cursorMove.getInt(4));
+        move.setPriority(cursorMove.getInt(5));
+        cursorMove.close();
+
+        // Get move Type
+        String queryType = "SELECT identifier FROM types WHERE id = " + typeId;
+        Cursor cursorType = db.rawQuery(queryType, null);
+        cursorType.moveToFirst();
+        move.setType(cursorType.getString(0));
+        cursorType.close();
+
+        // Get Targets
+        String queryTarget = "SELECT identifier FROM move_targets WHERE id = " + targetId;
+        Cursor cursorTarget = db.rawQuery(queryTarget, null);
+        cursorTarget.moveToFirst();
+        move.setTargets(cursorTarget.getString(0));
+        cursorTarget.close();
+
+        // Get Damage Class
+        String queryDamageClass = "SELECT identifier FROM move_damage_classes WHERE id = " + damageClassId;
+        Cursor cursorDamageClass = db.rawQuery(queryDamageClass, null);
+        cursorDamageClass.moveToFirst();
+        move.setDamageClass(cursorDamageClass.getString(0));
+        cursorDamageClass.close();
+
+        // Get Effects
+        String queryEffect = "SELECT effect, short_effect FROM move_effect_prose WHERE move_effect_id = " + effectId;
+        Cursor cursorEffect = db.rawQuery(queryEffect, null);
+        cursorEffect.moveToFirst();
+        move.setEffectLong(cursorEffect.getString(0));
+        move.setEffectShort(cursorEffect.getString(1));
+        cursorEffect.close();
+
+        if (methodId != null) {
+            // Get Method Name
+            String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
+            Cursor cursorMethod = db.rawQuery(queryMethod, null);
+            cursorMethod.moveToFirst();
+            move.setMethod(cursorMethod.getString(0));
+            cursorMethod.close();
+        }
+
+        return move;
+    }
+
     /**
      * Returns an ArrayList of Evolution objects containing all evolutions
      * 
