@@ -43,7 +43,9 @@ import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.EggGroupSpinnerAdapter;
 import com.darkdesign.pokemonmachine.adapter.PokemonMoveListAdapter;
+import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
+import com.darkdesign.pokemonmachine.animation.list.ExpandAnimation;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
@@ -60,7 +62,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphViewStyle.GridStyle;
-import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter;
 
 public class PokemonDisplayFragment extends Fragment implements OnPokemonListItemSelectedListener 
 {
@@ -80,6 +81,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public static PokemonMoveListAdapter movesListAdapter;
 	
 	private int lastViewedPokemonId = -1;
+	private View currentOpenMoveDescriptionView = null;
 	
 	
 	
@@ -182,15 +184,15 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			 }
 		 });
 	   
-	   // Clear button listener for POKEMON field
-	   ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
-	   btnClearNameFilter.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				EditText edtName = (EditText)view.findViewById(R.id.txtFilter);
-				edtName.setText("");
-			}
+		// Clear button listener for POKEMON field
+		ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
+		btnClearNameFilter.setOnClickListener(new OnClickListener() {
+
+		@Override
+		public void onClick(View v) {
+			EditText edtName = (EditText)view.findViewById(R.id.txtFilter);
+			edtName.setText("");
+		}
 		});
 	   
 	   // Clear button listener for SEARCH field
@@ -214,18 +216,43 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		testMove1.setName("Test Name 1");
 		testMove1.setMethod(null);
 		testMove1.setResourceURI("/etc");
-		
+
 		PokemonDisplayFragment.movesData.add(testMove1);
-		
+
 		movesListAdapter = new PokemonMoveListAdapter(getActivity(), movesData);
-		
+
 		ListView movesListView = (ListView) view.findViewById(R.id.mlist);
-		
-		movesListView.setAdapter(new SlideExpandableListAdapter(
-				movesListAdapter,
-                R.id.expandable_toggle_button,
-                R.id.expandable
-        ));
+
+		 movesListView.setAdapter(movesListAdapter);
+
+		 // Creating an item click listener, to open/close our toolbar for each item
+		 movesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			 public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+
+				 View description = view.findViewById(R.id.expandable);
+
+				 /*
+				 // Creating the expand animation for the item
+				 ExpandAnimation expandAni = new ExpandAnimation(description, 200);
+				 // Start the animation on the description
+				 description.startAnimation(expandAni);
+				 */
+
+
+
+				 if (description.getVisibility() == View.GONE) {
+					 if (currentOpenMoveDescriptionView != null) {
+						 currentOpenMoveDescriptionView.setVisibility(View.GONE);
+					 }
+
+					 description.setVisibility(View.VISIBLE);
+					 currentOpenMoveDescriptionView = description;
+				 } else {
+					 description.setVisibility(View.GONE);
+					 currentOpenMoveDescriptionView = null;
+				 }
+			 }
+		 });
 		
 		// Search-By-ID Listener
         EditText searchValueTextbox = (EditText) view.findViewById(R.id.txtSearch);
