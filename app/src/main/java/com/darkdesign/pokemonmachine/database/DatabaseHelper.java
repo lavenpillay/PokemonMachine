@@ -184,9 +184,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             // Get generic Move data
         	Move move = getMoveById(moveId, methodId);
 
-            // Add method for learning move, for this Pokemon
-            move.setMethod(methodId);
-
             // Level learned at, for this Pokemon
             move.setLevel(c.getInt(2));
         	
@@ -258,14 +255,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         move.setEffectShort(cursorEffect.getString(1));
         cursorEffect.close();
 
-        if (methodId != null) {
-            // Get Method Name
-            String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
-            Cursor cursorMethod = db.rawQuery(queryMethod, null);
-            cursorMethod.moveToFirst();
-            move.setMethod(cursorMethod.getString(0));
-            cursorMethod.close();
-        }
+
+        // Get Method Name
+        String queryMethod = "SELECT name FROM pokemon_move_method_prose WHERE pokemon_move_method_id = " + methodId;
+        Cursor cursorMethod = db.rawQuery(queryMethod, null);
+        cursorMethod.moveToFirst();
+        move.setMethod(cursorMethod.getString(0));
+        cursorMethod.close();
+
 
         return move;
     }

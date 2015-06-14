@@ -332,7 +332,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			Log.d(TAG, "[MOVES_UPDATED] Updating POKEMON_CACHE with ID = " + pokemon.getId());
 			PokemonMachineActivity.cache.addPokemonToCache(pokemon);
 		}
-		updateMoveList(pokemon, Constants.LEARN_TYPE_LEVEL_UP);
+		updateMoveList(Constants.LEARN_TYPE_LEVEL_UP);
 		
 		long stopTime = System.currentTimeMillis();
 	    long elapsedTime = stopTime - startTime;
@@ -401,22 +401,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		holder.removeAllViews();
 		
 		buildEvolutionChain(pokemon, assetHelper, inflater, holder);
-	}
-	 
-	/**
-	 * 
-	 * @param moveLearnType
-	 */
-	private void updateMoveList(Pokemon pokemon, String moveLearnType) {
-		ArrayList<Move> moveSubset = pokemon.getMovesByType(moveLearnType);
-		
-		if (moveLearnType.equalsIgnoreCase(Constants.LEARN_TYPE_LEVEL_UP)) {
-			moveSubset = Util.sortMovesByLevel(moveSubset);
-		}
-		
-		PokemonDisplayFragment.movesData.clear();
-		PokemonDisplayFragment.movesData.addAll(moveSubset);
-		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
 	}
 
 	private void updateBasicInformation(final Pokemon pokemon) {
