@@ -533,7 +533,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             cursorItemCategories.close();
             
             item.setCategory(itemCategory);
-            
+
+            /*
             // Get extra information
             String extraInfo = "";
         	String queryExtraInfo = "SELECT effect FROM item_extra_info WHERE id = " + item.getId();
@@ -545,6 +546,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             }
 
             cursorExtraInfo.close();
+            */
 
             // Add item to list
         	itemsList.add(item);
