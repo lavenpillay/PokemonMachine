@@ -7,7 +7,12 @@ import java.util.Map;
 public class Constants {
 	public static final int TOTAL_POKEMON_COUNT = 719;
 	public static final int POKEMON_ID_LENGTH = 3;
-	
+
+	public static final String PREF_KEY_LANGUAGE = "pref_language";
+
+	public static final int LANGUAGE_ENGLISH = 9;
+	public static final int LANGUAGE_JAPANESE = 1;
+
 	public static final String PATH_TO_POKEMON_SPRITES = "pokemon_sprites/";
 	public static final String PATH_TO_POKEMON_IMAGES = "pokemon_images/";
 	public static final String PATH_TO_ITEM_SPRITES = "items/";

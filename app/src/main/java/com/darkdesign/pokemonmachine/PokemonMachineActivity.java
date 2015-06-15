@@ -6,6 +6,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.preference.ListPreference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -56,6 +59,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
     public static Cache cache;
     
     public static Pokemon currentSelectedPokemon;
+    public static int currentLanguage = Constants.LANGUAGE_ENGLISH;
     
     public static PokemonDisplayFragment pokemonDisplayFragment = null;
     private CollectionDisplayFragment collectionDisplayFragment = null;
@@ -105,7 +109,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        forceDatabaseReload(this);
+        //forceDatabaseReload(this);
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
@@ -165,7 +169,10 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         }
 
         //crossfade();
-        
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        currentLanguage = Integer.parseInt(sharedPreferences.getString(Constants.PREF_KEY_LANGUAGE, "9"));
+
         // Set to default Tab
         mViewPager.setCurrentItem(1);
 

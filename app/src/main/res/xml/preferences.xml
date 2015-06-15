@@ -22,5 +22,16 @@
 			android:summary=""
 			android:defaultValue="true" />
     </PreferenceCategory>
+
+	<PreferenceCategory
+		android:title="Language Options">
+
+		<ListPreference
+			android:title="Select language"
+			android:key="pref_language"
+			android:defaultValue="9"
+			android:entries="@array/languageListArray"
+			android:entryValues="@array/languageListValues" />
+	</PreferenceCategory>
     
 </PreferenceScreen>

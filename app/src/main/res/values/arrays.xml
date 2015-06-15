@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    <string-array name="languageListArray">
+        <item>English</item>
+        <item>Japanese</item>
+    </string-array>
+
+    <string-array name="languageListValues">
+        <item>9</item>
+        <item>1</item>
+    </string-array>
+
+</resources>

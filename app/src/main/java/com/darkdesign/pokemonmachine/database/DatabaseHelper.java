@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.element.Ability;
 import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.EggGroup;
@@ -362,7 +363,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     
     
     // Getting single pokemon
-    public Pokemon getPokemon(String id) {
+    public Pokemon getPokemon(int id) {
     	Log.d(TAG, "Getting Pokemon from Database " + id);
     	
     	Pokemon pokemon = new Pokemon();
@@ -374,7 +375,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         		+ "	ps.gender_rate, ps.capture_rate, ps.base_happiness, ps.is_baby,	ps.hatch_counter, gr.identifier,"
         		+ " ps.forms_switchable, height, weight, psn.genus"
         		+ " FROM pokemon p, pokemon_species ps, pokemon_species_names psn, growth_rates gr "
-        		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id";
+        		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id AND psn.local_language_id = " + PokemonMachineActivity.currentLanguage;
         
         Cursor c = db.rawQuery(queryPokemon, null);
         c.moveToFirst();
@@ -733,8 +734,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         while (cursorEggGroups.moveToNext()) {
         	pokemonIds[index++] = cursorEggGroups.getInt(0);
         }
+
+        cursorEggGroups.close();
     	
     	return pokemonIds;
+    }
+
+    public String getLanguageName(int id) {
+        String name = "";
+
+        String queryLanguage = "SELECT name FROM language_names WHERE local_language_id = 9 AND language_id = " + id;
+
+        Cursor cursorLanguages = db.rawQuery(queryLanguage, null);
+        cursorLanguages.moveToFirst();
+        name = cursorLanguages.getString(0);
+
+        return name;
     }
     
 }

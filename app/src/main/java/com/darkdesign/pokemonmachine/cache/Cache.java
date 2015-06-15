@@ -80,21 +80,24 @@ public class Cache {
 	}
 	
 	public void addPokemonToCache(Pokemon pokemon) {
-		POKEMON_CACHE.put(pokemon.getId(), pokemon);
+		//POKEMON_CACHE.put(pokemon.getId(), pokemon);
 	}
 	
 	public Pokemon getPokemon(int id) {
 		Log.v(TAG, "Requesting Pokemon with ID = " + id);
+		/*
 		Pokemon pokemon = POKEMON_CACHE.get(id);
 		
 		if (pokemon == null) {
 			Log.v(TAG, "Pokemon not in Cache. Fetching from DB...");
-			pokemon = db.getPokemon(String.valueOf(id));
+			pokemon = db.getPokemon(id);
 			addPokemonToCache(pokemon);
 		} else {
 			Log.v(TAG, "Fetching from Cache...");
 		}
-		
+		*/
+
+		Pokemon pokemon = db.getPokemon(id);
 		
 		return pokemon;
 	}
