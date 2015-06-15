@@ -62,10 +62,9 @@ public class PokemonMoveListAdapter extends ArrayAdapter<Move> {
 		description.setText(Parser.parseMoveDescription(move));
 		
 		// Set Images
-		//Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
-		//categoryImageView.setImageBitmap(bm);
-		
-				 
+		Bitmap bm = assetHelper.getBitmapFromAsset("move_class_sprites/" + move.getDamageClass() + ".png");
+		categoryImageView.setImageBitmap(bm);
+
 		Bitmap typeBitmap = assetHelper.getBitmapFromAsset("type_images_medium/" + move.getType() + ".png");
 		typeImageView.setImageBitmap(typeBitmap);
 		

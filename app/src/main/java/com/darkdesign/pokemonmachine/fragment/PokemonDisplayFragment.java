@@ -470,7 +470,13 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		if (currentPokemon.getId() > 1) {
 			Button btnPreviousPokemon = (Button) view.findViewById(R.id.btnPreviousPokemon);
 			Pokemon previousPokemon = PokemonMachineActivity.cache.getPokemon(currentPokemon.getId() - 1);
-			btnPreviousPokemon.setText("< #" + previousPokemon.getId() + " " + previousPokemon.getName());
+			btnPreviousPokemon.setText("#" + previousPokemon.getId() + " " + previousPokemon.getName());
+		}
+
+		if (currentPokemon.getId() < 719) {
+			Button btnNextPokemon = (Button) view.findViewById(R.id.btnNextPokemon);
+			Pokemon nextPokemon = PokemonMachineActivity.cache.getPokemon(currentPokemon.getId() + 1);
+			btnNextPokemon.setText("#" + nextPokemon.getId() + " " + nextPokemon.getName());
 		}
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);

@@ -70,28 +70,35 @@
                     android:orientation="horizontal"
                     android:gravity="center">
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="&lt;"
-                        android:textSize="14sp"
-                        android:textColor="#333333"
-                        android:id="@+id/btnPreviousPokemon"
-                        android:onClick="onPreviousPokemonClick"
-                        android:background="@drawable/previous_button_blue"/>
+                        android:orientation="horizontal"
+                        android:gravity="right">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#333333"
+                            android:id="@+id/btnPreviousPokemon"
+                            android:onClick="onPreviousPokemonClick"
+                            android:background="@drawable/previous_button_blue"/>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
+                        android:layout_height="fill_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp">
 
                         <TextView
                             android:id="@+id/txtName"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
                             android:background="#33333311"
-                            android:padding="5dp"
+                            android:padding="10dp"
                             android:text="Pokemon Name "
                             android:textSize="19sp"
                             android:textStyle="bold"
@@ -100,16 +107,24 @@
                         <View
                             android:layout_width="fill_parent"
                             android:layout_height="6dp"
-                            android:layout_marginLeft="10dp"
                             android:background="@android:color/holo_blue_bright" />
                     </LinearLayout>
 
-                    <Button
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text=">"
-                        android:id="@+id/btnNextPokemon"
-                        android:onClick="onNextPokemonClick" />
+                        android:orientation="horizontal"
+                        android:gravity="left">
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:textColor="#333333"
+                            android:id="@+id/btnNextPokemon"
+                            android:onClick="onNextPokemonClick"
+                            android:background="@drawable/next_button_blue"/>
+                    </LinearLayout>
                 </LinearLayout>
 
                 <include 
