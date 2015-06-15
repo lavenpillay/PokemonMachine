@@ -1,7 +1,6 @@
 package com.darkdesign.pokemonmachine.database;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -12,7 +11,6 @@ import android.util.Log;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.element.Ability;
-import com.darkdesign.pokemonmachine.element.Berry;
 import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
@@ -122,7 +120,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	int[] pokemonIds = null;
     	
     	// Get Targets
-        String queryPokemon = "SELECT pokemon_id FROM pokemon_moves WHERE version_group_id = 15 AND move_id = " + moveId;
+        String queryPokemon = "SELECT pokemon_id FROM pokemon_moves WHERE version_group_id = " + PokemonMachineActivity.currentVersionGroupId + " AND move_id = " + moveId;
         Cursor cursorPokemon = db.rawQuery(queryPokemon, null);
         while (cursorPokemon.moveToNext()) {
         	pokemonIdList.add(cursorPokemon.getInt(0));
@@ -163,11 +161,11 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     // TODO optimise this - get move from cache then add extra fields like Method
     public ArrayList<Move> getMovesForPokemon(Pokemon pokemon) {
     	
-    	ArrayList<Move> moveList = new ArrayList<Move>(); 
-    	
-        String versionGroupToQuery = Constants.VERSION_GROUP_XY;
+    	ArrayList<Move> moveList = new ArrayList<Move>();
         
-        String query = "SELECT move_id, pokemon_move_method_id, level FROM pokemon_moves WHERE pokemon_id = " + pokemon.getId() + " AND version_group_id = " + versionGroupToQuery;
+        String query =
+             "SELECT move_id, pokemon_move_method_id, level FROM pokemon_moves "
+           + "WHERE pokemon_id = " + pokemon.getId() + " AND version_group_id = " + PokemonMachineActivity.currentVersionGroupId;
         Cursor c = db.rawQuery(query, null);
         
         int totalMoves = c.getCount();
@@ -375,7 +373,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         		+ "	ps.gender_rate, ps.capture_rate, ps.base_happiness, ps.is_baby,	ps.hatch_counter, gr.identifier,"
         		+ " ps.forms_switchable, height, weight, psn.genus"
         		+ " FROM pokemon p, pokemon_species ps, pokemon_species_names psn, growth_rates gr "
-        		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id AND psn.local_language_id = " + PokemonMachineActivity.currentLanguage;
+        		+ " WHERE p.id = " + id + " AND psn.pokemon_species_id = p.species_id AND ps.id = p.id AND gr.id = ps.growth_rate_id AND psn.local_language_id = " + PokemonMachineActivity.currentLanguageId;
         
         Cursor c = db.rawQuery(queryPokemon, null);
         c.moveToFirst();
@@ -436,7 +434,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         // Get Abilities
         String queryAbilities = 
-        		"SELECT pa.ability_id as id, pa.is_hidden as ishidden, a.identifier as identifier, aft.flavor_text as flavour_text, an.name FROM pokemon_abilities pa JOIN abilities a ON pa.ability_id = a.id JOIN ability_flavor_text aft ON pa.ability_id = aft.ability_id JOIN ability_names an ON pa.ability_id = an.ability_id WHERE an.local_language_id = 9 AND aft.language_id = 9 AND aft.version_group_id = 15 AND pokemon_id = " + pokemon.getId();
+        	"SELECT pa.ability_id as id, pa.is_hidden as ishidden, a.identifier as identifier, "
+          + "aft.flavor_text as flavour_text, an.name FROM pokemon_abilities pa JOIN abilities a "
+          + "ON pa.ability_id = a.id JOIN ability_flavor_text aft ON pa.ability_id = aft.ability_id "
+          + "JOIN ability_names an ON pa.ability_id = an.ability_id WHERE an.local_language_id = " + PokemonMachineActivity.currentLanguageId
+          + " AND aft.language_id = 9 AND aft.version_group_id = " + PokemonMachineActivity.currentVersionGroupId
+          + " AND pokemon_id = " + pokemon.getId();
         
         Cursor cursorAbilities = db.rawQuery(queryAbilities, null);
         while(cursorAbilities.moveToNext()) {
@@ -458,7 +461,8 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         // Get Mega Evolution
      // Get Mega-Evolutions
         String queryMegaEvolution =
-        		"SELECT id, identifier, species_id, megastone_item_id FROM pokemon p JOIN pokemon_megaevolution m ON p.id = m.pokemon_id WHERE p.species_id = " + pokemon.getId() + " AND p.id != p.species_id";
+            "SELECT id, identifier, species_id, megastone_item_id "
+          + "FROM pokemon p JOIN pokemon_megaevolution m ON p.id = m.pokemon_id WHERE p.species_id = " + pokemon.getId() + " AND p.id != p.species_id";
         
         Cursor cursorMegaEvo = db.rawQuery(queryMegaEvolution, null);
         if (cursorMegaEvo.moveToFirst()) {

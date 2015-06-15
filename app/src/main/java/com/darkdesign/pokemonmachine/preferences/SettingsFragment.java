@@ -1,6 +1,5 @@
 package com.darkdesign.pokemonmachine.preferences;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -42,7 +41,7 @@ public class SettingsFragment extends PreferenceFragment  {
             public boolean onPreferenceChange(Preference preference, Object o) {
                 int value = Integer.parseInt((String)o);
 
-                PokemonMachineActivity.currentLanguage = value;
+                PokemonMachineActivity.currentLanguageId = value;
                 languagePreference.setSummary("Current value is " + PokemonMachineActivity.db.getLanguageName(value));
 
                 return true;

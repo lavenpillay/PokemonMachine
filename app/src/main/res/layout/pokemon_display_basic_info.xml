@@ -38,11 +38,12 @@
 
         <ImageView
             android:id="@+id/imgPokemonArt"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dip"
             android:scaleType="fitCenter"
-            android:src="@drawable/pokeball" />
+            android:src="@drawable/pokeball"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

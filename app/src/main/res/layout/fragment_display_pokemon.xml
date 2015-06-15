@@ -130,7 +130,10 @@
 
                 <include 
                     layout="@layout/pokemon_display_basic_info"  
-                    android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"/>
                 <!-- END : Display Area -->
 
                 <include layout="@layout/card_divider_grey" />

@@ -28,9 +28,8 @@ public class Constants {
 	public static final String EVOLUTION_METHOD_USE_ITEM = "3";
 	public static final String EVOLUTION_METHOD_SHED = "4";
 	public static final String EVOLUTION_METHOD_MEGAEVOLUTION = "100";
-	
-	public static final String VERSION_GROUP_XY = "15";
-	public static final String VERSION_GROUP_BLACKWHITE_2 = "14";
+
+
 	
 	public static final int NUMBER_OF_TYPES = 18;
 	
@@ -88,6 +87,9 @@ public class Constants {
 	public static final String COLOR_MECHANIC_NAME = "#cc0029";
 	public static final String COLOR_ABILITY_NAME = "#FF7F2A";
 	public static final String COLOR_ITEM_NAME = "#00D4FF";
+
+	public static final int VERSION_GROUP_XY = 15;
+	public static final int VERSION_GROUP_BLACKWHITE_2 = 14;
 	
 	public static final String[] POKEMON_WITH_NO_GEN_6_MOVEDATA = 
 		{"19", "20", "52", "53", "109", "110", "137", "151", "152", "153", "154", "155", "156", "157", "158", "159", 
