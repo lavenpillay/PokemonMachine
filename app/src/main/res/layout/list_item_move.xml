@@ -57,7 +57,7 @@
 		    android:layout_height="wrap_content"
 		    android:text="blah blah"
 		    android:layout_marginLeft="5dip"
-		    android:textSize="10sp" />		
+		    android:textSize="11sp" />
 			
 	</LinearLayout>
 </LinearLayout>	

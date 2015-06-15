@@ -28,6 +28,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -462,6 +463,15 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			 // Remove 2nd Type icon
 			 pokemonType2.setImageResource(android.R.color.transparent);
 		 }
+
+		// Setup labels for previous and next buttons
+		Pokemon currentPokemon = PokemonMachineActivity.currentSelectedPokemon;
+
+		if (currentPokemon.getId() > 1) {
+			Button btnPreviousPokemon = (Button) view.findViewById(R.id.btnPreviousPokemon);
+			Pokemon previousPokemon = PokemonMachineActivity.cache.getPokemon(currentPokemon.getId() - 1);
+			btnPreviousPokemon.setText("< #" + previousPokemon.getId() + " " + previousPokemon.getName());
+		}
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);
 	     nameTextView.setText("#" + String.valueOf(pokemon.getId()) + " " + pokemon.getName());

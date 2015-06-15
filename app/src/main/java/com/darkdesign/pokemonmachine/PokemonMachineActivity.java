@@ -214,9 +214,24 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	 * @param view
 	 */
 	public void onSearchClick(View view) {
-		pokemonDisplayFragment.searchFromSearchBox();
+        pokemonDisplayFragment.searchFromSearchBox();
 	}
-	
+
+    public void onPreviousPokemonClick(View view) {
+        int previousId = currentSelectedPokemon.getId() - 1;
+        currentSelectedPokemon = PokemonMachineActivity.cache.getPokemon(previousId);
+
+        // Update Pokemon Display
+        pokemonDisplayFragment.update(currentSelectedPokemon);
+    }
+
+    public void onNextPokemonClick(View view) {
+        int nextId = currentSelectedPokemon.getId() + 1;
+        currentSelectedPokemon = PokemonMachineActivity.cache.getPokemon(nextId);
+
+        // Update Pokemon Display
+        pokemonDisplayFragment.update(currentSelectedPokemon);
+    }
 	
 
     @Override
