@@ -178,7 +178,8 @@
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
+                    android:background="@android:color/darker_gray"
+                    android:layout_marginTop="10dp"/>
 
                 <!-- START : Weaknesses -->
 
@@ -195,7 +196,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:layout_marginBottom="0dp" />
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="5dp" />
 
                     <View
                         android:layout_width="1dp"
@@ -217,7 +219,7 @@
                         android:paddingTop="0dp"
                         android:layout_weight="0.5"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="6dp"
                         android:paddingBottom="10dp">
 
                         <LinearLayout
