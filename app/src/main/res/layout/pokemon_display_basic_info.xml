@@ -128,46 +128,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- START : Stats Area -->
 
-    <LinearLayout
-        android:id="@+id/baseStatsGraphArea"
-        android:layout_width="0dp"
-        android:layout_height="fill_parent"
-        android:layout_marginRight="20dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="15dp"
-        android:paddingTop="10dip" >
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:id="@+id/heading"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:background="#33333311"
-                android:paddingBottom="3dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="3dp"
-                android:text="Base Stats"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="6dp"
-                android:layout_marginLeft="10dp"
-                android:background="@android:color/holo_green_light" />
-        </LinearLayout>
-    </LinearLayout>
-    <!-- END : Stats Area -->
 
 </LinearLayout>
