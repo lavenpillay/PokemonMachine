@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
@@ -120,22 +121,22 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 	 	return f;
 	}
-	
+
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void setUserVisibleHint(boolean isVisibleToUser) {
-	    super.setUserVisibleHint(isVisibleToUser);
+		super.setUserVisibleHint(isVisibleToUser);
 
-	    // Make sure that we are currently visible
-	    if (this.isVisible()) {
-	        // If we are becoming invisible, then...
-	    	Log.v(TAG, "PokemonDisplayFargment is Visible");
-	        if (!isVisibleToUser) {
-	            Log.v(TAG, "Not visible anymore.");
-	        }
-	    }
+		// Make sure that we are currently visible
+		if (this.isVisible()) {
+			// If we are becoming invisible, then...
+			Log.v(TAG, "PokemonDisplayFargment is Visible");
+			if (!isVisibleToUser) {
+				Log.v(TAG, "Not visible anymore.");
+			}
+		}
 	}
 
 	@Override
@@ -153,34 +154,34 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 @Override
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 Log.i(TAG, "onCreate() - Called");
-		 
+
 		 //PokemonMachineActivity.spinner.setVisibility(View.VISIBLE);	
-		 
+
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
-   
+
 		 if (applicationSettings == null) {
-			 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity)getActivity());
+			 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity) getActivity());
 		 }
-   
+
 		 filterText = (EditText) view.findViewById(R.id.txtFilter);
 		 filterText.addTextChangedListener(filterTextWatcher);
 
 		 // Handle Pokemon List
 		 pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
-	
+
 		 ListView listView = (ListView) view.findViewById(R.id.plist);
 		 listView.setAdapter(pokemonListAdapter);
 		 listView.invalidate();
-   
+
 		 listView.setOnItemClickListener(new OnItemClickListener() {
 			 public void onItemClick(AdapterView<?> parent, View view,
-					 int position, long id) {
+									 int position, long id) {
 
-				 Log.i(TAG, "Item Clicked");        
-      
+				 Log.i(TAG, "Item Clicked");
+
 				 String name = pokemonListAdapter.getItem(position);
 				 int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-					
+
 				 update(PokemonMachineActivity.cache.getPokemon(pokemonId));
 			 }
 		 });
@@ -275,13 +276,27 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
                 return false;
             }
         });
-		
-		
+
+		 /*
+		//Handle View Focus
+		LinearLayout pokemonListLayout = (LinearLayout)view.findViewById(R.id.pokemon_list_ref);
+		final ListView pokemonListView = (ListView)pokemonListLayout.findViewById(R.id.plist);
+
+		pokemonListLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View view, boolean hasFocus) {
+				if (hasFocus) {
+					pokemonListView.setBackgroundColor(Color.LTGRAY);
+				} else {
+					pokemonListView.setBackgroundColor(Color.RED);
+				}
+			}
+		});
+	*/
+
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
-		
-		//PokemonMachineActivity.spinner.setVisibility(View.GONE);
-		
+
 		return view;
 	 }
 	 
