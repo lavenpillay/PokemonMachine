@@ -482,16 +482,36 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		// Setup labels for previous and next buttons
 		Pokemon currentPokemon = PokemonMachineActivity.currentSelectedPokemon;
 
+		if (currentPokemon.getId() == 1) {
+			LinearLayout btnPreviousPokemon = (LinearLayout) view.findViewById(R.id.btnPreviousPokemon);
+			btnPreviousPokemon.setVisibility(View.GONE);
+		}
+
 		if (currentPokemon.getId() > 1) {
-			Button btnPreviousPokemon = (Button) view.findViewById(R.id.btnPreviousPokemon);
+			LinearLayout btnPreviousPokemon = (LinearLayout) view.findViewById(R.id.btnPreviousPokemon);
+			ImageView pokemonIcon = (ImageView) view.findViewById(R.id.imgPrevButtonIcon);
+			TextView label = (TextView) view.findViewById(R.id.txtPrevButtonLabel);
 			Pokemon previousPokemon = PokemonMachineActivity.cache.getPokemon(currentPokemon.getId() - 1);
-			btnPreviousPokemon.setText("#" + previousPokemon.getId() + " " + previousPokemon.getName());
+
+			pokemonIcon.setImageBitmap(assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(currentPokemon.getId() - 1, Constants.POKEMON_ID_LENGTH) + ".png"));
+			label.setText("#" + previousPokemon.getId() + " " + previousPokemon.getName());
+			btnPreviousPokemon.setVisibility(View.VISIBLE);
 		}
 
 		if (currentPokemon.getId() < 719) {
-			Button btnNextPokemon = (Button) view.findViewById(R.id.btnNextPokemon);
+			LinearLayout btnNextPokemon = (LinearLayout) view.findViewById(R.id.btnNextPokemon);
+			ImageView pokemonIcon = (ImageView) view.findViewById(R.id.imgNextButtonIcon);
+			TextView label = (TextView) view.findViewById(R.id.txtNextButtonLabel);
 			Pokemon nextPokemon = PokemonMachineActivity.cache.getPokemon(currentPokemon.getId() + 1);
-			btnNextPokemon.setText("#" + nextPokemon.getId() + " " + nextPokemon.getName());
+
+			pokemonIcon.setImageBitmap(assetHelper.getBitmapFromAsset("pokemon_sprites/" + Util.padLeft(currentPokemon.getId() + 1, Constants.POKEMON_ID_LENGTH) + ".png"));
+			label.setText("#" + nextPokemon.getId() + " " + nextPokemon.getName());
+			btnNextPokemon.setVisibility(View.VISIBLE);
+		}
+
+		if (currentPokemon.getId() == 719) {
+			LinearLayout btnNextPokemon = (LinearLayout) view.findViewById(R.id.btnNextPokemon);
+			btnNextPokemon.setVisibility(View.GONE);
 		}
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);

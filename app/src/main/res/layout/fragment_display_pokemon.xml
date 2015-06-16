@@ -77,19 +77,36 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="right">
-                        <Button
+
+                        <LinearLayout
+                            android:id="@+id/btnPreviousPokemon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:textColor="#333333"
-                            android:id="@+id/btnPreviousPokemon"
-                            android:onClick="onPreviousPokemonClick"
-                            android:background="@drawable/previous_button_blue"/>
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="@drawable/previous_button_blue"
+                            android:onClick="onPreviousPokemonClick">
+
+
+
+                            <TextView
+                                android:id="@+id/txtPrevButtonLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
+                                android:textColor="#5c5c5c"
+                                android:text="prev"/>
+
+                            <ImageView
+                                android:id="@+id/imgPrevButtonIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="200dp"
-                        android:layout_height="fill_parent"
+                        android:layout_height="50dp"
                         android:orientation="vertical"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp">
@@ -117,14 +134,30 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="left">
-                        <Button
+
+                        <LinearLayout
+                            android:id="@+id/btnNextPokemon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="14sp"
-                            android:textColor="#333333"
-                            android:id="@+id/btnNextPokemon"
-                            android:onClick="onNextPokemonClick"
-                            android:background="@drawable/next_button_blue"/>
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:background="@drawable/next_button_blue"
+                            android:onClick="onNextPokemonClick">
+
+                            <ImageView
+                                android:id="@+id/imgNextButtonIcon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/txtNextButtonLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
+                                android:textColor="#5c5c5c"
+                                android:text="next"/>
+                        </LinearLayout>
+                        
                     </LinearLayout>
                 </LinearLayout>
 

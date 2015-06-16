@@ -11,4 +11,6 @@
     <dimen name="move_stat_list_icon_padding_left">0dp</dimen>
     <dimen name="move_type_icon_width">50dp</dimen>
     <dimen name="move_type_icon_height">20dp</dimen>
+
+    <dimen name="pokemon_navigate_button_labels_textsize">14sp</dimen>
 </resources>
