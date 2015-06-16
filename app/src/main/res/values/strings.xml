@@ -776,4 +776,7 @@
 	<string name="damage_amount">damage amount</string>
     
 	<string name="damage_type">damage type</string>
+	<string name="panel_title_pokemon_information">Pokemon Information</string>
+	<string name="placeholder_pokemon_name">Pokemon Name</string>
+	<string name="section_heading_evolution_chain">Evolution Chain</string>
 </resources>

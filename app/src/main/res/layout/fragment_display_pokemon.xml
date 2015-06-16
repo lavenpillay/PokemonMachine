@@ -32,9 +32,9 @@
             android:background="@android:color/holo_green_light"
             android:gravity="center_vertical"
             android:paddingBottom="8dp"
-            android:paddingLeft="10dp"
+            android:paddingStart="10dp"
             android:paddingTop="8dp"
-            android:text="Pokemon Information"
+            android:text="@string/panel_title_pokemon_information"
             android:textColor="@android:color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -57,8 +57,8 @@
                     layout="@layout/pokemon_display_search"  
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:layout_gravity="left" 
-                    android:layout_marginLeft="10dp" />
+                    android:layout_gravity="start"
+                    android:layout_marginStart="10dp" />
                 <!-- END : Search Area -->
 
                 <include layout="@layout/card_divider_grey" />
@@ -87,15 +87,12 @@
                             android:background="@drawable/previous_button_blue"
                             android:onClick="onPreviousPokemonClick">
 
-
-
                             <TextView
                                 android:id="@+id/txtPrevButtonLabel"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
-                                android:textColor="#5c5c5c"
-                                android:text="prev"/>
+                                android:textColor="#5c5c5c"/>
 
                             <ImageView
                                 android:id="@+id/imgPrevButtonIcon"
@@ -117,7 +114,7 @@
                             android:layout_height="wrap_content"
                             android:background="#33333311"
                             android:padding="10dp"
-                            android:text="Pokemon Name "
+                            android:text="@string/placeholder_pokemon_name"
                             android:textSize="19sp"
                             android:textStyle="bold"
                             android:gravity="center" />
@@ -154,10 +151,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
-                                android:textColor="#5c5c5c"
-                                android:text="next"/>
+                                android:textColor="#5c5c5c"/>
                         </LinearLayout>
-                        
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -182,10 +178,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
                         android:background="#33333311"
                         android:padding="5dp"
-                        android:text="Evolution Chain"
+                        android:text="@string/section_heading_evolution_chain"
                         android:textSize="14sp" />
 
                     <View
@@ -266,7 +262,7 @@
 
                             <TextView
                                 android:id="@+id/heading"
-                                android:layout_width="fill_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
 
                                 android:background="#33333311"
@@ -277,7 +273,7 @@
                             <View
                                 android:layout_width="fill_parent"
                                 android:layout_height="6dp"
-                                android:background="@android:color/holo_green_light" />
+                                android:background="@android:color/holo_blue_light" />
                         </LinearLayout>
                     </LinearLayout>
                     <!-- END : Stats Area -->
