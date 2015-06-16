@@ -4,11 +4,6 @@
 
     <string name="action_settings">Settings</string>
     
-    <string name="title_fragment1">Items</string>
-    <string name="title_fragment2">Pokemon</string>
-    <string name="title_fragment3">Moves</string>
-    <string name="title_fragment4">Settings</string>
-    
     <string name="move_selector_prompt">Filter by</string>
     
     <string-array name="move_selectors">
@@ -777,6 +772,9 @@
     
 	<string name="damage_type">damage type</string>
 	<string name="panel_title_pokemon_information">Pokemon Information</string>
+	<string name="panel_title_pokemon">Pokemon</string>
+	<string name="panel_title_moves">Moves</string>
+	<string name="panel_title_items">Items</string>
 	<string name="placeholder_pokemon_name">Pokemon Name</string>
 	<string name="section_heading_evolution_chain">Evolution Chain</string>
 </resources>

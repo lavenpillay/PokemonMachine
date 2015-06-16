@@ -29,6 +29,7 @@ import com.darkdesign.pokemonmachine.database.DatabaseHelper;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
+import com.darkdesign.pokemonmachine.fragment.FavouritesFragment;
 import com.darkdesign.pokemonmachine.fragment.ItemDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
@@ -62,6 +63,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
     private CollectionDisplayFragment collectionDisplayFragment = null;
     public static ItemDisplayFragment itemDisplayFragment = null;
     private MoveDisplayFragment moveDisplayFragment = null;
+    private FavouritesFragment favouritesFragment = null;
     private Fragment settingsFragment = null;
 
     private LinearLayout loadingLayout;
@@ -328,6 +330,12 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         		returnFragment = moveDisplayFragment;
         		
         	} else if (position == 3) {
+                if (favouritesFragment == null) {
+                    favouritesFragment = new FavouritesFragment();
+                }
+
+                returnFragment = favouritesFragment;
+            } else if (position == 4) {
         		if (settingsFragment == null) {
         			settingsFragment = new SettingsFragment();
         		}
@@ -350,23 +358,30 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 
         @Override
         public int getCount() {
-            return 4;
+            return ((String[]) getResources().getStringArray(R.array.fragment_titles)).length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
-            switch (position) {
+            String[] titles = (String[]) getResources().getStringArray(R.array.fragment_titles);
+
+            return titles[position].toUpperCase();
+
+            /*switch (position) {
                 case 0:
-                    return getString(R.string.title_fragment1).toUpperCase(l);
+                    return getString(titles[posiyion).toUpperCase(l);
                 case 1:
                     return getString(R.string.title_fragment2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_fragment3).toUpperCase(l);
                 case 3:
-                    return getString(R.string.title_fragment4).toUpperCase(l);    
+                    return getString(R.string.title_fragment4).toUpperCase(l);
+                case 4:
+                    return getString(R.string.title_fragment5).toUpperCase(l);
             }
             return null;
+            */
         }
     }
     

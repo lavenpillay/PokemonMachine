@@ -12,4 +12,12 @@
         <item>1</item>
     </string-array>
 
+    <string-array name="fragment_titles">
+        <item>Items</item>
+        <item>Pokemon</item>
+        <item>Moves</item>
+        <item>Favourites</item>
+        <item>Settings</item>
+    </string-array>
+
 </resources>
