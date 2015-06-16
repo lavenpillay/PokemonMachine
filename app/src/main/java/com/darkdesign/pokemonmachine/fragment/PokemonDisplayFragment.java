@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.prefs.Preferences;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -48,6 +49,8 @@ import com.darkdesign.pokemonmachine.adapter.PokemonMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
 import com.darkdesign.pokemonmachine.animation.list.ExpandAnimation;
+import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseContract;
+import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseHelper;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
@@ -84,7 +87,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	
 	private int lastViewedPokemonId = -1;
 	private View currentOpenMoveDescriptionView = null;
-	
+
+	private ArrayList<Integer> favouritePokemon = null;
 	
 	
 	//The "x" and "y" position of the Popup Window
@@ -155,7 +159,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		 Log.i(TAG, "onCreate() - Called");
 
-		 //PokemonMachineActivity.spinner.setVisibility(View.VISIBLE);	
+		 // Testing Favourites
+		 //getActivity().deleteDatabase(FavouritePokemonDatabaseHelper.DATABASE_NAME);
+		 FavouritePokemonDatabaseHelper favPokemonDBHelper = new FavouritePokemonDatabaseHelper(getActivity());
+		 favouritePokemon = favPokemonDBHelper.getFavourites();
+		 Log.d(TAG, "<<< FOUND " + favouritePokemon.size() + favouritePokemon);
 
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
@@ -516,6 +524,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);
 	     nameTextView.setText("#" + String.valueOf(pokemon.getId()) + " " + pokemon.getName());
+		if (favouritePokemon.contains(new Integer(pokemon.getId()))) {
+			nameTextView.setTextColor(Color.RED);
+		} else {
+			nameTextView.setTextColor(Color.BLACK);
+		}
 	     
 	     TextView speciesTextView = (TextView)view.findViewById(R.id.txtSpecies);
 	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");

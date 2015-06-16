@@ -29,6 +29,14 @@ public class Util {
 	
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
 	private static Point screenDimensions;
+
+	public static Bitmap getPokemonSprite(int pokemonId) {
+		return PokemonMachineActivity.assetHelper.getBitmapFromAsset("pokemon_sprites/" + padLeft(String.valueOf(pokemonId), Constants.POKEMON_ID_LENGTH) + ".png");
+	}
+
+	public static Bitmap getTypeSprite(String typeName) {
+		return PokemonMachineActivity.assetHelper.getBitmapFromAsset("type_images_medium/" + typeName + ".png");
+	}
 	
 	public static void measureScreenDimensions(Context context) {
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
