@@ -32,6 +32,14 @@ public class FavouritesFragment extends Fragment {
     private View view;
     private ViewGroup container;
     private LayoutInflater inflater;
+    private LinearLayout row;
+    private LinearLayout.LayoutParams layoutParams;
+    private LinearLayout favouritePokemonHolder;
+
+    private ArrayList<Integer> favouritePokemon;
+
+    private int widgetsPerRow = 3;
+
 
 
     @Override
@@ -47,18 +55,23 @@ public class FavouritesFragment extends Fragment {
         this.inflater = inflater;
         view = inflater.inflate(R.layout.fragment_favourites, container, false);
 
-        LinearLayout favouritePokemonHolder = (LinearLayout)view.findViewById(R.id.favourite_pokemon_holder);
+        favouritePokemonHolder = (LinearLayout)view.findViewById(R.id.favourite_pokemon_holder);
+        layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        int widgetsPerRow = 3;
-        LinearLayout row = null;
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        populate();
 
-        FavouritePokemonDatabaseHelper favPokemonDBHelper = new FavouritePokemonDatabaseHelper(getActivity());
-        ArrayList<Integer> favouritePokemon = favPokemonDBHelper.getFavourites();
+        return view;
+    }
+
+    private void populate() {
+
+        favouritePokemon = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
+
+        favouritePokemonHolder.removeAllViews();
 
         for (int i=0; i < favouritePokemon.size(); i++) {
 
-            if ((i-1) % widgetsPerRow == 0) {
+            if ((i) % widgetsPerRow == 0) {
                 row = new LinearLayout(getActivity());
                 row.setLayoutParams(layoutParams);
                 favouritePokemonHolder.addView(row);
@@ -66,8 +79,6 @@ public class FavouritesFragment extends Fragment {
 
             row.addView(createPokemonWidget(favouritePokemon.get(i)));
         }
-
-        return view;
     }
 
     @Override
@@ -85,6 +96,8 @@ public class FavouritesFragment extends Fragment {
     public void onResume() {
         Log.i(TAG, "onResume() - Called");
         super.onResume();
+
+        populate();
     }
 
     public View createPokemonWidget(int pokemonId) {

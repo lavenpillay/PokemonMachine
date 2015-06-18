@@ -89,8 +89,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	private View currentOpenMoveDescriptionView = null;
 
 	private ArrayList<Integer> favouritePokemon = null;
-	
-	
+
 	//The "x" and "y" position of the Popup Window
     private Point p;
 
@@ -160,9 +159,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 Log.i(TAG, "onCreate() - Called");
 
 		 // Testing Favourites
-		 //getActivity().deleteDatabase(FavouritePokemonDatabaseHelper.DATABASE_NAME);
-		 FavouritePokemonDatabaseHelper favPokemonDBHelper = new FavouritePokemonDatabaseHelper(getActivity());
-		 favouritePokemon = favPokemonDBHelper.getFavourites();
+		 favouritePokemon = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
 		 Log.d(TAG, "<<< FOUND " + favouritePokemon.size() + favouritePokemon);
 
 		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
@@ -524,12 +521,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 
 		 TextView nameTextView = (TextView)view.findViewById(R.id.txtName);
 	     nameTextView.setText("#" + String.valueOf(pokemon.getId()) + " " + pokemon.getName());
-		if (favouritePokemon.contains(new Integer(pokemon.getId()))) {
-			nameTextView.setTextColor(Color.RED);
-		} else {
-			nameTextView.setTextColor(Color.BLACK);
-		}
-	     
+
 	     TextView speciesTextView = (TextView)view.findViewById(R.id.txtSpecies);
 	     speciesTextView.setText(Util.toTitleCase(pokemon.getSpecies()) + " Pokemon");
 
@@ -563,12 +555,26 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     weightTextView.setText(weight);
 
 		// Set favourite status
-		ImageView favStatus = (ImageView)view.findViewById(R.id.favourite_pokemon_status);
+		final ImageView favStatus = (ImageView)view.findViewById(R.id.favourite_pokemon_status);
 		if (favouritePokemon.contains(new Integer(pokemon.getId()))) {
 			favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_true.png"));
 		} else {
 			favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_false.png"));
 		}
+
+		favStatus.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (favouritePokemon.contains(new Integer(pokemon.getId()))) {
+					PokemonMachineActivity.favouritePokemonDBHelper.removeFavourite(pokemon.getId());
+					favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_false.png"));
+
+				} else {
+					PokemonMachineActivity.favouritePokemonDBHelper.addFavourite(pokemon.getId());
+					favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_true.png"));
+				}
+			}
+		});
 	     
 		// Add Base Stats Graph
 		// init example series data

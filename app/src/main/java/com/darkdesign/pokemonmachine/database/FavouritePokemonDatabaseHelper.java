@@ -15,10 +15,13 @@ import java.util.ArrayList;
 public class FavouritePokemonDatabaseHelper extends SQLiteOpenHelper {
     private static final String TEXT_TYPE = " TEXT";
     private static final String COMMA_SEP = ",";
+
     private static final String SQL_CREATE_TABLE =
             "CREATE TABLE " + FavouritePokemonDatabaseContract.FavouritePokemonEntry.TABLE_NAME + " (" +
                     FavouritePokemonDatabaseContract.FavouritePokemonEntry.COLUMN_NAME_ID + " INTEGER PRIMARY KEY," +
                     FavouritePokemonDatabaseContract.FavouritePokemonEntry.COLUMN_NAME_POKEMON_ID + " INTEGER)";
+
+    private static final String SQL_DELETE_ENTRIES = "DELETE FROM " + FavouritePokemonDatabaseContract.FavouritePokemonEntry.TABLE_NAME;
 
     // If you change the database schema, you must increment the database version.
     public static final int DATABASE_VERSION = 1;
@@ -44,6 +47,20 @@ public class FavouritePokemonDatabaseHelper extends SQLiteOpenHelper {
                 values);
 
         return newRowId;
+    }
+
+    public boolean removeFavourite(int pokemonId) {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = getWritableDatabase();
+
+        return db.delete(FavouritePokemonDatabaseContract.FavouritePokemonEntry.TABLE_NAME, FavouritePokemonDatabaseContract.FavouritePokemonEntry.COLUMN_NAME_POKEMON_ID + "=" + pokemonId, null) > 0;
+    }
+
+    public void deleteAllEntries() {
+        // Gets the data repository in write mode
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.delete(FavouritePokemonDatabaseContract.FavouritePokemonEntry.TABLE_NAME, null, null);
     }
 
     public ArrayList<Integer> getFavourites() {

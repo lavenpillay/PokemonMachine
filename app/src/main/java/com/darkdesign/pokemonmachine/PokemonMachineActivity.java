@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 
 import com.darkdesign.pokemonmachine.cache.Cache;
 import com.darkdesign.pokemonmachine.database.DatabaseHelper;
+import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseHelper;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.fragment.CollectionDisplayFragment;
@@ -68,6 +69,8 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 
     private LinearLayout loadingLayout;
     private int mShortAnimationDuration;
+
+    public static FavouritePokemonDatabaseHelper favouritePokemonDBHelper;
     
     public static AssetHelper assetHelper;
     
@@ -109,6 +112,10 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         
         // TODO Remove this after DEBUG/TESTING
         //forceDatabaseReload(this);
+
+        favouritePokemonDBHelper = new FavouritePokemonDatabaseHelper(this);
+        // Clear Favourites database
+        //favouritePokemonDatabaseHelper.deleteAllEntries();
         
         // Create and Initialise Database Connection
         db = new DatabaseHelper(this);
