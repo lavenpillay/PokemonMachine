@@ -57,6 +57,7 @@ import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.element.Type;
+import com.darkdesign.pokemonmachine.filter.PokemonNameTextWatcher;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
@@ -85,7 +86,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public static SimplePokemonListAdapter pokemonListAdapter;
 	public static PokemonMoveListAdapter movesListAdapter;
 	
-	private int lastViewedPokemonId = -1;
 	private View currentOpenMoveDescriptionView = null;
 
 	private ArrayList<Integer> favouritePokemon = null;
@@ -93,22 +93,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	//The "x" and "y" position of the Popup Window
     private Point p;
 
-	private TextWatcher filterTextWatcher = new TextWatcher() {
-
-	    public void afterTextChanged(Editable s) {
-	    }
-
-	    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-	    }
-
-	    public void onTextChanged(CharSequence s, int start, int before, int count) {
-	    	if (s.length() > 0) {
-	    		pokemonListAdapter.getFilter().filter(s);
-	    	} else if (s.length() == 0) {
-	    		pokemonListAdapter.getFilter().filter("");
-	    	}
-	    }
-	};
+	private TextWatcher filterTextWatcher = new PokemonNameTextWatcher();
 	
 	/**
 	 * 
@@ -125,25 +110,12 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 	return f;
 	}
 
-	/**
-	 *
-	 */
-	@Override
-	public void setUserVisibleHint(boolean isVisibleToUser) {
-		super.setUserVisibleHint(isVisibleToUser);
 
-		// Make sure that we are currently visible
-		if (this.isVisible()) {
-			// If we are becoming invisible, then...
-			Log.v(TAG, "PokemonDisplayFargment is Visible");
-			if (!isVisibleToUser) {
-				Log.v(TAG, "Not visible anymore.");
-			}
-		}
-	}
 
 	@Override
 	public void onAttach(Activity activity) {
+		Log.v(TAG, "onAttach() called");
+
 		super.onAttach(activity);
 
 		 if (this.assetHelper == null) {
@@ -152,73 +124,77 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 		 names = getResources().getStringArray(R.array.pokemon_names);
 	}
-	
 
-	 @Override
-	 public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		 Log.i(TAG, "onCreate() - Called");
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		Log.v(TAG, "onCreate() called");
 
-		 // Testing Favourites
-		 favouritePokemon = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
-		 Log.d(TAG, "<<< FOUND " + favouritePokemon.size() + favouritePokemon);
+		super.onCreate(savedInstanceState);
+	}
 
-		 view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-		 if (applicationSettings == null) {
-			 applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity) getActivity());
-		 }
+		view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
 
-		 filterText = (EditText) view.findViewById(R.id.txtFilter);
-		 filterText.addTextChangedListener(filterTextWatcher);
+		if (applicationSettings == null) {
+			applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity) getActivity());
+		}
 
-		 // Handle Pokemon List
-		 pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+		favouritePokemon = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
+		Log.v(TAG, "<<< FOUND " + favouritePokemon.size() + favouritePokemon);
 
-		 ListView listView = (ListView) view.findViewById(R.id.plist);
-		 listView.setAdapter(pokemonListAdapter);
-		 listView.invalidate();
+		filterText = (EditText) view.findViewById(R.id.txtFilter);
+		filterText.addTextChangedListener(filterTextWatcher);
 
-		 listView.setOnItemClickListener(new OnItemClickListener() {
-			 public void onItemClick(AdapterView<?> parent, View view,
-									 int position, long id) {
+		// Handle Pokemon List
+		pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
 
-				 Log.i(TAG, "Item Clicked");
+		ListView listView = (ListView) view.findViewById(R.id.plist);
+		listView.setAdapter(pokemonListAdapter);
+		listView.invalidate();
 
-				 String name = pokemonListAdapter.getItem(position);
-				 int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view,
+									int position, long id) {
 
-				 update(PokemonMachineActivity.cache.getPokemon(pokemonId));
-			 }
-		 });
-	   
+				Log.i(TAG, "Item Clicked");
+
+				String name = pokemonListAdapter.getItem(position);
+				int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+
+				update(PokemonMachineActivity.cache.getPokemon(pokemonId));
+			}
+		});
+
 		// Clear button listener for POKEMON field
 		ImageButton btnClearNameFilter = (ImageButton)view.findViewById(R.id.btnClearNameFilter);
 		btnClearNameFilter.setOnClickListener(new OnClickListener() {
 
-		@Override
-		public void onClick(View v) {
-			EditText edtName = (EditText)view.findViewById(R.id.txtFilter);
-			edtName.setText("");
-		}
+			@Override
+			public void onClick(View v) {
+				EditText edtName = (EditText)view.findViewById(R.id.txtFilter);
+				edtName.setText("");
+			}
 		});
-	   
-	   // Clear button listener for SEARCH field
-	   ImageButton btnClearId = (ImageButton)view.findViewById(R.id.btnClearID);
-	   btnClearId.setOnClickListener(new OnClickListener() {
-			
+
+		// Clear button listener for SEARCH field
+		ImageButton btnClearId = (ImageButton)view.findViewById(R.id.btnClearID);
+		btnClearId.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				EditText edtId = (EditText)view.findViewById(R.id.txtSearch);
 				edtId.setText("");
 			}
-	   });
-	   
-	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
-	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
-	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
-	   
-	   	// Handle Moves List
-	   		// Create Test Data
+		});
+
+		listView.setFastScrollEnabled(Config.FAST_SCROLL);
+		listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
+		listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+
+		// Handle Moves List
+		// Create Test Data
 		Move testMove1 = new Move();
 		testMove1.setName("Test Name 1");
 		testMove1.setMethod(null);
@@ -230,13 +206,13 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 		ListView movesListView = (ListView) view.findViewById(R.id.mlist);
 
-		 movesListView.setAdapter(movesListAdapter);
+		movesListView.setAdapter(movesListAdapter);
 
-		 // Creating an item click listener, to open/close our toolbar for each item
-		 movesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			 public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
+		// Creating an item click listener, to open/close our toolbar for each item
+		movesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
 
-				 View description = view.findViewById(R.id.expandable);
+				View description = view.findViewById(R.id.expandable);
 
 				 /*
 				 // Creating the expand animation for the item
@@ -246,65 +222,47 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				 */
 
 
+				if (description.getVisibility() == View.GONE) {
+					if (currentOpenMoveDescriptionView != null) {
+						currentOpenMoveDescriptionView.setVisibility(View.GONE);
+					}
 
-				 if (description.getVisibility() == View.GONE) {
-					 if (currentOpenMoveDescriptionView != null) {
-						 currentOpenMoveDescriptionView.setVisibility(View.GONE);
-					 }
-
-					 description.setVisibility(View.VISIBLE);
-					 currentOpenMoveDescriptionView = description;
-				 } else {
-					 description.setVisibility(View.GONE);
-					 currentOpenMoveDescriptionView = null;
-				 }
-			 }
-		 });
-		
-		// Search-By-ID Listener
-        EditText searchValueTextbox = (EditText) view.findViewById(R.id.txtSearch);
-        searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
-        searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
-        
-        searchValueTextbox.setOnEditorActionListener(new OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == ENTER_KEY_PRESSED) {
-                	
-                	Util.hideSoftKeyboard(v);
-                	clearFilterText();
-                	
-                	// Execute Search
-                	searchFromSearchBox();
-                	
-                    return true;
-                }
-                return false;
-            }
-        });
-
-		 /*
-		//Handle View Focus
-		LinearLayout pokemonListLayout = (LinearLayout)view.findViewById(R.id.pokemon_list_ref);
-		final ListView pokemonListView = (ListView)pokemonListLayout.findViewById(R.id.plist);
-
-		pokemonListLayout.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View view, boolean hasFocus) {
-				if (hasFocus) {
-					pokemonListView.setBackgroundColor(Color.LTGRAY);
+					description.setVisibility(View.VISIBLE);
+					currentOpenMoveDescriptionView = description;
 				} else {
-					pokemonListView.setBackgroundColor(Color.RED);
+					description.setVisibility(View.GONE);
+					currentOpenMoveDescriptionView = null;
 				}
 			}
 		});
-	*/
+
+		// Search-By-ID Listener
+		EditText searchValueTextbox = (EditText) view.findViewById(R.id.txtSearch);
+		searchValueTextbox.setImeActionLabel("Search", KeyEvent.KEYCODE_ENTER);
+		searchValueTextbox.setImeOptions(EditorInfo.IME_ACTION_SEND);
+
+		searchValueTextbox.setOnEditorActionListener(new OnEditorActionListener() {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				if (actionId == ENTER_KEY_PRESSED) {
+
+					Util.hideSoftKeyboard(v);
+					clearFilterText();
+
+					// Execute Search
+					searchFromSearchBox();
+
+					return true;
+				}
+				return false;
+			}
+		});
 
 		// Select default pokemon
 		update(PokemonMachineActivity.cache.getPokemon(1));
 
 		return view;
-	 }
-	 
+	}
+
 	/**
 	 * 
 	 */
@@ -315,10 +273,26 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		Log.i(TAG, "onActivityCreated() - Called");
 		
 		//adapter.getFilter().filter("Sand");
-		
-		//PokemonMachineActivity.spinner.setVisibility(View.GONE);
 	}
-	 
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+
+
+		 /*
+		 if (PokemonMachineActivity.currentSelectedPokemon.getId() != -1) {
+			 ((PokemonMachineActivity) getActivity()).executeSearch(PokemonMachineActivity.currentSelectedPokemon.getId());
+		 }
+		 */
+	}
+
+
 	/**
 	 * 
 	 * @param view
@@ -350,18 +324,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	@Override
 	public void onPause() {
 		super.onPause();
-		if (((PokemonMachineActivity) getActivity()) != null) {
-			lastViewedPokemonId = ((PokemonMachineActivity) getActivity()).currentSelectedPokemon.getId();
-		}
 	}
-	 
-	 @Override
-	 public void onResume() {
-		 super.onResume();
-		 if (lastViewedPokemonId != -1) {
-			 ((PokemonMachineActivity) getActivity()).executeSearch(lastViewedPokemonId);
-		 }
-	 }
 	 
 	public void update(final Pokemon pokemon) {
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
@@ -553,6 +516,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     }
 	     
 	     weightTextView.setText(weight);
+
+		favouritePokemon = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
 
 		// Set favourite status
 		final ImageView favStatus = (ImageView)view.findViewById(R.id.favourite_pokemon_status);
@@ -1096,14 +1061,14 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				@Override
 				public boolean onLongClick(View v) {
 
-					Log.d(TAG, "LongClick");
+					/*Log.d(TAG, "LongClick");
 
 					Item evolutionItem = PokemonMachineActivity.cache.getItemById(itemId);
 
 					if (evolutionItem.getCategory().getIdentifier().equalsIgnoreCase(Constants.ITEM_CATEGORY_EVOLUTION)) {
 						PokemonMachineActivity.itemDisplayFragment.update(evolutionItem);
 						((PokemonMachineActivity) getActivity()).getViewPager().setCurrentItem(PokemonMachineActivity.FRAGMENT_POSITION_ITEMS);
-					}
+					}*/
 
 					return true;
 				}
@@ -1123,6 +1088,23 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		PokemonDisplayFragment.movesData.clear();
 		PokemonDisplayFragment.movesData.addAll(moveSubset);
 		PokemonDisplayFragment.movesListAdapter.notifyDataSetChanged();
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public void setUserVisibleHint(boolean isVisibleToUser) {
+		super.setUserVisibleHint(isVisibleToUser);
+
+		// Make sure that we are currently visible
+		if (this.isVisible()) {
+			// If we are becoming invisible, then...
+			Log.v(TAG, "PokemonDisplayFargment is Visible");
+			if (!isVisibleToUser) {
+				Log.v(TAG, "Not visible anymore.");
+			}
+		}
 	}
 	
 }

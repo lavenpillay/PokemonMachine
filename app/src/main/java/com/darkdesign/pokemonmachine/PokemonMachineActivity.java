@@ -140,6 +140,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setOffscreenPageLimit(4);
 
         // CROSSFADE
         // Initially hide the content view.
