@@ -9,10 +9,10 @@
     <!-- POKEMON ART -->
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="10dp"
-        android:layout_weight="1"
+
         android:orientation="vertical" >
 
         <LinearLayout
@@ -36,99 +36,140 @@
                 android:src="@drawable/bug" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/imgPokemonArt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dip"
-            android:scaleType="fitCenter"
-            android:src="@drawable/pokeball"
-            android:layout_gravity="center"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/lblSpecies"
+
+            <!-- Basic Info Left Panel -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <!-- Art, Species, Height, Weight -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Species : "
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtSpecies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                <ImageView
+                    android:id="@+id/imgPokemonArt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dip"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/pokeball"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Species : "
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/txtSpecies"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Height : "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/txtHeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lblHeightUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" m"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/lblWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Weight : "
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/txtWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/lblWeightUnit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" kg"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                </LinearLayout>
+
+            <!-- Basic Info Right Panel -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/favourite_pokemon_status"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/favourite_false"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"/>
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/lblHeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Height : "
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/txtHeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/lblHeightUnit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" m"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/lblWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Weight : "
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/txtWeight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-
-            <TextView
-                android:id="@+id/lblWeightUnit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" kg"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="10sp" />
-        </LinearLayout>
     </LinearLayout>
-
-
 
 </LinearLayout>

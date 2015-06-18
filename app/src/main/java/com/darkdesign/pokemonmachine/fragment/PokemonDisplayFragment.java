@@ -548,7 +548,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	    	 heightUnitTextView.setText(" m");
 	     }
 	     heightTextView.setText(height);
-	     
 
 	     // Convert to kg
 	     String weight = String.valueOf(Double.parseDouble(pokemon.getWeight()) / 10);
@@ -562,6 +561,14 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	     }
 	     
 	     weightTextView.setText(weight);
+
+		// Set favourite status
+		ImageView favStatus = (ImageView)view.findViewById(R.id.favourite_pokemon_status);
+		if (favouritePokemon.contains(new Integer(pokemon.getId()))) {
+			favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_true.png"));
+		} else {
+			favStatus.setImageBitmap(assetHelper.getBitmapFromAsset("icons/favourite_false.png"));
+		}
 	     
 		// Add Base Stats Graph
 		// init example series data
@@ -591,7 +598,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			layout.removeViewAt(1);
 		}
 		layout.addView(graphView);
-	     
 	     
 		LayoutParams labelParams = new LayoutParams(150, LinearLayout.LayoutParams.WRAP_CONTENT);
 		labelParams.leftMargin = 20;

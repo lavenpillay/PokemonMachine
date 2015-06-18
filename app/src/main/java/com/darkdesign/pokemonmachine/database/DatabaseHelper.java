@@ -513,7 +513,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     public ArrayList<Item> getItems() {
     	ArrayList<Item> itemsList = new ArrayList<Item>();
     	
-    	String queryItem = "SELECT i.id AS id, i.category_id AS category_id, n.name AS name, i.cost AS cost, i.identifier AS identifier, f.flavor_text AS description FROM items i JOIN item_names n ON i.id = n.item_id JOIN item_flavor_text f ON i.id = f.item_id WHERE n.local_language_id = 9 ORDER BY i.id ASC;";
+    	String queryItem = "SELECT i.id AS id, i.category_id AS category_id, n.name AS name, i.cost AS cost, i.identifier AS identifier, f.flavor_text AS description FROM items i JOIN item_names n ON i.id = n.item_id JOIN item_flavor_text f ON i.id = f.item_id WHERE n.local_language_id = 9 AND f.language_id = " + PokemonMachineActivity.currentLanguageId + " AND f.version_group_id = " + PokemonMachineActivity.currentVersionGroupId + " ORDER BY i.id ASC;";
     	
         Cursor cursorItems = db.rawQuery(queryItem, null);
         

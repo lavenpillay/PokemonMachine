@@ -32,6 +32,8 @@ import com.darkdesign.pokemonmachine.helper.Config;
 import com.darkdesign.pokemonmachine.helper.Constants;
 import com.darkdesign.pokemonmachine.helper.Util;
 
+import org.w3c.dom.Text;
+
 public class ItemDisplayFragment extends Fragment {
 	private String TAG = ItemDisplayFragment.class.toString();
 	private View view;
@@ -157,7 +159,7 @@ public class ItemDisplayFragment extends Fragment {
 		txtItemName.setText(item.getName());
 		 
 		TextView txtDescription = (TextView) descriptionText.findViewById(R.id.content);
-		txtDescription.setText(item.getDescription());
+		txtDescription.setText(item.getDescription().replace("\n", " "));
 		 
 		mainInfoArea.addView(descriptionText);
 		 

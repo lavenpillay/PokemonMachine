@@ -15,8 +15,11 @@ import android.widget.TextView;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
+import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseHelper;
 import com.darkdesign.pokemonmachine.element.Pokemon;
 import com.darkdesign.pokemonmachine.helper.Util;
+
+import java.util.ArrayList;
 
 
 /**
@@ -50,15 +53,18 @@ public class FavouritesFragment extends Fragment {
         LinearLayout row = null;
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        for (int i=1; i < 7; i++) {
-            //((LinearLayout)view).addView(createPokemonWidget(i));
+        FavouritePokemonDatabaseHelper favPokemonDBHelper = new FavouritePokemonDatabaseHelper(getActivity());
+        ArrayList<Integer> favouritePokemon = favPokemonDBHelper.getFavourites();
+
+        for (int i=0; i < favouritePokemon.size(); i++) {
+
             if ((i-1) % widgetsPerRow == 0) {
                 row = new LinearLayout(getActivity());
                 row.setLayoutParams(layoutParams);
                 favouritePokemonHolder.addView(row);
             }
 
-            row.addView(createPokemonWidget(i));
+            row.addView(createPokemonWidget(favouritePokemon.get(i)));
         }
 
         return view;
