@@ -132,7 +132,10 @@ public class FavouritesFragment extends Fragment {
         favouritePokemonGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(), "Position: " + position, Toast.LENGTH_SHORT).show();
+                ArrayList<Integer> favourites = PokemonMachineActivity.favouritePokemonDBHelper.getFavourites();
+                PokemonMachineActivity.pokemonDisplayFragment.update(PokemonMachineActivity.cache.getPokemon(favourites.get(position)));
+                ((PokemonMachineActivity)getActivity()).getViewPager().setCurrentItem(PokemonMachineActivity.FRAGMENT_POSITION_POKEMON, true);
             }
         });
 
