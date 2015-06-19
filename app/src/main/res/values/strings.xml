@@ -5,6 +5,8 @@
     <string name="action_settings">Settings</string>
     
     <string name="move_selector_prompt">Filter by</string>
+
+	<string name="fav_pokemon_delete_label">Delete</string>
     
     <string-array name="move_selectors">
         <item>All Moves</item>

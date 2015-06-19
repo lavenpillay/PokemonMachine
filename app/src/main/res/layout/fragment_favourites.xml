@@ -25,14 +25,25 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <LinearLayout
+        <GridView
+            android:id="@+id/favourite_pokemon_holder"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:verticalSpacing="10dp"
+            android:horizontalSpacing="10dp"
+            android:layout_margin="10dp">
+
+        </GridView>
+
+        <!--<LinearLayout
             android:id="@+id/favourite_pokemon_holder"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="5dp">
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </LinearLayout>
 
