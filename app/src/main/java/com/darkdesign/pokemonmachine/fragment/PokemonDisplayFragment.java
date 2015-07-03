@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.prefs.Preferences;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
@@ -52,6 +53,7 @@ import com.darkdesign.pokemonmachine.animation.list.ExpandAnimation;
 import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseContract;
 import com.darkdesign.pokemonmachine.database.FavouritePokemonDatabaseHelper;
 import com.darkdesign.pokemonmachine.dialog.PopupManager;
+import com.darkdesign.pokemonmachine.element.Encounter;
 import com.darkdesign.pokemonmachine.element.Evolution;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.Move;
@@ -77,7 +79,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	
 	private AssetHelper assetHelper;
 	private SharedPreferences applicationSettings;
-	private View view; 
+	private LayoutInflater inflater;
+	private View view;
+	private ViewGroup container;
 	private EditText filterText = null;
 	
 	private String[] names;
@@ -136,6 +140,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		view = inflater.inflate(R.layout.fragment_display_pokemon, container, false);
+		this.container = container;
+		this.inflater = inflater;
 
 		if (applicationSettings == null) {
 			applicationSettings = PreferenceManager.getDefaultSharedPreferences((PokemonMachineActivity) getActivity());
@@ -327,8 +333,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	}
 	 
 	public void update(final Pokemon pokemon) {
-		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-		
 	 	PokemonMachineActivity.currentSelectedPokemon = pokemon;
 			 
 		updateBasicInformation(pokemon);
@@ -381,7 +385,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			pokemonInformationArea.addView(pokemonAbilityLayout);
 		}
 		 
-		// ------------
+		// ---------------------------------------------------------------------
+
+		// Add Locations
+
+		// ---------------------------------------------------------------------
 		
 		TextView pokemonNameFilterTextView = (TextView) view.findViewById(R.id.txtFilter);
 		Util.hideSoftKeyboard(pokemonNameFilterTextView);
@@ -406,12 +414,11 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		}
 		*/
 
-		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		LinearLayout holder = (LinearLayout) view.findViewById(R.id.evolutionsHolder);
 		// Remove current displays
 		holder.removeAllViews();
 		
-		buildEvolutionChain(pokemon, assetHelper, inflater, holder);
+		buildEvolutionChain(pokemon, assetHelper, holder);
 	}
 
 	private void updateBasicInformation(final Pokemon pokemon) {
@@ -569,13 +576,40 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			layout.removeViewAt(1);
 		}
 		layout.addView(graphView);
-	     
+
+		// BEGIN - Add Encounter Information
+		LinearLayout encountersHolder = (LinearLayout) view.findViewById(R.id.encountersArea);
+		// Cleanup
+		encountersHolder.removeAllViews();
+		ArrayList<Encounter> encounters = PokemonMachineActivity.db.getEncountersForPokemon(pokemon.getId());
+
+		for (int i=0; i < encounters.size(); i++ ) {
+			Encounter encounter = encounters.get(i);
+			LinearLayout encounterView = (LinearLayout) inflater.inflate(R.layout.encounter, container, false);
+
+			TextView txtGameName = (TextView)encounterView.findViewById(R.id.txtGameName);
+			txtGameName.setText(PokemonMachineActivity.db.getGameByVersionId(encounter.getVersionId()).getName());
+
+			TextView txtLocationName = (TextView)encounterView.findViewById(R.id.txtLocationName);
+			txtLocationName.setText(encounter.getLocation().getIdentifier());
+
+			TextView txtMinLevel = (TextView)encounterView.findViewById(R.id.txtMinLevel);
+			txtMinLevel.setText(String.valueOf(encounter.getMinLevel()));
+
+			TextView txtMaxLevel = (TextView)encounterView.findViewById(R.id.txtMaxLevel);
+			txtMaxLevel.setText(String.valueOf(encounter.getMaxLevel()));
+
+			encountersHolder.addView(encounterView);
+		}
+
+		// BEGIN - Add Breeding Info
 		LayoutParams labelParams = new LayoutParams(150, LinearLayout.LayoutParams.WRAP_CONTENT);
 		labelParams.leftMargin = 20;
 	
 		LinearLayout layoutGender = (LinearLayout) view.findViewById(R.id.ceGender);
+		layoutGender.setLayoutParams(labelParams);
 		TextView txtGenderHeading = (TextView) layoutGender.findViewById(R.id.heading);
-		txtGenderHeading.setLayoutParams(labelParams);
+		//txtGenderHeading.setLayoutParams(labelParams);
 		txtGenderHeading.setText("Gender");
 		TextView txtGenderContent = (TextView) layoutGender.findViewById(R.id.content);
 		txtGenderContent.setText(getGenderRatio(pokemon.getGenderRate()));
@@ -607,8 +641,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-			    	// TODO Auto-generated method stub
-			    }
+				// TODO Auto-generated method stub
+			}
 		});
 	     
 		LinearLayout layoutGrowthRate = (LinearLayout) view.findViewById(R.id.ceGrowthRate);
@@ -716,8 +750,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 				type2Id = Integer.parseInt(pokemon.getTypes().get(1).getId());
 				damagePercentageForType2 = matrix[i][type2Id];
 			}
-			
-			
+
 			// Resolve Efficacy
 			String damageText = Util.getAttackEfficacy(damagePercentageForType1, damagePercentageForType2);
 			
@@ -757,8 +790,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	 * @param inflater
 	 * @param holder
 	 */
-	public void buildEvolutionChain(Pokemon pokemon, AssetHelper assetHelper, 
-			LayoutInflater inflater, LinearLayout holder) {
+	public void buildEvolutionChain(Pokemon pokemon, AssetHelper assetHelper, LinearLayout holder) {
 		
 		LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
 			     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);

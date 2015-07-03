@@ -14,7 +14,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp">
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="5dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -23,10 +24,11 @@
                     android:textSize="14sp"
                     android:background="#33333311"
                     android:padding="5dp"/>
+
                 <View
                     android:background="@android:color/holo_blue_bright"
                     android:layout_width="fill_parent"
-                    android:layout_height="6dp" />
+                    android:layout_height="6dp"/>
             </LinearLayout>
 
             <TextView

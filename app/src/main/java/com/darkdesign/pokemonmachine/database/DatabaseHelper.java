@@ -12,9 +12,13 @@ import android.util.Log;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.element.Ability;
 import com.darkdesign.pokemonmachine.element.EggGroup;
+import com.darkdesign.pokemonmachine.element.Encounter;
 import com.darkdesign.pokemonmachine.element.Evolution;
+import com.darkdesign.pokemonmachine.element.Game;
 import com.darkdesign.pokemonmachine.element.Item;
 import com.darkdesign.pokemonmachine.element.ItemCategory;
+import com.darkdesign.pokemonmachine.element.Location;
+import com.darkdesign.pokemonmachine.element.LocationArea;
 import com.darkdesign.pokemonmachine.element.Move;
 import com.darkdesign.pokemonmachine.element.MoveMethod;
 import com.darkdesign.pokemonmachine.element.Pokemon;
@@ -52,6 +56,45 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         db = getReadableDatabase();
     }
+
+    public Game getGameByVersionId(int versionId) {
+        Game game = new Game();
+
+        game.setVersionId(versionId);
+
+        String queryVersion = "SELECT name FROM version_names WHERE version_id = " + game.getVersionId();
+        Cursor cursorVersion = db.rawQuery(queryVersion, null);
+
+        if (cursorVersion.moveToFirst()) {
+            game.setName(cursorVersion.getString(0));
+        }
+        cursorVersion.close();
+
+        return game;
+    }
+
+    public Game getGameByGameIndex(int gameIndex) {
+        Game game = new Game();
+
+        String queryGame = "SELECT version_id FROM pokemon_game_indices WHERE game_index = " + gameIndex;
+        Cursor cursorGame = db.rawQuery(queryGame, null);
+
+        if (cursorGame.moveToFirst()) {
+            game.setVersionId(cursorGame.getInt(0));
+
+            String queryVersion = "SELECT name FROM version_names WHERE version_id = " + game.getVersionId();
+            Cursor cursorVersion = db.rawQuery(queryVersion, null);
+
+            if (cursorVersion.moveToFirst()) {
+                game.setName(cursorVersion.getString(0));
+            }
+            cursorVersion.close();
+        }
+
+        cursorGame.close();
+
+        return game;
+    }
     
     public ArrayList<Move> getAllMoves() {
     	ArrayList<Move> moveList = new ArrayList<Move>(); 
@@ -71,7 +114,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         	move.setEffectChance(cursorMoves.getString(10) == null ? "" : cursorMoves.getString(10));
         	
         	int mId = move.getId();
-        	
         	int typeId = cursorMoves.getInt(2);
         	
         	// Get move Type
@@ -643,6 +685,66 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         }
     	
     	return typeNameById;
+    }
+
+    public Location getLocation(int locationAreaId) {
+        LocationArea locationArea = new LocationArea();
+        Location location = new Location();
+        Cursor cursorLocations = null;
+
+        String queryLocationArea = "SELECT id, location_id, game_index, identifier FROM location_areas WHERE id = " + locationAreaId;
+        Cursor cursorLocationArea = db.rawQuery(queryLocationArea, null);
+        if (cursorLocationArea.moveToFirst()) {
+            locationArea.setId(cursorLocationArea.getInt(0));
+            locationArea.setLocationId(cursorLocationArea.getInt(1));
+            locationArea.setGameIndex(cursorLocationArea.getInt(2));
+            locationArea.setIdentifier(cursorLocationArea.getString(3));
+
+            String queryLocation = "SELECT id, region_id, identifier FROM locations WHERE id = " + cursorLocationArea.getInt(1);
+            cursorLocations = db.rawQuery(queryLocation, null);
+
+            if (cursorLocations.moveToFirst()) {
+                location.setLocationArea(locationArea);
+                location.setId(cursorLocations.getInt(0));
+                location.setRegionId(cursorLocations.getInt(1));
+                location.setIdentifier(cursorLocations.getString(2));
+
+                //TODO add further Location queries here
+            }
+        }
+
+        cursorLocations.close();
+        cursorLocationArea.close();
+
+        return location;
+    }
+
+    public ArrayList<Encounter> getEncountersForPokemon(int pokemonId) {
+        ArrayList<Encounter> encounters = new ArrayList<Encounter>();
+        //SELECT * FROM encounters WHERE pokemon_id = 54 AND version_id = 15 ORDER BY location_area_id ASC
+
+        String queryEncounters = "SELECT id, version_id, location_area_id, encounter_slot_id, pokemon_id, min_level, max_level FROM encounters WHERE pokemon_id = " + pokemonId + " ORDER BY location_area_id ASC";
+
+        Cursor cursorEncounters = db.rawQuery(queryEncounters, null);
+
+        while (cursorEncounters.moveToNext()) {
+            Encounter encounter = new Encounter();
+            encounter.setId(cursorEncounters.getInt(0));
+            encounter.setVersionId(cursorEncounters.getInt(1));
+
+            // Query location
+            encounter.setLocation(getLocation(cursorEncounters.getInt(2)));
+
+            encounter.setEncounterSlotId(cursorEncounters.getInt(3));
+            encounter.setPokemonId(cursorEncounters.getInt(4));
+            encounter.setMaxLevel(cursorEncounters.getInt(5));
+            encounter.setMinLevel(cursorEncounters.getInt(6));
+
+            encounters.add(encounter);
+        }
+        cursorEncounters.close();
+
+        return encounters;
     }
     
     // Getting Pokemon Count

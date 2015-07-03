@@ -24,7 +24,8 @@
         android:layout_width="0dip"
         android:layout_height="fill_parent"
         android:layout_weight="2"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:background="@drawable/shadow_left">
 
         <TextView
             android:layout_width="fill_parent"
@@ -48,7 +49,7 @@
                 android:id="@+id/mainPokemonArea"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shadow_left"
+
                 android:orientation="vertical" >
 
                 <!-- START : Search Area -->
@@ -245,7 +246,7 @@
                         android:layout_width="0dp"
                         android:layout_height="fill_parent"
                         android:layout_marginRight="0dp"
-                        android:gravity="center_horizontal"
+                        android:gravity="left"
                         android:orientation="vertical"
                         android:paddingLeft="0dp"
                         android:paddingRight="10dp"
@@ -273,7 +274,7 @@
                             <View
                                 android:layout_width="fill_parent"
                                 android:layout_height="6dp"
-                                android:background="@android:color/holo_blue_light" />
+                                android:background="@android:color/holo_blue_bright" />
                         </LinearLayout>
                     </LinearLayout>
                     <!-- END : Stats Area -->
@@ -294,11 +295,49 @@
                 </LinearLayout>
                 <!-- END : Abilities area -->
 
+                <!-- BEGIN : Encounters area -->
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:background="#33333311"
+                            android:padding="5dp"
+                            android:text="@string/section_heading_encounters"
+                            android:textSize="14sp" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="6dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="@android:color/holo_blue_bright" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/encountersArea">
+
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- END : Encounters area -->
+
                 <!-- BEGIN : Breeding and Catching Information -->
                 <include
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dip"
+                    android:layout_marginTop="10dip"
                     layout="@layout/breeding_and_catching_info" />
 
                 <include layout="@layout/card_divider_grey" />
