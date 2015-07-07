@@ -8,18 +8,15 @@
     android:orientation="horizontal" >
 
     <!-- List of Pokemon to choose from -->
-
     <include
         android:id="@+id/pokemon_list_ref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         layout="@layout/pokemon_display_pokemon_list" />
-
     <!-- END - List of Pokemon -->
 
 
     <!-- START - Main Display Area -->
-
     <LinearLayout
         android:layout_width="0dip"
         android:layout_height="fill_parent"
@@ -349,11 +346,9 @@
     </LinearLayout>
 
     <!-- MOVES -->
-
     <include 
         layout="@layout/pokemon_display_moves_list"  
         android:layout_width="0dip" 
         android:layout_height="wrap_content" 
         android:layout_weight="1"/>
-
 </LinearLayout>

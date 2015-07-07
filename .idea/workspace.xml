@@ -16,7 +16,6 @@
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml">
         <config>
-          <state>Portrait</state>
           <theme>@android:style/Theme.Holo.Light.DarkActionBar</theme>
         </config>
       </layout>
@@ -45,19 +44,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dee07b9e-1ba0-47c7-8ae5-1923b95754a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/element/Encounter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/element/Game.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/element/Location.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/element/LocationArea.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/encounter.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_dev/pokemon_machine_db.sqlite" afterPath="$PROJECT_DIR$/db_dev/pokemon_machine_db.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/database/DatabaseHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/database/DatabaseHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/breeding_and_catching_info.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/breeding_and_catching_info.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/filters_items.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PokemonMachine.iws" />
@@ -104,9 +93,17 @@
       <file leaf-file-name="PokemonDisplayFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-25.25926">
+            <state vertical-scroll-proportion="0.0">
               <caret line="763" column="17" selection-start-line="763" selection-start-column="17" selection-end-line="763" selection-end-column="17" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#9253#9254#0" expanded="false" />
+                <element signature="e#9275#9276#0" expanded="false" />
+                <element signature="e#9622#9623#0" expanded="false" />
+                <element signature="e#9646#9647#0" expanded="false" />
+                <element signature="e#10223#10224#0" expanded="false" />
+                <element signature="e#10245#10246#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -116,7 +113,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="138" column="47" selection-start-line="138" selection-start-column="47" selection-end-line="138" selection-end-column="47" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#8546#8547#0" expanded="false" />
+                <element signature="e#8594#8595#0" expanded="false" />
+                <element signature="e#29052#29053#0" expanded="false" />
+                <element signature="e#29074#29075#0" expanded="false" />
+                <element signature="e#29158#29159#0" expanded="false" />
+                <element signature="e#29180#29181#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,10 +133,6 @@
               <caret line="142" column="42" selection-start-line="142" selection-start-column="42" selection-end-line="142" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="false" />
-                <element signature="e#3980#4214#0" expanded="false" />
-                <element signature="e#4213#4214#0" expanded="false" />
-                <element signature="e#6186#6394#0" expanded="false" />
-                <element signature="e#6393#6394#0" expanded="false" />
                 <element signature="e#7565#7566#0" expanded="false" />
                 <element signature="e#7607#7608#0" expanded="false" />
                 <element signature="e#8389#8390#0" expanded="false" />
@@ -145,39 +146,68 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fragment_display_pokemon.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="fragment_display_pokemon.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml">
-          <provider selected="true" editor-type-id="android-designer">
+          <provider editor-type-id="android-designer">
             <state />
           </provider>
-          <provider editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.0">
-              <caret line="339" column="47" selection-start-line="339" selection-start-column="47" selection-end-line="339" selection-end-column="47" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
               <folding>
-                <element signature="e#13696#13732#0" expanded="true" />
+                <element signature="n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="breeding_and_catching_info.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/breeding_and_catching_info.xml">
+      <file leaf-file-name="filters_items.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/filters_items.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.137931">
-              <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
-              <folding />
+            <state vertical-scroll-proportion="-4.6551723">
+              <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+              <folding>
+                <element signature="n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#0;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#1;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+                <element signature="n#LinearLayout#2;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java">
+      <file leaf-file-name="type_weakness.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/type_weakness.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.08322497">
-              <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="477" column="27" selection-start-line="458" selection-start-column="12" selection-end-line="477" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -2440,7 +2470,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/MoveDisplayFragment.java" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/SimpleMoveListAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values-sw800dp/dimens.xml" />
@@ -2487,10 +2516,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/encounter.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/database/DatabaseHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/breeding_and_catching_info.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/filters_items.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" />
       </list>
     </option>
   </component>
@@ -2505,10 +2535,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="26" />
-    <option name="y" value="48" />
+    <option name="x" value="32" />
+    <option name="y" value="92" />
     <option name="width" value="2109" />
-    <option name="height" value="1300" />
+    <option name="height" value="1262" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -2552,6 +2582,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope">
         <subPane subId="Project Files">
           <PATH>
@@ -2650,7 +2681,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2675,7 +2706,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2756,37 +2786,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PokemonMachine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PokemonMachine" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
+              <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2795,7 +2795,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
@@ -3036,22 +3036,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="26" y="48" width="2109" height="1300" extended-state="0" />
+    <frame x="32" y="92" width="2109" height="1262" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3268581" sideWeight="0.471464" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32635254" sideWeight="0.6048426" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.16416465" sideWeight="0.5144291" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33190393" sideWeight="0.30501089" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33769634" sideWeight="0.30750605" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32933104" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3277027" sideWeight="0.49764428" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32722512" sideWeight="0.49588376" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978207" sideWeight="0.49560854" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3268581" sideWeight="0.6949891" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33769634" sideWeight="0.692494" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16416465" sideWeight="0.48557088" order="0" side_tool="false" content_ui="combo" />
@@ -3103,24 +3103,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/PokemonMoveListAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/type_weakness.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="34" selection-start-line="4" selection-start-column="34" selection-end-line="4" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/SimpleMoveListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -3153,7 +3135,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7190413">
           <caret line="45" column="115" selection-start-line="45" selection-start-column="115" selection-end-line="45" selection-end-column="115" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3369,10 +3350,6 @@
           <caret line="142" column="42" selection-start-line="142" selection-start-column="42" selection-end-line="142" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#3980#4214#0" expanded="false" />
-            <element signature="e#4213#4214#0" expanded="false" />
-            <element signature="e#6186#6394#0" expanded="false" />
-            <element signature="e#6393#6394#0" expanded="false" />
             <element signature="e#7565#7566#0" expanded="false" />
             <element signature="e#7607#7608#0" expanded="false" />
             <element signature="e#8389#8390#0" expanded="false" />
@@ -3415,36 +3392,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
-          <folding>
-            <element signature="e#333#334#0" expanded="false" />
-            <element signature="e#358#359#0" expanded="false" />
-            <element signature="e#391#392#0" expanded="false" />
-            <element signature="e#419#420#0" expanded="false" />
-            <element signature="e#452#453#0" expanded="false" />
-            <element signature="e#484#485#0" expanded="false" />
-            <element signature="e#531#532#0" expanded="false" />
-            <element signature="e#573#574#0" expanded="false" />
-            <element signature="e#610#611#0" expanded="false" />
-            <element signature="e#641#642#0" expanded="false" />
-            <element signature="e#691#692#0" expanded="false" />
-            <element signature="e#731#732#0" expanded="false" />
-            <element signature="e#770#771#0" expanded="false" />
-            <element signature="e#808#809#0" expanded="false" />
-            <element signature="e#867#868#0" expanded="false" />
-            <element signature="e#921#922#0" expanded="false" />
-            <element signature="e#954#955#0" expanded="false" />
-            <element signature="e#986#987#0" expanded="false" />
-            <element signature="e#1033#1034#0" expanded="false" />
-            <element signature="e#1075#1076#0" expanded="false" />
-            <element signature="e#1107#1108#0" expanded="false" />
-            <element signature="e#1138#1139#0" expanded="false" />
-            <element signature="e#1183#1184#0" expanded="false" />
-            <element signature="e#1223#1224#0" expanded="false" />
-            <element signature="e#1255#1256#0" expanded="false" />
-            <element signature="e#1286#1287#0" expanded="false" />
-            <element signature="e#1331#1332#0" expanded="false" />
-            <element signature="e#1371#1372#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3452,7 +3399,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="19" selection-start-line="85" selection-start-column="19" selection-end-line="85" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -3467,24 +3413,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="9" column="24" selection-start-line="9" selection-start-column="24" selection-end-line="9" selection-end-column="24" />
-          <folding>
-            <element signature="e#252#253#0" expanded="false" />
-            <element signature="e#277#278#0" expanded="false" />
-            <element signature="e#310#311#0" expanded="false" />
-            <element signature="e#338#339#0" expanded="false" />
-            <element signature="e#372#373#0" expanded="false" />
-            <element signature="e#405#406#0" expanded="false" />
-            <element signature="e#454#455#0" expanded="false" />
-            <element signature="e#498#499#0" expanded="false" />
-            <element signature="e#531#532#0" expanded="false" />
-            <element signature="e#563#564#0" expanded="false" />
-            <element signature="e#610#611#0" expanded="false" />
-            <element signature="e#652#653#0" expanded="false" />
-            <element signature="e#689#690#0" expanded="false" />
-            <element signature="e#722#723#0" expanded="false" />
-            <element signature="e#774#775#0" expanded="false" />
-            <element signature="e#818#819#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3492,11 +3420,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="50" column="43" selection-start-line="50" selection-start-column="43" selection-end-line="50" selection-end-column="43" />
-          <folding>
-            <element signature="e#927#928#0" expanded="false" />
-            <element signature="e#989#990#0" expanded="false" />
-            <element signature="e#1037#1038#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3511,10 +3434,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
-          <folding>
-            <element signature="e#197#198#0" expanded="false" />
-            <element signature="e#229#230#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3553,20 +3472,38 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="138" column="47" selection-start-line="138" selection-start-column="47" selection-end-line="138" selection-end-column="47" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#8546#8547#0" expanded="false" />
+            <element signature="e#8594#8595#0" expanded="false" />
+            <element signature="e#29052#29053#0" expanded="false" />
+            <element signature="e#29074#29075#0" expanded="false" />
+            <element signature="e#29158#29159#0" expanded="false" />
+            <element signature="e#29180#29181#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml">
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.0">
-          <caret line="339" column="47" selection-start-line="339" selection-start-column="47" selection-end-line="339" selection-end-column="47" />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="763" column="17" selection-start-line="763" selection-start-column="17" selection-end-line="763" selection-end-column="17" />
           <folding>
-            <element signature="e#13696#13732#0" expanded="true" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#9253#9254#0" expanded="false" />
+            <element signature="e#9275#9276#0" expanded="false" />
+            <element signature="e#9622#9623#0" expanded="false" />
+            <element signature="e#9646#9647#0" expanded="false" />
+            <element signature="e#10223#10224#0" expanded="false" />
+            <element signature="e#10245#10246#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -3575,25 +3512,70 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.137931">
+        <state vertical-scroll-proportion="0.16216215">
           <caret line="8" column="38" selection-start-line="8" selection-start-column="38" selection-end-line="8" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/type_weakness.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-25.25926">
-          <caret line="763" column="17" selection-start-line="763" selection-start-column="17" selection-end-line="763" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="477" column="27" selection-start-line="458" selection-start-column="12" selection-end-line="477" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Constants.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/filters_items.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08322497">
-          <caret line="92" column="4" selection-start-line="92" selection-start-column="4" selection-end-line="92" selection-end-column="4" />
-          <folding />
+        <state vertical-scroll-proportion="-4.6551723">
+          <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
+          <folding>
+            <element signature="n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#0;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#1;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#2;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#3;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#4;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#0;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#1;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+            <element signature="n#LinearLayout#2;n#TableRow#5;n#TableLayout#0;n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="38" selection-start-line="0" selection-start-column="38" selection-end-line="0" selection-end-column="38" />
+          <folding>
+            <element signature="n#LinearLayout#0;n#LinearLayout#0;n#!!top" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
