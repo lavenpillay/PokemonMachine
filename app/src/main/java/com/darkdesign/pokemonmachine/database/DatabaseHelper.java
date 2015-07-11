@@ -698,10 +698,12 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	return typeNameById;
     }
 
-    public Location getLocation(int locationAreaId) {
+    public Location getLocation(int locationAreaId, String locationName) {
         LocationArea locationArea = new LocationArea();
         Location location = new Location();
         Cursor cursorLocations = null;
+
+        location.setName(locationName);
 
         String queryLocationArea = "SELECT id, location_id, game_index, identifier FROM location_areas WHERE id = " + locationAreaId;
         Cursor cursorLocationArea = db.rawQuery(queryLocationArea, null);
@@ -734,7 +736,18 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         ArrayList<Encounter> encounters = new ArrayList<Encounter>();
         //SELECT * FROM encounters WHERE pokemon_id = 54 AND version_id = 15 ORDER BY location_area_id ASC
 
-        String queryEncounters = "SELECT id, version_id, location_area_id, encounter_slot_id, pokemon_id, min_level, max_level FROM encounters WHERE pokemon_id = " + pokemonId + " ORDER BY location_area_id ASC";
+        //String queryEncounters = "SELECT id, version_id, location_area_id, encounter_slot_id, pokemon_id, min_level, max_level FROM encounters WHERE pokemon_id = " + pokemonId + " ORDER BY location_area_id ASC";
+
+        String queryEncounters = "SELECT encounters.id, version_id, location_area_id, encounter_slot_id, pokemon_id, min_level, max_level, location_names.name FROM encounters " +
+                "JOIN location_areas ON encounters.location_area_id = location_areas.id " +
+                "JOIN locations ON location_areas.location_id = locations.id " +
+                "JOIN versions ON encounters.version_id = versions.id " +
+                "JOIN location_names ON location_areas.location_id = location_names.location_id " +
+                "WHERE encounters.pokemon_id = " + pokemonId + " " +
+                "GROUP BY location_area_id " +
+                "ORDER BY versions.id ASC;";
+
+
 
         Cursor cursorEncounters = db.rawQuery(queryEncounters, null);
 
@@ -744,7 +757,7 @@ public class DatabaseHelper extends SQLiteAssetHelper {
             encounter.setVersionId(cursorEncounters.getInt(1));
 
             // Query location
-            encounter.setLocation(getLocation(cursorEncounters.getInt(2)));
+            encounter.setLocation(getLocation(cursorEncounters.getInt(2), cursorEncounters.getString(7)));
 
             encounter.setEncounterSlotId(cursorEncounters.getInt(3));
             encounter.setPokemonId(cursorEncounters.getInt(4));

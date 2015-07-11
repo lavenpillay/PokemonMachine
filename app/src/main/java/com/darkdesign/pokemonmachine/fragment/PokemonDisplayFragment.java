@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 import java.util.zip.Inflater;
 
 import android.app.Activity;
+import android.content.res.TypedArray;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -35,6 +36,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -49,6 +52,7 @@ import android.widget.TextView.OnEditorActionListener;
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
 import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.adapter.EggGroupSpinnerAdapter;
+import com.darkdesign.pokemonmachine.adapter.EncounterListAdapter;
 import com.darkdesign.pokemonmachine.adapter.PokemonMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimpleMoveListAdapter;
 import com.darkdesign.pokemonmachine.adapter.SimplePokemonListAdapter;
@@ -79,7 +83,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	public static final String EXTRA_MESSAGE = "EXTRA_MESSAGE";
 	private String TAG = "PM_POKEMON_DISPLAY";
 	private static final int ENTER_KEY_PRESSED = 66;
-	
+
+	private Context _context = null;
+
 	private AssetHelper assetHelper;
 	private SharedPreferences applicationSettings;
 	private LayoutInflater inflater;
@@ -131,6 +137,8 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		 }
 		
 		 names = getResources().getStringArray(R.array.pokemon_names);
+
+		this._context = getActivity();
 	}
 
 	@Override
@@ -597,7 +605,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			txtGameName.setText(PokemonMachineActivity.db.getGameByVersionId(encounter.getVersionId()).getName());
 
 			TextView txtLocationName = (TextView)encounterView.findViewById(R.id.txtLocationName);
-			txtLocationName.setText(encounter.getLocation().getIdentifier());
+			txtLocationName.setText(encounter.getLocation().getName());
 
 			TextView txtMinLevel = (TextView)encounterView.findViewById(R.id.txtMinLevel);
 			txtMinLevel.setText(String.valueOf(encounter.getMinLevel()));
@@ -607,6 +615,28 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 
 			encountersHolder.addView(encounterView);
 		}
+
+		// TEST Expandalbe List
+		// get the listview
+		ExpandableListView expListView = (ExpandableListView) view.findViewById(R.id.expListEncounters);
+
+		EncounterListAdapter encounterListAdapter = new EncounterListAdapter(getActivity(), encounters);
+
+		// setting list adapter
+		expListView.setAdapter(encounterListAdapter);
+
+		Util.setListViewHeightBasedOnChildren(expListView);
+
+		//obtain expandableListViewStyle  from theme
+		/*
+		TypedArray expandableListViewStyle = _context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.expandableListViewStyle});
+		//obtain attr from style
+		TypedArray groupIndicator = _context.getTheme().obtainStyledAttributes(expandableListViewStyle.getResourceId(0,0),new int[]{android.R.attr.groupIndicator});
+		expListView.setGroupIndicator(groupIndicator.getDrawable(0));
+		expandableListViewStyle.recycle();
+		groupIndicator.recycle();
+		*/
+		//---------------
 
 		// BEGIN - Add Breeding Info
 		LayoutParams labelParams = new LayoutParams(150, LinearLayout.LayoutParams.WRAP_CONTENT);

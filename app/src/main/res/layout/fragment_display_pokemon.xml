@@ -303,12 +303,13 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:layout_marginTop="10dp">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -330,11 +331,23 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:id="@+id/encountersArea">
+                            android:id="@+id/encountersArea"
+                            android:layout_marginLeft="5dp"
+                            android:visibility="gone">
 
                         </LinearLayout>
+
+                        <ExpandableListView
+                            android:id="@+id/expListEncounters"
+                            android:layout_height="200dp"
+                            android:layout_width="match_parent"/>
                     </LinearLayout>
                     <!-- END : Encounters area -->
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
 
                     <!-- BEGIN : Breeding and Catching Information -->
                     <include
