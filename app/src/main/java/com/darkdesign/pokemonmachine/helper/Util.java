@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
@@ -332,5 +334,16 @@ public class Util {
 		// Useful for SQL IN QUERY
 
 		return values.toString().replace("[", "'").replace("]", "'").replace(", ", "','");
+	}
+
+	public static int[] convertIntegerListToPrimitiveArray(List<Integer> integers)
+	{
+		int[] ret = new int[integers.size()];
+		Iterator<Integer> iterator = integers.iterator();
+		for (int i = 0; i < ret.length; i++)
+		{
+			ret[i] = iterator.next().intValue();
+		}
+		return ret;
 	}
 }

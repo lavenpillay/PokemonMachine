@@ -461,7 +461,10 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
      * @param view
      */
     public void onFilterPanelToggleClick(View view) {
+        toggleFilterPanel();
+    }
 
+    private void toggleFilterPanel() {
         LinearLayout filtersPanel = (LinearLayout) findViewById(R.id.filtersPanel);
         int width = filtersPanel.getWidth();
 
@@ -526,7 +529,8 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 
         pokemonListIsFiltered = true;
 
-        int[] pokemonIds = db.getPokemonByType(typesToDisplay.get(0));
+        //int[] pokemonIds = db.getPokemonByType(typesToDisplay.get(0));
+        int[] pokemonIds = db.getPokemonByType(typesToDisplay);
 
         // Build Name Array
         PokemonDisplayFragment.pokemonListAdapter.clear();
@@ -538,8 +542,10 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
             PokemonDisplayFragment.pokemonListAdapter.insert(filteredPokemonNames[i], i);
         }
 
-
         PokemonDisplayFragment.pokemonListAdapter.notifyDataSetChanged();
         PokemonDisplayFragment.pokemonListView.invalidate();
+
+        // Hide Panel
+        toggleFilterPanel();
     }
 }

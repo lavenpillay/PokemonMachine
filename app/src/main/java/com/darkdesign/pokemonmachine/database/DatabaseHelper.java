@@ -1,6 +1,7 @@
 package com.darkdesign.pokemonmachine.database;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -866,6 +867,22 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         name = cursorLanguages.getString(0);
 
         return name;
+    }
+
+    public int[] getPokemonByType(ArrayList<Integer> typeIds) {
+        ArrayList<Integer> pokemonIds = new ArrayList<Integer>();
+
+        for (int j=0; j < typeIds.size(); j++) {
+            ArrayList<Integer> idList = new ArrayList<Integer>();
+            int[] ids = getPokemonByType(typeIds.get(j));
+            for (int i = 0; i < ids.length; i++) {
+                idList.add(new Integer(ids[i]));
+            }
+
+            pokemonIds.addAll(idList);
+        }
+
+        return Util.convertIntegerListToPrimitiveArray(pokemonIds);
     }
 
     public int[] getPokemonByType(int typeId) {
