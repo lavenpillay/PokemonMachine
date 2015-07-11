@@ -1,308 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentDisplayPokemon"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/container_dropshadow"
-    android:orientation="horizontal" >
+    android:layout_height="fill_parent"
+    android:layout_width="fill_parent">
 
-    <!-- List of Pokemon to choose from -->
-    <include
-        android:id="@+id/pokemon_list_ref"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        layout="@layout/pokemon_display_pokemon_list" />
-    <!-- END - List of Pokemon -->
-
-
-    <!-- START - Main Display Area -->
     <LinearLayout
-        android:layout_width="0dip"
-        android:layout_height="fill_parent"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:background="@drawable/shadow_left">
 
-        <TextView
-            android:layout_width="fill_parent"
+        android:id="@+id/fragmentDisplayPokemon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/container_dropshadow"
+        android:orientation="horizontal" >
+
+        <!-- List of Pokemon to choose from -->
+        <include
+            android:id="@+id/pokemon_list_ref"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_light"
-            android:gravity="center_vertical"
-            android:paddingBottom="8dp"
-            android:paddingStart="10dp"
-            android:paddingTop="8dp"
-            android:text="@string/panel_title_pokemon_information"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            layout="@layout/pokemon_display_pokemon_list" />
+        <!-- END - List of Pokemon -->
 
-        <ScrollView
-            android:layout_width="fill_parent"
+
+        <!-- START - Main Display Area -->
+        <LinearLayout
+            android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:id="@+id/scrollPokemonInformationArea">
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:background="@drawable/shadow_left">
 
-            <LinearLayout
-                android:id="@+id/mainPokemonArea"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/holo_green_light"
+                android:gravity="center_vertical"
+                android:paddingBottom="8dp"
+                android:paddingStart="10dp"
+                android:paddingTop="8dp"
+                android:text="@string/panel_title_pokemon_information"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-                android:orientation="vertical" >
-
-                <!-- START : Search Area -->
-
-                <include 
-                    layout="@layout/pokemon_display_search"  
-                    android:layout_width="wrap_content" 
-                    android:layout_height="wrap_content" 
-                    android:layout_gravity="start"
-                    android:layout_marginStart="10dp" />
-                <!-- END : Search Area -->
-
-                <include layout="@layout/card_divider_grey" />
-
-                <!-- START : Display Area -->
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/scrollPokemonInformationArea">
 
                 <LinearLayout
+                    android:id="@+id/mainPokemonArea"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="right">
-
-                        <LinearLayout
-                            android:id="@+id/btnPreviousPokemon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:background="@drawable/previous_button_blue"
-                            android:onClick="onPreviousPokemonClick">
-
-                            <TextView
-                                android:id="@+id/txtPrevButtonLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
-                                android:textColor="#5c5c5c"/>
-
-                            <ImageView
-                                android:id="@+id/imgPrevButtonIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="200dp"
-                        android:layout_height="50dp"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp">
-
-                        <TextView
-                            android:id="@+id/txtName"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#33333311"
-                            android:padding="10dp"
-                            android:text="@string/placeholder_pokemon_name"
-                            android:textSize="19sp"
-                            android:textStyle="bold"
-                            android:gravity="center" />
-
-                        <View
-                            android:layout_width="fill_parent"
-                            android:layout_height="6dp"
-                            android:background="@android:color/holo_blue_bright" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="left">
-
-                        <LinearLayout
-                            android:id="@+id/btnNextPokemon"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:background="@drawable/next_button_blue"
-                            android:onClick="onNextPokemonClick">
-
-                            <ImageView
-                                android:id="@+id/imgNextButtonIcon"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <TextView
-                                android:id="@+id/txtNextButtonLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
-                                android:textColor="#5c5c5c"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <include 
-                    layout="@layout/pokemon_display_basic_info"  
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"/>
-                <!-- END : Display Area -->
-
-                <include layout="@layout/card_divider_grey" />
-
-                <!-- START : Evolutions -->
-
-                <LinearLayout
-                    android:id="@+id/evolutionArea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:background="#33333311"
-                        android:padding="5dp"
-                        android:text="@string/section_heading_evolution_chain"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="fill_parent"
-                        android:layout_height="6dp"
-                        android:layout_marginLeft="10dp"
-                        android:background="@android:color/holo_blue_bright" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="5dip" >
-
-                    <LinearLayout
-                        android:id="@+id/evolutionsHolder"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal" >
-                    </LinearLayout>
-                </LinearLayout>
-                <!-- END : Evolutions -->
-
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="10dp"/>
-
-                <!-- START : Weaknesses -->
-
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingLeft="10dp">
+                    <!-- START : Search Area -->
 
                     <include
-                        android:id="@+id/type_efficacy"
-                        layout="@layout/type_weakness"
-                        android:layout_width="0dp"
+                        layout="@layout/pokemon_display_search"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="5dp" />
+                        android:layout_gravity="start"
+                        android:layout_marginStart="10dp" />
+                    <!-- END : Search Area -->
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="fill_parent"
-                        android:background="@android:color/darker_gray"
-                        android:layout_marginLeft="5dp" />
+                    <include layout="@layout/card_divider_grey" />
 
-                    <!-- START : Stats Area -->
+                    <!-- START : Display Area -->
 
                     <LinearLayout
-                        android:id="@+id/baseStatsGraphArea"
-                        android:layout_width="0dp"
-                        android:layout_height="fill_parent"
-                        android:layout_marginRight="0dp"
-                        android:gravity="left"
-                        android:orientation="vertical"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="0dp"
-                        android:layout_weight="0.5"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="6dp"
-                        android:paddingBottom="10dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical" >
+                            android:orientation="horizontal"
+                            android:gravity="right">
 
-                            <TextView
-                                android:id="@+id/heading"
+                            <LinearLayout
+                                android:id="@+id/btnPreviousPokemon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:background="@drawable/previous_button_blue"
+                                android:onClick="onPreviousPokemonClick">
 
+                                <TextView
+                                    android:id="@+id/txtPrevButtonLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
+                                    android:textColor="#5c5c5c"/>
+
+                                <ImageView
+                                    android:id="@+id/imgPrevButtonIcon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="200dp"
+                            android:layout_height="50dp"
+                            android:orientation="vertical"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp">
+
+                            <TextView
+                                android:id="@+id/txtName"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
                                 android:background="#33333311"
-                                android:text="Base Stats"
-                                android:textSize="14dp"
-                                android:padding="5dp" />
+                                android:padding="10dp"
+                                android:text="@string/placeholder_pokemon_name"
+                                android:textSize="19sp"
+                                android:textStyle="bold"
+                                android:gravity="center" />
 
                             <View
                                 android:layout_width="fill_parent"
                                 android:layout_height="6dp"
                                 android:background="@android:color/holo_blue_bright" />
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="left">
+
+                            <LinearLayout
+                                android:id="@+id/btnNextPokemon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:gravity="center"
+                                android:background="@drawable/next_button_blue"
+                                android:onClick="onNextPokemonClick">
+
+                                <ImageView
+                                    android:id="@+id/imgNextButtonIcon"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:id="@+id/txtNextButtonLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/pokemon_navigate_button_labels_textsize"
+                                    android:textColor="#5c5c5c"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
                     </LinearLayout>
-                    <!-- END : Stats Area -->
-                </LinearLayout>
-                <!-- END : Weaknesses -->
 
-                <View
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray" />
+                    <include
+                        layout="@layout/pokemon_display_basic_info"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"/>
+                    <!-- END : Display Area -->
 
-                <!-- BEGIN : Abilities area -->
-                <LinearLayout
-                    android:id="@+id/abilitiesArea"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-                </LinearLayout>
-                <!-- END : Abilities area -->
+                    <include layout="@layout/card_divider_grey" />
 
-                <!-- BEGIN : Encounters area -->
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    <!-- START : Evolutions -->
 
                     <LinearLayout
+                        android:id="@+id/evolutionArea"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical" >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -310,7 +185,7 @@
                             android:layout_marginStart="10dp"
                             android:background="#33333311"
                             android:padding="5dp"
-                            android:text="@string/section_heading_encounters"
+                            android:text="@string/section_heading_evolution_chain"
                             android:textSize="14sp" />
 
                         <View
@@ -323,32 +198,171 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:id="@+id/encountersArea">
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="5dip" >
 
+                        <LinearLayout
+                            android:id="@+id/evolutionsHolder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+                        </LinearLayout>
                     </LinearLayout>
+                    <!-- END : Evolutions -->
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:layout_marginTop="10dp"/>
+
+                    <!-- START : Weaknesses -->
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingLeft="10dp">
+
+                        <include
+                            android:id="@+id/type_efficacy"
+                            layout="@layout/type_weakness"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="5dp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="fill_parent"
+                            android:background="@android:color/darker_gray"
+                            android:layout_marginLeft="5dp" />
+
+                        <!-- START : Stats Area -->
+
+                        <LinearLayout
+                            android:id="@+id/baseStatsGraphArea"
+                            android:layout_width="0dp"
+                            android:layout_height="fill_parent"
+                            android:layout_marginRight="0dp"
+                            android:gravity="left"
+                            android:orientation="vertical"
+                            android:paddingLeft="0dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="0dp"
+                            android:layout_weight="0.5"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="6dp"
+                            android:paddingBottom="10dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <TextView
+                                    android:id="@+id/heading"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+
+                                    android:background="#33333311"
+                                    android:text="Base Stats"
+                                    android:textSize="14dp"
+                                    android:padding="5dp" />
+
+                                <View
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="6dp"
+                                    android:background="@android:color/holo_blue_bright" />
+                            </LinearLayout>
+                        </LinearLayout>
+                        <!-- END : Stats Area -->
+                    </LinearLayout>
+                    <!-- END : Weaknesses -->
+
+                    <View
+                        android:layout_width="fill_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray" />
+
+                    <!-- BEGIN : Abilities area -->
+                    <LinearLayout
+                        android:id="@+id/abilitiesArea"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
+                    </LinearLayout>
+                    <!-- END : Abilities area -->
+
+                    <!-- BEGIN : Encounters area -->
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="10dp"
+                                android:background="#33333311"
+                                android:padding="5dp"
+                                android:text="@string/section_heading_encounters"
+                                android:textSize="14sp" />
+
+                            <View
+                                android:layout_width="fill_parent"
+                                android:layout_height="6dp"
+                                android:layout_marginLeft="10dp"
+                                android:background="@android:color/holo_blue_bright" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:id="@+id/encountersArea">
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!-- END : Encounters area -->
+
+                    <!-- BEGIN : Breeding and Catching Information -->
+                    <include
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dip"
+                        layout="@layout/breeding_and_catching_info" />
+
+                    <include layout="@layout/card_divider_grey" />
+                    <!-- END : Breeding and Catching Information -->
+
+
                 </LinearLayout>
-                <!-- END : Encounters area -->
+            </ScrollView>
+        </LinearLayout>
 
-                <!-- BEGIN : Breeding and Catching Information -->
-                <include
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dip"
-                    layout="@layout/breeding_and_catching_info" />
-
-                <include layout="@layout/card_divider_grey" />
-                <!-- END : Breeding and Catching Information -->
-
-
-            </LinearLayout>
-        </ScrollView>
+        <!-- MOVES -->
+        <include
+            layout="@layout/pokemon_display_moves_list"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
     </LinearLayout>
 
-    <!-- MOVES -->
-    <include 
-        layout="@layout/pokemon_display_moves_list"  
-        android:layout_width="0dip" 
-        android:layout_height="wrap_content" 
-        android:layout_weight="1"/>
-</LinearLayout>
+    <!-- FILTERS -->
+    <include
+        layout="@layout/filters_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"/>
+</FrameLayout>

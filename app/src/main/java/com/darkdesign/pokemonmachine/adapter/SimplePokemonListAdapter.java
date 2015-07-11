@@ -27,13 +27,13 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 	private final String TAG = SimplePokemonListAdapter.class.getName();
 
 	private Context context;
-	private String[] values;
+	private ArrayList<String> values;
 	
 	private AssetHelper assetHelper;
 	private DatabaseHelper db;
 	private SharedPreferences applicationSettings;
 	
-	public SimplePokemonListAdapter(Context context, String[] values) {
+	public SimplePokemonListAdapter(Context context, ArrayList<String> values) {
 	    super(context, R.layout.list_item_pokemon, values);
 	    this.context = context;
 	    this.values = values;
@@ -42,6 +42,8 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 	    //db = new DatabaseHelper(context);
 	    db = PokemonMachineActivity.db;
 	}
+
+
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -52,7 +54,8 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
 		View rowView = inflater.inflate(R.layout.list_item_pokemon, parent, false);
 
 		String name = this.getItem(position);
-		int pokemonId = Util.arrayIndexOf(values, name) + 1; // because of zero-index
+		//int pokemonId = Util.arrayIndexOf(values.get(position), name) + 1; // because of zero-index
+		int pokemonId = PokemonMachineActivity.db.getPokemonByName(name).getId();
 		
 		//Pokemon pokemon = PokemonMachineActivity.cache.getPokemon(pokemonId);
 		ArrayList<Type> pokemonTypes = db.getPokemonTypes(pokemonId); 
@@ -98,7 +101,9 @@ public class SimplePokemonListAdapter extends ArrayAdapter<String> implements Se
   }
 	
 	public String[] getAllData() {
-		return values;
+		String[] names = new String[values.size()];
+
+		return (String[]) values.toArray(names);
 	}
 
 	@Override

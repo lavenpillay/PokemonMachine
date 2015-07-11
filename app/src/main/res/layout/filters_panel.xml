@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/filtersPanel"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="#DDDDDD"
+    android:clickable="false"
+    android:padding="5dp"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/typeFilterHolder"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
 
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
+
             <TableRow>
                 <!-- BUG -->
                 <LinearLayout
@@ -18,16 +25,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeBug"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeBug"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:onClick="onTypeFilterClick"
+                        android:clickable="true"
+                        android:tag="bug"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/bug"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/bug" />
                 </LinearLayout>
 
                 <!-- DARK -->
@@ -37,16 +48,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeDark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeDark"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="dark" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/dark"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/dark" />
                 </LinearLayout>
 
                 <!-- DRAGON -->
@@ -56,18 +71,21 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeDragon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeDragon"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="dragon" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/dragon"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/dragon" />
                 </LinearLayout>
-
 
 
             </TableRow>
@@ -81,16 +99,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeElectric"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeElectric"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="electric" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/electric"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/electric" />
                 </LinearLayout>
 
                 <!-- FAIRY -->
@@ -100,16 +122,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeFairy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeFairy"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="fairy" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/fairy"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/fairy" />
                 </LinearLayout>
 
                 <!-- FIGHTING -->
@@ -119,16 +145,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeFighting"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeFighting"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="fighting" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/fighting"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/fighting" />
                 </LinearLayout>
 
             </TableRow>
@@ -141,16 +171,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeFire"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeFire"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="fire" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/fire"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/fire" />
                 </LinearLayout>
 
                 <!-- FLYING -->
@@ -160,16 +194,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeFlying"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeFlying"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="flying" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/flying"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/flying" />
                 </LinearLayout>
 
                 <!-- GHOST -->
@@ -179,16 +217,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeGhost"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeGhost"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="ghost" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ghost"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ghost" />
                 </LinearLayout>
 
             </TableRow>
@@ -201,16 +243,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeGrass"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeGrass"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="grass"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/grass"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/grass" />
                 </LinearLayout>
 
                 <!-- GROUND -->
@@ -220,16 +266,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeGround"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeGround"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="ground" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ground"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ground" />
                 </LinearLayout>
 
                 <!-- ICE -->
@@ -239,16 +289,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeIce"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeIce"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="ice" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ice"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/ice" />
                 </LinearLayout>
 
             </TableRow>
@@ -261,16 +315,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeNormal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeNormal"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="normal" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/normal"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/normal" />
                 </LinearLayout>
 
                 <!-- POISON -->
@@ -280,16 +338,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypePoison"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypePoison"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="poison" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/poison"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/poison" />
                 </LinearLayout>
 
                 <!-- PSYCHIC -->
@@ -299,16 +361,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypePsychic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypePsychic"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="psychic" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/psychic"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/psychic" />
                 </LinearLayout>
             </TableRow>
 
@@ -320,16 +386,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeRock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeRock"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="rock" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/rock"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/rock" />
                 </LinearLayout>
 
                 <!-- STEEL -->
@@ -339,16 +409,20 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeSteel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeSteel"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="steel" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/steel"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/steel" />
                 </LinearLayout>
 
                 <!-- WATER -->
@@ -358,19 +432,61 @@
                     android:orientation="horizontal">
 
                     <CheckBox
+                        android:id="@+id/filterTypeWater"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/filterTypeWater"
-                        android:textSize="12sp"/>
+                        android:checked="true"
+                        android:textSize="12sp"
+                        android:clickable="true"
+                        android:onClick="onTypeFilterClick"
+                        android:tag="water" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/water"
-                        android:layout_gravity="center_vertical"/>
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/water" />
                 </LinearLayout>
             </TableRow>
         </TableLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Select All"
+            android:id="@+id/btnTypesAll"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/filterApplyButtonTextSize"
+            android:onClick="onSelectAllTypesClick"
+            android:clickable="true" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Select None"
+            android:id="@+id/btnTypesNone"
+            android:layout_gravity="center_horizontal"
+            android:textSize="@dimen/filterApplyButtonTextSize"
+            android:onClick="onSelectNoTypesClick"
+            android:clickable="true" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Apply Filters"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/filterApplyButtonTextSize"
+        android:onClick="onApplyFiltersClick"
+        android:clickable="true" />
 
 </LinearLayout>

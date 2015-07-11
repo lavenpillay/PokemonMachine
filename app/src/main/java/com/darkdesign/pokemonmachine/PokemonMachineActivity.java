@@ -1,5 +1,6 @@
 package com.darkdesign.pokemonmachine;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import android.animation.Animator;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -36,6 +38,7 @@ import com.darkdesign.pokemonmachine.fragment.MoveDisplayFragment;
 import com.darkdesign.pokemonmachine.fragment.PokemonDisplayFragment;
 import com.darkdesign.pokemonmachine.helper.AssetHelper;
 import com.darkdesign.pokemonmachine.helper.Constants;
+import com.darkdesign.pokemonmachine.helper.Util;
 import com.darkdesign.pokemonmachine.preferences.SettingsFragment;
 
 
@@ -75,6 +78,8 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
     public static AssetHelper assetHelper;
     
     public static ProgressBar spinner;
+
+    public static boolean pokemonListIsFiltered = false;
 
     private void crossfade() {
 
@@ -450,4 +455,91 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
 	public void onMoveByTutorClick(View view) {
 		pokemonDisplayFragment.updateMoveList(Constants.MOVE_LEARN_TYPE_TUTOR);
 	}
+
+    /**
+     *
+     * @param view
+     */
+    public void onFilterPanelToggleClick(View view) {
+
+        LinearLayout filtersPanel = (LinearLayout) findViewById(R.id.filtersPanel);
+        int width = filtersPanel.getWidth();
+
+        int duration = 100;
+        if (filtersPanel.getX() < 0) {
+            filtersPanel.animate()
+                    .x(0f)
+                    .setDuration(duration)
+                    .setListener(null);
+        } else {
+            filtersPanel.animate()
+                    .x(-width)
+                    .setDuration(duration)
+                    .setListener(null);
+        }
+    }
+
+    public void onTypeFilterClick(View view) {
+        CheckBox checkbox = (CheckBox) view;
+        boolean newState = checkbox.isChecked();
+        String name = checkbox.getTag().toString();
+
+        Log.v(TAG, "[FILTER] Checkbox = " + name + ", Value = " + newState);
+    }
+
+    public void onSelectAllTypesClick(View view) {
+        String[] typeNames = getResources().getStringArray(R.array.type_names);
+
+        LinearLayout typesHolder = (LinearLayout) findViewById(R.id.typeFilterHolder);
+        for (int i=0; i < Constants.NUMBER_OF_TYPES; i++ ) {
+            CheckBox checkbox = (CheckBox) typesHolder.findViewWithTag(typeNames[i].toLowerCase());
+            if (!checkbox.isChecked()) {
+                checkbox.setChecked(true);
+            }
+        }
+    }
+
+    public void onSelectNoTypesClick(View view) {
+        String[] typeNames = getResources().getStringArray(R.array.type_names);
+
+        LinearLayout typesHolder = (LinearLayout) findViewById(R.id.typeFilterHolder);
+        for (int i=0; i < Constants.NUMBER_OF_TYPES; i++ ) {
+            CheckBox checkbox = (CheckBox) typesHolder.findViewWithTag(typeNames[i].toLowerCase());
+            if (checkbox.isChecked()) {
+                checkbox.setChecked(false);
+            }
+        }
+    }
+
+    public void onApplyFiltersClick(View view) {
+        // Get Type Filters
+        ArrayList<Integer> typesToDisplay = new ArrayList<Integer>();
+        String[] typeNames = getResources().getStringArray(R.array.type_names);
+
+        LinearLayout typesHolder = (LinearLayout) findViewById(R.id.typeFilterHolder);
+        for (int i=0; i < Constants.NUMBER_OF_TYPES; i++ ) {
+            CheckBox checkbox = (CheckBox) typesHolder.findViewWithTag(typeNames[i].toLowerCase());
+            if (checkbox.isChecked()) {
+                typesToDisplay.add(PokemonMachineActivity.cache.getTypeIdByName(Util.toTitleCase(checkbox.getTag().toString())));
+            }
+        }
+
+        pokemonListIsFiltered = true;
+
+        int[] pokemonIds = db.getPokemonByType(typesToDisplay.get(0));
+
+        // Build Name Array
+        PokemonDisplayFragment.pokemonListAdapter.clear();
+
+        String[] filteredPokemonNames = new String[pokemonIds.length];
+        for (int i=0; i < pokemonIds.length; i++) {
+            filteredPokemonNames[i] = cache.getPokemon(pokemonIds[i]).getName();
+            Log.v(TAG, String.valueOf(filteredPokemonNames[i]));
+            PokemonDisplayFragment.pokemonListAdapter.insert(filteredPokemonNames[i], i);
+        }
+
+
+        PokemonDisplayFragment.pokemonListAdapter.notifyDataSetChanged();
+        PokemonDisplayFragment.pokemonListView.invalidate();
+    }
 }

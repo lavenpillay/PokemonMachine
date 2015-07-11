@@ -2,6 +2,7 @@ package com.darkdesign.pokemonmachine.fragment;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.prefs.Preferences;
 import java.util.zip.Inflater;
@@ -26,10 +27,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -83,6 +86,7 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 	private View view;
 	private ViewGroup container;
 	private EditText filterText = null;
+	public static ListView pokemonListView = null;
 	
 	private String[] names;
 	public static ArrayList<Move> movesData = new ArrayList<Move>();	
@@ -154,13 +158,15 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		filterText.addTextChangedListener(filterTextWatcher);
 
 		// Handle Pokemon List
-		pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+		ArrayList<String> lst = new ArrayList<String>(Arrays.asList(names));
 
-		ListView listView = (ListView) view.findViewById(R.id.plist);
-		listView.setAdapter(pokemonListAdapter);
-		listView.invalidate();
+		pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), lst);
 
-		listView.setOnItemClickListener(new OnItemClickListener() {
+		pokemonListView = (ListView) view.findViewById(R.id.plist);
+		pokemonListView.setAdapter(pokemonListAdapter);
+		pokemonListView.invalidate();
+
+		pokemonListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 									int position, long id) {
 
@@ -195,9 +201,9 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			}
 		});
 
-		listView.setFastScrollEnabled(Config.FAST_SCROLL);
-		listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
-		listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+		pokemonListView.setFastScrollEnabled(Config.FAST_SCROLL);
+		pokemonListView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
+		pokemonListView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 
 		// Handle Moves List
 		// Create Test Data
@@ -1138,5 +1144,6 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 			}
 		}
 	}
+
 	
 }

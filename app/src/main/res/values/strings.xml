@@ -34,10 +34,12 @@
 	    <item>Dark</item> 
 	    <item>Dragon</item>
 	    <item>Electric</item>
+		<item>Fairy</item>
 	    <item>Fighting</item>
 	    <item>Fire</item>
 	    <item>Flying</item>
 	    <item>Ghost</item>
+		<item>Grass</item>
 	    <item>Ground</item>
 	    <item>Ice</item>
 	    <item>Normal</item>
@@ -588,7 +590,7 @@
 		<item>Seismitoad</item>
 		<item>Throh</item>
 		<item>Sawk</item>
-		<item>Sewaddle[99]</item>
+		<item>Sewaddle</item>
 		<item>Swadloon</item>
 		<item>Leavanny</item>
 		<item>Venipede</item>

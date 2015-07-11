@@ -1,6 +1,7 @@
 package com.darkdesign.pokemonmachine.fragment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -157,30 +158,30 @@ public class CollectionDisplayFragment extends Fragment implements OnPokemonList
 	
 	private void setupPokemonList() {
 		// Handle Pokemon List
-	   String[] names = getResources().getStringArray(R.array.pokemon_names);
-	   pokemonListAdapter = new SimplePokemonListAdapter(getActivity(), names);
+	   	String[] names = getResources().getStringArray(R.array.pokemon_names);
+		ArrayList<String> nameList = (ArrayList<String>) Arrays.asList(names);
+		pokemonListAdapter = new SimplePokemonListAdapter(this.getActivity(), nameList);
 		
-	   ListView listView = (ListView) v.findViewById(R.id.plistCollection);
-	   listView.setAdapter(pokemonListAdapter);
-	   listView.invalidate();
-	   
-	   listView.setOnItemClickListener(new OnItemClickListener() {
-	        public void onItemClick(AdapterView<?> parent, View view,
-	                int position, long id) {
+		ListView listView = (ListView) v.findViewById(R.id.plistCollection);
+		listView.setAdapter(pokemonListAdapter);
+		listView.invalidate();
 
-	          Log.i(TAG, "Item Clicked");
-	  		  
-	  		  //OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
-	          OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) parent.getParent();
-	  		  String name = pokemonListAdapter.getItem(position);
-	  		  int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
-	  		  listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));	        	
-	       }
-	    });
-	   
-	   listView.setFastScrollEnabled(Config.FAST_SCROLL);
-	   listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
-	   listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+		public void onItemClick(AdapterView<?> parent, View view,
+			int position, long id) {
+			Log.i(TAG, "Item Clicked");
+
+			//OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) getActivity();
+			OnPokemonListItemSelectedListener listener = (OnPokemonListItemSelectedListener) parent.getParent();
+			String name = pokemonListAdapter.getItem(position);
+			int pokemonId = Util.arrayIndexOf(pokemonListAdapter.getAllData(), name) + 1;
+			listener.onPokemonListItemSelected(Util.padLeft(pokemonId, Constants.POKEMON_ID_LENGTH));
+		}
+		});
+
+		listView.setFastScrollEnabled(Config.FAST_SCROLL);
+		listView.setFastScrollAlwaysVisible(Config.FAST_SCROLL_VISIBILITY);
+		listView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_INSET);
 	}
 	
 	public static void showPopup(final Activity context, Point p, String heading, String content) {

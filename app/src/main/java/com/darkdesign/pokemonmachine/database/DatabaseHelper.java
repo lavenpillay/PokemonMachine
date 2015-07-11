@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.darkdesign.pokemonmachine.PokemonMachineActivity;
+import com.darkdesign.pokemonmachine.R;
 import com.darkdesign.pokemonmachine.element.Ability;
 import com.darkdesign.pokemonmachine.element.EggGroup;
 import com.darkdesign.pokemonmachine.element.Encounter;
@@ -47,13 +48,16 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private static final String TABLE_VERSION_NAMES = "version_names";
     private static final String TABLE_VERSIONS = "versions";
     private static final String TABLE_VERSION_GROUPS = "version_groups";
+
+    private Context context = null;
     
     
     private static SQLiteDatabase db = null;
     
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        
+
+        this.context = context;
         db = getReadableDatabase();
     }
 
@@ -400,6 +404,14 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         
         return name;
 	}
+
+    public Pokemon getPokemonByName(String name) {
+        String[] names = context.getResources().getStringArray(R.array.pokemon_names);
+
+        // TODO Handle incorrect name
+
+        return getPokemon(Util.arrayIndexOf(names, name) + 1); // because of zero index
+    }
     
     
     // Getting single pokemon
@@ -408,8 +420,6 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     	
     	Pokemon pokemon = new Pokemon();
     	ArrayList<EggGroup> eggGroupList = new ArrayList<EggGroup>();
-    	
-    	//SQLiteDatabase db = getReadableDatabase();
 
         String queryPokemon = "SELECT p.id, psn.name, ps.generation_id, ps.evolves_from_species_id, ps.evolution_chain_id,"
         		+ "	ps.gender_rate, ps.capture_rate, ps.base_happiness, ps.is_baby,	ps.hatch_counter, gr.identifier,"
@@ -856,6 +866,26 @@ public class DatabaseHelper extends SQLiteAssetHelper {
         name = cursorLanguages.getString(0);
 
         return name;
+    }
+
+    public int[] getPokemonByType(int typeId) {
+        int[] pokemonIds;
+
+        //String queryPokemonIds = "SELECT pokemon_id FROM pokemon_types WHERE type_id = " + typeId;
+        String queryPokemonIds = "SELECT pokemon_id FROM pokemon_types pt JOIN pokemon_species ps ON pt.pokemon_id = ps.id WHERE type_id = " + typeId;
+
+        Cursor cursorPokemon = db.rawQuery(queryPokemonIds, null);
+
+        pokemonIds = new int[cursorPokemon.getCount()];
+        int index = 0;
+
+        while (cursorPokemon.moveToNext()) {
+            pokemonIds[index++] = cursorPokemon.getInt(0);
+        }
+
+        cursorPokemon.close();
+
+        return pokemonIds;
     }
     
 }

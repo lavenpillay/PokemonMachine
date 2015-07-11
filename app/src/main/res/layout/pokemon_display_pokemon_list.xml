@@ -18,7 +18,9 @@
         android:text="Pokemon List"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:clickable="true"
+        android:onClick="onFilterPanelToggleClick" />
 
     <LinearLayout
         android:layout_width="match_parent"

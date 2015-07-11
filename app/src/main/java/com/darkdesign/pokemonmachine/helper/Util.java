@@ -26,7 +26,7 @@ import com.darkdesign.pokemonmachine.layout.FlowLayout;
 
 public class Util {
 	private static String TAG = Util.class.getName();
-	
+
 	private static final int MOVE_ID_TOKEN_POSITION = 4;
 	private static Point screenDimensions;
 
@@ -37,60 +37,58 @@ public class Util {
 	public static Bitmap getTypeSprite(String typeName) {
 		return PokemonMachineActivity.assetHelper.getBitmapFromAsset("type_images_medium/" + typeName + ".png");
 	}
-	
+
 	public static void measureScreenDimensions(Context context) {
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
 		screenDimensions = new Point();
 		display.getSize(screenDimensions);
 	}
-	
+
 	public static String padLeft(String stringToPad, int finalLength) {
 		return String.format("%03d", Integer.valueOf(stringToPad));
 	}
-	
+
 	public static String padLeft(int intToPad, int finalLength) {
 		return String.format("%03d", intToPad);
 	}
-	
+
 	public static String arrayListToCSV(ArrayList list) {
 		return list.toString().replaceAll("[\\s\\[\\]]", "");
 	}
-	
+
 	public static String stripZeros(String stringToModify) {
 		return stringToModify.replaceAll("0", "");
 	}
-	
+
 	/**
-	 * 
 	 * @param stringToConvert
 	 * @return
 	 */
 	public static String toTitleCase(String stringToConvert) {
-		
+
 		String returnStr = "";
-		
+
 		if (stringToConvert == null || stringToConvert.equals("")) {
 			return "";
 		}
-		
+
 		stringToConvert = stringToConvert.replace("-", " ");
-		
+
 		if (stringToConvert != null) {
-	        String[] arr = stringToConvert.split(" ");
-	        StringBuffer sb = new StringBuffer();
-	        for (int i = 0; i < arr.length; i++) {
-	        	sb.append(Character.toUpperCase(arr[i].charAt(0))).append(arr[i].substring(1)).append(" ");
-	        }   
-	        
-	        returnStr =  sb.toString().trim();
+			String[] arr = stringToConvert.split(" ");
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < arr.length; i++) {
+				sb.append(Character.toUpperCase(arr[i].charAt(0))).append(arr[i].substring(1)).append(" ");
+			}
+
+			returnStr = sb.toString().trim();
 		}
 
 		return returnStr;
-    }
-	
+	}
+
 	/**
-	 * 
 	 * @param text
 	 * @return
 	 */
@@ -100,95 +98,91 @@ public class Util {
 		newText = newText.replace(" ", "");
 		newText = newText.replace("_", "");
 		newText = newText.replace("-", "");
-		
+
 		return newText;
 	}
-	
+
 	/**
 	 * Returns the IDs of a list of Moves, as a CSV string
 	 */
 	public static String getMoveListIDsAsCSV(ArrayList<Move> moveList) {
 		String returnStr = "";
-		
-		for (int i=0; i < moveList.size(); i++) {
+
+		for (int i = 0; i < moveList.size(); i++) {
 			String resourceURI = moveList.get(i).getResourceURI();
 			String[] moveData = resourceURI.split("/");
 			String moveID = moveData[MOVE_ID_TOKEN_POSITION];
 			returnStr += (moveID + ",");
 		}
-		
+
 		// Trim final comma and return
-		return returnStr.substring(0, returnStr.length() -1);
+		return returnStr.substring(0, returnStr.length() - 1);
 	}
-	
+
 	public static int arrayIndexOf(String[] array, String value) {
 		int index = 0;
 		boolean valueFound = false;
-		
-		for (int i=0; i < array.length; i++) {
+
+		for (int i = 0; i < array.length; i++) {
 			if (array[i].equalsIgnoreCase(value)) {
 				index = i;
 				break;
 			}
 		}
-		
+
 		return index;
 	}
-	
+
 	public static String[] getMoveListIDsAsArray(ArrayList<Move> moveList) {
 		String[] ids = new String[moveList.size()];
-		
-		for (int i=0; i < moveList.size(); i++) {
+
+		for (int i = 0; i < moveList.size(); i++) {
 			String resourceURI = moveList.get(i).getResourceURI();
 			String[] moveData = resourceURI.split("/");
 			String moveID = moveData[MOVE_ID_TOKEN_POSITION];
 			ids[i] = moveID;
 		}
-		
+
 		return ids;
 	}
-	
+
 	public static ArrayList<Move> sortMovesByLevel(ArrayList<Move> list) {
 		Collections.sort(list, new Comparator<Move>() {
-		    @Override
-		    public int compare(Move move1, Move move2) {
-		        if (move1.getLevel() > move2.getLevel())
-		            return 1;
-		        if (move1.getLevel() < move2.getLevel())
-		            return -1;
-		        return 0;
-		    }
+			@Override
+			public int compare(Move move1, Move move2) {
+				if (move1.getLevel() > move2.getLevel())
+					return 1;
+				if (move1.getLevel() < move2.getLevel())
+					return -1;
+				return 0;
+			}
 		});
-		
+
 		return list;
 	}
-	
+
 	/**
-	 * 
 	 * @param str
 	 * @return
 	 */
 	public static boolean stringIsInteger(String str) {
-		try {  
-		    int i = Integer.parseInt(str);  
-		}  
-		catch(NumberFormatException nfe) {  
-			return false;  
-		}  
+		try {
+			int i = Integer.parseInt(str);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
 		return true;
 	}
-	
+
 	/**
-	 * 
 	 * @param valueInKilograms
 	 * @return
 	 */
 	public static String convertKilogramsToImperial(double valueInKilograms) {
 		return String.valueOf(round(valueInKilograms * 2.2046, 2));
 	}
-	
+
 	/**
-	 * 
 	 * @param valueInMeters
 	 * @return
 	 */
@@ -196,14 +190,13 @@ public class Util {
 		double valueInInches = valueInMeters * 39.37;
 		int feetPart = (int) (valueInInches / 12);
 		int inchesPart = (int) (valueInInches % 12);
-		
+
 		String finalValue = feetPart + "' " + inchesPart + "\"";
-				
-		return finalValue; 
+
+		return finalValue;
 	}
 
 	/**
-	 * 
 	 * @param damagePercentageType1
 	 * @param damagePercentageType2
 	 * @return
@@ -246,23 +239,21 @@ public class Util {
 				damage = Constants.DAMAGE_STRING_QUADRUPLE;
 			}
 		}
-		
+
 		return damage;
 	}
 
 	public static double round(double value, int places) {
-        if (places < 0)
-            throw new IllegalArgumentException();
+		if (places < 0)
+			throw new IllegalArgumentException();
 
-        BigDecimal bd = new BigDecimal(value);
-        bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
-        return bd.doubleValue();
-    }
-	
+		BigDecimal bd = new BigDecimal(value);
+		bd = bd.setScale(places, BigDecimal.ROUND_HALF_UP);
+		return bd.doubleValue();
+	}
 
 
 	/**
-	 * 
 	 * @param image
 	 * @param rotationAngle
 	 * @param context
@@ -271,62 +262,75 @@ public class Util {
 	public static ImageView rotateImageView(ImageView image, int rotationAngle, Context context) {
 		Matrix matrix = new Matrix();
 		image.setScaleType(ScaleType.MATRIX);   //required
-		int pivotX = image.getDrawable().getBounds().width()/2;
-		float pivotY = image.getDrawable().getBounds().height()/2;
+		int pivotX = image.getDrawable().getBounds().width() / 2;
+		float pivotY = image.getDrawable().getBounds().height() / 2;
 		matrix.postRotate((float) rotationAngle, pivotX, pivotY);
 		image.setImageMatrix(matrix);
-		
+
 		return image;
 	}
 
 	/**
-	 * 
 	 * @param context
 	 * @param gameFilterCheckboxHolder
 	 */
 	public static void generateGameFilterCheckboxes(final Activity context, FlowLayout gameFilterCheckboxHolder) {
-		
+
 		ArrayList<VideoGame> gameList = PokemonMachineActivity.cache.getGameList();
-		
-		for (int i=0; i < gameList.size(); i++) {
+
+		for (int i = 0; i < gameList.size(); i++) {
 			CheckBox checkBox = new CheckBox(context);
 			checkBox.setTextColor(0xFFBBBBBB);
 			checkBox.setWidth(120);
 			checkBox.setText(gameList.get(i).getName());
-			   
+
 			gameFilterCheckboxHolder.addView(checkBox);
 		}
-	}	
-	
+	}
+
 	/**
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static int getScreenWidth(Context context) {
-		if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
-		
+		if (Util.screenDimensions == null) {
+			Util.measureScreenDimensions(context);
+		}
+
 		return Util.screenDimensions.x;
 	}
-	
+
 	/**
-	 * 
 	 * @param context
 	 * @return
 	 */
 	public static int getScreenHeight(Context context) {
-		if (Util.screenDimensions == null) { Util.measureScreenDimensions(context); }
-		
+		if (Util.screenDimensions == null) {
+			Util.measureScreenDimensions(context);
+		}
+
 		return Util.screenDimensions.y;
 	}
-	
+
 	/**
-	 * 
 	 * @param v
 	 */
 	public static void hideSoftKeyboard(TextView v) {
 		// hide virtual keyboard - could also use InputMethodManager.HIDE_NOT_ALWAYS
-		InputMethodManager imm = (InputMethodManager)v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) v.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-	}		
+	}
+
+	public String convertToCSV(String[] values) {
+		// CSV format
+		return values.toString().replace("[", "").replace("]", "").replace(", ", ",");
+	}
+
+
+	public String convertToCSVWithQuotes(String[] values) {
+		// CSV format surrounded by single quote
+		// Useful for SQL IN QUERY
+
+		return values.toString().replace("[", "'").replace("]", "'").replace(", ", "','");
+	}
 }
