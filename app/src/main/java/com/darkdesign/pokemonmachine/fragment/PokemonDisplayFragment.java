@@ -628,14 +628,14 @@ public class PokemonDisplayFragment extends Fragment implements OnPokemonListIte
 		Util.setListViewHeightBasedOnChildren(expListView);
 
 		//obtain expandableListViewStyle  from theme
-		/*
+
 		TypedArray expandableListViewStyle = _context.getTheme().obtainStyledAttributes(new int[]{android.R.attr.expandableListViewStyle});
 		//obtain attr from style
 		TypedArray groupIndicator = _context.getTheme().obtainStyledAttributes(expandableListViewStyle.getResourceId(0,0),new int[]{android.R.attr.groupIndicator});
 		expListView.setGroupIndicator(groupIndicator.getDrawable(0));
 		expandableListViewStyle.recycle();
 		groupIndicator.recycle();
-		*/
+
 		//---------------
 
 		// BEGIN - Add Breeding Info

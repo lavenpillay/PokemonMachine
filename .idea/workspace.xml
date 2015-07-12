@@ -50,14 +50,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dee07b9e-1ba0-47c7-8ae5-1923b95754a7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_group_encounter.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_item_encounter.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db_dev/pokemon_machine_db.sqlite" afterPath="$PROJECT_DIR$/db_dev/pokemon_machine_db.sqlite" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/database/DatabaseHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/database/DatabaseHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Util.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/helper/Util.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_display_pokemon.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="PokemonMachine.iws" />
@@ -90,26 +84,26 @@
       <file leaf-file-name="PokemonDisplayFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.814816">
-              <caret line="637" column="10" selection-start-line="637" selection-start-column="10" selection-end-line="637" selection-end-column="10" />
+            <state vertical-scroll-proportion="-17.592592">
+              <caret line="613" column="73" selection-start-line="609" selection-start-column="12" selection-end-line="613" selection-end-column="73" />
               <folding>
-                <element signature="e#27861#27879#0" expanded="true" />
-                <element signature="e#35043#35271#0" expanded="true" />
-                <element signature="e#35270#35271#0" expanded="true" />
-                <element signature="e#36171#36746#0" expanded="true" />
-                <element signature="e#36745#36746#0" expanded="true" />
-                <element signature="e#36979#37602#0" expanded="true" />
-                <element signature="e#37601#37602#0" expanded="true" />
-                <element signature="e#37835#38359#0" expanded="true" />
-                <element signature="e#38358#38359#0" expanded="true" />
-                <element signature="e#39547#40147#0" expanded="true" />
-                <element signature="e#40146#40147#0" expanded="true" />
-                <element signature="e#40352#40860#0" expanded="true" />
-                <element signature="e#40859#40860#0" expanded="true" />
-                <element signature="e#41747#42489#0" expanded="true" />
-                <element signature="e#42488#42489#0" expanded="true" />
-                <element signature="e#42539#43078#0" expanded="true" />
-                <element signature="e#43077#43078#0" expanded="true" />
+                <element signature="e#27853#27871#0" expanded="true" />
+                <element signature="e#35035#35263#0" expanded="true" />
+                <element signature="e#35262#35263#0" expanded="true" />
+                <element signature="e#36163#36738#0" expanded="true" />
+                <element signature="e#36737#36738#0" expanded="true" />
+                <element signature="e#36971#37594#0" expanded="true" />
+                <element signature="e#37593#37594#0" expanded="true" />
+                <element signature="e#37827#38351#0" expanded="true" />
+                <element signature="e#38350#38351#0" expanded="true" />
+                <element signature="e#39539#40139#0" expanded="true" />
+                <element signature="e#40138#40139#0" expanded="true" />
+                <element signature="e#40344#40852#0" expanded="true" />
+                <element signature="e#40851#40852#0" expanded="true" />
+                <element signature="e#41739#42481#0" expanded="true" />
+                <element signature="e#42480#42481#0" expanded="true" />
+                <element signature="e#42531#43070#0" expanded="true" />
+                <element signature="e#43069#43070#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -187,8 +181,8 @@
       <file leaf-file-name="EncounterListAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.69262296">
-              <caret line="112" column="88" selection-start-line="112" selection-start-column="88" selection-end-line="112" selection-end-column="88" />
+            <state vertical-scroll-proportion="0.5491803">
+              <caret line="106" column="33" selection-start-line="106" selection-start-column="33" selection-end-line="106" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1637#1638#0" expanded="true" />
@@ -3075,7 +3069,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java</url>
-          <line>104</line>
+          <line>105</line>
           <properties />
           <option name="timeStamp" value="69" />
         </line-breakpoint>
@@ -3537,32 +3531,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.814816">
-          <caret line="637" column="10" selection-start-line="637" selection-start-column="10" selection-end-line="637" selection-end-column="10" />
-          <folding>
-            <element signature="e#27861#27879#0" expanded="true" />
-            <element signature="e#35043#35271#0" expanded="true" />
-            <element signature="e#35270#35271#0" expanded="true" />
-            <element signature="e#36171#36746#0" expanded="true" />
-            <element signature="e#36745#36746#0" expanded="true" />
-            <element signature="e#36979#37602#0" expanded="true" />
-            <element signature="e#37601#37602#0" expanded="true" />
-            <element signature="e#37835#38359#0" expanded="true" />
-            <element signature="e#38358#38359#0" expanded="true" />
-            <element signature="e#39547#40147#0" expanded="true" />
-            <element signature="e#40146#40147#0" expanded="true" />
-            <element signature="e#40352#40860#0" expanded="true" />
-            <element signature="e#40859#40860#0" expanded="true" />
-            <element signature="e#41747#42489#0" expanded="true" />
-            <element signature="e#42488#42489#0" expanded="true" />
-            <element signature="e#42539#43078#0" expanded="true" />
-            <element signature="e#43077#43078#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_encounter.xml">
       <provider editor-type-id="android-designer">
         <state />
@@ -3574,10 +3542,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/fragment/PokemonDisplayFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.592592">
+          <caret line="613" column="73" selection-start-line="609" selection-start-column="12" selection-end-line="613" selection-end-column="73" />
+          <folding>
+            <element signature="e#27853#27871#0" expanded="true" />
+            <element signature="e#35035#35263#0" expanded="true" />
+            <element signature="e#35262#35263#0" expanded="true" />
+            <element signature="e#36163#36738#0" expanded="true" />
+            <element signature="e#36737#36738#0" expanded="true" />
+            <element signature="e#36971#37594#0" expanded="true" />
+            <element signature="e#37593#37594#0" expanded="true" />
+            <element signature="e#37827#38351#0" expanded="true" />
+            <element signature="e#38350#38351#0" expanded="true" />
+            <element signature="e#39539#40139#0" expanded="true" />
+            <element signature="e#40138#40139#0" expanded="true" />
+            <element signature="e#40344#40852#0" expanded="true" />
+            <element signature="e#40851#40852#0" expanded="true" />
+            <element signature="e#41739#42481#0" expanded="true" />
+            <element signature="e#42480#42481#0" expanded="true" />
+            <element signature="e#42531#43070#0" expanded="true" />
+            <element signature="e#43069#43070#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/darkdesign/pokemonmachine/adapter/EncounterListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.69262296">
-          <caret line="112" column="88" selection-start-line="112" selection-start-column="88" selection-end-line="112" selection-end-column="88" />
+        <state vertical-scroll-proportion="0.5491803">
+          <caret line="106" column="33" selection-start-line="106" selection-start-column="33" selection-end-line="106" selection-end-column="33" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1637#1638#0" expanded="true" />

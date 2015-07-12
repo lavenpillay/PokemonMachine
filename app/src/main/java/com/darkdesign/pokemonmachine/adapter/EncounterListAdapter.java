@@ -102,7 +102,9 @@ public class EncounterListAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = ((Encounter) getChild(groupPosition, childPosition)).getLocation().getName();
+
+        Encounter encounter = (Encounter) getChild(groupPosition, childPosition);
+        final String childText = encounter.getLocation().getName();
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -112,6 +114,12 @@ public class EncounterListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.txtLocationName);
         txtListChild.setText(childText);
+
+        TextView txtMinLevel = (TextView)convertView.findViewById(R.id.txtMinLevel);
+        txtMinLevel.setText(String.valueOf(encounter.getMinLevel()));
+
+        TextView txtMaxLevel = (TextView)convertView.findViewById(R.id.txtMaxLevel);
+        txtMaxLevel.setText(String.valueOf(encounter.getMaxLevel()));
 
         return convertView;
     }
