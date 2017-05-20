@@ -116,7 +116,7 @@ public class PokemonMachineActivity extends FragmentActivity implements ActionBa
         setContentView(R.layout.activity_pokemonmachine);
         
         // TODO Remove this after DEBUG/TESTING
-        //forceDatabaseReload(this);
+        forceDatabaseReload(this);
 
         favouritePokemonDBHelper = new FavouritePokemonDatabaseHelper(this);
         // Clear Favourites database
